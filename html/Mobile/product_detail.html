@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>產品詳情</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link href="https://cdn.bootcss.com/mui/3.7.1/css/mui.min.css" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet">
+		<style>
+			.mui-card .mui-control-content {
+				padding: 10px;
+			} 
+			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{border-bottom: 2px solid #FFAA00;color: #FFAA00;}
+			.my_order .mui-btn{ position: relative;transform: inherit;right: 0;}
+			
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #7ac141;"></a>
+			<h1 class="mui-title">產品詳情</h1>
+			<a href="#" class="mui-action-menu mui-pull-right index-hd-right2"></a>
+			<a href="#" class="mui-action-menu mui-pull-right index-hd-right"></a>
+		</header>
+
+		<nav class="mui-bar mui-bar-tab" style="box-shadow: 0 0 1px rgba(0, 0, 0, 0.20);line-height: 50px;">
+			
+			<button type="button" class="mui-btn mui-btn-success mui-pull-right" style="margin-right: 10px;">提交訂單</button>
+			<p class="mui-pull-right" style="margin:0;margin-right: 20px;">合計：<span class="color_ro">$</span><span class="color_ro font18">388</span></p>
+
+		</nav>
+
+		<div class="mui-content">
+				<link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/Swiper/3.4.0/css/swiper.min.css" media="screen">
+				<script src="https://cdn.bootcss.com/Swiper/4.3.0/js/swiper.min.js"></script>
+		      	<div class="swiper-container index_banner bgcolor_white" style="">
+				      <div class="swiper-wrapper ">
+				            <div class="swiper-slide"> 
+				              <a href="#"  target="_bank">
+				                <img src="img/product_detail_img.png">
+				              </a>
+				            </div>
+				            <div class="swiper-slide"> 
+				              <a href="#"  target="_bank">
+				                <img src="img/product_detail_img.png">
+				              </a>
+				            </div>
+				            <div class="swiper-slide"> 
+				              <a href="#"  target="_bank">
+				                <img src="img/product_detail_img.png">
+				              </a>
+				            </div>
+				      </div>
+				      <!-- 如果需要分页器 -->
+				      <div class="swiper-pagination"></div>
+				      <script language="javascript"> 
+					        var mySwiper = new Swiper('.swiper-container',{
+					        pagination: {
+					          el: '.swiper-pagination',
+					        },
+							autoplay: {
+								delay: 2000,//1秒切换一次
+							  },
+							effect : 'slide',
+					        //pagination : '#swiper-pagination1',
+					        })
+				      </script>
+				</div>
+				<div class="mui-row bgcolor_white" style="padding: 20px;">
+					<div class="mui-col-sm-3 mui-col-xs-3 color_777777">產品星級：</div>
+					<div class="mui-col-sm-9 mui-col-xs-9">5265695</div>
+					<div class="mui-col-sm-3 mui-col-xs-3 color_777777">產品名稱：</div>
+					<div class="mui-col-sm-9 mui-col-xs-9">赫曼MoliMed無憂墊細碼14片</div>
+					<div class="mui-col-sm-3 mui-col-xs-3 color_777777">編碼：</div>
+					<div class="mui-col-sm-9 mui-col-xs-9">3654576876</div>
+					<div class="mui-col-sm-3 mui-col-xs-3 color_777777">包裝規格：</div>
+					<div class="mui-col-sm-9 mui-col-xs-9">一包14片</div>
+					<div class="mui-col-sm-3 mui-col-xs-3 color_777777">產地：</div>
+					<div class="mui-col-sm-9 mui-col-xs-9">德國</div>
+					<div class="mui-col-sm-3 mui-col-xs-3 color_777777">原價：</div>
+					<div class="mui-col-sm-9 mui-col-xs-9">$188</div>
+					<div class="mui-col-sm-3 mui-col-xs-3 color_777777">特價：</div>
+					<div class="mui-col-sm-9 mui-col-xs-9 color_ro">$<span class="font18">144</span></div>
+				</div> 
+			<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary my_order_segmented">
+				<a class="mui-control-item mui-active" href="#item1">產品描述</a>
+				<a class="mui-control-item" href="#item2">功效</a>
+				<a class="mui-control-item" href="#item3">規格</a>
+			</div>
+			 
+			<div class="product_detail"  style="background:#fff;padding: 20px;">
+				<div id="item1" class="mui-control-content mui-active">
+					<div id="scroll" class="mui-scroll-wrapper">
+						<div class="mui-scroll">
+				    	  		CLX詳寫為Consective Loops Exercise，每條練力帶由9個具彈性的環圈(Easy Grip LoopsTM )組成，設計已獲得專利，獨特物料不含乳膠及防敏感，配合專利製作工驟使其持久耐用。共有7種顏色可供選擇，每種顏色各有不同阻力。免費流動程式(IOS及Android)載有獨家的數據庫，內附詳細動作說明、圖示及示範短片，用法比傳統練力帶更方便、靈活及多元化。環圈提供不同的握法及訓練選擇，無需再額外購買手把或練力圈
+							用者可使用不同的環數來控制阻力，有助循序漸進地訓練。多功能、簡易、創新，一條練力帶已可進行各種傳統訓練及複雜動作，全身肌肉也能受惠。 
+						</div>
+					</div>
+				</div>
+				<div id="item2" class="mui-control-content">
+					 
+				</div>
+				<div id="item3" class="mui-control-content">
+					
+				</div>
+			</div>
+
+			<div class="product_list" style="top: 145px;background-color:#fff" data-scroll="1" data-pullrefresh="2"> 
+				<div style="padding:  10px;border-bottom: 1px solid #efefef;">相關產品</div>
+				<!--数据列表-->
+					<ul class="mui-table-view mui-table-view-chevron mui-row">
+					
+						<li class="mui-col-sm-4 mui-col-xs-4 list">
+							<a class="news"></a>
+							<img src="img/f2_1.jpg">
+							<p class="p2">ATex sports 肌肉運動貼</p>
+							<p>
+							  <span class="color_ro">$</span>
+							  <span class="color_ro font18">388</span>
+							  <span class="price">$688</span></p>
+						</li>
+						<li class="mui-col-sm-4 mui-col-xs-4 list">
+						  <img src="img/f2_1.jpg">
+						  <p class="p2">ATex sports 肌肉運動貼</p>
+						  <p>
+						    <span class="color_ro">$</span>
+						    <span class="color_ro font18">388</span>
+						    <span class="price">$688</span></p>
+						</li>
+						<li class="mui-col-sm-4 mui-col-xs-4 list">
+						  <img src="img/f2_1.jpg">
+						  <p class="p2">ATex sports 肌肉運動貼</p>
+						  <p>
+						    <span class="color_ro">$</span>
+						    <span class="color_ro font18">388</span>
+						    <span class="price">$688</span></p>
+						</li>
+						<li class="mui-col-sm-4 mui-col-xs-4 list">
+						  <img src="img/f2_1.jpg">
+						  <p class="p2">ATex sports 肌肉運動貼</p>
+						  <p>
+						    <span class="color_ro">$</span>
+						    <span class="color_ro font18">388</span>
+						    <span class="price">$688</span></p>
+						</li>
+						<li class="mui-col-sm-4 mui-col-xs-4 list">
+						  <img src="img/f2_1.jpg">
+						  <p class="p2">ATex sports 肌肉運動貼</p>
+						  <p>
+						    <span class="color_ro">$</span>
+						    <span class="color_ro font18">388</span>
+						    <span class="price">$688</span></p>
+						</li>
+				</ul>
+				<div class="clear"></div>
+			</div>
+			  	
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script>
+			mui('.mui-scroll-wrapper').scroll();
+		</script>
+
+	</body>
+
+</html>

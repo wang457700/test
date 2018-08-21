@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet"> 
+    <link href="https://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css" rel="stylesheet">
+    <title>2.7營康薈搜索頁</title></head> 
+  <body style="background: url(img/index_bg.jpg) repeat-y;">
+ 
+ 
+ 
+ 
+    <div class="container bgcolor_white">
+      <div class="pr_name">搜索結果</div>
+        <div class="search_page_empty">
+             
+             
+        </div>
+        
+    </div> 
+ 
+
+
+	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">(function() {
+
+        var time = null;
+
+        var list = $("#navlist");
+
+        var box = $("#navbox");
+
+        var lista = list.find("a");
+
+        for (var i = 0,
+        j = lista.length; i < j; i++) {
+
+          if (lista[i].className == "now") {
+
+            var olda = i;
+
+          }
+
+        }
+
+        var box_show = function(hei) {
+
+          box.stop().animate({
+
+            height: hei,
+
+            opacity: 1
+
+          },
+          400);
+
+        }
+
+        var box_hide = function() {
+
+          box.stop().animate({
+
+            height: 0,
+
+            opacity: 0
+
+          },
+          400);
+
+        }
+
+        lista.hover(function() {
+
+          lista.removeClass("now");
+
+          $(this).addClass("now");
+
+          clearTimeout(time);
+
+          var index = list.find("a").index($(this));
+
+          box.find(".cont").hide().eq(index).show();
+
+          var _height = box.find(".cont").eq(index).height() + 54;
+
+          box_show(_height)
+
+        },
+        function() {
+
+          time = setTimeout(function() {
+
+            box.find(".cont").hide();
+
+            box_hide();
+
+          },
+          50);
+
+          lista.removeClass("now");
+
+          lista.eq(olda).addClass("now");
+
+        });
+
+        box.find(".cont").hover(function() {
+
+          var _index = box.find(".cont").index($(this));
+
+          lista.removeClass("now");
+
+          lista.eq(_index).addClass("now");
+
+          clearTimeout(time);
+
+          $(this).show();
+
+          var _height = $(this).height() + 54;
+
+          box_show(_height);
+
+        },
+        function() {
+
+          time = setTimeout(function() {
+
+            $(this).hide();
+
+            box_hide();
+
+          },
+          50);
+
+          lista.removeClass("now");
+
+          lista.eq(olda).addClass("now");
+
+        });
+
+      })();</script>
+
+  </body>
+
+</html>

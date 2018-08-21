@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>購物車</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link href="https://cdn.bootcss.com/mui/3.7.1/css/mui.min.css" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet">
+		<style>
+			.mui-card{box-shadow: none;border-radius: 5px;}
+			
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #7ac141;"></a>
+			<h1 class="mui-title">購物車</h1>
+		</header>
+		<nav class="mui-bar mui-bar-tab" style="box-shadow: none;">
+			<div class="mui-checkbox mui-col-sm-1 mui-col-xs-1" style="line-height: 40px;width: 80px;height:  40px;float: left;">
+				
+				<input name="checkbox" value="Item 2" type="checkbox" style="left: 8px;top: 5px;" id="checked">
+			<label style="line-height: 40px;padding-left: 40px;padding-right: 0;">全选</label></div>
+			
+			<button type="button" class="mui-btn mui-btn-success mui-pull-right">結算(2)</button>
+			<p class="mui-pull-right" style="margin:  0;line-height: 40px;margin-right: 20px;">合計：<span class="color_ro">$</span><span class="color_ro font18">388</span></p>
+
+
+		</nav>
+		<div class="mui-content">
+			
+			<div class="shopping_cart">
+				<div class="mui-card" id="list_1">
+					<div class="mui-card-content">
+						<div class="mui-card-content-inner">
+
+							<ul class="mui-row">
+								<li class="mui-checkbox mui-col-sm-1 mui-col-xs-1" style="line-height: 40px;">
+
+									<input name="ids" value="Item 2" type="checkbox" style="right: 8px;top: 35px;">
+								</li>
+						        
+						        <li class="mui-col-sm-4 mui-col-xs-4" style="padding-right: 5px">
+						            <img src="img/f2_1.jpg" class="img_left" />
+						        </li>
+						        <li class="mui-col-sm-7 mui-col-xs-7">
+						            <p class="title">赫曼MoliMed無憂墊赫曼無憂鞋墊...</p>
+									<a href="" class="xuan">細碼</a>
+									<div>
+										<p class="mui-pull-left" style="margin:  0;line-height: 40px;"><span class="color_ro">$</span><span class="color_ro font18">388</span></p>
+										<div class="col-md-12 mui-pull-right number" style="">
+											<input id="min_1" name="" type="button" value="-" class="reduce" disabled="disabled" onclick="on_number(1,'min')">  
+											<input id="number_1" name="" type="text" value="1" style="width:40px;text-align: center;border: 0;height: 20px;">  
+											<input id="add_1" name="" type="button" value="+" class="add" onclick="on_number(1,'add')">
+										  </div>
+									</div>
+									<a href="javascript:del('1')" class="del">×</a>
+						        </li> 
+						    </ul> 
+						</div>
+					</div>
+				</div> 
+
+
+
+			</div>
+			  	
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+		<script>
+			mui('.mui-scroll-wrapper').scroll();
+
+			function on_number(id,type){
+				//初始化数量为1,并失效减
+				//$('#min' + id).attr('disabled',true);
+				//获得文本框对象
+				var t = $("#number_" + id); 
+				 
+				if(type=='add'){
+					// 给获取的val加上绝对值，避免出现负数
+					t.val(Math.abs(parseInt(t.val()))+1);
+					  if (parseInt(t.val())!=1){
+					  $('#min_' + id).attr('disabled',false);
+					}; 
+				}
+				if(type=='min'){
+					t.val(Math.abs(parseInt(t.val()))-1);
+					  if (parseInt(t.val())==1){
+					  $('#min_' + id).attr('disabled',true);
+					};
+					 
+				}
+				 
+				var unit_price = $('#unit_price_' + id).val();
+				var number = t.val();
+				var subtotal_price = Number(unit_price)*Number(number);
+				$('#subtotal_span_' + id).text(subtotal_price.toFixed(2));
+				$('#subtotal_' + id).val(subtotal_price.toFixed(2));
+
+				total();
+			}
+
+			//统计总价格	
+			function total(){
+				var sum=0;
+				$("input[name^='subtotal']").each(function(){ 
+						sum+= Number($(this).val()); 
+				});
+				$('#total').text('$ '+ sum.toFixed(2));
+
+			}
+
+			//全选或不选
+			$("#checked").on('click',function(){
+				if($(this).data('id') == 1){
+					$("input[name=ids]").each(function(){
+						$(this).prop('checked', false);
+					});
+					$(this).data('id',0);
+				}else{
+					$("input[name=ids]").each(function(){ 
+						$(this).prop('checked', true);
+					});
+					$(this).data('id',1);
+				}
+			}); 
+ 			
+ 			//移除购物车
+			function del(id){
+
+				var r=confirm("你确定要删除购物车的商品吗？")
+			 	if (r==true){
+			    	$('#list_' + id).remove();
+					total();
+			    }
+
+			}
+
+
+		</script>
+
+	</body>
+
+</html>

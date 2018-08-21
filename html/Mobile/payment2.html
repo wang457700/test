@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>支付</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link href="https://cdn.bootcss.com/mui/3.7.1/css/mui.min.css" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet">
+		<style>
+			 
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #7ac141;"></a>
+			<h1 class="mui-title">支付</h1>
+		</header>
+		<div class="mui-content">
+			<ul class="mui-table-view">
+				 <li class="mui-table-view-cell" style="text-align: center">
+				 	確認付款<span class="color_777777  mui-pull-right" style="position:  absolute;right: 10px;">規則</span>
+				 </li>
+		         <li class="mui-table-view-cell" style="text-align: center;padding: 30px;">
+		         	HKD <span class="font16">$1234</span>
+		         </li>
+		         <li class="mui-table-view-cell" style="">
+		         	<div class="mui-input-row mui-checkbox mui-right">
+						<label><img src="img/pay_1.png" class="left_ico"> Visa</label>
+						<input name="checkbox" value="Item 1" type="checkbox">
+					</div>
+		         </li>
+		         <li class="mui-table-view-cell" style="">
+		         	<div class="mui-input-row mui-checkbox mui-right">
+						<label><img src="img/pay_2.png" class="left_ico"> Matercard</label>
+						<input name="checkbox" value="Item 1" type="checkbox">
+					</div>
+		         </li> 
+			</ul>
+			<div class="mui-button-row" style="padding:  20px;">
+				<button class="mui-btn mui-btn-success btn-success-edit">
+					立即支付
+				</button>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script>
+			mui('.mui-scroll-wrapper').scroll();
+		</script>
+
+	</body>
+
+</html>

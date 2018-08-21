@@ -1,0 +1,118 @@
+<h3>訂單信息</h3>
+<table class="table table-striped">
+    <thead>
+        
+    </thead>
+    <tbody  class="col-xs-6 col-sm-6">
+        <tr class="col-xs-6 col-sm-6">
+            <th>訂單ID：</th>
+            <td>{$row.order_id}</td>
+        </tr>
+        <tr class="col-xs-6 col-sm-6">
+            <th>下單日期：</th>
+            <td>{$row.order_time}</td>
+        </tr>
+        <tr class="col-xs-6 col-sm-6">
+            <th>用戶ID：</th>
+            <td>{$row.user_id}</td>
+        </tr>
+        <tr class="col-xs-6 col-sm-6">
+            <th>用戶名：</th>
+            <td>{$row.user_name}</td>
+        </tr> 
+        <tr class="col-xs-6 col-sm-6">
+            <th>支付方式：</th>
+            <td>{$row.payment_type}</td>
+        </tr> 
+        <tr class="col-xs-6 col-sm-6">
+            <th>應付金額：</th>
+            <td>{$row.amount_payable}</td>
+        </tr>
+        <tr class="col-xs-6 col-sm-6">
+            <th>服務費：</th>
+            <td>{$row.service_charge}</td>
+        </tr>
+        <tr class="col-xs-6 col-sm-6">
+            <th>捐款金額：</th>
+            <td>{$row.donated_amount}</td>
+        </tr>
+        <tr class="col-xs-6 col-sm-6">
+            <th>運費：</th>
+            <td>{$row.freight}</td>
+        </tr>
+        <tr class="col-xs-6 col-sm-6">
+            <th>訂單總金額：</th>
+            <td>{$row.total_amount}</td>
+        </tr>
+        <tr class="col-xs-6 col-sm-6">
+            <th>商品數量：</th>
+            <td>{$row.goods_count}</td>
+        </tr>
+        <tr class="col-xs-6 col-sm-6">
+            <th>優惠券：</th>
+            <td>{$row.coupon}</td>
+        </tr>
+        <tr class="col-xs-6 col-sm-6">
+            <th>優惠金額：</th>
+            <td>{$row.coupon_amount}</td>
+        </tr>
+    </tbody>
+</table>
+<h3>配送信息</h3>
+<table class="table table-striped col-sm-4">
+    <thead>
+        
+    </thead>
+    <tbody class="col-xs-6 col-sm-6">
+        <tr class="col-xs-6 col-sm-6">
+            <th>收貨人：</th>
+            <td>{$row.take_name}</td>
+        </tr>
+        <tr class="col-xs-6 col-sm-6">
+            <th>聯繫電話：</th>
+            <td>{$row.take_phone}</td>
+        </tr>
+        <tr class="col-xs-12 col-sm-12">
+            <th>收貨地址：</th>
+            <td>{$row.take_address}</td>
+        </tr>
+        <tr class="col-xs-12 col-sm-12">
+            <th>訂單狀態：</th>
+            <td>{$row.status}</td>
+        </tr> 
+    </tbody>
+</table>
+
+<h3>配送信息</h3>
+<table class="table table-striped">
+    <thead>
+      
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>產品標題 產品標題 產品標題 產品標題</td>
+            <td>貨品ID:10008611</td>
+            <td>產品型號：4713286446454</td>
+            <td>×1</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>產品標題 產品標題 產品標題 產品標題</td>
+            <td>貨品ID:10008611</td>
+            <td>產品型號：4713286446454</td>
+            <td>×3</td>
+        </tr>
+        
+    </tbody>
+</table>
+
+<div class="hide layer-footer">
+    <label class="control-label col-xs-12 col-sm-2"></label>
+    <div class="col-xs-6 col-sm-2">
+        <button type="reset" class="btn btn-success btn-callback">审核通过</button>
+    </div>
+    <div class="col-xs-6 col-sm-2">
+        <button type="reset" class="btn btn-primary btn-embossed btn-close" onclick="Layer.closeAll();">{:__('Close')}</button>
+    </div>
+</div>

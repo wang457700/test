@@ -1,0 +1,257 @@
+<style type="text/css">
+.plupload {
+    background: url(/fastadmin/public/assets/img/upload_img.png) no-repeat;
+    background-size: 100%;
+    width: 60px;
+    height: 60px;
+}
+.plupload:active,.plupload:hover{
+    background: url(/fastadmin/public/assets/img/upload_img.png) no-repeat;
+    background-size: 100%;
+    width: 60px;
+    height: 60px;
+    border:0;
+}
+.danxuan .fa-circle{color: #eee;}
+.danxuan.on .fa-circle{display: inline-block;color: #18bc9b;}
+
+</style>
+<form id="edit-form" class="form-horizontal form-ajax" role="form" data-toggle="validator" method="POST" action="" style="min-height: 450px;">
+    
+    <div class="form-group">
+        <label for="username" class="control-label col-xs-12 col-sm-2">產品名稱</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="slide_name" name="row[data1]" value="{$row.data1}" data-rule="required;data1" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="c-type" class="control-label col-xs-12 col-sm-2">类型:</label>
+        <div class="col-xs-12 col-sm-3">
+
+            <select id="c-type" data-rule="required" class="form-control selectpicker" name="row[slide_type]">
+                <option value="index_banner" >健康有机产品</option>
+                <option value="float_left_banner" >健康有机产品1</option>
+                <option value="center_lefe_banner" >健康有机产品2</option>
+                <option value="center_right_banner" >健康有机产品3</option>
+            </select>
+
+        </div>
+         <div class="col-xs-12 col-sm-3">
+
+            <select id="c-type" data-rule="required" class="form-control selectpicker" name="row[slide_type]">
+                <option value="index_banner" >健康食品及零食</option>
+                <option value="float_left_banner" >健康食品及零食1 </option>
+                <option value="center_lefe_banner" >健康食品及零食2 </option>
+                <option value="center_right_banner" >健康食品及零食3</option>
+            </select>
+
+        </div>
+         <div class="col-xs-12 col-sm-3">
+
+            <select id="c-type" data-rule="required" class="form-control selectpicker" name="row[slide_type]">
+                <option value="index_banner" >健康零食</option>
+                <option value="float_left_banner" >健康零食1</option>
+                <option value="center_lefe_banner" >健康零食2</option>
+                <option value="center_right_banner" >健康零食3</option>
+            </select>
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="username" class="control-label col-xs-12 col-sm-2">品牌</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="slide_url" name="row[data2]" value="{$row.data2}" data-rule="required;data2" />
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label for="username" class="control-label col-xs-12 col-sm-2">貨品ID</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="slide_url" name="row[data3]" value="{$row.data3}" data-rule="required;data3" />
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label for="username" class="control-label col-xs-12 col-sm-2">規格</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="slide_url" name="row[data4]" value="{$row.data4}" data-rule="required;data4" />
+        </div>
+    </div> 
+
+    <div class="form-group">
+        <label for="username" class="control-label col-xs-12 col-sm-2">產地</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="slide_url" name="row[data4]" value="{$row.slide_url}" data-rule="required;data4" />
+        </div>
+    </div>
+
+
+    <div class="form-group on danxuan">
+        <div class="col-sm-12">
+            <label for="username" class="control-label col-xs-12 col-sm-3"><i class="fa fa-circle"></i> 價格</label>
+            <div class="col-xs-12 col-sm-5">
+                <input type="text" class="form-control" id="data5" name="row[data5]" value="{$row.data5}" data-rule=";data5" />
+            </div>
+        </div>
+    </div> 
+    <div class="form-group danxuan"> 
+        <div class="col-sm-12">
+            <label for="username" class="control-label col-xs-12 col-sm-3"><i class="fa fa-circle"></i> 特價</label>
+            <div class="col-xs-12 col-sm-5">
+                <input type="text" class="form-control" id="data6" name="row[data6]" value="{$row.data6}" data-rule=";data6" />
+            </div>
+        </div>
+    </div> 
+    <div class="form-group danxuan" > 
+        <div class="col-sm-12">
+            <label for="username" class="control-label col-xs-12 col-sm-3"><i class="fa fa-circle"></i> 優惠</label>
+            <div class="col-xs-12 col-sm-4">
+                <input type="text" class="form-control" id="data7" name="row[data7]" value="{$row.data7}" data-rule=";data7" />
+            </div>
+            <div class="col-xs-12 col-sm-1">%</div>
+        </div>
+    </div>
+
+    <div class="form-group has-success">
+        <label for="c-logintime" class="control-label col-xs-12 col-sm-3">开始时间:</label>
+        <div class="col-xs-12 col-sm-8" style="position: relative;">
+            <input id="c-logintime" class="form-control datetimepicker " data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[start_time]" type="text" value="2018-08-08 16:43:43" style="width: 40%">
+            结束时间：
+            <input id="c-logintime" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[end_time]" type="text" value="2018-07-31 16:43:44" style="width: 40%">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-image" class="control-label col-xs-12 col-sm-2">封面</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="input-group">
+                <input id="c-image" class="form-control" size="50" name="row[data8]" type="hidden" value="{$row.data8}">
+                <div class="input-group-addon no-border no-padding">
+                    <span><button type="button" id="plupload-image" class="btn btn-danger plupload" data-input-id="c-image" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image"></button></span>
+                </div>
+                <span class="msg-box n-right"></span>
+            </div>
+            <ul class="row list-inline plupload-preview" id="p-image"></ul>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="c-image1" class="control-label col-xs-12 col-sm-2">图片</label>
+        <div class="col-xs-12 col-sm-1">
+            <div class="input-group">
+                <input id="c-image1" class="form-control" size="50" name="row[data9]" type="hidden" value="{$row.data9}">
+                <div class="input-group-addon no-border no-padding">
+                    <span><button type="button" id="plupload-image1" class="btn btn-danger plupload" data-input-id="c-image1" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image1"></button></span>
+                </div>
+                <span class="msg-box n-right"></span>
+            </div>
+            <ul class="row list-inline plupload-preview" id="p-image1"  data-template="uploadtpl"></ul>
+        </div>
+        <div class="col-xs-12 col-sm-1">
+            <div class="input-group">
+                <input id="c-image2" class="form-control" size="50" name="row[data9]" type="hidden" value="{$row.data9}">
+                <div class="input-group-addon no-border no-padding">
+                    <span><button type="button" id="plupload-image2" class="btn btn-danger plupload" data-input-id="c-image2" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image2"></button></span>
+                </div>
+                <span class="msg-box n-right"></span>
+            </div>
+            <ul class="row list-inline plupload-preview" id="p-image2"  data-template="uploadtpl"></ul>
+        </div>
+        <div class="col-xs-12 col-sm-1">
+            <div class="input-group">
+                <input id="c-image3" class="form-control" size="50" name="row[data9]" type="hidden" value="{$row.data9}">
+                <div class="input-group-addon no-border no-padding">
+                    <span><button type="button" id="plupload-image3" class="btn btn-danger plupload" data-input-id="c-image3" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image3"></button></span>
+                </div>
+                <span class="msg-box n-right"></span>
+            </div>
+            <ul class="row list-inline plupload-preview" id="p-image3"  data-template="uploadtpl"></ul>
+        </div>
+
+
+
+    </div>
+
+    <div class="form-group"> 
+        <div class="col-sm-12">
+            <label for="username" class="control-label col-xs-12 col-sm-2">SKU</label>
+            <div class="col-xs-12 col-sm-8">
+                <input type="text" class="form-control" id="data10" name="row[data10]" value="{$row.data10}" data-rule="required;" />
+            </div>
+        </div>
+    </div>
+    <div class="form-group"> 
+        <div class="col-sm-12">
+            <label for="username" class="control-label col-xs-12 col-sm-2">庫存</label>
+            <div class="col-xs-12 col-sm-2">
+                <input type="text" class="form-control" id="data11" name="row[data11]" value="{$row.data11}" data-rule="required;data11" />
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                    <a type="text" class="btn btn-success">獲取庫存</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            {:build_radios('row[slide_status]', ['0'=>'TOP 10', '1'=>'熱銷', '2'=>'精選'], $row['slide_status'])}
+        </div>
+    </div>
+
+    <div class="form-group hidden layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+    <div class="form-group tf tf-channel tf tf-list">
+        <label for="c-description" class="control-label col-xs-12 col-sm-2">簡介</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea id="c-description" data-rule="" class="form-control" name="row[description]"></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="username" class="control-label col-xs-12 col-sm-2">詳情</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea id="c-content" data-rule="" class="form-control editor" rows="15" name="row[content]" cols="50"></textarea>
+        </div>
+    </div>
+    <div class="form-group"> 
+        <div class="col-sm-12">
+            <label for="username" class="control-label col-xs-12 col-sm-2">标题</label>
+            <div class="col-xs-12 col-sm-8">
+                <input type="text" class="form-control" id="data1" name="row[data12]" value="{$row.data12}" data-rule="required;data12" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group"> 
+        <div class="col-sm-12">
+            <label for="username" class="control-label col-xs-12 col-sm-2">關鍵字</label>
+            <div class="col-xs-12 col-sm-8">
+                <input type="text" class="form-control" id="data2" name="row[data13]" value="{$row.data13}" data-rule="required;data13" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group"> 
+        <div class="col-sm-12">
+            <label for="username" class="control-label col-xs-12 col-sm-2">描述</label>
+            <div class="col-xs-12 col-sm-8">
+                <input type="text" class="form-control" id="slide_url" name="row[data14]" value="{$row.data14}" data-rule="required;data14" />
+            </div>
+        </div>
+    </div>
+
+
+</form>
+<script type="text/html" id="uploadtpl">
+    <li class="col-xs-12">
+         <a href="<%=fullurl%>" data-url="<%=url%>" target="_blank" class="thumbnail">
+            <img src="<%=fullurl%>" class="img-responsive">
+        </a>
+        <a href="javascript:;" class="btn btn-danger btn-xs btn-trash"><i class="fa fa-trash"></i></a>
+    </li>
+</script> 

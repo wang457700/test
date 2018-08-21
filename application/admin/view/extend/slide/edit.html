@@ -1,0 +1,72 @@
+<form id="edit-form" class="form-horizontal form-ajax" role="form" data-toggle="validator" method="POST" action="" style="min-height: 450px;">
+    <div class="form-group">
+        <label for="c-type" class="control-label col-xs-12 col-sm-2">类型:</label>
+        <div class="col-xs-12 col-sm-8">
+            
+            <select id="c-type" data-rule="required" class="form-control selectpicker" name="row[slide_type]">
+                <option value="index_banner" {$row['slide_type']=='index_banner'?'selected':''}>首页轮播_banner 1920px*420px</option>
+                <option value="float_left_banner" {$row['slide_type']=='float_left_banner'?'selected':''}>左边浮动_banner 255px*255px</option>
+                <option value="center_lefe_banner" {$row['slide_type']=='center_lefe_banner'?'selected':''}>首页固定_左边_banner 390px*360px</option>
+                <option value="center_right_banner" {$row['slide_type']=='center_right_banner'?'selected':''}>首页固定_右边(最多两个)_banner 790px*170px</option>
+            </select>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="username" class="control-label col-xs-12 col-sm-2">banner名稱</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="slide_name" name="row[slide_name]" value="{$row.slide_name}" data-rule="required;slide_name" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="username" class="control-label col-xs-12 col-sm-2">链接</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="slide_url" name="row[slide_url]" value="{$row.slide_url}" data-rule="required;slide_url" />
+        </div>
+    </div>
+   
+    <div class="form-group">
+        <label for="c-logintime" class="control-label col-xs-12 col-sm-2">有效期:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-logintime" data-rule="required" class="form-control datetimepicker " data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[start_time]" type="text" value="{$row.start_time}" style="width: 40%">
+            -
+            <input id="c-logintime" data-rule="required" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[end_time]" type="text" value="{$row.end_time}" style="width: 40%">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">狀態</label>
+        <div class="col-xs-12 col-sm-8">
+            {:build_radios('row[slide_status]', ['0'=>'隐藏', '1'=>'顯示'], $row['slide_status'])}
+        </div>
+    </div>
+    <div class="form-group hidden layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="username" class="control-label col-xs-12 col-sm-2">排序</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="number" class="form-control" id="listorder" name="row[listorder]" value="0" data-rule="required;listorder" />
+        </div>
+    </div>
+
+     <div class="form-group">
+        <label for="c-image" class="control-label col-xs-12 col-sm-2">{:__('Image')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="input-group">
+                <input id="c-image" class="form-control" size="50" name="row[slide_pic]" type="text" value="{$row.slide_pic}">
+                <div class="input-group-addon no-border no-padding">
+                    <span><button type="button" id="plupload-image" class="btn btn-danger plupload" data-input-id="c-image" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                    <!--<span><button type="button" id="fachoose-image" class="btn btn-primary fachoose" data-input-id="c-image" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>-->
+                </div>
+                <span class="msg-box n-right"></span>
+            </div>
+            <ul class="row list-inline plupload-preview" id="p-image"></ul>
+        </div>
+    </div>
+
+</form>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>登录</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link href="https://cdn.bootcss.com/mui/3.7.1/css/mui.min.css" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet">
+		<style>
+			.mui-content{background:#fff;}
+			 .mui-input-group:before,.mui-input-group .mui-input-row:after,.mui-input-group:after{height: 0}
+			 .mui-input-row{margin-bottom: 10px;border: 1px solid #eee;border-radius: 5px;}
+			 .mui-input-group{padding:20px;}
+			 .mui-input-row input{float: inherit !important;font-size: 14px;padding-left: 10px !important;border-left: 1px solid #eee !important;} 
+			 .facebook_img,.weixin_img{vertical-align: middle;margin-right: 10px;width: 20px;}
+			 .mui-checkbox input[type=checkbox]:checked:before, .mui-radio input[type=radio]:checked:before {color: #7ac142;}
+		</style>
+	</head>
+
+	<body style="background:#fff">
+		 
+		<div class="mui-content"> 
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label class="login_ico"></label>
+					<input type="text" placeholder="請輸入您的電郵地址">
+				</div>
+				
+				<div class="mui-input-row">
+					<label class="login_ico" style="background-position-x: -40px;"></label>
+					<input type="text" placeholder="請輸入6-12位數字字母組合密碼">
+				</div>
+				<div class="mui-checkbox mui-left" style="line-height: 40px;">
+					<div class="mui-pull-left">
+						<label style="line-height: 40px;">記住密碼</label>
+						<input name="checkbox" value="Item 2" type="checkbox">
+					</div>
+					<a class="mui-pull-right color_ro">忘記密碼？</a>
+				</div>
+				<button class="mui-btn mui-btn-success btn-success-edit">
+					登  錄
+				</button>
+			</form>
+
+			<img src="img/logo_info.jpg" style="width: 100%;margin: 20px 0;" />
+			<div style="padding: 0 20px">
+				<button type="button" class="mui-btn mui-btn-outlined btn-outlined-edit" >
+					<img src="img/facebook.png" class="facebook_img" />Login with Facebook
+				</button>
+				<button type="button" class="mui-btn mui-btn-outlined btn-outlined-edit">
+					<img src="img/wei_xing.png" class="weixin_img" />Login with Wechat
+				</button>
+			</div>
+
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script>
+			
+		</script>
+
+	</body>
+
+</html>
