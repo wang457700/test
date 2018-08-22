@@ -2,126 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2e59b9c7-5a72-4b70-bf71-d65451660939" name="Default" comment="Default">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/11.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/uploads/20180808/11111.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/uploads/20180821/f5c1c870bc46d0776e4209794d410236.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/uploads/usershare/img_1534749092.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/uploads/usershare/img_1534749112.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/uploads/usershare/img_1534749197.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/uploads/usershare/img_1534749203.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/uploads/usershare/img_1534749319.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/uploads/usershare/img_1534749331.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/uploads/usershare/img_1534749336.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/uploads/usershare/img_1534749382.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/uploads/usershare/img_1534749421.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/uploads/usershare/img_1534749448.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/uploads/usershare/img_1534749456.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/uploads/usershare/img_1534749460.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/uploads/usershare/img_1534749485.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/uploads/usershare/img_1534749556.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/uploads/usershare/img_1534749695.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/uploads/usershare/img_1534750004.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/uploads/usershare/img_1534752196.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/uploads/usershare/img_1534752236.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/uploads/usershare/img_1534752249.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/uploads/usershare/img_1534752251.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/uploads/usershare/img_1534752255.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/uploads/usershare/img_1534752441.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/uploads/usershare/img_1534842816.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/uploads/usershare/img_1534842839.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/application/admin/controller/extend/Page.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/application/admin/view/extend/page/add.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/application/admin/view/extend/page/edit.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/application/admin/view/extend/page/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/application/admin/view/product/category_add.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/js/backend/extend/page.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/js/message/message.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/js/message/message.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assets/js/message/messageIE.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/0b8ba25cab69d5b90128f23e6e2ae78c.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/11ecd77132c85eba3ef8b7a31fa98859.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/15520527eb9078e55fde778a3a85fd61.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/200e12cc9a2ae80ae914e06adce24c9a.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/2a1c9e0580393ecc1374c8bb38f5b318.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/31462df5b1f1e10d679b27e785bdb90b.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/323f74be2226ee069fde0f2c3d5a9956.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/382dd312673995619c47f333c4b2d259.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/403a3e676954447c278d91e827a09d9f.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/43aa1c8bff4bf652a796ad590cb9bb61.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/472401eaa4c7549c7b2c089f031f1aff.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/4726cd555c99d98d06282ad4089f44e0.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/4a07a436574955aae6b545ca70b1b096.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/4b0d243cbad08ac5bda0ef7c41fab483.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/4dfb35e62a25e8c386b6134b8b999ee5.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/5f2fdaa78791c5d9949978f8e78a8a52.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/603d089821d5417dc991fa12da9879e3.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/721fd2a66a088238e5963e0cb20372c9.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/733d993ba1ff66af3e36c75c1e2434a9.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/7ec0077b7f4bbe60a498839db134b7e2.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/86b002aed88ef79ccf8d1159fa746f10.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/8aa48bad5f08f480205f283cc4926252.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/8b4b6f44b81ea6711bf537a8c2b0ca33.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/8d108d7dcc98fdc747aef628026d07f6.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/8ef5291ee217c38c26d3a36333d72f91.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/ab928b4416e305a3a0b3cefce19d1d04.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/b0b0ff1371fa526787a3cb8a401b80e8.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/ba7a754b4e0a8c18cde76f45cf143cbe.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/c16935a41932e28fd5c87984907df3fe.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/c2f69acecd08258fdc340198020604c9.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/c8953929d2c436d51634a33d752be1ff.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/d821baed3f5634bd51e0b33bc79c8d19.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/e98f17749d100a523c28cf6374662270.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/ec9d7e8f044e1e26ffbf44c9517304cb.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/ee2f89000fd1489061eae8da9e818b92.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/ef34cd2a376680e102c487a0688f14ca.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/f246f7e0f792fa3a91735f8d214752e8.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/runtime/temp/f505a8be95a78fd49e1fb962d7352bef.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/template/pc/common/css/message.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/template/pc/common/header.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/template/pc/common/js/scripts.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/template/pc/common/user_left.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/template/pc/index/index - 副本.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/template/pc/user/address_list.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/template/pc/user/center.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/template/pc/user/center1.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/template/pc/user/share/add.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/template/pc/user/share/share_list.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/template/pc/user/share/share_success.html" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/template/pc/index/index - 副本.html" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/controller/Category.php" afterPath="$PROJECT_DIR$/application/admin/controller/Category.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/controller/Myadminjson.php" afterPath="$PROJECT_DIR$/application/admin/controller/Myadminjson.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/controller/Product.php" afterPath="$PROJECT_DIR$/application/admin/controller/Product.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/controller/extend/News.php" afterPath="$PROJECT_DIR$/application/admin/controller/extend/News.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/controller/general/Config.php" afterPath="$PROJECT_DIR$/application/admin/controller/general/Config.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/view/product/category.html" afterPath="$PROJECT_DIR$/application/admin/view/product/category.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/common/controller/Frontend.php" afterPath="$PROJECT_DIR$/application/common/controller/Frontend.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/common/library/Auth.php" afterPath="$PROJECT_DIR$/application/common/library/Auth.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/common/view/tpl/dispatch_jump.tpl" afterPath="$PROJECT_DIR$/application/common/view/tpl/dispatch_jump.tpl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/database.php" afterPath="$PROJECT_DIR$/application/database.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/extra/site.php" afterPath="$PROJECT_DIR$/application/extra/site.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/home/controller/Base.php" afterPath="$PROJECT_DIR$/application/home/controller/Base.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/home/controller/News.php" afterPath="$PROJECT_DIR$/application/home/controller/News.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/home/controller/User.php" afterPath="$PROJECT_DIR$/application/home/controller/User.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.php" afterPath="$PROJECT_DIR$/build.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assets/js/backend/product.js" afterPath="$PROJECT_DIR$/public/assets/js/backend/product.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/cache/cb/78ef4a9130f39208ff10858ddd8377.php" afterPath="$PROJECT_DIR$/runtime/cache/cb/78ef4a9130f39208ff10858ddd8377.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/runtime/temp/249787946ec243cd161e39906a2a182f.php" afterPath="$PROJECT_DIR$/runtime/temp/249787946ec243cd161e39906a2a182f.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/template/pc/common/control/js/zyUpload.js" afterPath="$PROJECT_DIR$/template/pc/common/control/js/zyUpload.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/template/pc/common/css/style.css" afterPath="$PROJECT_DIR$/template/pc/common/css/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/template/pc/common/script.html" afterPath="$PROJECT_DIR$/template/pc/common/script.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/template/pc/index/index.html" afterPath="$PROJECT_DIR$/template/pc/index/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/template/pc/layout/public_head.html" afterPath="$PROJECT_DIR$/template/pc/layout/public_head.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/template/pc/news/article.html" afterPath="$PROJECT_DIR$/template/pc/news/article.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/template/pc/news/index.html" afterPath="$PROJECT_DIR$/template/pc/news/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/template/pc/user/login.html" afterPath="$PROJECT_DIR$/template/pc/user/login.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/template/pc/user/register.html" afterPath="$PROJECT_DIR$/template/pc/user/register.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/template/pc/user/user_edit.html" afterPath="$PROJECT_DIR$/template/pc/user/user_edit.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/template/pc/user/user_email_activation.html" afterPath="$PROJECT_DIR$/template/pc/user/user_email_activation.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/template/pc/user/user_my_order.html" afterPath="$PROJECT_DIR$/template/pc/user/user_my_order.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/template/pc/user/user_order_detail.html" afterPath="$PROJECT_DIR$/template/pc/user/user_order_detail.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/thinkphp/tpl/think_exception.tpl" afterPath="$PROJECT_DIR$/thinkphp/tpl/think_exception.tpl" />
     </list>
     <list id="7815eabc-1308-4015-8b6b-688dd00df361" name="Failed commit: Default" comment="xiaogang" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -148,27 +31,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="User.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/home/controller/User.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-              <folding>
-                <element signature="e#39#74#0#PHP" expanded="true" />
-                <marker date="1534844156028" expanded="true" signature="10086:10705" ph="..." />
-                <marker date="1534844156028" expanded="true" signature="10777:10889" ph="..." />
-                <marker date="1534844156028" expanded="true" signature="10945:11154" ph="..." />
-                <marker date="1534844156028" expanded="true" signature="11209:11417" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/template/pc/index/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="10013">
-              <caret line="527" column="7" lean-forward="false" selection-start-line="527" selection-start-column="7" selection-end-line="527" selection-end-column="7" />
+            <state relative-caret-position="532">
+              <caret line="28" column="8" lean-forward="true" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
               <folding>
                 <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -198,86 +65,6 @@
                 <element signature="n#style#0;n#p#0;n#div#4;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#4;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/build.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="zh-cn.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/admin/lang/zh-cn.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="532">
-              <caret line="28" column="68" lean-forward="false" selection-start-line="28" selection-start-column="68" selection-end-line="28" selection-end-column="68" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name=".htaccess" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/.htaccess">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Register.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/home/controller/Register.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Base.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/home/controller/Base.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Index.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/home/controller/Index.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Share.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/home/controller/Share.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="513">
-              <caret line="28" column="17" lean-forward="false" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="helper.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/thinkphp/helper.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="8550">
-              <caret line="473" column="13" lean-forward="false" selection-start-line="473" selection-start-column="13" selection-end-line="473" selection-end-column="13" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -323,8 +110,8 @@
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
-        <option value="572580083@qq.com" />
         <option value="linjiahong" />
+        <option value="572580083@qq.com" />
         <option value="sss" />
         <option value="11" />
         <option value="ggg" />
@@ -423,6 +210,60 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="template" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pc" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="template" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pc" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="index" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="template" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -535,7 +376,7 @@
       <workItem from="1534912884477" duration="29000" />
       <workItem from="1534920832877" duration="114000" />
       <workItem from="1534923018835" duration="1117000" />
-      <workItem from="1534925412018" duration="158000" />
+      <workItem from="1534925412018" duration="1016000" />
     </task>
     <task id="LOCAL-00001" summary="xiaogang">
       <created>1534831630052</created>
@@ -565,11 +406,18 @@
       <option name="project" value="LOCAL" />
       <updated>1534911654163</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Default">
+      <created>1534925611381</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1534925611381</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33728000" />
+    <option name="totallyTimeSpent" value="34586000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -582,9 +430,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.282516" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.282516" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5063966" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -935,22 +783,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/application/home/controller/User.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
+        <state relative-caret-position="361">
           <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
           <folding>
             <element signature="e#39#74#0#PHP" expanded="true" />
-            <marker date="1534844156028" expanded="true" signature="10086:10705" ph="..." />
-            <marker date="1534844156028" expanded="true" signature="10777:10889" ph="..." />
-            <marker date="1534844156028" expanded="true" signature="10945:11154" ph="..." />
-            <marker date="1534844156028" expanded="true" signature="11209:11417" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/template/pc/index/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10013">
-          <caret line="527" column="7" lean-forward="false" selection-start-line="527" selection-start-column="7" selection-end-line="527" selection-end-column="7" />
+        <state relative-caret-position="532">
+          <caret line="28" column="8" lean-forward="true" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
           <folding>
             <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
