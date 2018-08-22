@@ -1,0 +1,170 @@
+{include file="layout/public_head" /}
+    <body style="background: url(__TMPL_PUBLIC__/img/index_bg.jpg) repeat-y;"> 
+<!--头部 str-->
+   {include file="common/header"/} 
+<!--头部 end-->
+<!-- 导航 str-->  
+  {include file="common/nav"/} 
+<!--导航 end-->
+
+    <div class="container bgcolor_white">
+        <div class="alzx-crumbs alzx-crumbs-f1"> 
+          <div class="alzx-con" style="border-bottom: 1px solid #ddd;margin-bottom: 10px;"> 
+          <a class="crumbs-01" href="#">主頁</a> 
+              <em>&gt;</em> 
+              <span class="crumbs-02">用戶中心</span> 
+          </div> 
+        
+        </div>
+        <div class="address_list">
+              
+            <div class="row">
+                <div class="col-md-2 left-list"> 
+                   {include file="common/user_left" /}
+                </div>
+                <div class="col-md-10 right-list">
+                    <div class="pr_name">收貨地址</div> 
+                    <div class="row" style="margin-right: 20px;padding: 0 20px;margin-bottom: 10px;">
+                      <h5 class="color_ro bold">新增收貨地址</h5> 
+                     
+                      <form action="{$row['id']?url('user/address_edit'):url('user/address_add')}" class="form-horizontal col-sm-9" method="post" enctype="multipart/form-data" onsubmit="return addressform()" id="address-form">
+
+                        {present name="row['id']"}
+                            <input name="id" type="hidden" value="{$row['id']}" />
+                        {/present}
+                        <div class="form-group">
+                          <label for="inputEmail3" class="col-sm-2 control-label"><span class="color_ro">＊</span>所在地區</label>
+                          <div class="col-sm-3">
+                            <select class="form-control select_e" name="country">
+                              <option value="香港">香港</option>
+                              <option value="香港香港">香港</option>
+                              <option value="香港">香港</option>
+                            </select>
+                          </div>
+                          <div class="col-sm-3">
+                            <select class="form-control select_e" name="province">
+                              <option value="九龍">九龍</option>
+                              <option value="九龍九龍">九龍</option>
+                              <option value="九龍">九龍</option>
+                            </select>
+                          </div>
+                          <div class="col-sm-3">
+                            <select class="form-control select_e" name="city">
+                              <option value="九龍">藍田</option>
+                              <option value="九龍">藍田</option>
+                              <option value="九龍">藍田</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="inputEmail3" class="col-sm-2 control-label"><span class="color_ro">*</span>詳細地址</label>
+                          <div class="col-sm-9">
+                            <textarea class="form-control textarea_e" rows="3" name="address" required oninvalid="setCustomValidity('请输入詳細地址！')" oninput="setCustomValidity('')">{$row.address}</textarea>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="inputEmail3" class="col-sm-2 control-label"><span class="color_ro">*</span>收件人姓名</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control input_e" id="name" placeholder="" name="name" value="{$row.name}" required oninvalid="setCustomValidity('请输入收件人姓名！')" oninput="setCustomValidity('')">
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label for="inputEmail3" class="col-sm-2 control-label"><span class="color_ro">*</span>手機號碼</label>
+                          <div class="col-sm-3">
+                            <select class="form-control select_e" name="phone_type">
+                              <option value="中國香港+852">中國香港+852</option>
+                              <option value="香港">香港</option>
+                              <option value="香港">香港</option>
+                            </select>
+                          </div>
+                          <div class="col-sm-6" >
+                            <input type="text" class="form-control input_e" id="phone" placeholder="" value="{$row.phone}"  name="phone" required oninvalid="setCustomValidity('请输入手機號碼！')" oninput="setCustomValidity('') "onkeyup="value=value.replace(/[^\d]/g,'') " ng-pattern="/[^a-zA-Z]/" maxlength="11">
+                          </div>
+                          
+                        </div>
+
+                        <div class="form-group">
+                          <label for="inputEmail3" class="col-sm-2 control-label"></label>
+                          <div class="col-sm-8">
+                            <input type="hidden" style="width: 20%;" name="default" value="0">
+                            <label style="width: 40%;"><input type="checkbox" style="width: 20%;" name="default" {$row['default']?'checked':''}>設置為默認收貨地址</label>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-2"></div> 
+                            <div class="col-md-3" style="">
+                              <button type="submit" class="btn btn-success btn-success-edit">保存</button>
+                            </div> 
+                        </div>
+        
+                      </form>
+                    </div>
+                    
+                    <div class="col-md-12 right-list">       
+            						<div class="color_ro" style="padding: 50px 0 10px 0;">已保存了3條地址，還能新建7條地址</div>
+            						<div class="row item-single">
+            							<div class="col-md-1" style="">收貨人</div>
+            							<div class="col-md-2" style="">所在地區</div>
+            							<div class="col-md-4" style="">詳細地址</div>
+            							<div class="col-md-2" style="">電話</div>
+            							<div class="col-md-1" style="">操作</div>
+            						</div>
+
+                      {foreach name="address_list" item="vo"}
+            						<div class="row cart-item-list">
+            						  <div class="col-md-1 nowrap">
+            							 {$vo.name}
+            						  </div>
+            						  <div class="col-md-2 t2" style="">
+            								{$vo.country} {$vo.province} {$vo.city}
+            						  </div>
+            						  <div class="col-md-4 " style="">{$vo.address}</div>
+            						  <div class="col-md-2" style="">  
+            							   {$vo.phone}
+            						  </div>
+            						  <div class="col-md-2" style="width: 11.66666667%;">  
+            							   <a href="{:url('user/address_list',array('id'=>$vo['id']))}">修改</a> |
+            							   <a href="{:url('user/address_delete',array('id'=>$vo['id']))}" class="js-ajax-delete" onclick="return false;">刪除</a>
+            						  </div>
+            						  <div class="col-md-1" style="">
+                          {eq name="vo['default']" value="1"}
+            							   <button type="button" class="btn btn-warning">{$vo.default_text}</button>
+                          {/eq}
+            						  </div>
+            						</div>
+                      {/foreach}
+            					</div>
+ 
+                </div>
+            </div> 
+
+        </div>
+    </div> 
+	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+  <script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
+  <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
+    <script type="text/javascript">
+      function addressform(){
+        // jquery 表单提交
+        $("#address-form").ajaxSubmit(function(data) {
+          console.log(data);
+          if(data.code == 0){
+            $.message({message:data.msg,type:'warning',time:'3000'});
+          }else{ 
+            $.message(data.msg);
+            setTimeout(function () {
+                      window.location = data.url
+                  },1000);
+          }
+        });
+
+        return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
+      }
+    </script>
+     
+  </body>
+
+</html>

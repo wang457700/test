@@ -44,10 +44,7 @@
             <a href="{$url}" class="btn btn-primary">{:__('Jump now')}</a>
         {/if}
     </p>
-</div>
-<div class="copyright">
-    <p>Powered by <a href="https://www.fastadmin.net/?ref=jump">FastAdmin</a></p>
-</div>
+</div> 
 {if $url}
     <script type="text/javascript">
         (function () {

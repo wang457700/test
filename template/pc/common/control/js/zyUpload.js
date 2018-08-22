@@ -200,12 +200,13 @@
 					html += '	<a style="height:'+para.itemHeight+';width:'+para.itemWidth+';" href="#" class="imgBox">';
 					html += '		<div class="uploadImg" style="width:'+imgWidth+'px">';				
 					html += '			<img id="uploadImage_'+file.index+'" class="upload_image" src="' + e.target.result + '" style="width:expression(this.width > '+imgWidth+' ? '+imgWidth+'px : this.width)" />';                                                                 
-					html += '		</div>';
+					html += '		</div><input name="pic" type="hidden" value="' + e.target.result + '" id="pic">';
 					html += '	</a>';
 					html += '	<p id="uploadProgress_'+file.index+'" class="file_progress"></p>';
 					html += '	<p id="uploadFailure_'+file.index+'" class="file_failure">上传失败，请重试</p>';
 					html += '	<p id="uploadSuccess_'+file.index+'" class="file_success"></p>';
 					html += '</div>';
+					$('#pic').val('' + e.target.result + '');
                 	
 				}else{
 					html += '<div id="uploadList_'+ file.index +'" class="upload_append_list">';
@@ -218,12 +219,12 @@
 					html += '	<a style="height:'+para.itemHeight+';width:'+para.itemWidth+';" href="#" class="imgBox">';
 					html += '		<div class="uploadImg" style="width:'+imgWidth+'px">';				
 					html += '			<img id="uploadImage_'+file.index+'" class="upload_image" src="' + fileImgSrc + '" style="width:expression(this.width > '+imgWidth+' ? '+imgWidth+'px : this.width)" />';                                                                 
-					html += '		</div>';
+					html += '		</div><input name="pic" type="hidden" value="' + fileImgSrc + '" id="pic">';
 					html += '	</a>';
 					html += '	<p id="uploadProgress_'+file.index+'" class="file_progress"></p>';
 					html += '	<p id="uploadFailure_'+file.index+'" class="file_failure">上传失败，请重试</p>';
 					html += '	<p id="uploadSuccess_'+file.index+'" class="file_success"></p>';
-					html += '</div>';
+					html += '</div>'; 
 				}
 				
 				return html;

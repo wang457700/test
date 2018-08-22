@@ -72,7 +72,7 @@ class Myadminjson extends Backend
         );
         $result = array("total" => $total, "rows" => $list);
 
-            return json($result);
+        return json($result);
 
     }
 

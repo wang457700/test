@@ -218,6 +218,8 @@ class Config extends Backend
         \think\Config::set('site', array_merge(\think\Config::get('site'), $row));
         $receiver = $this->request->request("receiver");
         $email = new Email;
+
+        dump($email);
         $result = $email
             ->to($receiver)
             ->subject(__("This is a test mail"))

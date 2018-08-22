@@ -1,0 +1,16 @@
+
+ <div class="user_data">
+    <h4><img src="__TMPL_PUBLIC__/img/left_menu_hd.png" style="margin-right: 5px;"/>會員信息</h4>
+    <p>
+        賬號:  {$user.username}<br>
+        手機:  {$user.mobile|default='未綁定'}<br>
+        郵箱:{$user.email}
+    </p>
+
+    <a href="" class="edit">修改信息</a>
+</div>
+<div class="left_menu">
+  <a href="{:url('user/my_order')}"><img src="__TMPL_PUBLIC__/img/left_menu_ico1.png" />我的訂單</a>
+  <a href="{:url('user/share_list')}"><img src="__TMPL_PUBLIC__/img/left_menu_ico2.png" />我的共享</a>
+  <a href="{:url('user/address_list')}"><img src="__TMPL_PUBLIC__/img/left_menu_ico3.png" />地址管理</a>
+</div>

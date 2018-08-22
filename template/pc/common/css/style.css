@@ -1,4 +1,4 @@
-
+@import "message.css";
 a {color:#000000;}
 a:hover {text-decoration:none}
 ul {margin:0;list-style:none;}
@@ -47,7 +47,7 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 /*border*/
 .border_1{border: 1px solid #e5e5e5;border-top: 0;}
 /**************** commons ***************/
-
+.nowrap{overflow: hidden; text-overflow:ellipsis;white-space:nowrap;}
 .no_after:after{height:0;}
 .no_border{border:0 !important}
 .btn-warning {color: #fff;background-color: #ffa800;border-color: #ffa800;}

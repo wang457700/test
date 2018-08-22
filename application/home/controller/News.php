@@ -22,9 +22,14 @@ class News extends Frontend
 
     public function index()
     {   
-
-        $list = $this->article_model->select();
+        $where = array(
+            'post_type'=>2, 
+        );
+        $list = $this->article_model
+        ->where($where)
+        ->select();
         $this->view->assign("list", $list);
+        $this->assign('title','社區服務資訊');
         return $this->view->fetch();
     }
 
@@ -40,6 +45,8 @@ class News extends Frontend
         $prevArticle = $this->publishedPrevArticle($articleId);
         $nextArticle = $this->publishedNextArticle($articleId);
         $this->view->assign("data",$data);
+
+        $this->assign('title',$data['post_title']);
         $this->view->assign("prev",$prevArticle);
         $this->view->assign("next",$nextArticle);
         return $this->view->fetch();
@@ -76,6 +83,7 @@ class News extends Frontend
 
 
         return $article;
+
     }
     
 

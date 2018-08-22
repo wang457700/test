@@ -19,7 +19,7 @@ return array (
     'page' => 'Page',
     'article' => 'Article',
     'test' => 'Test',
-    'jifen' => '积分',
+    'product' => '产品',
   ),
   'configgroup' => 
   array (

@@ -27,6 +27,8 @@ class News extends Backend
         if ($this->request->isAjax()) {
             list($where, $sort, $order, $offset, $limit) = $this->buildparams(NULL);
 
+
+            $where = array('post_type'=>2);
             $total = Db::name('Article')
                 ->where($where)
                 ->order($sort, $order)
@@ -34,6 +36,7 @@ class News extends Backend
 
             $list = Db::name('Article')
             ->limit($offset, $limit)
+            ->where($where)
             ->select(); 
             
 
@@ -64,6 +67,7 @@ class News extends Backend
         if ($this->request->isPost())
         {
             $params = $this->request->post("row/a");
+            $params['post_type'] = 2;
            
 
             $info = Db::name('Article')->where('id',$ids)->update($params);
@@ -87,6 +91,7 @@ class News extends Backend
         if ($this->request->isPost())
         {
             $params = $this->request->post("row/a");
+            $params['post_type'] = 2;
            /* if ($params){
                 $params['start_time'] = strtotime($params['start_time']);
                 $params['end_time'] = strtotime($params['end_time']);

@@ -102,9 +102,10 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             // 初始化表格参数配置
             Table.api.init({
                 extend: {
-                    index_url: 'Myadminjson/category_index',
-                    add_url: 'category/add',
-                    edit_url: 'category/edit',
+                    index_url: 'product/category',
+                    sub_url: 'product/category_sub',
+                    add_url: 'product/category_add',
+                    edit_url: '',
                     del_url: 'category/del',
                     multi_url: 'category/multi',
                     dragsort_url: '',
@@ -123,10 +124,19 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 commonSearch: false,
                 columns: [
                     [
-                        {field: 'data1', title:'',addclass:'aaaaaa',data:'1', formatter: function (value, row, index) {
+                        {field: 'name', title:'',addclass:'aaaaaa',data:'1',align: 'left',formatter: function (value, row, index){
                                 return '<span data-id="' + row.id + '">' + value + '</span>';
                             }
-                       },
+                         },
+                         {
+                            field: 'operate',
+                            width: "120px",
+                            title: __('Operate'),
+                            table: table,
+                            events: Table.api.events.operate,
+                           
+                            formatter: Table.api.formatter.operate
+                        },
                     ]
                 ],
             };
@@ -160,25 +170,69 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 $("input[name='row[password]']").val('');
                 var url = Backend.api.cdnurl($("#c-avatar").val());
                 top.window.$(".user-panel .image img,.user-menu > a > img,.user-header > img").prop("src", url);
+
+
+
+                var cid = $('#sub_pid').val();
+                $('#form-group').html('');  
+                $.ajax({
+                      type: "GET",
+                      url:  $.fn.bootstrapTable.defaults.extend.sub_url,
+                      data: {cid:cid},
+                      success: function(data) {
+                           if((data.rows).length !==0){
+                            $.each(data.rows,function(index, value) {
+                                $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12"><input type="text" class="form-control" id="slide_name" name="row[data]['+value.id+']" value="'+value.name+'" data-rule=""/>');
+                            });
+                            }else{ 
+                                $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12">没有找到匹配的记录</div></div>'); 
+                            }
+                      }
+                });
+
                 return true;
             });
 
             //ajax 从获取输出三级分类
             $(document).on("click", "tr", function (){
-                var id = $(this).find("span").data('id'); 
-                $('#form-group').html('');
-                for (var i=0;i<Math.floor(Math.random()*100);i++){ 
+                var cid = $(this).find("span").data('id'); 
+                $(this).addClass("on").siblings().removeClass("on");
 
-                    $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-8"><input type="text" class="form-control" id="slide_name" name="row[data1]" value="'+$(this).find("span").text()+i+'" data-rule="required;data1"/>');  
-                }
+                 //记录二级分类的id
+                $('#sub_pid').val(cid);
+                $('#form-group').html('');  
+                $.ajax({
+                      type: "GET",
+                      url:  $.fn.bootstrapTable.defaults.extend.sub_url,
+                      data: {cid:cid},
+                      success: function(data) {
+                           if((data.rows).length !==0){
+                            $.each(data.rows,function(index, value) {
+                                $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12"><input type="text" class="form-control" id="slide_name" name="row[data]['+value.id+']" value="'+value.name+'" data-rule=""/>');
+                            });
+                            }else{ 
+                                $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12">没有找到匹配的记录</div></div>'); 
+                            }
+                      }
+                });
             });
 
+            $(document).on("click", "#add_sub", function (){
+
+                var sub_pid = $('#sub_pid').val();
+                if(sub_pid !==''){
+                    $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12"><input type="text" class="form-control" id="slide_name" name="row[new][]" value="" data-rule=""/></div></div>'); 
+                }else{
+
+                    alert('请选择二级分类!');
+                }
+            });
+            $('.columns,.search').hide();
+            $('#table thead').hide(); 
         },
 
         add: function () {
             Controller.api.bindevent();
-
-            
             $(function(){
                 $('.danxuan').eq(0).addClass("on");
                  $('.danxuan').each(function(){
@@ -188,6 +242,10 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                  });
             });
 
+        },
+
+        category_add: function () {
+            Controller.api.bindevent();
         },
         edit: function () {
 

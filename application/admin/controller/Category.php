@@ -21,6 +21,7 @@ class Category extends Backend
 
     public function _initialize()
     {
+        
         parent::_initialize();
         $this->request->filter(['strip_tags']);
         $this->model = model('app\common\model\Category');
@@ -33,6 +34,7 @@ class Category extends Backend
         {
             $categorydata[$v['id']] = $v;
         }
+
         $this->view->assign("flagList", $this->model->getFlagList());
         $this->view->assign("typeList", CategoryModel::getTypeList());
         $this->view->assign("parentList", $categorydata);

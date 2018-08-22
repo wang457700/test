@@ -6,6 +6,7 @@ use app\common\library\Auth;
 use think\Config;
 use think\Controller;
 use think\Hook;
+use think\Session;
 use think\Lang;
 
 /**
@@ -56,27 +57,25 @@ class Frontend extends Controller
         // token
         $token = $this->request->server('HTTP_TOKEN', $this->request->request('token', \think\Cookie::get('token')));
 
+
         $path = str_replace('.', '/', $controllername) . '/' . $actionname;
+
+
         // 设置当前请求的URI
         $this->auth->setRequestUri($path);
+
+
         // 检测是否需要验证登录
         if (!$this->auth->match($this->noNeedLogin)) {
             //初始化
             $this->auth->init($token);
             //检测是否登录
-            if (!$this->auth->isLogin()) {
+            if (!Session::get('user_id')) {
                 $this->error(__('Please login first'), 'user/login');
-            }
-            // 判断是否需要验证权限
-            if (!$this->auth->match($this->noNeedRight)) {
-                // 判断控制器和方法判断是否有对应权限
-                if (!$this->auth->check($path)) {
-                    $this->error(__('You have no permission'));
-                }
             }
         } else {
             // 如果有传递token才验证是否登录状态
-            if ($token) {
+            if ($token){
                 $this->auth->init($token);
             }
         }
@@ -134,5 +133,5 @@ class Frontend extends Controller
     {
         $this->view->config = array_merge($this->view->config ? $this->view->config : [], is_array($name) ? $name : [$name => $value]);
     }
-
+ 
 }

@@ -329,7 +329,6 @@ class Auth
                     return FALSE;
                 }
             }
-
             $ip = request()->ip();
             $time = time();
 
