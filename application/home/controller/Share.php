@@ -3,7 +3,7 @@
 namespace app\home\controller;
 
 use app\common\controller\Frontend;
-use app\common\library\Token;
+use think\Db;
 
 
 class Share extends Frontend
@@ -16,17 +16,22 @@ class Share extends Frontend
     public function _initialize()
     {
         parent::_initialize();
+        $this->user_share_model = Db::name('user_share');
     }
 
     public function index()
     {
-        return $this->view->fetch();
-    }
 
-    public function news()
-    {
-        $newslist = [];
-        return jsonp(['newslist' => $newslist, 'new' => count($newslist), 'url' => 'https://www.fastadmin.net?ref=news']);
+        $where = array(
+            'status'=>1,
+        );
+        $list = $this->user_share_model
+            ->where($where)
+            ->select();
+        dump($list);
+        $this->view->assign("list", $list);
+        $this->assign('title','共享平台');
+        return $this->view->fetch();
     }
 
 }
