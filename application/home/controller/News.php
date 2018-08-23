@@ -35,8 +35,7 @@ class News extends Frontend
 
 
     public function article()
-    {   
-
+    {
         $articleId = $this->request->param('id', 0, 'intval');
         $data = $this->article_model
         ->where('id',$articleId)
@@ -56,7 +55,6 @@ class News extends Frontend
   //上一篇文章
     public function publishedPrevArticle($postId, $categoryId = 0)
     {
-        
              $where = array(
                 'id' => array('lt',$postId)
             );
@@ -71,7 +69,6 @@ class News extends Frontend
   //下一篇文章
     public function publishedNextArticle($postId, $categoryId = 0)
     {
-        
              $where = array(
                 'id' => array('gt',$postId)
             );

@@ -133,5 +133,13 @@ class Frontend extends Controller
     {
         $this->view->config = array_merge($this->view->config ? $this->view->config : [], is_array($name) ? $name : [$name => $value]);
     }
+
+
+    protected function is_login(){
+
+        $this->result(1);
+
+    }
+
  
 }

@@ -299,8 +299,9 @@ if (!function_exists('var_export_short')) {
         }
     }
 
-} 
+}
 
+/* home 公共模块 */
 
 /**
  * 转化数据库保存图片的文件路径，为可以访问的url
@@ -312,3 +313,6 @@ function fa_get_image_url($file)
     $url=substr($PHP_SELF,0,strrpos($PHP_SELF,'/')+1).$file;
     return $url;
 }
+
+
+

@@ -11,6 +11,7 @@ use think\Hook;
 use think\Session;
 use think\Validate;
 use app\common\library\Email;
+use app\home\common\common;
 
 /**
  * 会员中心
@@ -53,6 +54,7 @@ class User extends Frontend
 	    	}
 
 	    	Session::set("user_id", $user['id']);
+	    	Session::set("user", $user);
 	    	$this->success('登录成功！',url('user/center'));
 	    	//dump($user);
 		}
@@ -62,6 +64,11 @@ class User extends Frontend
         return $this->view->fetch();
     }
 
+
+    public function logout(){
+        Session::set("user_id",'');
+        $this->success('退出成功！',url('user/login'));
+    }
 
 	/*
 		注册
@@ -144,10 +151,24 @@ class User extends Frontend
 
     public function user_edit(){
 
+        if ($this->request->isPost()){
+            $data = input('post.');
 
+            $user_id = Session::get('user_id');
+           $info = Db::name('user')->where(array('id'=>$user_id))->update($data);
+            if($info!==false){
+                $this->success('修改成功！');
+            }else{
+                $this->error('修改失败！'.json_encode($data,true));
+            }
+        }
+
+        $user_id = Session::get('user_id');
+        $info = Db::name('user')->where('id', $user_id)->find();
+        $this->assign('info', $info);
+        $this->assign('title', '修改资料');
         return $this->view->fetch();
-
-    } 
+    }
 
     /*
      * @return string
@@ -160,16 +181,7 @@ class User extends Frontend
         return $this->view->fetch();
     }
 
-    /***
-     * @return string
-     * 用户中心我的订单！
-     */
 
-    public function user_my_order(){ 
-
- 		$this->assign('title','用户中心');
-        return $this->view->fetch();
-    }
 
     /**
      * @return string
@@ -430,7 +442,6 @@ class User extends Frontend
     }
 
     public function address_delete(){
- 
     	if ($this->request->isGet()){
 	 		$id = $this->request->param('id', 0, 'intval');
 	 		if(empty($id)){
@@ -445,7 +456,14 @@ class User extends Frontend
 				$this->error('删除失败');
 			}
     	}
+    }
 
+    /******************************       my_order 我的订单  ************************************/
+
+    public function my_order(){
+
+        $this->assign('title','我的订单');
+        return $this->view->fetch();
     }
 
 

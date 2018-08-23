@@ -21,13 +21,12 @@ class Share extends Frontend
 
     public function index()
     {
-
         $where = array(
             'status'=>1,
         );
         $list = $this->user_share_model
             ->where($where)
-            ->select();
+            ->paginate(10);
 
         $this->view->assign("list", $list);
         $this->assign('title','共享平台');

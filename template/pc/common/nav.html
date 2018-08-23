@@ -1,240 +1,136 @@
+<?php
+      $category = model('category')->where('pid',14)->select();
+?>
 <div class="nav_menu">
       <div class="nav">
         <div class="list" id="navlist">
           <ul id="navfouce">
             <li class="active">
-              <a href="/">主頁</a></li>
+              <a href="{:url('index/index')}">主頁</a></li>
+
+            {foreach name="category" item="vo"}
+              <li><a href="{:url('product/index',array('id',$vo['id']))}" class="true">{$vo.name}</a></li>
+            {/foreach}
             <li>
-              <a href="/">康復產品</a></li>
+              <a href="{:url('share/index')}">共享平台</a></li>
             <li>
-              <a href="/">健康及有機產品</a></li>
+              <a href="{:url('news/index')}">最新消息</a></li>
             <li>
-              <a href="/">科技產品</a></li>
+              <a href="{:url('index/page',array('id'=>108))}">關於我們</a></li>
             <li>
-              <a href="/">節日促銷</a></li>
-            <li>
-              <a href="/">共享平台</a></li>
-            <li>
-              <a href="/">最新消息</a></li>
-            <li>
-              <a href="/">家居家器</a></li>
-            <li>
-              <a href="/">關於我們</a></li>
-            <li>
-              <a href="/" style="background:none">會員優惠</a></li>
+              <a href="{:url('index/page',array('id'=>110))}" style="background-image:none">會員優惠</a></li>
           </ul>
         </div>
         <div class="box" id="navbox" style="height:0px;opacity:0;overflow:hidden;">
-          <div class="cont" style="display:none;">
-            <ul class="sublist clearfix">
-              <li>
-                <h3 class="mcate-item-hd">
-                  <span>服饰内衣</span></h3>
-                <p class="mcate-item-bd">
-                  <a href="">女装</a>
-                  <a href="">男装</a>
-                  <a href="">内衣</a>
-                  <a href="">家居服</a>
-                  <a href="">配件</a>
-                  <a href="">羽绒</a>
-                  <a href="">呢大衣</a>
-                  <a href="">毛衣</a></p>
-              </li>
-              
+          <div class="" style="display:none;">
 
-            </ul>
           </div>
-          <div class="cont" style="display:none;">
-            <ul class="sublist clearfix">
-              <li>
-                <h3 class="mcate-item-hd">
-                  <span>服饰内衣</span></h3>
-                <p class="mcate-item-bd">
-                  <a href="">女装</a>
-                  <a href="">男装</a>
-                  <a href="">内衣</a>
-                  <a href="">家居服</a>
-                  <a href="">配件</a>
-                  <a href="">羽绒</a>
-                  <a href="">呢大衣</a>
-                  <a href="">毛衣</a></p>
-              </li>
-              <li>
-                <h3 class="mcate-item-hd">
-                  <span>鞋 箱包</span></h3>
-                <p class="mcate-item-bd">
-                  <a href="">女鞋</a>
-                  <a href="">男鞋</a>
-                  <a href="">箱包</a>
-                  <a href="">女包</a>
-                  <a href="">男包</a>
-                  <a href="">旅行箱</a>
-                  <a href="">钱包</a></p>
-              </li>
-              
-            </ul>
+          {foreach name="category" item="vo"}
+            <div class="cont" style="display:none;">
+              <ul class="sublist clearfix">
+                <?php $category_2 = model('category')->where('pid',$vo['id'])->select(); ?>
+                {foreach name="$category_2" item="vov"}
+                  <li>
+                    <h3 class="mcate-item-hd">
+                      <span>{$vov.name}</span></h3>
+                    <p class="mcate-item-bd">
+                      <?php $category_3 = model('category')->where('pid',$vov['id'])->select(); ?>
+                      {foreach name="$category_3" item="vovv"}
+                        <a href="">{$vovv.name}</a>
+                      {/foreach}
+                    </p>
+                  </li>
+                {/foreach}
+              </ul>
+            </div>
+          {/foreach}
+          <div class="" style="display:none;">4
           </div>
-          <div class="cont" style="display:none;">
-            <ul class="sublist clearfix">
-              <li>
-                <h3 class="mcate-item-hd">
-                  <span>服饰内衣</span></h3>
-                <p class="mcate-item-bd">
-                  <a href="">女装</a>
-                  <a href="">男装</a>
-                  <a href="">内衣</a>
-                  <a href="">家居服</a>
-                  <a href="">配件</a>
-                  <a href="">羽绒</a>
-                  <a href="">呢大衣</a>
-                  <a href="">毛衣</a></p>
-              </li>
-              <li>
-                <h3 class="mcate-item-hd">
-                  <span>鞋 箱包</span></h3>
-                <p class="mcate-item-bd">
-                  <a href="">女鞋</a>
-                  <a href="">男鞋</a>
-                  <a href="">箱包</a>
-                  <a href="">女包</a>
-                  <a href="">男包</a>
-                  <a href="">旅行箱</a>
-                  <a href="">钱包</a></p>
-              </li>
-            </ul>
+          <div class="" style="display:none;">5</div>
+          <div class="" style="display:none;">6
           </div>
-          <div class="cont" style="display:none;">3
-            <br />3</div>
-          <div class="cont" style="display:none;">4
-            <br />3
-            <br />4</div>
-          <div class="cont" style="display:none;">5</div>
-          <div class="cont" style="display:none;">6
-            <br />3
-            <br />3</div>
-          <div class="cont" style="display:none;">7
-            <br />3
-            <br />3
-            <br />3</div></div>
+          <div class="" style="display:none;">7
+          </div>
+        </div>
       </div>
     </div>
-	 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script> 
-    <script type="text/javascript">
+	 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+    var urlstr = location.href;
+    //alert(urlstr);
+    var urlstatus=false;
+    $("#navfouce a").each(function () {
+        if ((urlstr + '/').indexOf($(this).attr('href')) > -1&&$(this).attr('href')!='') {
+            $(this).addClass('cur'); urlstatus = true;
+        } else {
+            $(this).removeClass('cur');
+        }
+    });
+    if (!urlstatus) {$("#menu a").eq(0).addClass('cur'); }
+</script>
+<script type="text/javascript">
       (function() {
-
         var time = null;
-
         var list = $("#navlist");
-
         var box = $("#navbox");
-
-        var lista = list.find("a");
-
+        var lista = list.find("a.true");
         for (var i = 0,
         j = lista.length; i < j; i++) {
-
           if (lista[i].className == "now") {
-
             var olda = i;
-
           }
-
         }
-
         var box_show = function(hei) {
-
           box.stop().animate({
-
             height: hei,
-
             opacity: 1
-
           },
           400);
-
         }
-
         var box_hide = function() {
-
           box.stop().animate({
-
             height: 0,
-
             opacity: 0
-
           },
           400);
-
         }
-
         lista.hover(function() {
-
           lista.removeClass("now");
-
           $(this).addClass("now");
-
           clearTimeout(time);
-
-          var index = list.find("a").index($(this));
-
+          var index = list.find("a.true").index($(this));
           box.find(".cont").hide().eq(index).show();
-
           var _height = box.find(".cont").eq(index).height() + 54;
-
           box_show(_height)
-
         },
         function() {
-
           time = setTimeout(function() {
-
             box.find(".cont").hide();
-
             box_hide();
-
           },
           50);
-
           lista.removeClass("now");
-
           lista.eq(olda).addClass("now");
-
         });
 
         box.find(".cont").hover(function() {
-
           var _index = box.find(".cont").index($(this));
-
           lista.removeClass("now");
-
           lista.eq(_index).addClass("now");
-
           clearTimeout(time);
-
           $(this).show();
-
           var _height = $(this).height() + 54;
-
           box_show(_height);
-
         },
         function() {
-
           time = setTimeout(function() {
-
             $(this).hide();
-
             box_hide();
-
           },
           50);
-
           lista.removeClass("now");
-
           lista.eq(olda).addClass("now");
-
         });
-
       })(); 
 
     </script>

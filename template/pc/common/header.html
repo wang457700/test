@@ -1,20 +1,24 @@
  <div class="header">
    <div class="container" style="padding: 5px 0;"> 
-    <div class="h_left">
+        <div class="h_left">
 
-
-      <a class="color_gr" --blue>Andy</a>
-      <a>退出</a>
-
-
-    </div>
-    <div class="h_right">
-      <a style="background: url(__TMPL_PUBLIC__/img/hd_in_ico.png) no-repeat left;padding-left: 15px;"></a>
-       <a href="{:url('news/index')}">社區服務諮詢</a>
-       <a href="{:url('share/index')}">共亯平臺</a>
-    </div>
-    <div class="clear"></div>
-
+        <?php
+            $user_id = Session('user_id');
+            $user = Session('user');
+        ?>
+        {if condition="$user_id neq ''"}
+            <a href="{:url('user/center')}" class="color_gr" --blue>{$user.username}</a>
+            <a href="{:url('user/logout')}">退出</a>
+        {else/}
+             <a href="{:url('user/login')}">登录</a>
+        {/if}
+        </div>
+        <div class="h_right">
+          <a href="{:url('index/index')}"style="background: url(__TMPL_PUBLIC__/img/hd_in_ico.png) no-repeat left;padding-left: 15px;"></a>
+           <a href="{:url('news/index')}">社區服務諮詢</a>
+           <a href="{:url('share/index')}">共亯平臺</a>
+        </div>
+        <div class="clear"></div>
     </div>
     <div style="background: #fff;padding: 20px 0;"> 
       <div class="container p_all_0" > 
@@ -25,8 +29,8 @@
 	  
             <a class="phone">訂購熱線：2534-3534  /  51096509</a>
             <div class="header-search">
-              <form action="#" method="post">
-                <input type="search" name="Search" placeholder="輸入商品關鍵字/商品型號" required="">
+              <form action="{:url('product/search')}" method="get">
+                <input type="search" name="keyword" placeholder="輸入商品關鍵字/商品型號" required="">
                 <a class="color_ro">成人紙尿褲</a>
                 <a class="color_99">電療機</a>
                 <a class="color_ro">健康鞋墊</a>

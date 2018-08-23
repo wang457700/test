@@ -76,7 +76,7 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 
 /* nav_menu */.nav_menu {background-color:#7ac141;}
 .nav {width:1170px;position:relative;margin:0 auto;}
-.nav .list li {float:left;width:10%;list-style-type:none;text-align:center;}
+.nav .list li {float:left;width:11%;list-style-type:none;text-align:center;}
 .nav .list ul {list-style-type:none;}
 .nav .list a {display:block;text-align:center;font:bold 14px/36px "Helvetica Neue",Helvetica,Arial,sans-serif;color:#fff;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;background: url(../img/nav-right.png) no-repeat right;}
 .nav .list a:hover {color:#FFA304;}
@@ -126,7 +126,7 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 .f6 .d1 h3{overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
 
 
-.cooperation{background:#f7f7f7;padding: 1em 0;}
+.cooperation{background:#f7f7f7;padding: 1em 0;margin-top:50px;}
 .cooperation a{border-right: 1px dashed #ccc;text-align: center;margin-right: 1em;padding: 0;padding-right: 1em;}
 .cooperation a img{width: 100%;}
 
@@ -372,13 +372,14 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 .address_list{padding: 20px;padding-top: 0;}
 .address_list .left-list{padding: 0;}
 .address_list .left-list p{line-height:25px;color: #666666;}
+
 .address_list .item-single{background: #e5e5e5;padding: 15px 0;}
 .address_list .cart-item-list{line-height: 50px;border: 1px solid #e5e5e5;border-top: 0;}
 .address_list .cart-item-list .btn.btn-warning{background:#ffa800;border-radius:0}
 
 
 
-
+.user_data p{line-height:25px;color:#666666;}
 .user_data h4{font-weight: bold;}
 
 @media (max-width: 1200px){
