@@ -33,17 +33,17 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 columns: [
                     [
                         {checkbox: true},
-                        {field: 'data1', title: __('產品ID'), operate: false},
-                        {field: 'data2', title: __('產品名稱'),operate: false},
-                        {field: 'data3', title: __('品牌'), operate: false},
-                        {field: 'data4', title: __('產品規格'), operate: false},
-                        {field: 'data5', title: __('產品價格'), operate: false},
-                        {field: 'data6', title: __('產品圖片'),formatter: Table.api.formatter.image,  operate: false},
-                        {field: 'data7', title: __('SKU'), operate: false},
-                        {field: 'data8', title: __('庫存'), operate: false},
-                        {field: 'data9', title: __('貨品ID'), operate: false},
-                        {field: 'data10', title: __('狀態'), operate: false},
- 
+                        {field: 'product_id', title: __('產品ID'), operate: false},
+                        {field: 'product_name', title: __('產品名稱'),operate: false},
+                        {field: 'brand', title: __('品牌'), operate: false},
+                        {field: 'place_origin', title: __('產品規格'), operate: false},
+                        {field: 'price', title: __('產品價格'), operate: false},
+                        {field: 'cover', title: __('產品圖片'),formatter: Table.api.formatter.image,  operate: false},
+                        {field: 'sku', title: __('SKU'), operate: false},
+                        {field: 'stock', title: __('庫存'), operate: false},
+                        {field: 'freight_num', title: __('貨品ID'), operate: false},
+                        {field: 'is_on_sale', title: __('狀態'), operate: false},
+
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate,
                             buttons: [
                                 {
@@ -77,7 +77,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                     title: __('发送Ajax'),
                                     text:'下架',
                                     classname: 'btn btn-xs btn-detail btn-magic btn-ajax',
-                                    url: 'order/index/detail',
+                                    url: 'Product/',
                                     success: function (data, ret) {
                                         //Layer.alert(ret.msg + ",返回数据：" + JSON.stringify(data));
                                         //如果需要阻止成功提示，则必须使用return false;
@@ -89,7 +89,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                         return false;
                                     }
                                 },
-                            ], 
+                            ],
                         formatter: Table.api.formatter.operate},
                     ]
                 ]
@@ -134,7 +134,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                             title: __('Operate'),
                             table: table,
                             events: Table.api.events.operate,
-                           
+
                             formatter: Table.api.formatter.operate
                         },
                     ]
@@ -174,7 +174,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
 
 
                 var cid = $('#sub_pid').val();
-                $('#form-group').html('');  
+                $('#form-group').html('');
                 $.ajax({
                       type: "GET",
                       url:  $.fn.bootstrapTable.defaults.extend.sub_url,
@@ -184,8 +184,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                             $.each(data.rows,function(index, value) {
                                 $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12"><input type="text" class="form-control" id="slide_name" name="row[data]['+value.id+']" value="'+value.name+'" data-rule=""/>');
                             });
-                            }else{ 
-                                $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12">没有找到匹配的记录</div></div>'); 
+                            }else{
+                                $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12">没有找到匹配的记录</div></div>');
                             }
                       }
                 });
@@ -195,12 +195,12 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
 
             //ajax 从获取输出三级分类
             $(document).on("click", "tr", function (){
-                var cid = $(this).find("span").data('id'); 
+                var cid = $(this).find("span").data('id');
                 $(this).addClass("on").siblings().removeClass("on");
 
                  //记录二级分类的id
                 $('#sub_pid').val(cid);
-                $('#form-group').html('');  
+                $('#form-group').html('');
                 $.ajax({
                       type: "GET",
                       url:  $.fn.bootstrapTable.defaults.extend.sub_url,
@@ -210,8 +210,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                             $.each(data.rows,function(index, value) {
                                 $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12"><input type="text" class="form-control" id="slide_name" name="row[data]['+value.id+']" value="'+value.name+'" data-rule=""/>');
                             });
-                            }else{ 
-                                $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12">没有找到匹配的记录</div></div>'); 
+                            }else{
+                                $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12">没有找到匹配的记录</div></div>');
                             }
                       }
                 });
@@ -221,14 +221,14 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
 
                 var sub_pid = $('#sub_pid').val();
                 if(sub_pid !==''){
-                    $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12"><input type="text" class="form-control" id="slide_name" name="row[new][]" value="" data-rule=""/></div></div>'); 
+                    $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12"><input type="text" class="form-control" id="slide_name" name="row[new][]" value="" data-rule=""/></div></div>');
                 }else{
 
                     alert('请选择二级分类!');
                 }
             });
             $('.columns,.search').hide();
-            $('#table thead').hide(); 
+            $('#table thead').hide();
         },
 
         add: function () {
