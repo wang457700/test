@@ -1,9 +1,22 @@
+
 {include file="layout/public_head" /}
+<!--头部 str-->
+{include file="common/header"/}
+<!--头部 end-->
+{include file="common/nav"/}
   <body style="background: url(__TMPL_PUBLIC__/img/index_bg.jpg) repeat-y;font-size: 14px;">
+    <style>
+      @media (min-width: 768px){
+        .col-sm-1 {
+          width: 10.33333333%;
+        }
+      }
+    </style>
     <div class="container bgcolor_white">
       <div class="pr_name">發佈共享</div>
       <div class="share_product_add">
             <form action="{:url('user/share_edit')}" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return share()" id="share-form"  style="padding: 0 20px;">
+              <input type="hidden"  name="id" value="{$info.id}" >
               <div class="form-group form-group-e">
                 <label for="inputEmail3" class="col-sm-1 col-xs-12 control-label"><span class="color_ro">* </span>&nbsp;商品名稱:</label>
                 <div class="col-sm-6">
@@ -46,14 +59,13 @@
                 <label 
                 for="inputPassword3" class="col-sm-1 col-xs-6 control-label"><span class="color_ro">* </span>圖片上傳:</label>
                 <div class="col-sm-6">
-                  <div id="preview" style="padding: 20px;display: none">
-                    <img id="imghead"  class="upload_image" >
+                  <div id="preview" style="padding: 20px;">
+                    <img id="imghead"  class="upload_image" src="{:fa_get_image_url($info['product_pic'])}"  style="max-width:  200px;">
                   </div>
-
                   <input name="pic" type="hidden"  id="pic"/>
                   <input type="file" onchange="previewImage(this)" style="display: none;" id="previewImg" accept=".gif,.jpg,.jpeg,.png">
-                  <img src="__TMPL_PUBLIC__/control/images/add_img.png"  onclick="$('#previewImg').click();" id="add_img">
-                  <img src="__TMPL_PUBLIC__/control/images/edit_img.png"  onclick="$('#previewImg').click();" id="edit_img" style="display: none">
+                  <img src="__TMPL_PUBLIC__/control/images/add_img.png"  onclick="$('#previewImg').click();" id="add_img"  style="display: none">
+                  <img src="__TMPL_PUBLIC__/control/images/edit_img.png"  onclick="$('#previewImg').click();" id="edit_img">
                   <script>
                       //图片上传预览    IE是用了滤镜。
                       function previewImage(file)
@@ -112,7 +124,6 @@
                    <!-- <div id="upload" class="upload"></div> -->
                 </div>
               </div>
-              <input name="pic" type="hidden" value="" id="pic">
               <div class="form-group form-group-e no_border">
                 <label for="inputPassword3" class="col-md-1 control-label"><span class="color_ro">* </span>简&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;介&nbsp;:</label>
                 <div class="col-md-8">
@@ -133,7 +144,7 @@
               <div class="form-group" style="padding-top: 20px;">
                   <div class="col-md-1"></div>
                   <div class="col-md-2" style="">
-                    <button type="submit" class="btn btn-success btn-success-edit" style="border-radius: 0;">發佈產品</button>
+                    <button type="submit" class="btn btn-success btn-success-edit" style="border-radius: 0;">提交編輯</button>
                   </div>
               </div>
 
