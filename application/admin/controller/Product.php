@@ -117,8 +117,6 @@ class Product extends Backend
         return $this->view->fetch();
     }
 
-
-
     /**
      * 分类
      */

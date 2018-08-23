@@ -1,5 +1,12 @@
 {include file="layout/public_head" /}
-    <body style="background: url(__TMPL_PUBLIC__/img/index_bg.jpg) repeat-y;background-size: cover !important;">
+
+
+<!--头部 str-->
+{include file="common/header"/}
+<!--头部 end-->
+
+{include file="common/nav"/}
+<body style="background: url(__TMPL_PUBLIC__/img/index_bg.jpg) repeat-y;background-size: cover !important;">
 
     <div class="container bgcolor_white">
       <div class="alzx-crumbs alzx-crumbs-f1">
@@ -36,7 +43,7 @@
                           </div>
                           <div class="col-md-2" style="">{$vo['status_text']}</div>
                           <div class="col-md-3" style="">
-                               <a href="">編輯</a>  |
+                               <a href="{:url('user/share_edit',array('id'=>$vo['id']))}">編輯</a>  |
 
                               {eq name="vo['status']" value="1"}
                                   <a href="{:url('user/share_operation',array('id'=>$vo['id'],'type'=>'lower'))}" class="js-ajax-operation" onclick="return false;">下架</a>  | 
@@ -72,10 +79,9 @@
         </div>
 
     </div>
-
+    {include file="common/footer"/}
   <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 	<script src="__TMPL_PUBLIC__/js/scripts.js"></script>
 
   </body>
-
 </html>

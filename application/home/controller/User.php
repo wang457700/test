@@ -222,11 +222,10 @@ class User extends Frontend
 			if(empty($post['customized-buttonpane'])){
 				$this->error('请输入简介！');
 			}
-         	
 			$imgstr = $post['pic'];
 			$imgdata = substr($imgstr,strpos($imgstr,",") + 1);
 			$decodedData = base64_decode($imgdata);
-			$pic_url = 'uploads/usershare/img_'.time().'.jpg'; 
+			$pic_url = 'uploads/usershare/img_'.time().'.jpg';
 			file_put_contents($pic_url,$decodedData);
 
 			$data['product_content'] =htmlspecialchars_decode($post['customized-buttonpane']);
@@ -247,6 +246,51 @@ class User extends Frontend
  
      	$this->assign('title','我的共享');
         return $this->view->fetch('user/share/add');
+    }
+
+
+    /**
+     *
+     * 编辑共享产品
+     */
+    public function share_edit(){
+        $user_id = Session::get('user_id');
+
+        if ($this->request->isPost()) {
+
+            $post = input('post.');
+            if(empty($post['customized-buttonpane'])){
+                $this->error('请输入简介！');
+            }
+
+            if(!empty($post['pic'])){
+                $imgstr = $post['pic'];
+                $imgdata = substr($imgstr,strpos($imgstr,",") + 1);
+                $decodedData = base64_decode($imgdata);
+                $pic_url = 'uploads/usershare/img_'.time().'.jpg';
+                file_put_contents($pic_url,$decodedData);
+                $data['product_pic'] = $pic_url;
+            }
+
+            $data['product_content'] =htmlspecialchars_decode($post['customized-buttonpane']);
+            $data['product_name'] = $post['title'];
+            $data['product_category'] = '0-'.implode('-',$post['cid']);
+            $data['add_date'] = time();
+            $data['user_id'] = $user_id;
+
+            $info= Db::name('user_share')->where(array('id'=>$post['id'],'user_id'=>$user_id))->update($data);
+            if($info!==false){
+                $this->success('编辑成功',url('user/share_list'));
+            }else{
+                $this->error('编辑失败');
+            }
+        }
+
+        $id = $this->request->param('id', 0, 'intval');
+        $info= Db::name('user_share')->where(array('id'=>$id,'user_id'=>$user_id))->find();
+        $this->assign('info',$info);
+        $this->assign('title','我的共享');
+        return $this->view->fetch('user/share/edit');
     }
 
 
