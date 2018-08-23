@@ -232,16 +232,13 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
         },
 
         add: function () {
-
             Controller.api.bindevent();
-
             // 初始化表格参数配置
             Table.api.init({
                 extend: {
                     get_category: 'api/index/get_category',
                 }
             });
-
 
             $(function(){
                 $('.danxuan').eq(0).addClass("on");
@@ -273,7 +270,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             function get_category(id,next,select_id){
                 $.ajax({
                     type : "GET",
-                    url  : $.fn.bootstrapTable.defaults.extend.get_category,
+                    url  : $('#get_category_url').val(),
                     data:{parent_id:id},
                     dataType:'json',
                     success: function(data) {

@@ -249,11 +249,14 @@
 
         </form>
 
-<script type="text/html" id="uploadtpl">
-    <li class="col-xs-12">
-         <a href="<%=fullurl%>" data-url="<%=url%>" target="_blank" class="thumbnail">
-            <img src="<%=fullurl%>" class="img-responsive">
-        </a>
-        <a href="javascript:;" class="btn btn-danger btn-xs btn-trash"><i class="fa fa-trash"></i></a>
-    </li>
-</script>
+        <input  value="{:url('api/index/get_category')}" id="get_category_url">
+
+        <script type="text/html" id="uploadtpl">
+            <li class="col-xs-12">
+                 <a href="<%=fullurl%>" data-url="<%=url%>" target="_blank" class="thumbnail">
+                    <img src="<%=fullurl%>" class="img-responsive">
+                </a>
+                <a href="javascript:;" class="btn btn-danger btn-xs btn-trash"><i class="fa fa-trash"></i></a>
+            </li>
+        </script>
+
