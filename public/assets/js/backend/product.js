@@ -253,6 +253,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
 
             //选择分类
             $(function(){
+                get_category(14,'cat_id','0');  // 14：产品分类
                 $(document).on("change",'#cat_id',function(){
                     get_category($(this).val(),'cat_id_2','0');
                     $('#cat_id_3').empty().html("<option value='0'>请选择商品分类</option>");
