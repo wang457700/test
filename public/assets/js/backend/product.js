@@ -284,7 +284,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                     }
                 });
             }
-
         },
 
         category_add: function () {
