@@ -2,11 +2,104 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2e59b9c7-5a72-4b70-bf71-d65451660939" name="Default" comment="Default">
+<<<<<<< Updated upstream
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/view/product/add.html" afterPath="$PROJECT_DIR$/application/admin/view/product/add.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/view/product/edit.html" afterPath="$PROJECT_DIR$/application/admin/view/product/edit.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/admin/view/product/index.html" afterPath="$PROJECT_DIR$/application/admin/view/product/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/home/common/common.php" afterPath="$PROJECT_DIR$/application/home/common/common.php" />
+=======
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/cache/4e/819c837d54a6ed09abc77a8560a66f.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/cache/cb/78ef4a9130f39208ff10858ddd8377.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/02.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/07.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/08.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/09.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/10.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/13.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/14.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/1533623498-07.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/1533627769-07.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/1533632343-07.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/1533710711-08.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/1533714532-08.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/1533722666-08.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/1533780224-09.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/1533787035-09.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/1533808057-09.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/1533887816-10.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/1534128303-13.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/1534140328-13.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/1534145311-13.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/1534149440-13.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/1534156325-13.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/1534226377-14.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/1534232833-14.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/1534237677-14.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/1534406859-16.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/1534410934-16.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/1534487142-17.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/1534495099-17.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/16.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/log/201808/17.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/0b8ba25cab69d5b90128f23e6e2ae78c.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/11ecd77132c85eba3ef8b7a31fa98859.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/15520527eb9078e55fde778a3a85fd61.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/200e12cc9a2ae80ae914e06adce24c9a.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/249787946ec243cd161e39906a2a182f.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/2a1c9e0580393ecc1374c8bb38f5b318.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/2cd447acf3ac74d29da0d1b844537009.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/2d98f3b6ac1b8ea1be7192cd89aa68b9.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/31462df5b1f1e10d679b27e785bdb90b.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/323f74be2226ee069fde0f2c3d5a9956.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/382dd312673995619c47f333c4b2d259.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/403a3e676954447c278d91e827a09d9f.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/41b124d6445515066c402e0469e798b9.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/43aa1c8bff4bf652a796ad590cb9bb61.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/472401eaa4c7549c7b2c089f031f1aff.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/4726cd555c99d98d06282ad4089f44e0.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/4a07a436574955aae6b545ca70b1b096.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/4b0d243cbad08ac5bda0ef7c41fab483.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/4dfb35e62a25e8c386b6134b8b999ee5.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/5cc9e9b4353780169db429ddf4e2f1d7.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/5f2fdaa78791c5d9949978f8e78a8a52.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/603d089821d5417dc991fa12da9879e3.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/721fd2a66a088238e5963e0cb20372c9.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/733d993ba1ff66af3e36c75c1e2434a9.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/74a54395e1600529b09e08a9cbc14089.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/7a4374058171d55c07b6edc60db28b41.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/7ec0077b7f4bbe60a498839db134b7e2.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/86b002aed88ef79ccf8d1159fa746f10.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/8a8bfef6cf38e5abcdee0bac638772d9.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/8aa48bad5f08f480205f283cc4926252.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/8b4b6f44b81ea6711bf537a8c2b0ca33.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/8d108d7dcc98fdc747aef628026d07f6.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/8ef5291ee217c38c26d3a36333d72f91.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/91160f08750e9dea1183b39dfc6c682c.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/ab928b4416e305a3a0b3cefce19d1d04.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/af025475900e7f9d3f4c812298b7ce31.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/b0b0ff1371fa526787a3cb8a401b80e8.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/b6be74faae5951da5021b3d2efe01af0.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/ba7a754b4e0a8c18cde76f45cf143cbe.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/c16935a41932e28fd5c87984907df3fe.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/c2f69acecd08258fdc340198020604c9.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/c80d2a3f033296c79a217f192a889eab.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/c8953929d2c436d51634a33d752be1ff.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/d821baed3f5634bd51e0b33bc79c8d19.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/dbb47bc8807e894c7901a550d4a22ac4.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/dc3ef2934a6bf30a85b33deafaa31508.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/dd65151cfdaa7459cc5bef201defd8f4.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/de4ccf8712a3ac5f029169a26c2f7bf2.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/e98f17749d100a523c28cf6374662270.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/ec9d7e8f044e1e26ffbf44c9517304cb.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/ee2f89000fd1489061eae8da9e818b92.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/ef34cd2a376680e102c487a0688f14ca.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/f246f7e0f792fa3a91735f8d214752e8.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/f505a8be95a78fd49e1fb962d7352bef.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/runtime/temp/f735b38bf266d1cb85b9f354f914dc15.php" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/database.php" afterPath="$PROJECT_DIR$/application/database.php" />
+>>>>>>> Stashed changes
     </list>
     <list id="7815eabc-1308-4015-8b6b-688dd00df361" name="Failed commit: Default" comment="xiaogang" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -33,11 +126,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+<<<<<<< Updated upstream
       <file leaf-file-name="User.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/home/controller/User.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="494">
               <caret line="44" column="39" lean-forward="true" selection-start-line="44" selection-start-column="39" selection-end-line="44" selection-end-column="39" />
+=======
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/template/pc/index/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="756">
+              <caret line="28" column="8" lean-forward="false" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
+>>>>>>> Stashed changes
               <folding>
                 <element signature="e#39#74#0#PHP" expanded="true" />
               </folding>
@@ -113,6 +214,16 @@
               <folding>
                 <element signature="e#8#109#0#PHP" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="database.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/application/database.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="18" column="69" lean-forward="false" selection-start-line="18" selection-start-column="69" selection-end-line="18" selection-end-column="69" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -197,7 +308,6 @@
         <option value="$PROJECT_DIR$/application/index/view/user/register.html" />
         <option value="$PROJECT_DIR$/application/index/controller/Index.php" />
         <option value="$PROJECT_DIR$/application/index/controller/User.php" />
-        <option value="$PROJECT_DIR$/application/database.php" />
         <option value="$PROJECT_DIR$/template/pc/layout/public_head.html" />
         <option value="$PROJECT_DIR$/template/pc/user/login.html" />
         <option value="$PROJECT_DIR$/template/pc/user/user_center.html" />
@@ -213,6 +323,7 @@
         <option value="$PROJECT_DIR$/yinkanghui/index.php" />
         <option value="$PROJECT_DIR$/build.php" />
         <option value="$PROJECT_DIR$/template/pc/index/index.html" />
+<<<<<<< Updated upstream
         <option value="$PROJECT_DIR$/application/home/common/common.php" />
         <option value="$PROJECT_DIR$/application/extra/function.php" />
         <option value="$PROJECT_DIR$/application/home/common/function.php" />
@@ -220,6 +331,9 @@
         <option value="$PROJECT_DIR$/application/admin/view/product/index.html" />
         <option value="$PROJECT_DIR$/application/admin/view/product/add.html" />
         <option value="$PROJECT_DIR$/application/admin/view/product/edit.html" />
+=======
+        <option value="$PROJECT_DIR$/application/database.php" />
+>>>>>>> Stashed changes
       </list>
     </option>
   </component>
@@ -231,14 +345,12 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="1912" />
-    <option name="y" value="-8" />
+    <option name="x" value="1916" />
+    <option name="y" value="16" />
     <option name="width" value="1936" />
     <option name="height" value="1056" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <ConfirmationsSetting value="2" id="添加" />
-  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
@@ -267,6 +379,7 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
+<<<<<<< Updated upstream
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="test" />
@@ -441,6 +554,8 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
+=======
+>>>>>>> Stashed changes
         </subPane>
       </pane>
       <pane id="Scratches" />
@@ -553,7 +668,12 @@
       <workItem from="1534912884477" duration="29000" />
       <workItem from="1534920832877" duration="114000" />
       <workItem from="1534923018835" duration="1117000" />
+<<<<<<< Updated upstream
       <workItem from="1534925412018" duration="3847000" />
+=======
+      <workItem from="1534925412018" duration="1016000" />
+      <workItem from="1534928324021" duration="939000" />
+>>>>>>> Stashed changes
     </task>
     <task id="LOCAL-00001" summary="xiaogang">
       <created>1534831630052</created>
@@ -601,7 +721,11 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< Updated upstream
     <option name="totallyTimeSpent" value="37417000" />
+=======
+    <option name="totallyTimeSpent" value="35525000" />
+>>>>>>> Stashed changes
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -613,32 +737,42 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
+<<<<<<< Updated upstream
     <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.282516" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+=======
+    <frame x="1916" y="16" width="1936" height="1056" extended-state="0" />
+    <editor active="false" />
+    <layout>
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2857143" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+>>>>>>> Stashed changes
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="检验" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329718" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="调试" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5063966" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.4936034" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.4978678" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="运行" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+<<<<<<< Updated upstream
       <window_info id="找到" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+=======
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+>>>>>>> Stashed changes
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32987553" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -663,13 +797,6 @@
     <entry file="file://$PROJECT_DIR$/application/index/view/user/register.html" />
     <entry file="file://$PROJECT_DIR$/application/index/controller/Index.php" />
     <entry file="file://$PROJECT_DIR$/application/index/controller/User.php" />
-    <entry file="file://$PROJECT_DIR$/application/database.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="69" lean-forward="false" selection-start-line="18" selection-start-column="69" selection-end-line="18" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/template/pc/index/index - 副本.html" />
     <entry file="file://$PROJECT_DIR$/template/pc/layout/public_head.html">
       <provider selected="true" editor-type-id="text-editor">
@@ -797,11 +924,20 @@
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
+=======
+    <entry file="file://$PROJECT_DIR$/application/home/controller/Base.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+>>>>>>> Stashed changes
     <entry file="file://$PROJECT_DIR$/application/.htaccess">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -809,7 +945,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -817,7 +952,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="513">
           <caret line="28" column="17" lean-forward="false" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -825,15 +959,23 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="8550">
           <caret line="473" column="13" lean-forward="false" selection-start-line="473" selection-start-column="13" selection-end-line="473" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
+=======
+    <entry file="file://$PROJECT_DIR$/application/home/controller/Register.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+>>>>>>> Stashed changes
     <entry file="file://$PROJECT_DIR$/application/admin/lang/zh-cn.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="532">
           <caret line="28" column="68" lean-forward="false" selection-start-line="28" selection-start-column="68" selection-end-line="28" selection-end-column="68" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -864,8 +1006,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/template/pc/index/index.html">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
         <state relative-caret-position="194">
           <caret line="428" column="77" lean-forward="false" selection-start-line="428" selection-start-column="73" selection-end-line="428" selection-end-column="77" />
+=======
+        <state relative-caret-position="756">
+          <caret line="28" column="8" lean-forward="false" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
+>>>>>>> Stashed changes
           <folding>
             <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -898,6 +1045,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/application/home/common/common.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
@@ -1042,6 +1190,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38">
           <caret line="2" column="27" lean-forward="false" selection-start-line="2" selection-start-column="27" selection-end-line="2" selection-end-column="27" />
+=======
+    <entry file="file://$PROJECT_DIR$/application/database.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="69" lean-forward="false" selection-start-line="18" selection-start-column="69" selection-end-line="18" selection-end-column="69" />
+>>>>>>> Stashed changes
           <folding />
         </state>
       </provider>

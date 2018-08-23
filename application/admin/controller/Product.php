@@ -38,6 +38,16 @@ class Product extends Backend
 
     }
 
+
+    public function add(){
+
+        $cat_list = Db::name('category')->where("pid = 0")->select();
+
+        $this->assign('cat_list',$cat_list);
+
+        return $this->view->fetch();
+    }
+
     /**
      * 查看
      */
@@ -46,7 +56,7 @@ class Product extends Backend
         if ($this->request->isAjax()) {
             //数据输出ajax
 
-           
+
 
 
         }
@@ -58,7 +68,7 @@ class Product extends Backend
      */
     public function detail($ids)
     {
-       
+
         $row = array(
             'order_id'=>201807001,
             'order_time'=>'2018/06/30',
@@ -93,7 +103,7 @@ class Product extends Backend
      */
     public function edit($ids = NULL)
     {
-         
+
         if ($this->request->isPost())
         {
             $params = 1;
@@ -135,7 +145,7 @@ class Product extends Backend
             return json($result);
         }
 
-        $category_list = Db::name('Category')->where('pid',14)->select(); 
+        $category_list = Db::name('Category')->where('pid',14)->select();
         $this->view->assign("category_list", $category_list);
         return $this->view->fetch();
     }
@@ -151,11 +161,11 @@ class Product extends Backend
             $total = 1;
             $cid = $this->request->get('cid');
 
-            $list = Db::name('Category')->where('pid',$cid)->select(); 
-           
+            $list = Db::name('Category')->where('pid',$cid)->select();
+
             $result = array("total" => $total, "rows" => $list);
             return json($result);
-        } 
+        }
     }
 
     /**
@@ -165,15 +175,15 @@ class Product extends Backend
     {
         if ($this->request->isAjax()) {
             //数据输出ajax
-            
-            
+
+
             $params = $this->request->post("row/a");
             $pid = $params['pid'];
 
             if($pid == ''){
                 $this->error('请选择分类！');
             }
-         
+
             if($params['data']){
                 foreach ($params['data'] as $k => $v) {
                     $edit = array(
@@ -199,8 +209,8 @@ class Product extends Backend
                 }
             }
             $this->success('修改成功');
-  
-        } 
+
+        }
     }
     /**
      * 修改三级分类
@@ -230,9 +240,9 @@ class Product extends Backend
             }else{
                 $this->error('修改失败！');
             }
-  
-        } 
+
+        }
         return $this->view->fetch();
     }
- 
+
 }
