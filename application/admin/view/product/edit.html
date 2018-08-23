@@ -23,15 +23,22 @@
             <input type="text" class="form-control" id="slide_name" name="product_name" value="{$product_list.product_name}" data-rule="required;data1" />
         </div>
     </div>
+    <?php
+    dump($product_list);
+?>
     <div class="form-group">
         <label class="control-label col-xs-12 col-sm-2">类型:</label>
+
         <div class="col-xs-12 col-sm-3">
-            <select name="cat_id" id="cat_id"  class="form-control" >
-                <option value="0">请选择商品分类</option>
+            <select name="cat_id" id="cat_id"  class="form-control">
+
+                {foreach name="cat_list" item="vo"}
+                        <option value="{$vo.id}" {$vo['id'] == $product_list['cat_id']?'selected':''}>{$vo.name}</option>
+                 {/foreach}
             </select>
         </div>
         <div class="col-xs-12 col-sm-3">
-            <select name="cat_id" id="cat_id_2" onChange="get_category(this.value,'cat_id_3','0');"  onclick="get_category(this.value,'cat_id_3','0');" class="small form-control">
+            <select name="cat_id" id="cat_id_2" class="small form-control">
                 <option value="0">请选择商品分类</option>
             </select>
         </div>
@@ -126,42 +133,36 @@
     </div>
     <div class="form-group">
         <label for="c-image1" class="control-label col-xs-12 col-sm-2">图片</label>
+
+        {foreach name="img_url" item="vo"}
         <div class="col-xs-12 col-sm-1">
             <div class="input-group">
-                <input id="c-image1" class="form-control" size="50" name="img_url[]" type="hidden" value="">
+                <input id="c-image{$key}" class="form-control" size="50" name="img_url[]" type="hidden" value="__PUBLIC__/{$vo}">
                 <div class="input-group-addon no-border no-padding">
-                    <span><button type="button" id="plupload-image1" class="btn btn-danger plupload" data-input-id="c-image1" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image1"></button></span>
+			<span style="position: relative;"><button type="button" id="plupload-image1" class="btn btn-danger plupload" data-input-id="c-image1" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image{$key}" initialized="true" style="position: relative; z-index: 1;"></button>
+			<div id="html5_1clj82ml6dvt2crr6o1pnh18j77_container" class="moxie-shim moxie-shim-html5" style="position: absolute; top: -22px; left: 0px; width: 60px; height: 60px; overflow: hidden; z-index: 0;">
+				<input id="html5_1clj82ml6dvt2crr6o1pnh18j77" type="file" style="font-size: 999px; opacity: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" accept="image/gif,.gif,image/jpeg,.jpg,.jpeg,.jpe,image/png,.png,image/bmp,.bmp">
+			</div>
+			</span>
                 </div>
                 <span class="msg-box n-right"></span>
             </div>
-            <ul class="row list-inline plupload-preview" id="p-image1"  data-template="uploadtpl"></ul>
-        </div>
-        <div class="col-xs-12 col-sm-1">
-            <div class="input-group">
-                <input id="c-image2" class="form-control" size="50" name="img_url[]" type="hidden" value="">
-                <div class="input-group-addon no-border no-padding">
-                    <span><button type="button" id="plupload-image2" class="btn btn-danger plupload" data-input-id="c-image2" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image2"></button></span>
-                </div>
-                <span class="msg-box n-right"></span>
-            </div>
-            <ul class="row list-inline plupload-preview" id="p-image2"  data-template="uploadtpl">
-                <img src="__PUBLIC__/{$product_list.cover}">
+            <ul class="row list-inline plupload-preview" id="p-image{$key}" data-template="uploadtpl">
+                <li class="col-xs-12">
+                    <a href="__PUBLIC__/{$vo}" data-url="__PUBLIC__/{$vo}" target="_blank" class="thumbnail">
+                        <img src="__PUBLIC__/{$vo}" class="img-responsive">
+                    </a>
+                    <a href="javascript:;" class="btn btn-danger btn-xs btn-trash"><i class="fa fa-trash"></i></a>
+                </li>
             </ul>
         </div>
-        <div class="col-xs-12 col-sm-1">
-            <div class="input-group">
-                <input id="c-image3" class="form-control" size="50" name="img_url[]" type="hidden" value="">
-                <div class="input-group-addon no-border no-padding">
-                    <span><button type="button" id="plupload-image3" class="btn btn-danger plupload" data-input-id="c-image3" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image3"></button></span>
-                </div>
-                <span class="msg-box n-right"></span>
-            </div>
-            <ul class="row list-inline plupload-preview" id="p-image3"  data-template="uploadtpl">
-                {foreach name="img_url" item="vo"}
-                <img src="__PUBLIC__/{$vo}">
-                {/foreach}
-            </ul>
-        </div>
+        {/foreach}
+
+
+
+
+
+
 
 
 
