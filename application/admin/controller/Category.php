@@ -9,7 +9,7 @@ use fast\Tree;
 /**
  * 分类管理
  *
- * @icon fa fa-list
+ * @icon fa fa-listx
  * @remark 用于统一管理网站的所有分类,分类可进行无限级分类
  */
 class Category extends Backend
