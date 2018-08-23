@@ -1,6 +1,7 @@
 <?php
 
 namespace app\admin\controller;
+use think\config\driver\Json;
 use think\Db;
 use app\common\controller\Backend;
 use app\common\model\Category as CategoryModel;
@@ -41,7 +42,29 @@ class Product extends Backend
 
     public function add(){
 
-        $cat_list = Db::name('category')->where("pid = 0")->select();
+        $cat_list = Db::name('category')->where("pid = 14")->select();
+        if($this->request->isAjax()){
+            $data=input('post.');
+            $data['cat_id']=17;
+            $product_name=Db::name('goods')->where('product_name',$data['product_name'])->find();
+            if($product_name){
+                $this->error('该商品名称已经添加');
+            }
+            if(empty($data['cat_id'])){
+                $this->error('请选择分类');
+            }
+            $data['add_time']=date('Y-m-d H:i:s',time());
+            $img_url=input('img_url/a');
+            $data['img_url']=implode(',',$img_url);
+            $res=Db::name('goods')->insertGetId($data);
+            if($res){
+                $this->success('添加成功！');
+            }else{
+                $this->error('添加失败');
+            }
+
+
+        }
 
         $this->assign('cat_list',$cat_list);
 
@@ -53,70 +76,58 @@ class Product extends Backend
      */
     public function index()
     {
-        if ($this->request->isAjax()) {
-            //数据输出ajax
-
-
-
-
-        }
-        return $this->view->fetch();
-    }
-
-    /**
-     * 详情
-     */
-    public function detail($ids)
-    {
-
-        $row = array(
-            'order_id'=>201807001,
-            'order_time'=>'2018/06/30',
-            'user_id'=>'152',
-            'user_name'=>'Alan Fox',
-            'service_charge'=>'$10.00',
-            'total_amount'=>'$1,210.40',
-            'amount_payable'=>'$1,210.40',
-            'take_name'=>'Alan Fox',
-            'take_phone'=>'13111111111',
-            'take_address'=>'廣東省深圳市龍翔大道志聯佳大厦',
-            'freight'=>'$45.00',
-            'donated_amount'=>'$180.00',
-            'payment_type'=>'信用卡',
-            'goods_count'=>'2',
-            'coupon'=>'XXXXX XXXX',
-            'coupon_amount'=>'$100.00',
-            'status'=>'未發貨',
+        $list=Db::name('goods')->paginate(3);
+        $is_on_sale=array(
+            '0'=>'下架',
+            '1'=>'上架'
         );
+        $page = $list->render();
+        $this->assign('list',$list);
+        $this->assign('page', $page);
+        $this->assign('is_on_sale',$is_on_sale);
+        return    $this->view->fetch();
+    }
 
-        if (!$row)
-            $this->error(__('No Results were found'));
-        if ($this->request->isAjax()) {
-            $this->success("Ajax请求成功", null, ['id' => $ids]);
+    public function is_on_sale(){
+
+        $product_id = input('product_id');
+        $is_on_sale = input('is_on_sale');
+        $on_sale="";
+        switch ($is_on_sale){
+            case 0:
+                $on_sale=1;
+                break;
+             case 1;
+             $on_sale=0;
+             break;
         }
 
-        $this->view->assign("row", $row);
-        return $this->view->fetch();
-    }
-     /**
-     * 编辑
-     */
-    public function edit($ids = NULL)
-    {
-
-        if ($this->request->isPost())
-        {
-            $params = 1;
-            if ($params)
-            {
-               $this->success();
-            }
+       $res=Db::name('goods')->where('product_id',$product_id)->update(array('is_on_sale'=>$on_sale));
+        if ($res) {
+            $this->success();
+        } else {
             $this->error();
         }
-        $this->view->assign("row", 1);
-        return $this->view->fetch();
+
+
     }
 
+    public function del($ids =null){
+
+        if ($this->request->isPost()) {
+            $product_id = input('product_id');
+            $res = Db::name('goods')->where('product_id', $product_id)->delete();
+            if ($res) {
+                $this->success();
+            } else {
+                $this->error();
+            }
+
+
+        }
+
+
+    }
     /**
      * 分类
      */
@@ -241,6 +252,39 @@ class Product extends Backend
 
         }
         return $this->view->fetch();
+    }
+    public function edit($ids = NULL){
+
+          $product_id=input('product_id');
+        $product_list=Db::name('goods')->where('product_id',$product_id)->find();
+         $img_url=explode(',',$product_list['img_url']);
+
+        $cat_list = Db::name('category')->where("pid = 14")->select();
+        if($this->request->isAjax()){
+            $data=input('post.');
+            $data['cat_id']=17;
+
+            if(empty($data['cat_id'])){
+                $this->error('请选择分类');
+            }
+            $img_url=input('img_url/a');
+            $data['img_url']=implode(',',$img_url);
+            $res=Db::name('goods')->where($data);
+            if($res){
+                $this->success('添加成功！');
+            }else{
+                $this->error('添加失败');
+            }
+        }
+
+        $this->assign('img_url',$img_url);
+        $this->assign('product_list',$product_list);
+        $this->assign('product_list',$product_list);
+        $this->assign('cat_list',$cat_list);
+
+        return $this->view->fetch();
+
+
     }
 
 }
