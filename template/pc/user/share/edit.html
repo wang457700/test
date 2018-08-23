@@ -3,11 +3,11 @@
     <div class="container bgcolor_white">
       <div class="pr_name">發佈共享</div>
       <div class="share_product_add">
-            <form action="{:url('user/share_add')}" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return share()" id="share-form"  style="padding: 0 20px;">
+            <form action="{:url('user/share_edit')}" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return share()" id="share-form"  style="padding: 0 20px;">
               <div class="form-group form-group-e">
                 <label for="inputEmail3" class="col-sm-1 col-xs-12 control-label"><span class="color_ro">* </span>&nbsp;商品名稱:</label>
                 <div class="col-sm-6">
-                  <input type="text" class="form-control input_e" id="title" placeholder="" name="title" required oninvalid="setCustomValidity('请输入商品名稱！')" oninput="setCustomValidity('')">
+                  <input type="text" class="form-control input_e" id="title" placeholder="" name="title" value="{$info.product_name}" required oninvalid="setCustomValidity('请输入商品名稱！')" oninput="setCustomValidity('')">
                 </div>
               </div>
               <div class="form-group form-group-e">
@@ -50,7 +50,7 @@
                     <img id="imghead"  class="upload_image" >
                   </div>
 
-                  <input name="pic" type="hidden" value="" id="pic">
+                  <input name="pic" type="hidden"  id="pic"/>
                   <input type="file" onchange="previewImage(this)" style="display: none;" id="previewImg" accept=".gif,.jpg,.jpeg,.png">
                   <img src="__TMPL_PUBLIC__/control/images/add_img.png"  onclick="$('#previewImg').click();" id="add_img">
                   <img src="__TMPL_PUBLIC__/control/images/edit_img.png"  onclick="$('#previewImg').click();" id="edit_img" style="display: none">
@@ -109,9 +109,10 @@
                           return param;
                       }
                   </script>
-                  <!-- <div id="upload" class="upload"></div> -->
+                   <!-- <div id="upload" class="upload"></div> -->
                 </div>
               </div>
+              <input name="pic" type="hidden" value="" id="pic">
               <div class="form-group form-group-e no_border">
                 <label for="inputPassword3" class="col-md-1 control-label"><span class="color_ro">* </span>简&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;介&nbsp;:</label>
                 <div class="col-md-8">
@@ -126,7 +127,7 @@
                       <img src="__TMPL_PUBLIC__/kindedit/pic/cz.png" title="重置" border="0" alt="重置" onclick="sub(0)"/>
                       <img src="__TMPL_PUBLIC__/kindedit/pic/sc.png" title="删除" border="0" alt="删除" onclick="del();odiv.style.display='none';"/>
                   </div>
-                  <div  onmousedown="show_element(event)" style="clear:both" id="customized-buttonpane" class="editor">111111</div>
+                  <div  onmousedown="show_element(event)" style="clear:both" id="customized-buttonpane" class="editor">{$info.product_content}</div>
                </div>
               </div>
               <div class="form-group" style="padding-top: 20px;">

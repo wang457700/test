@@ -28,7 +28,7 @@ class Share extends Frontend
         $list = $this->user_share_model
             ->where($where)
             ->select();
-        dump($list);
+
         $this->view->assign("list", $list);
         $this->assign('title','共享平台');
         return $this->view->fetch();
