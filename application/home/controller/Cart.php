@@ -44,11 +44,35 @@ class Cart extends Frontend
     public function shopping_cart(){
 
 
+         $user_id=  Session::get('user_id');
+         $car_list=Db::name('cart_order')->where(array('user_id'=>$user_id))->select();
 
+         $this->assign('car_list',$car_list);
 
-        $this->fetch();
+      return  $this->fetch();
     }
 
+
+    public function cart_del(){
+            $cart_id=input('cart_id');
+           $res=Db::name('cart_order')->where('cart_id',$cart_id)->delete();
+        if ($res) {
+            $data = array(
+                'code' => 1,
+                'msg' => '删除成功',
+            );
+            $this->ajaxReturn($data);
+        }else{
+            $data = array(
+                'code' => 0,
+                'msg' => '删除失败！',
+
+            );
+            $this->ajaxReturn($data);
+        }
+
+
+    }
 
 
     public function ajaxReturn($data,$type = 'json'){
