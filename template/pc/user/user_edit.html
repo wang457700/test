@@ -88,21 +88,21 @@
                         <div class="form-group">
                           <label for="inputEmail3" class="col-sm-3 control-label"><span class="color_ro">*</span>出生日期：</label>
                           <div class="col-sm-2">
-                            <select class="form-control select_e" name="birthday['year']">
+                            <select class="form-control select_e" name="birthday_year">
                               <option value="1989">1989</option>
                               <option value="">1990</option>
                               <option value="">1991</option>
                             </select>
                           </div>
                           <div class="col-sm-2">
-                            <select class="form-control select_e" name="birthday['month']">
+                            <select class="form-control select_e" name="birthday_month">
                               <option value="10">10</option>
                               <option value="">11</option>
                               <option value="">12</option>
                             </select>
                           </div>
                           <div class="col-sm-2">
-                            <select class="form-control select_e" name="birthday['day']">
+                            <select class="form-control select_e" name="birthday_day">
                               <option value="23">23</option>
                               <option value="">24</option>
                               <option value="">25</option>
@@ -113,35 +113,33 @@
                         <div class="form-group">
                           <label for="inputEmail3" class="col-sm-3 control-label"><span class="color_ro">*</span>地址：</label>
                           <div class="col-sm-2">
-                            <select class="form-control select_e" name="country">
-                              <option value="香港">香港</option>
-                              <option value="">香港</option>
-                              <option value="">香港</option>
+                            <select onchange="get_city(this)" class="form-control select_e" id="province" name="province"  title="请选择所在省份">
+                              <option value="">选择省份</option>
+                              {volist name="province" id="vo"}
+                                <option value="{$vo.id}" {if condition="$vo['id'] eq $region_province['id']"} selected="selected"{/if} >{$vo.name}</option>
+                              {/volist}
                             </select>
                           </div>
                           <div class="col-sm-2">
-                            <select class="form-control select_e" name="province">
-                              <option value="九龍">九龍</option>
-                              <option value="">九龍</option>
-                              <option value="">九龍</option>
+                            <select onchange="get_area(this)" id="city" class="form-control select_e" name="city" title="请选择所在城市">
+                              <option value="">选择城市</option>
+                              <option value="{$region_city['id']}" selected="selected" >{$region_city['name']}</option>
                             </select>
                           </div>
                           <div class="col-sm-2">
-                            <select class="form-control select_e" name="city">
-                              <option value="藍田">藍田</option>
-                              <option value="">藍田</option>
-                              <option value="">藍田</option>
+                            <select id="district" class="form-control select_e" name="district">
+                              <option value="0">选择区域</option>
+                              <option value="{$region_district['id']}" class="form-control select_e" selected="selected" >{$region_district['name']}</option>
+
                             </select>
                           </div>
                         </div>
-
                         <div class="form-group">
                           <label for="inputEmail3" class="col-sm-3 control-label"><span class="color_ro">*</span>詳細地址：</label>
                           <div class="col-sm-6">
-                            <input type="text" class="form-control input_e" id="address_details" placeholder="" name="address_detail">
+                            <input type="text" class="form-control input_e" value="{$edit_category.address}" id="address_details" placeholder="" name="address_detail">
                           </div>
                         </div>
-
                       </div>
                       <div class="col-md-2"></div>
                     </div>
@@ -185,6 +183,106 @@
 
                 return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
             }
+
+
+            /**
+             * 获取省份
+             */
+            function get_province(){
+              //  var url = '/index.php?m=Admin&c=Api&a=getRegion&level=1&parent_id=0';
+                var url ="{:url('api/index/getRegion')}";
+                $.ajax({
+                    type : "GET",
+                    url  : url,
+                    data :{level:1,parent_id:0},
+                    error: function(request) {
+                        alert("服务器繁忙, 请联系管理员!");
+                        return;
+                    },
+                    success: function(v) {
+                        v = '<option value="0">选择省份</option>'+ v;
+                        $('#province').empty().html(v);
+                    }
+                });
+            }
+
+
+            /**
+             * 获取城市
+             * @param t  省份select对象
+             */
+            function get_city(t){
+                var parent_id = $(t).val();
+                if(!parent_id > 0){
+                    return;
+                }
+                $('#district').empty().css('display','none');
+                $('#twon').empty().css('display','none');
+               // var url = '/index.php?m=Admin&c=Api&a=getRegion&level=2&parent_id='+ parent_id;
+                 var url ="{:url('api/index/getRegion')}";
+                $.ajax({
+                    type : "GET",
+                    url  : url,
+                    data :{level:2,parent_id:parent_id},
+                    error: function(request) {
+                        alert("服务器繁忙, 请联系管理员!");
+                        return;
+                    },
+                    success: function(v) {
+                        v = '<option value="0">选择城市</option>'+ v;
+                        $('#city').empty().html(v);
+                    }
+                });
+            }
+
+            /**
+             * 获取地区
+             * @param t  城市select对象
+             */
+            function get_area(t){
+                var parent_id = $(t).val();
+                if(!parent_id > 0){
+                    return;
+                }
+                $('#district').empty().css('display','inline');
+                $('#twon').empty().css('display','none');
+                //var url = '/index.php?m=Admin&c=Api&a=getRegion&level=3&parent_id='+ parent_id;
+                var url ="{:url('api/index/getRegion')}";
+                $.ajax({
+                    type : "GET",
+                    url  : url,
+                    data :{level:3,parent_id:parent_id},
+                    error: function(request) {
+                        alert("服务器繁忙, 请联系管理员!");
+                        return;
+                    },
+                    success: function(v) {
+                        v = '<option>选择区域</option>'+ v;
+                        $('#district').empty().html(v);
+                    }
+                });
+            }
+
+            // 获取最后一级乡镇
+            function get_twon(obj){
+                var parent_id = $(obj).val();
+               // var url = '/index.php?m=Admin&c=Api&a=getTwon&parent_id='+ parent_id;
+                var url ="{:url('api/getTwon')}";
+                $.ajax({
+                    type : "GET",
+                    url  : url,
+                    data :{parent_id:parent_id},
+                    success: function(res) {
+                        if(parseInt(res) == 0){
+                            $('#twon').empty().css('display','none');
+                        }else{
+                            $('#twon').css('display','inline');
+                            $('#twon').empty().html(res);
+                        }
+                    }
+                });
+            }
+
         </script>
     </div>
     {include file="common/footer"/}
