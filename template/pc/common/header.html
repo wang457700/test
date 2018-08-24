@@ -1,7 +1,6 @@
  <div class="header">
    <div class="container" style="padding: 5px 0;"> 
         <div class="h_left">
-
         <?php
             $user_id = Session('user_id');
             $user = Session('user');
@@ -37,7 +36,7 @@
                 <a class="color_99">專業運動鞋</a>
                 <button type="submit" class="btn btn-default" aria-label="Left Align">搜索</button></form>
             </div>
-            <a class="shopping">我的购物车<span class="color_gr">0</span></a> 
+            <a class="shopping" href="{:url('cart/shopping_cart')}">我的购物车<span class="color_gr">0</span></a>
             <div class="logo-2">
               <img src="__TMPL_PUBLIC__/img/logo-2.png">
             </div>  
