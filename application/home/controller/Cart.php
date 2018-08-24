@@ -45,12 +45,21 @@ class Cart extends Frontend
 
 
         $user_id=  Session::get('user_id');
-        $list= Db::name('cart_order')->alias('a')->field('c.*,a.product_id as goods_id,a.user_id,a.cart_id')->join('__GOODS__ c','a.product_id=c.product_id','RIGHT')->where('user_id',$user_id)->group('c.product_id')->select();
+        $list= Db::name('cart_order')->alias('a')->field('c.*,a.product_id as goods_id,a.user_id,a.cart_id')->join('__GOODS__ c','a.product_id=c.product_id','RIGHT')->where('user_id',8)->group('c.product_id')->select();
 
+
+
+        $sum=0;
         foreach ($list as $key=>$item){
-            $list[$key]['total']=Db::name('cart_order')->where(array('product_id'=>$item['product_id']))->count();
+
+                $total=Db::name('cart_order')->where(array('product_id'=>$item['product_id']))->count();
+               $list[$key]['total']=$total;
+               $list[$key]['total_price']=$total*$item['price'];
+               $sum+=$list[$key]['total_price'];
+
         }
 
+        $this->assign('all_price',$sum);
         $this->assign('car_list',$list);
         $this->assign('title','我的购物车');
         return  $this->fetch();
