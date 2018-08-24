@@ -38,7 +38,7 @@ class Cart extends Frontend
             );
             $this->ajaxReturn($data);
         }
-
+        $this->assign('title','我的购物车');
     }
 
     public function shopping_cart(){
