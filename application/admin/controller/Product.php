@@ -45,7 +45,7 @@ class Product extends Backend
         $cat_list = Db::name('category')->where("pid = 14")->select();
         if($this->request->isAjax()){
             $data=input('post.');
-            $data['cat_id']=17;
+
             $product_name=Db::name('goods')->where('product_name',$data['product_name'])->find();
             if($product_name){
                 $this->error('该商品名称已经添加');
@@ -58,7 +58,7 @@ class Product extends Backend
             $data['img_url']=implode(',',$img_url);
             $res=Db::name('goods')->insertGetId($data);
             if($res){
-                $this->success('添加成功！');
+                $this->success('添加成功！',url('product/index'));
             }else{
                 $this->error('添加失败');
             }
@@ -81,8 +81,14 @@ class Product extends Backend
             '0'=>'下架',
             '1'=>'上架'
         );
+
+        $is_on=array(
+            '0'=>'上架',
+            '1'=>'下架'
+        );
         $page = $list->render();
         $this->assign('list',$list);
+        $this->assign('is_on',$is_on);
         $this->assign('page', $page);
         $this->assign('is_on_sale',$is_on_sale);
         return    $this->view->fetch();
@@ -255,36 +261,60 @@ class Product extends Backend
     }
     public function edit($ids = NULL){
 
-          $product_id=input('product_id');
+        $product_id=input('product_id');
         $product_list=Db::name('goods')->where('product_id',$product_id)->find();
-         $img_url=explode(',',$product_list['img_url']);
+
+        $img_url=explode(',',$product_list['img_url']);
+
+        //cai_id 为 三级
+        $parent_two_id = Db::name('category')->where('id',$product_list['cat_id'])->value('pid');
+        if($parent_two_id){
+            $parent_thee_id = Db::name('category')->where("id", $parent_two_id)->value('pid');
+        }
+        $product_list['cat_id'] = array_values(array_filter(array($parent_thee_id==14?'':$parent_thee_id,$parent_two_id==14?'':$parent_two_id,$product_list['cat_id'])));
 
         $cat_list = Db::name('category')->where("pid = 14")->select();
         if($this->request->isAjax()){
             $data=input('post.');
-            $data['cat_id']=17;
 
             if(empty($data['cat_id'])){
                 $this->error('请选择分类');
             }
             $img_url=input('img_url/a');
             $data['img_url']=implode(',',$img_url);
-            $res=Db::name('goods')->where($data);
+            $res=Db::name('goods')->where('product_id',$data['product_id'])->update($data);
+
+            return json($data);
+
+            exit;
             if($res){
-                $this->success('添加成功！');
+
+                $this->success('添加成功！',json_encode($data,true));
+
             }else{
                 $this->error('添加失败');
             }
         }
 
+        $category_list = array(
+            $this->get_category($parent_thee_id),
+            $this->get_category($parent_two_id),
+        );
+
+      //  $this->assign('two_parent_id', $two_parent_id);
         $this->assign('img_url',$img_url);
-        $this->assign('product_list',$product_list);
+        $this->assign('product_id',$product_id);
+
+        $this->assign('category_list',$category_list);
         $this->assign('product_list',$product_list);
         $this->assign('cat_list',$cat_list);
 
         return $this->view->fetch();
+    }
 
-
+    public function get_category($parent_id){
+        $list = Db::name('category')->where("pid",$parent_id)->select();
+        return $list;
     }
 
 }

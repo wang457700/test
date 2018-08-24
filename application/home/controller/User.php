@@ -96,7 +96,6 @@ class User extends Frontend
         return $this->view->fetch();
     }
 
-
 	/**
      * 邮箱激活
      */
@@ -129,7 +128,6 @@ class User extends Frontend
      * 邮箱激活
      */
     public function is_email(){
-
     	$user_id=base64_decode(input('token'));
         $res= Db::name('user')->where(array('id'=>$user_id))->value('is_eamil_status');
         if($res){

@@ -94,7 +94,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                     ]
                 ]
             });
-
             // 为表格绑定事件
             Table.api.bindevent(table);
         },
@@ -232,6 +231,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
         },
 
         add: function () {
+
             Controller.api.bindevent();
             // 初始化表格参数配置
             Table.api.init({
@@ -248,8 +248,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                    });
                  });
             });
-
-            console.log($.fn.bootstrapTable.defaults.extend);
 
             //选择分类
             $(function(){
@@ -270,18 +268,29 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
              */
 
             function get_category(id,next,select_id){
+                if(id == 0){
+                    return false;
+                }
                 $.ajax({
                     type : "GET",
                     url  : $('#get_category_url').val(),
                     data:{parent_id:id},
                     dataType:'json',
                     success: function(data) {
-                        var html = "<option value='0'>请选择商品分类</option>";
-                        $.each(data.result,function(index, value) {
-                            html+= "<option value='"+value.id+"'>"+value.name+"</option>";
-                        });
-                        $('#'+next).empty().append(html);
-                        // (select_id > 0) && $('#'+next).val(select_id);//默认选中
+                        if(data.status == 1){
+                            var html = "<option value='0'>请选择商品分类</option>";
+                            $.each(data.result,function(index, value) {
+                                if(value.id == select_id){
+                                    var selected = 'selected';
+                                }else {
+                                    var selected = '';
+                                }
+                                html+= "<option value='"+value.id+"' selected>"+value.name+"</option>";
+                            });
+                            $('#'+next).empty().append(html).show().attr('name','cat_id');
+                        }else{
+                            $('#'+next).hide().attr('name','');
+                        }
                     }
                 });
             }
@@ -306,6 +315,16 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
 
             //选择分类
             $(function(){
+                var cat_id_01 = $('#cat_id_01').val();
+                var cat_id_02 = $('#cat_id_02').val();
+                var cat_id_03 = $('#cat_id_02').val();
+                if(cat_id_02){
+                    get_category($('#cat_id_01').val(),'cat_id_2',$('#cat_id_01').val());
+                }
+                if(cat_id_03){
+                    get_category($('#cat_id_02').val(),'cat_id_3',$('#cat_id_02').val());
+                }
+
                 $(document).on("change",'#cat_id',function(){
                     get_category($(this).val(),'cat_id_2','0');
                     $('#cat_id_2').empty().html("<option value='0'>请选择商品分类</option>");
@@ -321,18 +340,29 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
              */
 
             function get_category(id,next,select_id){
+               if(id == 0){
+                   return false;
+               }
                 $.ajax({
                     type : "GET",
                     url  : $('#get_category_url').val(),
                     data:{parent_id:id},
                     dataType:'json',
                     success: function(data) {
-                        var html = "<option value='0'>请选择商品分类</option>";
-                        $.each(data.result,function(index, value) {
-                            html+= "<option value='"+value.id+"'>"+value.name+"</option>";
-                        });
-                        $('#'+next).empty().append(html);
-                        // (select_id > 0) && $('#'+next).val(select_id);//默认选中
+                        if(data.status == 1){
+                            var html = "<option value='0'>请选择商品分类</option>";
+                            $.each(data.result,function(index, value) {
+                                if(value.id == select_id){
+                                    var selected = 'selected';
+                                }else {
+                                    var selected = '';
+                                }
+                                html+= "<option value='"+value.id+"' selected>"+value.name+"</option>";
+                            });
+                            $('#'+next).empty().append(html).show().attr('name','cat_id');
+                        }else{
+                            $('#'+next).hide().attr('name','');
+                        }
                     }
                 });
             }

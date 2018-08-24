@@ -178,33 +178,64 @@ define(['fast', 'template', 'moment'], function (Fast, Template, Moment) {
                 var options = $.extend({}, $(that).data() || {});
                 if (typeof options.url === 'undefined' && $(that).attr("href")) {
                     options.url = $(that).attr("href");
-                }
+                } 
                 options.url = Backend.api.replaceids(this, options.url);
                 var success = typeof options.success === 'function' ? options.success : null;
                 var error = typeof options.error === 'function' ? options.error : null;
                 delete options.success;
                 delete options.error;
                 var button = Backend.api.gettablecolumnbutton(options);
-                if (button) {
+                if (button) { 
                     if (typeof button.success === 'function') {
-                        success = button.success;
+                        success = button.success; 
                     }
                     if (typeof button.error === 'function') {
-                        error = button.error;
-                    }
+                        error = button.error; 
+                    } 
                 }
+
                 //如果未设备成功的回调,设定了自动刷新的情况下自动进行刷新
                 if (!success && typeof options.tableId !== 'undefined' && typeof options.refresh !== 'undefined' && options.refresh) {
-                    $("#" + options.tableId).bootstrapTable('refresh');
+                    $("#" + options.tableId).bootstrapTable('refresh'); 
                 }
                 if (typeof options.confirm !== 'undefined') {
                     Layer.confirm(options.confirm, function (index) {
                         Backend.api.ajax(options, success, error);
-                        Layer.close(index);
+                        Layer.close(index); 
                     });
                 } else {
                     Backend.api.ajax(options, success, error);
                 }
+
+                console.log(success);
+                return false;
+            });
+
+            //点击包含.btn-ajax的元素时发送Ajax请求
+            $(document).on('click', '.btn-ajax-xs', function (e) {
+
+                var that = this;
+                var options = $.extend({}, $(that).data() || {});
+                if (typeof options.url === 'undefined' && $(that).attr("href")) {
+                    options.url = $(that).attr("href");
+                }
+                options.url = Backend.api.replaceids(this, options.url);
+                Fast.api.ajax({
+                    url:options.url,
+                }, function(data, ret){
+                    if(ret.msg==''){var msg ='操作成功！'}else{ var msg = ret.msg;}
+                    //成功的回调
+                    alert(msg);
+                    window.location.reload();
+                    return false;
+                }, function(data, ret){
+                    if(ret.msg==''){var msg ='操作失败！'}else{ var msg = ret.msg;}
+                    //失败的回调
+                    //alert(ret.msg);
+                    alert(msg);
+                    return false;
+                });
+
                 return false;
             });
             //修复含有fixed-footer类的body边距
