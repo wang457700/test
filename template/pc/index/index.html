@@ -129,7 +129,6 @@
             </div>
         </div>
         <div class="col-md-7 f2 col-xs-7" style="padding: 0;">
-
             <p class="index_title" style="background-position-y: -25px;"> Top Ten</p>
             <div class="swiper-container2" style="overflow: hidden;position: relative;">
               <div class="swiper-wrapper row">
@@ -138,7 +137,7 @@
                       <p></p>
                       <img src="__PUBLIC__/{$vo.cover}">
                       <span class="font24"><i class="font12">$</i>{$vo.price}</span>
-                      <a class="adds">+</a>
+                      <a class="adds" data-productid="{$vo.product_id}">+</a>
                   </div>
                   {/foreach}
                 </div>
@@ -427,6 +426,8 @@
 
     </div>
 	{include file="common/footer"/}
+
+    <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 

@@ -49,3 +49,10 @@ $(".js-ajax-delete").click(function(){
  }
   
 });
+/* 加入购物车 */
+$(".adds").click(function(){
+    $.message('成功加入购物车！');
+    var num = $('.shopping span').text();
+     $('.shopping span').text(Number(num) + 1);
+});
+
