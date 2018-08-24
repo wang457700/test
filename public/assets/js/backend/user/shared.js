@@ -24,12 +24,12 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 columns: [
                     [
                         {checkbox: true},
-                        {field: 'title', title: __('title'), operate: false},
+                        {field: 'product_name', title: __('title'), operate: false},
                         {field: 'category_name', title: __('分类'), operate: false},
-                        {field: 'cover', title: __('封面图'), formatter: Table.api.formatter.image, operate: false},
+                        {field: 'product_pic', title: __('封面图'), formatter: Table.api.formatter.image, operate: false},
                         {field: 'user_name', title: __('用戶名'), operate: false},
                         {field: 'user_id', title: __('用戶ID'), operate: false},
-                        {field: 'status', title: __('狀態'), operate: false},
+                        {field: 'status_text', title: __('狀態'), operate: false},
 
                        /* {field: 'username', title: __('Username'), operate: 'LIKE'},
                         {field: 'nickname', title: __('Nickname'), operate: 'LIKE'},

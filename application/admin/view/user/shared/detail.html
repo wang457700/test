@@ -5,7 +5,7 @@
     <tbody>
         <tr>
             <th>标题</th>
-            <td>{$row.title}</td>
+            <td>{$row.product_name}</td>
         </tr>
         <tr>
             <th>分类</th>
@@ -13,7 +13,9 @@
         </tr>
         <tr>
             <th>封面图</th>
-            <td>{$row.img}</td>
+            <td>
+                <img src="__PUBLIC__/{$row.product_pic}" />
+            </td>
         </tr>
         <tr>
             <th>用戶名</th>
@@ -22,17 +24,20 @@
         <tr>
             <th>用戶ID</th>
             <td>{$row.user_id}</td>
-        </tr> 
+        </tr>
+        <?php
+            $status = array('0'=>'未审核','1'=>'已审核','2'=>'下架',);
+        ?>
         <tr>
             <th>狀態</th>
-            <td>{$row.status}</td>
+            <td>{$status[$row['status']]}</td>
         </tr>
         <tr>
             <th>發佈時間</th>
-            <td>{$row.add_time}</td>
+            <td>{:date('Y-m-d H:i',$row['add_date'])}</td>
         </tr>
         {if $Think.get.dialog}
-        <!--<tr>
+        <tr>
             <td>回传数据</td>
             <td>
                 <div class="input-group">
@@ -40,15 +45,12 @@
                     <span class="input-group-btn"><a href="javascript:;" class="btn btn-success btn-callback" >审核通过</a></span>
                 </div>
             </td>
-        </tr>-->
+        </tr>
         {/if}
     </tbody>
 </table>
 <div class="hide layer-footer">
     <label class="control-label col-xs-12 col-sm-2"></label>
-    <div class="col-xs-6 col-sm-2">
-        <button type="reset" class="btn btn-success btn-callback">审核通过</button>
-    </div>
     <div class="col-xs-6 col-sm-2">
         <button type="reset" class="btn btn-primary btn-embossed btn-close" onclick="Layer.closeAll();">{:__('Close')}</button>
     </div>

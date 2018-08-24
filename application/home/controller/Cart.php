@@ -29,7 +29,7 @@ class Cart extends Frontend
                 'msg' => '加入购物车成功！',
                 'total' => $total
             );
-         $this->ajaxReturn($data);
+            $this->ajaxReturn($data);
         }else{
             $data = array(
                 'code' => 0,
@@ -44,22 +44,22 @@ class Cart extends Frontend
     public function shopping_cart(){
 
 
-         $user_id=  Session::get('user_id');
-         $list= Db::name('cart_order')->alias('a')->field('c.*,a.product_id as goods_id,a.user_id,a.cart_id')->join('__GOODS__ c','a.product_id=c.product_id','RIGHT')->where('user_id',$user_id)->group('c.product_id')->select();
+        $user_id=  Session::get('user_id');
+        $list= Db::name('cart_order')->alias('a')->field('c.*,a.product_id as goods_id,a.user_id,a.cart_id')->join('__GOODS__ c','a.product_id=c.product_id','RIGHT')->where('user_id',$user_id)->group('c.product_id')->select();
 
-         foreach ($list as $key=>$item){
-              $list[$key]['total']=Db::name('cart_order')->where(array('product_id'=>$item['product_id']))->count();
-         }
+        foreach ($list as $key=>$item){
+            $list[$key]['total']=Db::name('cart_order')->where(array('product_id'=>$item['product_id']))->count();
+        }
 
-         $this->assign('car_list',$list);
+        $this->assign('car_list',$list);
 
-      return  $this->fetch();
+        return  $this->fetch();
     }
 
 
     public function cart_del(){
-            $cart_id=input('cart_id');
-           $res=Db::name('cart_order')->where('cart_id',$cart_id)->delete();
+        $cart_id=input('cart_id');
+        $res=Db::name('cart_order')->where('cart_id',$cart_id)->delete();
         if ($res) {
             $data = array(
                 'code' => 1,
