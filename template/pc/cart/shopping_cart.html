@@ -26,22 +26,22 @@
 			</ul>
 		</div>
 		<div class="row item-single">
-			<div class="col-md-1 col-xs-1" style="text-align: center;" id="checked" data-id='0'>全選</div>
+			<div class="col-md-1 col-xs-1" style="text-align: center;cursor: default;" id="checked" data-id='0' >全選</div>
 			<div class="col-md-4 col-xs-4" style="">商品</div>
 			<div class="col-md-1 col-xs-1" style="">單價</div>
 			<div class="col-md-3 col-xs-3" style="">購買數量	</div>
 			<div class="col-md-2 col-xs-2" style="">小計</div>
 			<div class="col-md-1 col-xs-1" style="">操作</div>
 		</div>
-
-	 {foreach name="car_list" item="vo"}
+<form action="{:URL('cart/shopping_cart_post')}" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return cartform()" id="cart-form">
+		 {foreach name="car_list" item="vo"}
 		<!--第{$key}个产品-->
 		<div class="row cart-item-list"  id="list_{$key}" >
-			<input type="hidden" value="{$vo.price}" id="unit_price_{$key}"/>
-			<input type="hidden" name="subtotal" value="{$vo.price}" id="subtotal_{$key}"/>
+			<input type="hidden" value="{$vo.price}" name="price[]" id="unit_price_{$key}"/>
+			<input type="hidden" value="{$vo.price}" id="subtotal_{$key}"/>
 			<!-- <input type="hidden" value="2" id="number_1"/> -->
 			<div class="col-md-1 col-xs-1" style="">
-				<input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids" value="{$vo.product_id}" title="ID:106">
+				<input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="goods_id[]" value="{$vo.product_id}" title="ID:106">
 				<label for='checkbox1'></label>
 			</div>
 			<div class="col-md-4 col-xs-4 t2" style="">
@@ -58,14 +58,15 @@
 					<div class="row number">
 					  <div class="col-md-12" style="">
 						<input id="min_{$key}" name="" type="button" value="-" class="reduce" onclick="on_number({$key},'min')">
-						<input id="number_{$key}" name="" type="text" value="{$vo.total}" style="width:40px;text-align: center"  class="color_75">
+						<input id="number_{$key}" name="goods_num[]" type="text" value="{$vo.total}" style="width:40px;text-align: center"  class="color_75">
 						<input id="add_{$key}" name="" type="button" value="+" class="add" onclick="on_number({$key},'add')">
 					  </div>
 					</div>
 			</div>
-			<div class="col-md-2 col-xs-2 color_ro font18" style="">$ <span id="subtotal_span_{$key}">{$vo['price']*$vo['total']}</span></div>
-			<div class="col-md-1 col-xs-1 t6" style=""><a href="{:url('cart/cart_del',array('cart_id'=>$vo['cart_id']))}" class="js-ajax-delete" onclick="return false;"><i class="fa fa-trash-o" aria-hidden="true" style="color:#666"></i></a></div>
+			<div class="col-md-2 col-xs-2 color_ro font18" style="">$ <span id="subtotal_span_{$key}">{:number_format($vo['price']*$vo['total'],2)}</span></div>
+			<div class="col-md-1 col-xs-1 t6" style=""><a href="{:url('cart/cart_del',array('product_id'=>$vo['product_id']))}" class="js-ajax-delete" onclick="return false;"><i class="fa fa-trash-o" aria-hidden="true" style="color:#666"></i></a></div>
 		</div>
+        <?php $total_num[] =  $vo['total']; ?>
 	 {/foreach}
 		 
 <!--第2个产品-->
@@ -100,30 +101,26 @@
 			<div class="col-md-1 col-xs-1 t6"><i class="fa fa-trash-o" aria-hidden="true" onclick="del('2')"></i></div>
 
 		</div>-->
-		 
-
 		<div class="row" style="padding: 20px;">
 			<div class="col-md-8" style="display: none">
 				<h4>積分抵扣現金</h4>
 				<input type="checkbox" class="checkbox"/>您當前有<span class="color_ro">120</span>積分，可抵扣<span class="color_ro">$12.0</span>
-
 			</div>
 			<div class="col-md-4" style="float: right;text-align: right;">
-				<span class="color_ro">2</span>件商品, 總計: <span class="color_ro" id="total">$ 20000.00</span>
+				<span class="color_ro" id="total_sum">{:array_sum($total_num)}</span>件商品, 總計: <span class="color_ro" id="total">$ {:number_format($all_price,2)}</span>
 				<br/>運費: $ 0<br/>
-				<p style="font-size:22px ">合計 (不含運費)：<span class="color_ro">$ 20000.00</span></p>
+				<p style="font-size:22px ">合計 (不含運費)：<span class="color_ro" id="total_no_yunxfei">$ {:number_format($all_price,2)}</span></p>
 				<div class="row" style="padding:10px 0 ">
-                   <div class="col-md-6" style="">
-                        <button type="button" class="btn btn-default btn-default-edit" style="margin-bottom: 1em">繼續購物</button>
+                   <div class="col-md-6" style=""><a href="{:url('index/index')}">
+					   <button type="button" class="btn btn-default btn-default-edit" style="margin-bottom: 1em">繼續購物</button></a>
                     </div>
                      <div class="col-md-6" style="">
-                        <button type="button" class="btn btn-warning btn-warning-edit">提交訂單</button>
+                        <button type="submit" class="btn btn-warning btn-warning-edit">提交訂單</button>
                     </div> 
                 </div>
 			</div>
 		</div>
-
-
+</form>
 		 {include file="common/footer"/}
 		 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
 		 <script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
@@ -148,9 +145,8 @@
 					  if (parseInt(t.val())==1){
 					  $('#min_' + id).attr('disabled',true);
 					};
-					 
 				}
-				 
+
 				var unit_price = $('#unit_price_' + id).val();
 				var number = t.val();
 				var subtotal_price = Number(unit_price)*Number(number);
@@ -163,38 +159,54 @@
 			//统计总价格	
 			function total(){
 				var sum=0;
-				$("input[name^='subtotal']").each(function(){ 
+				var total_sum=0;
+				$("input[id^='subtotal']").each(function(){
 						sum+= Number($(this).val()); 
 				});
+                $("input[name^='goods_num[]']").each(function(){
+                    total_sum+= Number($(this).val());
+                });
+				$('#total_sum').text(Number(total_sum));
 				$('#total').text('$ '+ sum.toFixed(2));
-
+				$('#total_no_yunxfei').text('$ '+ sum.toFixed(2));
 			}
 
 			//全选或不选
 			$("#checked").on('click',function(){
+
 				if($(this).data('id') == 1){
-					$("input[name=ids]").each(function(){
+					$("input[name^='goods_id[]']").each(function(){
 						$(this).prop('checked', false);
 					});
 					$(this).data('id',0);
 				}else{
-					$("input[name=ids]").each(function(){ 
+					$("input[name^='goods_id[]']").each(function(){
 						$(this).prop('checked', true);
 					});
 					$(this).data('id',1);
 				}
-			}); 
- 			
- 			//移除购物车
-			function del(id){
+			});
 
-				var r=confirm("你确定要删除购物车的商品吗？")
-			 	if (r==true){
-			    	$('#list_' + id).remove();
-					total();
-			    }
+            function cartform(){
+                console.log($('#cart-form').serializeArray());
+					alert(1);
+                // jquery 表单提交
+                $("#cart-form").ajaxSubmit(function(data){
+                    console.log(data);
+                    if(data.code == 0){
+                        $.message({message:data.msg,type:'warning',time:'3000'});
+                    }else{
+                        $.message(data.msg);
+                        setTimeout(function () {
+                            //window.location = data.url
+                        },2500);
+                    }
+                });
 
-			}
+                return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
+            }
+
+
 	</script> 
 
 	</body>
