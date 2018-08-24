@@ -95,8 +95,8 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 .f2 .list {text-align:center;background:#fff;border-radius: 10px;padding: 1em;}
 .f2 .list .adds{padding: 0.2em 0.6em;background: #7ac142;color:  #fff;border-radius: 2em;font-size: 1.5em;float: right;line-height: 0.8em;}
 .f2 .swiper-wrapper {margin: 0;}
-.f2 .swiper-button-next {margin: 0;right: -3em;background: #ffffff85 url(../img/swiper-button-next.png) no-repeat center;background-size: 20px;opacity: 0.8;padding:  20px;} 
-
+.f2 .swiper-button-next {margin: 0;right: -3em;background: #ffffff85 url(../img/swiper-button-next.png) no-repeat center;background-size: 20px;opacity: 0.8;padding:  20px;}
+.adds:hover{background: #6ea742 !important;cursor:default}
 .f2 .list img {width:100%;margin: 1em auto;}
 .f1 .list {background:#fff;border-radius: 10px;padding:0;text-align:center;margin: 0 25px;margin-left: 15px;margin-right: 30px}
 .f1 .list img {width:100%;margin: 3em 0 0em 0;}
