@@ -29,7 +29,14 @@ class Cart extends Frontend
                 'msg' => '加入购物车成功！',
                 'total' => $total
             );
-     $this->ajaxReturn($data);
+         $this->ajaxReturn($data);
+        }else{
+            $data = array(
+                'code' => 0,
+                'msg' => '加入购物车失败！',
+
+            );
+            $this->ajaxReturn($data);
         }
 
     }
