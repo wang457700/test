@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  
+
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <link href="__TMPL_PUBLIC__/css/style.css" rel="stylesheet"> 
+    <link href="__TMPL_PUBLIC__/css/style.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css" rel="stylesheet">
     <title>营康会首頁</title>
 	<style>
@@ -27,7 +27,7 @@
             right:0;
         }
     </style>
-  </head> 
+  </head>
   <body style="background: url(__TMPL_PUBLIC__/img/index_bg.jpg) repeat-y;">
 	<div class="left">
 		<img src="./images/1.gif" alt="">
@@ -36,11 +36,11 @@
 		<img src="./images/2.gif" alt="">
 	</div>
 <!--头部 str-->
-   {include file="common/header"/} 
+   {include file="common/header"/}
 <!--头部 end-->
-     
-	{include file="common/nav"/} 
-	
+
+	{include file="common/nav"/}
+
     <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/Swiper/3.4.0/css/swiper.min.css" media="screen">
 	<script src="https://cdn.bootcss.com/Swiper/4.3.0/js/swiper.min.js"></script>
   <div class="swiper-container" style="">
@@ -58,7 +58,7 @@
       </div>
       <!-- 如果需要分页器 -->
       <div class="swiper-pagination"></div>
-      <script language="javascript"> 
+      <script language="javascript">
         var mySwiper = new Swiper('.swiper-container',{
         pagination: {
           el: '.swiper-pagination',
@@ -82,7 +82,7 @@
             {/eq}
           {/foreach}
       </div>
-      
+
       <div class="ads_right" style="width: 16%;z-index: 9999;right: 0;">
     	 	<a class="close" href="javascript:$('.ads_right').hide()">×</a>
       	<div class="index_news" style="">
@@ -105,7 +105,7 @@
       					<p>安神龍眼百合茶唔怕眼光光… </p>
       					<p >材料：龍眼肉10克百合…</p>
       					<p>2018-07-03，週二</p>
-      				</li> 
+      				</li>
       			</ul>
           </div>
           <img src="__TMPL_PUBLIC__/img/ads_1.png">
@@ -129,43 +129,21 @@
             </div>
         </div>
         <div class="col-md-7 f2 col-xs-7" style="padding: 0;">
- 
+
             <p class="index_title" style="background-position-y: -25px;"> Top Ten</p>
             <div class="swiper-container2" style="overflow: hidden;position: relative;">
               <div class="swiper-wrapper row">
+                  {foreach  name="top_ten" item='vo'}
                   <div class="swiper-slide col-md-3 list">
-                      <p>ATex sports 肌肉運動貼</p>
-                      <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
-                      <span class="font24"><i class="font12">$</i>1234</span>
+                      <p></p>
+                      <img src="__PUBLIC__/{$vo.cover}">
+                      <span class="font24"><i class="font12">$</i>{$vo.price}</span>
                       <a class="adds">+</a>
                   </div>
-                  <div class="swiper-slide col-md-3 list">
-                      <p>ATex sports 肌肉運動貼</p>
-                      <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
-                       <span class="font24"><i class="font12">$</i>1234</span>
-                      <a class="adds">+</a>
-                  </div>
-                  <div class="swiper-slide col-md-3 list">
-                      <p>ATex sports 肌肉運動貼</p>
-                      <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
-					   <span class="font24"><i class="font12">$</i>1234</span>
-                      <a class="adds">+</a>
-                  </div>
-                  <div class="swiper-slide col-md-3 list">
-                      <p>ATex sports 肌肉運動貼</p>
-                      <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
-                       <span class="font24"><i class="font12">$</i>1234</span>
-                      <a class="adds">+</a>
-                  </div>
-                  <div class="swiper-slide col-md-3 list">
-                      <p>ATex sports 肌肉運動貼</p>
-                      <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
-                       <span class="font24"><i class="font12">$</i>1234</span>
-                      <a class="adds">+</a>
-                  </div>
+                  {/foreach}
                 </div>
                 <!-- Add Arrows -->
-               
+
 
               </div>
                <div class="swiper-button-next"></div>
@@ -183,7 +161,7 @@
                   </script>
 
            </div>
-            
+
         </div>
 
 
@@ -194,14 +172,14 @@
                         <img src="{:fa_get_image_url($vo['slide_pic'])}">
                   {/eq}
               {/foreach}
-          </div> 
+          </div>
           <div class="col-md-8 col-xs-8 p_right_0">
               {foreach name="slide" item="vo"}
                 {eq name="vo['slide_type']" value="center_right_banner"}
                          <img src="{:fa_get_image_url($vo['slide_pic'])}" style="margin-bottom: 1.5em;"> <br>
                  {/eq}
               {/foreach}
-          </div> 
+          </div>
         </div>
 
 
@@ -209,7 +187,7 @@
         <div class="row f3" style="padding: 20px 0;">
           <p class="index_title" style="background-position-y: -50px;"> 復康產品</p>
           <div class="border_top1"></div>
-          <div class="col-md-2 col-xs-2 n1"> 
+          <div class="col-md-2 col-xs-2 n1">
               <img src="__TMPL_PUBLIC__/data/index_2.png">
               <div class="d1">
                 <p class="font16 bold">Polar 心率錶</p>
@@ -219,7 +197,7 @@
                     <a class="adds">+</a>
                 </div>
               </div>
-          </div> 
+          </div>
           <div class="col-md-10 col-xs-10 " style="background: #fff;">
               <div class="row">
                 <div class="col-md-12">
@@ -234,7 +212,7 @@
                                       <a class="adds" style="padding: 0.4em 0.8em;">+</a>
                                   </div>
                                 </div>
-                            </div> 
+                            </div>
 
                             <div class="col-md-3 col-xs-3 n2">
                                 <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
@@ -246,7 +224,7 @@
                                       <a class="adds">+</a>
                                   </div>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="col-md-3 col-xs-3 n2">
                                  <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
                                 <div class="d2">
@@ -258,9 +236,9 @@
                                   </div>
                                 </div>
                             </div>
-                       </div>  
- 
-                  </div> 
+                       </div>
+
+                  </div>
 
                   <div class="col-md-12">
                       <div class="row">
@@ -274,7 +252,7 @@
                                       <a class="adds" style="padding: 0.4em 0.8em;">+</a>
                                   </div>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="col-md-3 col-xs-3 n2">
                                  <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
                                 <div class="d2">
@@ -296,7 +274,7 @@
                                       <a class="adds">+</a>
                                   </div>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="col-md-3 col-xs-3 n2">
                                  <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
                                 <div class="d2">
@@ -309,7 +287,7 @@
                                 </div>
                             </div>
                        </div>
-                  </div> 
+                  </div>
              </div>
           </div>
         </div>
@@ -319,7 +297,7 @@
         <div class="row f3" style="padding: 20px 0;">
           <p class="index_title" style="background-position-y: -75px;"> 健康及有機產品</p>
           <div class="border_top1"></div>
-          <div class="col-md-2 col-xs-2 n1"> 
+          <div class="col-md-2 col-xs-2 n1">
               <img src="__TMPL_PUBLIC__/data/index_1.png">
               <div class="d1">
 				<p class="font16 bold">Polar 心率錶</p>
@@ -329,7 +307,7 @@
                     <a class="adds">+</a>
                 </div>
               </div>
-          </div> 
+          </div>
           <div class="col-md-10 col-xs-10" style="background: #fff;">
               <div class="row">
                  <div class="col-md-12">
@@ -344,7 +322,7 @@
                                       <a class="adds" style="padding: 0.4em 0.8em;">+</a>
                                   </div>
                                 </div>
-                            </div> 
+                            </div>
 
                             <div class="col-md-3 col-xs-3 n2">
                                 <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
@@ -356,7 +334,7 @@
                                       <a class="adds">+</a>
                                   </div>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="col-md-3 col-xs-3 n2">
                                  <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
                                 <div class="d2">
@@ -368,8 +346,8 @@
                                   </div>
                                 </div>
                             </div>
-                       </div>  
-                  </div> 
+                       </div>
+                  </div>
 
                   <div class="col-md-12">
                       <div class="row">
@@ -383,7 +361,7 @@
                                       <a class="adds">+</a>
                                   </div>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="col-md-3 col-xs-3 n2">
                                  <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
                                 <div class="d2">
@@ -405,7 +383,7 @@
                                       <a class="adds">+</a>
                                   </div>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="col-md-3 col-xs-3 n2">
                                  <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
                                 <div class="d2">
@@ -418,7 +396,7 @@
                                 </div>
                             </div>
                        </div>
-                  </div> 
+                  </div>
              </div>
           </div>
         </div>
@@ -427,59 +405,40 @@
 
 
 <!--- f6 str-->
-        <div class="row f6" style="padding: 20px 0;"> 
+        <div class="row f6" style="padding: 20px 0;">
           <p class="index_title" style="background-position-y: -100px;"> 共享平台</p>
           <div class="border_top1"></div>
-		  
-			<div class="row" style="margin: 0;padding: 2em 20px;background:  #fff;border-radius: 0 0 5px 5px;">
-			  <div class="col-md-6 col-xs-6 list"> 
-					<img src="__TMPL_PUBLIC__/img/f2_1.jpg" class="img_left" />
-					<div class="d1">
-					  <h3>Bremed Tens電療機2Channels</h3>
-					  <p>最近在營康薈網站新購買的產品，買回來后才發現不太適合我自己用，身邊也沒有親人朋友需要，所以轉讓出來，產品沒有任何破損，有需要的朋友請與我聯繫，謝謝。</p>
-					</div>
-			  </div>
-			  <div class="col-md-6 col-xs-6 list"> 
-					<img src="__TMPL_PUBLIC__/img/f2_1.jpg" class="img_left" />
-					<div class="d1">
-					  <h3>Bremed Tens電療機2Channels</h3>
-					  <p>最近在營康薈網站新購買的產品，買回來后才發現不太適合我自己用，身邊也沒有親人朋友需要，所以轉讓出來，產品沒有任何破損，有需要的朋友請與我聯繫，謝謝。</p>
-					</div>
-			  </div>
-			  <div class="col-md-6 col-xs-6 list"> 
-					<img src="__TMPL_PUBLIC__/img/f2_1.jpg" class="img_left" />
-					<div class="d1">
-					  <h3>Bremed Tens電療機2Channels</h3>
-					  <p>最近在營康薈網站新購買的產品，買回來后才發現不太適合我自己用，身邊也沒有親人朋友需要，所以轉讓出來，產品沒有任何破損，有需要的朋友請與我聯繫，謝謝。</p>
-					</div>
-			  </div>
-			  <div class="col-md-6 col-xs-6 list"> 
-					<img src="__TMPL_PUBLIC__/img/f2_1.jpg" class="img_left" />
-					<div class="d1">
-					  <h3>Bremed Tens電療機2Channels</h3>
-					  <p>最近在營康薈網站新購買的產品，買回來后才發現不太適合我自己用，身邊也沒有親人朋友需要，所以轉讓出來，產品沒有任何破損，有需要的朋友請與我聯繫，謝謝。</p>
-					</div>
-			  </div>
 
+			<div class="row" style="margin: 0;padding: 2em 20px;background:  #fff;border-radius: 0 0 5px 5px;">
+
+                {foreach name="share" item="vo"}
+			  <div class="col-md-6 col-xs-6 list">
+					<img src="__PUBLIC__/{$vo.product_pic}" class="img_left" />
+					<div class="d1">
+					  <h3>{$vo.product_name}</h3>
+					  <p>{$vo.product_content}</p>
+					</div>
+			  </div>
+                {/foreach}
 			</div>
         </div>
   <!--- f6 end-->
- 
+
 
     </div>
-	{include file="common/footer"/} 
+	{include file="common/footer"/}
 <script type="text/javascript">
 $(document).ready(function(){
 
   $(".fixediv a").click(function(){
-    
+
     $(".fixediv").fadeOut(400);
-    
+
   });
-  
+
   $(".ads_left").floatadv();
   $(".ads_right").floatadv();
-  
+
 });
 
 jQuery.fn.floatadv = function(loaded) {
@@ -487,24 +446,24 @@ jQuery.fn.floatadv = function(loaded) {
   body_height = parseInt($(window).height());
   block_height = parseInt(obj.height());
   container = parseInt($('.f3').height()+200);
-  
-  
+
+
   top_position = parseInt((body_height/2) - (block_height/2) + $(window).scrollTop());
   if (body_height<block_height) { top_position = 0 + $(window).scrollTop(); };
-  
-  
+
+
   console.log("top_position:" + top_position);
   console.log("container:" + container);
-  
-  
-  
+
+
+
 	if(!loaded){
 		obj.css({'position': 'absolute'});
 		obj.css({ 'top': container });
-		$(window).bind('resize', function() { 
+		$(window).bind('resize', function() {
 		  obj.floatadv(!loaded);
 		});
-		$(window).bind('scroll', function() { 
+		$(window).bind('scroll', function() {
 		  obj.floatadv(!loaded);
 		});
 	}else{
@@ -517,10 +476,10 @@ jQuery.fn.floatadv = function(loaded) {
 			obj.stop();
 			obj.css({'position': 'absolute'});
 			obj.animate({ 'top': top_position }, 500, 'linear');
-		} 
+		}
 	}
-	
-	
+
+
 }
 </script>
 
