@@ -223,9 +223,10 @@ define(['fast', 'template', 'moment'], function (Fast, Template, Moment) {
                 Fast.api.ajax({
                     url:options.url,
                 }, function(data, ret){
+
                     if(ret.msg==''){var msg ='操作成功！'}else{ var msg = ret.msg;}
                     //成功的回调
-                    alert(msg);
+                    Fast.events.onAjaxSuccess(msg,success);
                     window.location.reload();
                     return false;
                 }, function(data, ret){

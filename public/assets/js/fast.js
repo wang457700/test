@@ -60,6 +60,7 @@ define(['jquery', 'bootstrap', 'toastr', 'layer', 'lang'], function ($, undefine
         api: {
             //发送Ajax请求
             ajax: function (options, success, error) {
+                console.log(options);
                 options = typeof options === 'string' ? {url: options} : options;
                 var index = Layer.load();
                 options = $.extend({
@@ -70,6 +71,11 @@ define(['jquery', 'bootstrap', 'toastr', 'layer', 'lang'], function ($, undefine
                         ret = Fast.events.onAjaxResponse(ret);
                         if (ret.code === 1) {
                             Fast.events.onAjaxSuccess(ret, success);
+                            setTimeout(function () {
+                                if(options.reload){
+                                    window.location.reload();
+                                }
+                            },1000);
                         } else {
                             Fast.events.onAjaxError(ret, error);
                         }

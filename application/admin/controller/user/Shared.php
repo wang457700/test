@@ -1,7 +1,7 @@
 <?php
 
 namespace app\admin\controller\User;
-
+use think\Db;
 use app\common\controller\Backend;
 
 /**
@@ -24,26 +24,24 @@ class Shared extends Backend
     public function index()
     {
         if ($this->request->isAjax()) {
-
             $total = 1;
-            $list =array(
-                array(
-                    'id'=>1,'title'=>'Bremed Tens電療機2Channels',
-                    'category_name'=>'電療機',
-                    'img'=>'/uploads/20180807/1f80094b66870d833a6073d2fbee9116.jpg',
-                    'user_name'=>'NAME',
-                    'user_id'=>'861675',
-                    'status'=>'稽核中',
-                ),
-                array(
-                    'id'=>1,'title'=>'Bremed Tens電療機2Channels',
-                    'category_name'=>'電療機',
-                    'img'=>'/uploads/20180807/1f80094b66870d833a6073d2fbee9116.jpg',
-                    'user_name'=>'NAME',
-                    'user_id'=>'861675',
-                    'status'=>'顯示',
-                ),
-            );
+            $where['status'] = array('neq',3);
+            $list =  Db::name('user_share')->where($where)->select();
+            $status =array('0'=>'未审核','1'=>'已审核','2'=>'下架');
+            foreach ($list as $k => &$v)
+            {
+                $v['product_category']  = explode('-',$v['product_category']);
+                foreach ($v['product_category'] as $kk => &$vv){
+                    $category_name[$k][] = Db::name('category')->where('id',$vv)->value('name');
+                }
+
+                $v['status_text'] = $status[$v['status']];
+                $v['product_pic'] = $v['product_pic'];
+                $v['user_name'] = Db::name('user')->where('id',$v['user_id'])->value('username');
+                $v['category_name'] = implode(' ',$category_name[$k]);
+            }
+            unset($v);
+
             $result = array("total" => $total, "rows" => $list);
             return json($result);
         }
@@ -53,20 +51,16 @@ class Shared extends Backend
     /**
      * 详情
      */
-    public function detail($ids)
+    public function detail($ids=null)
     {
-       
-       $row = array(
-            'id'=>1,
-            'title'=>'Bremed Tens電療機2Channels',
-            'category_name'=>'電療機',
-            'img'=>'/uploads/20180807/1f80094b66870d833a6073d2fbee9116.jpg',
-            'user_name'=>'NAME',
-            'user_id'=>'861675',
-            'add_time'=>'2018-8-7 17:22:08',
-            'status'=>'稽核中',
-        );
 
+        $row = Db::name('user_share')->where('id',$ids)->find();
+        $row['product_category']  = explode('-',$row['product_category']);
+        foreach ($row['product_category'] as $kk => &$vv){
+            $category_name[] = Db::name('category')->where('id',$vv)->value('name');
+        }
+        $row['category_name'] = implode(' ',$category_name);
+        $row['user_name'] = Db::name('user')->where('id',$row['user_id'])->value('username');
         if (!$row)
             $this->error(__('No Results were found'));
         if ($this->request->isAjax()) {
