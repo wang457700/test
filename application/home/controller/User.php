@@ -24,7 +24,7 @@ class User extends Frontend
     const URL ="www.baidu.com";
 
      public function _initialize()
-    {	
+    {
     	parent::_initialize();
 
     	$user_id = Session::get('user_id');
@@ -52,9 +52,10 @@ class User extends Frontend
 	    	if($password !== $user['password']){
 	    		$this->error('密码不正确，请重新输入！');
 	    	}
-
 	    	Session::set("user_id", $user['id']);
 	    	Session::set("user", $user);
+            $total=Db::name('cart_order')->where('user_id',$user['id'])->count();
+            Session::set("total", $total);
 	    	$this->success('登录成功！',url('user/center'));
 	    	//dump($user);
 		}
@@ -83,6 +84,7 @@ class User extends Frontend
           if($data['password2'] != $data['password']){
               $this->error('二次輸入的密碼不一致',url('user/register'),2);
           };
+          $data['password']=md5(input('password'));
           unset($data['password2']);
           $res=Db::name('user')->insertGetId($data);
           if($res){
@@ -102,7 +104,6 @@ class User extends Frontend
     public function user_email_activation(){
         $user_id= Session::get('user_id');
         $list=Db::name('user')->where(array('id'=>$user_id))->find();
-
         if(input('email')==1){
             $email = new Email;
             $encodeurl=url('User/is_email',array('token'=>base64_encode($user_id)));
@@ -151,8 +152,16 @@ class User extends Frontend
 
         if ($this->request->isPost()){
             $data = input('post.');
-
             $user_id = Session::get('user_id');
+             $birthday_year= input('birthday_year');
+
+             $birthday_month= input('birthday_month');
+             $birthday_day= input('birthday_day');
+              $data['birthday']=$birthday_year.'-'.$birthday_month.'-'.$birthday_day;
+                unset($data['birthday_year']);
+                unset($data['birthday_month']);
+                unset($data['birthday_day']);
+
            $info = Db::name('user')->where(array('id'=>$user_id))->update($data);
             if($info!==false){
                 $this->success('修改成功！');
@@ -160,6 +169,18 @@ class User extends Frontend
                 $this->error('修改失败！'.json_encode($data,true));
             }
         }
+        $edit_category = db('user_address')->where(array('user_id'=>8))->find();
+        $province = db('region')->where(array('parent_id'=>0,'level'=>1))->select();
+        $region_province = db('region')->where(array('id'=>$edit_category['province']))->find();
+        $region_city = db('region')->where(array('id'=>$edit_category['city']))->find();
+        $region_district = db('region')->where(array('id'=>$edit_category['district']))->find();
+        $this->assign('edit_category',$edit_category);
+        $this->assign('province',$province);
+        $this->assign('region_province',$region_province);
+
+        $this->assign('region_city',$region_city);
+        $this->assign('region_district',$region_district);
+
 
         $user_id = Session::get('user_id');
         $info = Db::name('user')->where('id', $user_id)->find();
@@ -172,9 +193,9 @@ class User extends Frontend
      * @return string
      * 用户会员中心
      */
-  
 
-    public function center(){ 
+
+    public function center(){
         $this->assign('title','用户中心');
         return $this->view->fetch();
     }
@@ -185,7 +206,7 @@ class User extends Frontend
      * @return string
      * 订单详情
      */
-    public function user_order_detail(){ 
+    public function user_order_detail(){
         return $this->view->fetch();
     }
 
@@ -193,7 +214,7 @@ class User extends Frontend
 /******************************       share_list  产品共享        ************************************/
 
 
-    public function share_list(){ 
+    public function share_list(){
 		$user_id = Session::get('user_id');
 		$where['user_id'] = $user_id;
 		$where['status'] = array('neq',3);
@@ -212,17 +233,17 @@ class User extends Frontend
             $share_list[$k] = $v;
         }
         unset($v);
-		$this->assign('share_list',$share_list); 
+		$this->assign('share_list',$share_list);
 
         $this->assign('title','我的共享');
         return $this->view->fetch('user/share/share_list');
     }
 
 	/**
-     * 
+     *
      * 发布添加共享产品
      */
-    public function share_add(){ 
+    public function share_add(){
         $user_id = Session::get('user_id');
 
 
@@ -251,9 +272,9 @@ class User extends Frontend
 			}else{
 				$this->error('发布失败');
 			}
-     	
+
     	}
- 
+
      	$this->assign('title','我的共享');
         return $this->view->fetch('user/share/add');
     }
@@ -366,9 +387,9 @@ class User extends Frontend
 
 /******************************       address_list 用户地址管理 ************************************/
 
-	public function address_list(){ 
-		$user_id = Session::get('user_id'); 
-		$where['user_id'] = $user_id; 
+	public function address_list(){
+		$user_id = Session::get('user_id');
+		$where['user_id'] = $user_id;
 		$address_list= Db::name('user_address')
 		->where($where)
 		->order('createtime desc')
@@ -383,7 +404,7 @@ class User extends Frontend
             $v['createtime'] = date('Y-m-d',$v['createtime']);
             $address_list[$k] = $v;
         }
-    
+
         $id = input('id');
         if($id){
         	$row= Db::name('user_address')->where(array('id'=>$id,'user_id'=>$user_id))->find();
@@ -399,7 +420,7 @@ class User extends Frontend
 
 
     public function address_add(){
-    	if ($this->request->isPost()){ 
+    	if ($this->request->isPost()){
     		$user_id = Session::get('user_id');
     		$post = input('post.');
     		$data = $post;
@@ -410,7 +431,7 @@ class User extends Frontend
     		if($data['default']){
     			Db::name('user_address')->where(array('user_id'=>$user_id))->update(array('default'=>0));
     		}
-			$info = Db::name('user_address')->insert($data); 
+			$info = Db::name('user_address')->insert($data);
 			if($info!==false){
 				$this->success('保存成功');
 			}else{
@@ -418,12 +439,19 @@ class User extends Frontend
 			}
     	}
     }
- 
+
 
     public function address_edit(){
+
+        $user_id = Session::get('user_id');
     	if ($this->request->isPost()){
+
+
+
+
     		$user_id = Session::get('user_id');
     		$data = input('post.');
+
     		if($data['default'] == 'on'){
 				$data['default'] = 1;
     		}
@@ -437,6 +465,8 @@ class User extends Frontend
 				$this->error('保存失败');
 			}
     	}
+
+
     }
 
     public function address_delete(){
