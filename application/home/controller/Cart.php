@@ -45,7 +45,11 @@ class Cart extends Frontend
 
 
          $user_id=  Session::get('user_id');
-         $car_list=Db::name('cart_order')->where(array('user_id'=>$user_id))->select();
+         $list= Db::name('cart_order')->alias('a')->field('c.*,a.product_id as goods_id,a.user_id,a.cart_id')->join('__GOODS__ c','a.product_id=c.product_id','RIGHT')->where('user_id',$user_id)->group('c.product_id')->select();
+
+         foreach ($list as $key=>$item){
+              $list[$key]['total']=Db::name('cart_order')->where(array('product_id'=>$item['product_id']))->count();
+         }
 
          $this->assign('car_list',$car_list);
 
