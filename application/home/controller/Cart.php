@@ -51,7 +51,7 @@ class Cart extends Frontend
               $list[$key]['total']=Db::name('cart_order')->where(array('product_id'=>$item['product_id']))->count();
          }
 
-         $this->assign('car_list',$car_list);
+         $this->assign('car_list',$list);
 
       return  $this->fetch();
     }
