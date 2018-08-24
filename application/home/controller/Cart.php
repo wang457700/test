@@ -58,8 +58,8 @@ class Cart extends Frontend
 
 
     public function cart_del(){
-        $cart_id=input('cart_id');
-        $res=Db::name('cart_order')->where('cart_id',$cart_id)->delete();
+        $product_id=input('product_id');
+        $res=Db::name('cart_order')->where('product_id',$product_id)->delete();
         if ($res) {
             $data = array(
                 'code' => 1,
