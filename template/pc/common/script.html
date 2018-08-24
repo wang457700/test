@@ -2,12 +2,10 @@
 <script src='__PUBLIC__/assets/js/message/message.js'></script>
 <script src='__PUBLIC__/assets/js/message/messageIE.js'></script>
 <script>
-    /* 加入购物车 */
+/* 加入购物车 */
 $(".adds").click(function(){
         var product_id = $(this).data('productid');
         var name = $(this).data('name');
-        var num = $('.shopping span').text();
-
         $.ajax({
                 type: "POST",
                 url: "{:url('cart/checkin_cart')}",
@@ -17,6 +15,8 @@ $(".adds").click(function(){
                 if (data.code) {
                     $.message(data.code);
                     $('.shopping span').text(Number(data.total));
+                }else{
+                    $.message({message:data.msg,type:'warning',time:'3000'});
                 }
             }
         });
