@@ -59,7 +59,7 @@ class Cart extends Frontend
                     $fat['price'] =$price['price'];
                     $fat['money_total']=$v['goods_num']*$price['price'];
                     $fat['goods_sn'] =$price['freight_num'];
-                    $fat['order_sn'] =date('Y-m-d').time();
+                    $fat['order_sn'] =date('Ymd').time();
                     $fat['goods_id'] = $v['goods_id'];//这里都要加上下标
                     $fat['goods_num'] = $v['goods_num'];//这里都要加上下标
                     $fat['user_id'] = Session::get('user_id');
@@ -73,6 +73,7 @@ class Cart extends Frontend
                 $data = array(
                     'code' => 1,
                     'msg' => '你已经生成订单！',
+                    'url'=>url('cart/submit_order'，array(''))
                 );
                 $this->ajaxReturn($data);
             }else{

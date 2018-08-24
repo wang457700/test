@@ -49,7 +49,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                             buttons: [
                                 {
                                     name: 'ajax',
-                                    title:{field: 'status'},
+                                    title: __('通过'),
                                     classname: 'btn btn-xs btn-success btn-magic btn-ajax',
                                     text: __('通过'),
                                     icon: '',
