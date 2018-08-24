@@ -137,7 +137,7 @@
                       <p></p>
                       <img src="__PUBLIC__/{$vo.cover}">
                       <span class="font24"><i class="font12">$</i>{$vo.price}</span>
-                      <a class="adds" data-productid="{$vo.product_id}">+</a>
+                      <a class="adds" data-productid="{$vo.product_id}" data-name="{$vo.product_name}" >+</a>
                   </div>
                   {/foreach}
                 </div>
@@ -162,7 +162,6 @@
            </div>
 
         </div>
-
 
         <div class="row advert" style="padding: 20px 0;">
           <div class="col-md-4 col-xs-4" style="padding: 0;">
@@ -390,7 +389,7 @@
                                   <p class="color_ro">优惠全民享</p>
                                   <div>
                                        <span class="font24"><i class="font12">$</i>1234</span>
-                                      <a class="adds">+</a>
+                                      <a class="adds" >+</a>
                                   </div>
                                 </div>
                             </div>
@@ -428,6 +427,7 @@
 	{include file="common/footer"/}
 
     <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
+{include file="common/script"/}
 <script type="text/javascript">
 $(document).ready(function(){
 
