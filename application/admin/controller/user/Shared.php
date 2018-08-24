@@ -36,7 +36,7 @@ class Shared extends Backend
                 }
 
                 $v['status_text'] = $status[$v['status']];
-                $v['product_pic'] = $v['product_pic'];
+                $v['product_pic'] = '/'.$v['product_pic'];
                 $v['user_name'] = Db::name('user')->where('id',$v['user_id'])->value('username');
                 $v['category_name'] = implode(' ',$category_name[$k]);
             }
