@@ -37,11 +37,11 @@
 		 {foreach name="car_list" item="vo"}
 		<!--第{$key}个产品-->
 		<div class="row cart-item-list"  id="list_{$key}" >
-			<input type="hidden" value="{$vo.price}" id="unit_price_{$key}"/>
+			<input type="hidden" value="{$vo.price}" name="price[]" id="unit_price_{$key}"/>
 			<input type="hidden" value="{$vo.price}" id="subtotal_{$key}"/>
 			<!-- <input type="hidden" value="2" id="number_1"/> -->
 			<div class="col-md-1 col-xs-1" style="">
-				<input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="product_id[]" value="{$vo.product_id}" title="ID:106">
+				<input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="goods_id[]" value="{$vo.product_id}" title="ID:106">
 				<label for='checkbox1'></label>
 			</div>
 			<div class="col-md-4 col-xs-4 t2" style="">
@@ -58,7 +58,7 @@
 					<div class="row number">
 					  <div class="col-md-12" style="">
 						<input id="min_{$key}" name="" type="button" value="-" class="reduce" onclick="on_number({$key},'min')">
-						<input id="number_{$key}" name="total[]" type="text" value="{$vo.total}" style="width:40px;text-align: center"  class="color_75">
+						<input id="number_{$key}" name="goods_num[]" type="text" value="{$vo.total}" style="width:40px;text-align: center"  class="color_75">
 						<input id="add_{$key}" name="" type="button" value="+" class="add" onclick="on_number({$key},'add')">
 					  </div>
 					</div>
@@ -163,25 +163,24 @@
 				$("input[id^='subtotal']").each(function(){
 						sum+= Number($(this).val()); 
 				});
-                $("input[name^='total[]']").each(function(){
+                $("input[name^='goods_num[]']").each(function(){
                     total_sum+= Number($(this).val());
                 });
 				$('#total_sum').text(Number(total_sum));
 				$('#total').text('$ '+ sum.toFixed(2));
 				$('#total_no_yunxfei').text('$ '+ sum.toFixed(2));
-
 			}
 
 			//全选或不选
 			$("#checked").on('click',function(){
 
 				if($(this).data('id') == 1){
-					$("input[name^='product_id[]']").each(function(){
+					$("input[name^='goods_id[]']").each(function(){
 						$(this).prop('checked', false);
 					});
 					$(this).data('id',0);
 				}else{
-					$("input[name^='product_id[]']").each(function(){
+					$("input[name^='goods_id[]']").each(function(){
 						$(this).prop('checked', true);
 					});
 					$(this).data('id',1);
