@@ -5,6 +5,7 @@ namespace app\common\controller;
 use app\common\library\Auth;
 use think\Config;
 use think\Controller;
+use think\Db;
 use think\Hook;
 use think\Session;
 use think\Lang;
@@ -41,12 +42,13 @@ class Frontend extends Controller
 
     public function _initialize()
     {
- 
+
         //移除HTML标签
         $this->request->filter('strip_tags');
         $modulename = $this->request->module();
         $controllername = strtolower($this->request->controller());
         $actionname = strtolower($this->request->action());
+
 
         // 如果有使用模板布局
         if ($this->layout) {
@@ -106,7 +108,7 @@ class Frontend extends Controller
         $config = array_merge($config, Config::get("view_replace_str"));
 
         Config::set('upload', array_merge(Config::get('upload'), $upload));
-  
+
         // 配置信息后
         Hook::listen("config_init", $config);
         // 加载当前控制器语言包
@@ -141,5 +143,5 @@ class Frontend extends Controller
 
     }
 
- 
+
 }
