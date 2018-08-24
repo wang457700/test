@@ -6,24 +6,20 @@
 $(".adds").click(function(){
         var product_id = $(this).data('productid');
         var name = $(this).data('name');
-       $.message(name + ' 成功加入购物车！');
         var num = $('.shopping span').text();
-        $('.shopping span').text(Number(num) + 1);
-    /* $.ajax({
-            type: "POST",
-            url: {:url('cart/checkin_cart')},
-          success: function(data) {
-            if (data.code == 0) {
-                $.message({
-                    message: data.msg,
-                    type: 'warning',
-                    time: '3000'
-                });
-            } else {
-                $.message(data.msg);
+
+        $.ajax({
+                type: "POST",
+                url: "{:url('cart/checkin_cart')}",
+                 dataType: 'json',
+                data:{product_id:product_id},
+              success: function(data) {
+                if (data.code) {
+                    $.message(data.code);
+                    $('.shopping span').text(Number(data.total));
+                }
             }
-        }
-    });*/
+        });
 });
 
 
