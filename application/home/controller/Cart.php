@@ -41,6 +41,15 @@ class Cart extends Frontend
 
     }
 
+    public function shopping_cart(){
+
+
+
+
+        $this->fetch();
+    }
+
+
 
     public function ajaxReturn($data,$type = 'json'){
         exit(json_encode($data));
