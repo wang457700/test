@@ -53,15 +53,16 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                     classname: 'btn btn-xs btn-success btn-magic btn-ajax',
                                     text: __('通过'),
                                     icon: '',
-                                    url: 'example/bootstraptable/detail',
+                                    url: 'user/shared/status',
                                     success: function (data, ret) {
-                                        Layer.alert(ret.msg + ",返回数据：" + JSON.stringify(data));
+                                        //Layer.alert(ret.msg + ",返回数据：" + JSON.stringify(data));
+                                        $('.btn-refresh').click();
                                         //如果需要阻止成功提示，则必须使用return false;
                                         //return false;
                                     },
                                     error: function (data, ret) {
                                         console.log(data, ret);
-                                        Layer.alert(ret.msg);
+                                        //Layer.alert(ret.msg);
                                         return false;
                                     }
                                 },{
@@ -79,7 +80,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                     ]
                 ]
             });
-
             // 为表格绑定事件
             Table.api.bindevent(table);
         },
@@ -88,6 +88,11 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
         },
         edit: function () {
             Controller.api.bindevent();
+        },
+        detail: function () {
+            $(document).on('click', '.btn-callback', function () {
+                Fast.api.close($("input[name=callback]").val());
+            });
         },
         api: {
             bindevent: function () {

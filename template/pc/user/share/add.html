@@ -24,36 +24,19 @@
               </div>
               <div class="form-group form-group-e">
                 <label for="inputPassword3" class="col-sm-1 col-xs-6 control-label"><span class="color_ro">* </span>分&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;類：</label>
-                <div class="col-sm-3">
-                  <select class="form-control select_e" name="cid[]">
-                    <option value="9">智能恢復產品</option>
-                    <option value="9">智能恢復產品</option>
-                    <option value="8">智能恢復產品</option>
-                    <option value="7">智能恢復產品</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group form-group-e">
-                <label for="inputPassword3" class="col-sm-1 col-xs-6 control-label"><span class="color_ro">* </span>分&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;類&nbsp;2:</label>
-                <div class="col-sm-3">
-                  <select class="form-control select_e" name="cid[]">
-                    <option value="6">智能恢復產品</option>
-                    <option value="5">智能恢復產品</option>
-                    <option value="4">智能恢復產品</option>
-                  </select>
+                <div class="col-sm-8">
+                  <select class="form-control select_e" name="cid[]" id="cat_id" style="display: inline-block;width: 30%">
 
-                </div>
-              </div>
-              <div class="form-group form-group-e">
-                <label for="inputPassword3" class="col-sm-1 col-xs-6 control-label"><span class="color_ro">* </span>分&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;類&nbsp;3:</label>
-                <div class="col-sm-3">
-                  <select class="form-control select_e" name="cid[]">
-                    <option value="1">智能恢復產品</option>
-                    <option value="2">智能恢復產品</option>
-                    <option value="3">智能恢復產品</option>
+                  </select>
+                  <select class="form-control select_e" name="cid[]" id="cat_id_2" style="display: inline-block;width: 30%">
+
+                  </select>
+                  <select class="form-control select_e" name="cid[]" id="cat_id_3" style="display: inline-block;width: 30%">
+
                   </select>
                 </div>
               </div>
+
               <div class="form-group form-group-e">
                 <label 
                 for="inputPassword3" class="col-sm-1 col-xs-6 control-label"><span class="color_ro">* </span>圖片上傳:</label>
@@ -178,7 +161,47 @@
         }); 
         return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转 
       }
+
+
+      get_category(14,'cat_id','0');  // 14：产品分类
+      $(document).on("change",'#cat_id',function(){
+          get_category($(this).val(),'cat_id_2',0);
+          $('#cat_id_2').empty().html("<option value='0'>请选择商品分类</option>");
+      });
+
+      $(document).on("change",'#cat_id_2',function(){
+          get_category($(this).val(),'cat_id_3',0);
+          $('#cat_id_3').empty().html("<option value='0'>请选择商品分类</option>");
+      })
+      /**
+       * 获取多级联动的商品分类
+       */
+      function get_category(id, next, select_id) {
+          if (id == 0) {
+              return false;
+          }
+          $.ajax({
+              type: "GET",
+              url: "{:url('api/index/get_category')}",
+              data: {
+                  parent_id: id
+              },
+              dataType: 'json',
+              success: function(data) {
+                  if (data.status == 1) {
+                      var html = "<option value='0'>请选择商品分类</option>";
+                      $.each(data.result, function(index, value) {
+                          html += "<option value='" + value.id + "' >" + value.name + "</option>";
+                      });
+                      $('#' + next).empty().append(html).show().attr('name', 'cat_id');
+                  } else {
+                      $('#' + next).hide().attr('name', '');
+                  }
+              }
+          });
+      }
     </script>
+
 
 
   </body>

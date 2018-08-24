@@ -226,14 +226,17 @@ define(['fast', 'template', 'moment'], function (Fast, Template, Moment) {
 
                     if(ret.msg==''){var msg ='操作成功！'}else{ var msg = ret.msg;}
                     //成功的回调
-                    Fast.events.onAjaxSuccess(msg,success);
+                    Fast.events.onAjaxSuccess(ret.msg);
+
                     window.location.reload();
+
                     return false;
                 }, function(data, ret){
                     if(ret.msg==''){var msg ='操作失败！'}else{ var msg = ret.msg;}
                     //失败的回调
                     //alert(ret.msg);
-                    alert(msg);
+                    Fast.events.onAjaxError(ret.msg);
+                    //alert(msg);
                     return false;
                 });
 

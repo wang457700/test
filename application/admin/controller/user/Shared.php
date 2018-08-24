@@ -71,6 +71,20 @@ class Shared extends Backend
         $this->view->assign("row", $row);
         return $this->view->fetch();
     }
+
+    /**
+     * 详情
+     */
+    public function status($ids=null)
+    {
+        $row = Db::name('user_share')->where('id',$ids)->update(array('status'=>1));
+        if (!$row)
+            $this->error(__('No Results were found'));
+        if ($this->request->isAjax()) {
+            $this->success("审核成功！", null, ['id' => $ids]);
+        }
+    }
+
      /**
      * 编辑
      */

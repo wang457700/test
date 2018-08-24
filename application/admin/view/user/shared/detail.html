@@ -36,17 +36,6 @@
             <th>發佈時間</th>
             <td>{:date('Y-m-d H:i',$row['add_date'])}</td>
         </tr>
-        {if $Think.get.dialog}
-        <tr>
-            <td>回传数据</td>
-            <td>
-                <div class="input-group">
-                    <input name="callback" class="form-control" value="test" />
-                    <span class="input-group-btn"><a href="javascript:;" class="btn btn-success btn-callback" >审核通过</a></span>
-                </div>
-            </td>
-        </tr>
-        {/if}
     </tbody>
 </table>
 <div class="hide layer-footer">
