@@ -1,5 +1,7 @@
 define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefined, Backend, Table, Form) {
 
+
+
     var Controller = {
         index: function () {
             // 初始化表格参数配置
@@ -231,7 +233,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
         },
 
         add: function () {
-
             Controller.api.bindevent();
             // 初始化表格参数配置
             Table.api.init({
@@ -262,49 +263,16 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                     $('#cat_id_3').empty().html("<option value='0'>请选择商品分类</option>");
                 })
             });
-
-            /**
-             * 获取多级联动的商品分类
-             */
-
-            function get_category(id,next,select_id){
-                if(id == 0){
-                    return false;
-                }
-                $.ajax({
-                    type : "GET",
-                    url  : $('#get_category_url').val(),
-                    data:{parent_id:id},
-                    dataType:'json',
-                    success: function(data) {
-                        if(data.status == 1){
-                            var html = "<option value='0'>请选择商品分类</option>";
-                            $.each(data.result,function(index, value) {
-                                if(value.id == select_id){
-                                    var selected = 'selected';
-                                }else {
-                                    var selected = '';
-                                }
-                                html+= "<option value='"+value.id+"' selected>"+value.name+"</option>";
-                            });
-                            $('#'+next).empty().append(html).show().attr('name','cat_id');
-                        }else{
-                            $('#'+next).hide().attr('name','');
-                        }
-                    }
-                });
-            }
-
-
         },
 
         category_add: function () {
             Controller.api.bindevent();
         },
         edit: function () {
-
             Controller.api.bindevent();
             $(function(){
+
+
                 $('.danxuan').eq(0).addClass("on");
                  $('.danxuan').each(function(){
                   $(this).click(function(){
@@ -317,12 +285,12 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             $(function(){
                 var cat_id_01 = $('#cat_id_01').val();
                 var cat_id_02 = $('#cat_id_02').val();
-                var cat_id_03 = $('#cat_id_02').val();
+                var cat_id_03 = $('#cat_id_03').val();
                 if(cat_id_02){
-                    get_category($('#cat_id_01').val(),'cat_id_2',$('#cat_id_01').val());
+                    get_category(cat_id_01,'cat_id_2',cat_id_02);
                 }
                 if(cat_id_03){
-                    get_category($('#cat_id_02').val(),'cat_id_3',$('#cat_id_02').val());
+                    get_category(cat_id_02,'cat_id_3',cat_id_03);
                 }
 
                 $(document).on("change",'#cat_id',function(){
@@ -335,37 +303,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                     $('#cat_id_3').empty().html("<option value='0'>请选择商品分类</option>");
                 })
             });
-            /**
-             * 获取多级联动的商品分类
-             */
-
-            function get_category(id,next,select_id){
-               if(id == 0){
-                   return false;
-               }
-                $.ajax({
-                    type : "GET",
-                    url  : $('#get_category_url').val(),
-                    data:{parent_id:id},
-                    dataType:'json',
-                    success: function(data) {
-                        if(data.status == 1){
-                            var html = "<option value='0'>请选择商品分类</option>";
-                            $.each(data.result,function(index, value) {
-                                if(value.id == select_id){
-                                    var selected = 'selected';
-                                }else {
-                                    var selected = '';
-                                }
-                                html+= "<option value='"+value.id+"' selected>"+value.name+"</option>";
-                            });
-                            $('#'+next).empty().append(html).show().attr('name','cat_id');
-                        }else{
-                            $('#'+next).hide().attr('name','');
-                        }
-                    }
-                });
-            }
 
         },
         api: {
@@ -374,5 +311,63 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             }
         }
     };
+
+
+
+    /*JQuery 限制文本框只能输入数字*/
+    $(".NumText").keyup(function(){
+        $(this).val($(this).val().replace(/[^0-9]/g,''));
+    }).bind("paste",function(){  //CTR+V事件处理
+        $(this).val($(this).val().replace(/[^0-9]/g,''));
+    }).css("ime-mode", "disabled"); //CSS设置输入法不可用
+
+    /*JQuery 限制文本框只能输入数字和小数点*/
+    $(".NumDecText").keyup(function(){
+        $(this).val($(this).val().replace(/[^0-9.]/g,''));
+    }).bind("paste",function(){  //CTR+V事件处理
+        $(this).val($(this).val().replace(/[^0-9.]/g,''));
+    }).css("ime-mode", "disabled"); //CSS设置输入法不可用
+
+    $("#add_image_input").click(function(){
+
+        var id= Math.floor(Math.random()*10000);
+        var li = '<div class="col-xs-12 col-sm-1"><div class="input-group"><input id="c-image'+id+'" class="form-control" size="50" name="img_url[]" type="hidden" value=""><div class="input-group-addon no-border no-padding"><span style="position:relative"><button type="button" id="plupload-image'+id+'" class="btn btn-danger plupload" data-input-id="c-image'+id+'" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image'+id+'" initialized="true" style="position:relative;z-index:1"></button><div id="html5_'+id+'_container" class="moxie-shim moxie-shim-html5" style="position:absolute;top:-22px;left:0;width:60px;height:60px;overflow:hidden;z-index:0"><input id="html5_'+id+'" type="file" style="font-size:999px;opacity:0;position:absolute;top:0;left:0;width:100%;height:100%" accept="image/gif,.gif,image/jpeg,.jpg,.jpeg,.jpe,image/png,.png,image/bmp,.bmp"></div></span></div><span class="msg-box n-right"></span></div><ul class="row list-inline plupload-preview" id="p-image'+id+'" data-template="uploadtpl"></ul></div>';
+        $("#images").append(li);
+    });
+
+
+/**
+ * 获取多级联动的商品分类
+ */
+
+function get_category(id,next,select_id){
+    if(id == 0){
+        return false;
+    }
+    $.ajax({
+        type : "GET",
+        url  : $('#get_category_url').val(),
+        data:{parent_id:id},
+        dataType:'json',
+        success: function(data) {
+            if(data.status == 1){
+                var html = "<option value='0'>请选择商品分类</option>";
+                $.each(data.result,function(index, value) {
+                    if(value.id == select_id){
+                        var selected = 'selected';
+                        html+= "<option value='"+value.id+"' selected>"+value.name+"</option>";
+                    }else {
+                        html+= "<option value='"+value.id+"'>"+value.name+"</option>";
+                    }
+                   // html+= "<option value='"+value.id+"' selected>"+value.name+"</option>";
+                });
+                $('#'+next).empty().append(html).show().attr('name','cat_id');
+            }else{
+                $('#'+next).hide().attr('name','');
+            }
+        }
+    });
+}
+
     return Controller;
 });
