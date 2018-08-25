@@ -197,6 +197,21 @@ class User extends Frontend
 
     public function center(){
         $this->assign('title','用户中心');
+         $order_list= Db::name('order')->alias('a')->join('__GOODS__ c','a.goods_id=c.product_id','LEFT')->where('user_id',Session::get('user_id'))->order('addtime desc')->paginate(10);
+
+        $result= array();
+         foreach ($order_list as $key=>$item){
+            $sel= Db::name('order')->where('order_sn',$item['order_sn'])->find();
+            if($item['order_sn']==$sel['order_sn']){
+                $result[$item['order_sn']][] = $item;
+            }
+         }
+
+        $page = $order_list->render();
+        $this->assign('page',$page);
+         $this->assign('order_list',$result);
+
+
         return $this->view->fetch();
     }
 
@@ -278,6 +293,8 @@ class User extends Frontend
      	$this->assign('title','我的共享');
         return $this->view->fetch('user/share/add');
     }
+
+
 
 
     /**
