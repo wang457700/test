@@ -112,13 +112,14 @@ class Cart extends Frontend
                 $data[$i]['goods_num'] = $goods_num[$i];
             }
             $res='';
+             $order_sn=date('Ymd').time();
             foreach ($data as $k => $v) {
                      $price=Db::name('goods')->where('product_id',$v['goods_id'])->find();
                     $fat['price'] =$price['price'];
                     $fat['money_total']=$v['goods_num']*$price['price'];
                     $fat['goods_sn'] =$price['freight_num'];
                     $fat['address_id'] =$address_id;
-                    $fat['order_sn'] =date('Y-m-d').time();
+                    $fat['order_sn'] =$order_sn;
                     $fat['goods_id'] = $v['goods_id'];//这里都要加上下标
                     $fat['goods_num'] = $v['goods_num'];//这里都要加上下标
                     $fat['user_id'] = Session::get('user_id');
@@ -132,6 +133,7 @@ class Cart extends Frontend
                 $data = array(
                     'code' => 1,
                     'msg' => '你已经生成订单！',
+                    'order_sn' => $order_sn,
                 );
                 $this->ajaxReturn($data);
             }else{
