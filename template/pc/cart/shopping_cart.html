@@ -120,11 +120,7 @@
 			</div>
 		</div>
 </form>
-		 {include file="common/footer"/}
-		 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
-		 <script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
-		 <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
-		 {include file="common/script" /}
+
 	<script type="text/javascript">
 			function on_number(id,type){
 				//初始化数量为1,并失效减
@@ -196,7 +192,7 @@
                     }else{
                         $.message(data.msg);
                         setTimeout(function () {
-                            //window.location = data.url
+                            window.location = data.url
                         },2500);
                     }
                 });

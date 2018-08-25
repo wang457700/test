@@ -17,7 +17,7 @@ class Cart extends Frontend
 
     public function checkin_cart()
     {
-
+        
         $data['product_id'] = input('product_id');
         $data['user_id'] = Session::get('user_id');
         $data['add_time'] = date('Y-m-d H:i:s');
@@ -59,7 +59,7 @@ class Cart extends Frontend
                     $fat['price'] =$price['price'];
                     $fat['money_total']=$v['goods_num']*$price['price'];
                     $fat['goods_sn'] =$price['freight_num'];
-                    $fat['order_sn'] =date('Ymd').time();
+                    $fat['order_sn'] =$order_sn = date('Ymd').time();
                     $fat['goods_id'] = $v['goods_id'];//这里都要加上下标
                     $fat['goods_num'] = $v['goods_num'];//这里都要加上下标
                     $fat['user_id'] = Session::get('user_id');
@@ -73,7 +73,7 @@ class Cart extends Frontend
                 $data = array(
                     'code' => 1,
                     'msg' => '你已经生成订单！',
-                    'url'=>url('cart/submit_order'，array(''))
+                    'url'=>url('cart/submit_order',array('order'=>$order_sn))
                 );
                 $this->ajaxReturn($data);
             }else{
@@ -88,21 +88,49 @@ class Cart extends Frontend
         }
 
     }
-
-
-
+    
+    
+    
+    /*确认订单 linjiahong*/
+    public function submit_order(){
+        
+        if ($this->request->isPost()) {
+            
+            
+            
+            
+        }
+        
+        
+        $order_sn = input('order_sn');
+        $address_list = Db::name('user_address')
+        ->where('user_id',Session::get('user_id'))
+        ->select();
+        
+         $goods_list = Db::name('order')
+        ->alias('a')->field('a.*,c.price,product_name,a.goods_id as product_id')->join('__GOODS__ c','a.goods_id=c.product_id','RIGHT')
+        ->where('order_sn',$order_sn)
+        ->select();
+        
+        dump($address_list);
+        dump($order_info);
+        $this->assign('title','確認訂單');
+        $this->assign('goods_list',$goods_list);
+        $this->assign('address_list',$address_list);
+        return  $this->fetch();
+    }
+     
     public function shopping_cart(){
-
-
+ 
         $user_id=  Session::get('user_id');
         $list= Db::name('cart_order')->alias('a')->field('c.*,a.product_id as goods_id,a.user_id,a.cart_id')->join('__GOODS__ c','a.product_id=c.product_id','RIGHT')->where('user_id', $user_id)->group('c.product_id')->select();
         $sum=0;
         foreach ($list as $key=>$item){
 
-                $total=Db::name('cart_order')->where(array('product_id'=>$item['product_id']))->count();
-               $list[$key]['total']=$total;
-               $list[$key]['total_price']=$total*$item['price'];
-               $sum+=$list[$key]['total_price'];
+            $total=Db::name('cart_order')->where(array('product_id'=>$item['product_id']))->count();
+            $list[$key]['total']=$total;
+            $list[$key]['total_price']=$total*$item['price'];
+            $sum+=$list[$key]['total_price'];
         }
 
         $this->assign('all_price',$sum);
