@@ -1,10 +1,9 @@
 <style>
     .plupload{background:url(__CDN__/assets/img/upload_img.png) no-repeat;background-size:100%;width:60px;height:60px}
-    /*.plupload:active{background:url(__CDN__/assets/img/upload_img.png) no-repeat;background-size:100%;width:60px;height:60px;border:0}*/
+
     .danxuan .fa-circle{color:#eee}
     .danxuan.on .fa-circle{display:inline-block;color:#18bc9b}
     .plupload-edit{background-color:#e74c3c;border-color:#e74c3c;width:100px;height:30px;background-image:none}
-
 </style>
 <form id="add-form" class="form-horizontal form-ajax" role="form" data-toggle="validator" method="POST" action="" style="min-height: 450px;background: #fff;padding: 20px">
 
@@ -14,10 +13,7 @@
             <input type="text" class="form-control" id="slide_name" name="product_name" value="{$product_list.product_name}" data-rule="required;data1" />
         </div>
     </div>
-    <?php
-    dump($product_list);
-    dump($cat_list);
-?>
+
     <div class="form-group">
         <label class="control-label col-xs-12 col-sm-2">类型:</label>
 
@@ -85,7 +81,7 @@
         <div class="col-sm-12">
             <label for="username" class="control-label col-xs-12 col-sm-3"><i class="fa fa-circle"></i> 價格</label>
             <div class="col-xs-12 col-sm-5">
-                <input type="text" class="form-control" id="data5" name="price" value="{$product_list.price}" data-rule=";data5" />
+                <input type="text" class="form-control NumDecText" id="data5" name="price" value="{$product_list.price}" data-rule=";data5" />
             </div>
         </div>
     </div>
@@ -93,7 +89,7 @@
         <div class="col-sm-12">
             <label for="username" class="control-label col-xs-12 col-sm-3"><i class="fa fa-circle"></i> 特價</label>
             <div class="col-xs-12 col-sm-5">
-                <input type="text" class="form-control" id="data6" name="pricevip" value="{$product_list.pricevip}" data-rule=";data6" />
+                <input type="text" class="form-control NumDecText" id="data6" name="pricevip" value="{$product_list.pricevip}" data-rule=";data6" />
             </div>
         </div>
     </div>
@@ -101,7 +97,7 @@
         <div class="col-sm-12">
             <label for="username" class="control-label col-xs-12 col-sm-3"><i class="fa fa-circle"></i> 優惠</label>
             <div class="col-xs-12 col-sm-4">
-                <input type="text" class="form-control" id="data7" name="discount_price" value="{$product_list.discount_price}" data-rule=";data7" />
+                <input type="text" class="form-control NumDecText" id="data7" name="discount_price" value="{$product_list.discount_price}" data-rule=";data7" />
             </div>
             <div class="col-xs-12 col-sm-1">%</div>
         </div>
@@ -132,46 +128,45 @@
     </div>
     <div class="form-group">
         <label for="c-image1" class="control-label col-xs-12 col-sm-2">图片</label>
-
-        {foreach name="img_url" item="vo"}
-        <!--<div class="col-xs-12 col-sm-1">
-            <div class="input-group">
-                <input id="c-image{$key}" class="form-control" size="50" name="img_url[]" type="hidden" value="__PUBLIC__/{$vo}">
-                <div class="input-group-addon no-border no-padding">
-			<span style="position: relative;"><button type="button" id="plupload-image1" class="btn btn-danger plupload" data-input-id="c-image1" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image{$key}" initialized="true" style="position: relative; z-index: 1;"></button>
-			<div id="html5_1clj82ml6dvt2crr6o1pnh18j77_container" class="moxie-shim moxie-shim-html5" style="position: absolute; top: -22px; left: 0px; width: 60px; height: 60px; overflow: hidden; z-index: 0;">
-				<input id="html5_1clj82ml6dvt2crr6o1pnh18j77" type="file" style="font-size: 999px; opacity: 0; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" accept="image/gif,.gif,image/jpeg,.jpg,.jpeg,.jpe,image/png,.png,image/bmp,.bmp">
-			</div>
-			</span>
+        <div id="images">
+            {foreach name="img_url" item="vo"}
+            <div class="col-xs-12  col-sm-1">
+                <div class="input-group">
+                    <input id="c-image{$key}" class="form-control" size="50" name="img_url[]" type="hidden" value="{$vo}">
+                    <div class="input-group-addon no-border no-padding">
+                        <span><button type="button" id="plupload-image{$key}" class="btn btn-danger plupload plupload-edit" data-input-id="c-image{$key}" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image{$key}"><i class="fa fa-upload"></i> 重新上传</button></span>
+                        <!--<span><button type="button" id="fachoose-image" class="btn btn-primary fachoose" data-input-id="c-image" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>-->
+                    </div>
+                    <span class="msg-box n-right"></span>
                 </div>
-                <span class="msg-box n-right"></span>
+                <ul class="row list-inline plupload-preview" id="p-image{$key}" data-template="uploadtpl"></ul>
             </div>
-            <ul class="row list-inline plupload-preview" id="p-image{$key}" data-template="uploadtpl">
-                <li class="col-xs-12">
-                    <a href="__PUBLIC__/{$vo}" data-url="__PUBLIC__/{$vo}" target="_blank" class="thumbnail">
-                        <img src="__PUBLIC__/{$vo}" class="img-responsive">
-                    </a>
-                    <a href="javascript:;" class="btn btn-danger btn-xs btn-trash"><i class="fa fa-trash"></i></a>
-                </li>
-            </ul>
-        </div>-->
+            {/foreach}
 
-        <div class="col-xs-12  col-sm-1">
-            <div class="input-group">
-                <input id="c-image{$key}" class="form-control" size="50" name="cover" type="hidden" value="{$vo}">
-                <div class="input-group-addon no-border no-padding">
-                    <span><button type="button" id="plupload-image{$key}" class="btn btn-danger plupload plupload-edit" data-input-id="c-image{$key}" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image{$key}"><i class="fa fa-upload"></i> 重新上传</button></span>
-                    <!--<span><button type="button" id="fachoose-image" class="btn btn-primary fachoose" data-input-id="c-image" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>-->
+            <div class="col-xs-12 col-sm-1">
+                <div class="input-group">
+                    <input id="c-image01" class="form-control" size="50" name="img_url[]" type="hidden" value="">
+                    <div class="input-group-addon no-border no-padding">
+                        <span><button type="button" id="plupload-image01" class="btn plupload" data-input-id="c-image01" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image01"></button></span>
+                    </div>
+                    <span class="msg-box n-right"></span>
                 </div>
-                <span class="msg-box n-right"></span>
+                <ul class="row list-inline plupload-preview" id="p-image01"  data-template="uploadtpl"></ul>
             </div>
-            <ul class="row list-inline plupload-preview" id="p-image{$key}" data-template="uploadtpl"></ul>
+            <div class="col-xs-12 col-sm-1">
+                <div class="input-group">
+                    <input id="c-image02" class="form-control" size="50" name="img_url[]" type="hidden" value="">
+                    <div class="input-group-addon no-border no-padding">
+                        <span><button type="button" id="plupload-image02" class="btn plupload" data-input-id="c-image02" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image02"></button></span>
+                    </div>
+                    <span class="msg-box n-right"></span>
+                </div>
+                <ul class="row list-inline plupload-preview" id="p-image02"  data-template="uploadtpl"></ul>
+            </div>
+            <a type="text" class="btn btn-success" id="add_image_input" style="display: none">+</a>
         </div>
 
 
-
-
-        {/foreach}
     </div>
 
     <div class="form-group">
@@ -186,7 +181,7 @@
         <div class="col-sm-12">
             <label for="username" class="control-label col-xs-12 col-sm-2">庫存</label>
             <div class="col-xs-12 col-sm-2">
-                <input type="text" class="form-control" id="data11" name="stock" value="{$product_list.stock}" data-rule="required;data11" />
+                <input type="text" class="form-control NumText" id="data11" name="stock" value="{$product_list.stock}" data-rule="required;data11" />
             </div>
             <div class="col-xs-12 col-sm-4">
                 <a type="text" class="btn btn-success">獲取庫存</a>
