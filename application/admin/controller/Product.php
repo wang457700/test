@@ -54,7 +54,7 @@ class Product extends Backend
                 $this->error('请选择分类');
             }
             $data['add_time']=date('Y-m-d H:i:s',time());
-            $img_url=input('img_url/a');
+            $img_url=array_filter(input('img_url/a'));
             $data['img_url']=implode(',',$img_url);
             $res=Db::name('goods')->insertGetId($data);
             if($res){
@@ -93,11 +93,11 @@ class Product extends Backend
             if(empty($data['cat_id'])){
                 $this->error('请选择分类');
             }
-            $img_url=input('img_url/a');
+            $img_url=array_filter(input('img_url/a'));
             $data['img_url']=implode(',',$img_url);
             $res=Db::name('goods')->where('product_id',$data['product_id'])->update($data);
             if($res){
-                $this->success('添加成功！',json_encode($data,true));
+                $this->success('添加成功！'.json_encode($img_url,true));
             }else{
                 $this->error('添加失败');
             }
@@ -107,6 +107,7 @@ class Product extends Backend
             $this->get_category($parent_thee_id),
             $this->get_category($parent_two_id),
         );
+
 
         $this->assign('img_url',$img_url);
         $this->assign('product_id',$product_id);

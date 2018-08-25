@@ -32,7 +32,7 @@
 			<div class="col-md-2 col-xs-2" style="">小計</div>
 			<div class="col-md-1 col-xs-1" style="">操作</div>
 		</div>
-<form action="{:URL('cart/action_cart')}" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return cartform()" id="cart-form">
+<form action="{:URL('cart/order_ok')}" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return cartform()" id="cart-form">
 		 {foreach name="car_list" item="vo"}
 		<!--第{$key}个产品-->
 		<div class="row cart-item-list"  id="list_{$key}" >
@@ -197,7 +197,7 @@
                         },1500);
                     }
                 });
-                return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
+              //  return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
             }
 
 

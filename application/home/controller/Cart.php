@@ -55,8 +55,10 @@ class Cart extends Frontend
             $this->assign('address_list',$address_list);
             $this->assign('order_list',$list);
         }else {
+
             $product_id = input('goods_id/a');
-           $goods_num = input('goods_num/a');
+            $goods_num = input('goods_num/a');
+
             $count = count($product_id);
             if ($count> 0) {
                 $i = 0;
@@ -65,6 +67,8 @@ class Cart extends Frontend
                     $data[$i]['goods_id'] = $product_id[$i];
                     $data[$i]['goods_num'] = $goods_num[$i];
                 }
+                $total=0;
+                $num=0;
                 foreach ($data as $k => $v) {
                      $goods= Db::name('goods')->where('product_id',$v['goods_id'])->find();
                     $data[$k]['product_name'] = $goods['product_name'];
@@ -77,24 +81,29 @@ class Cart extends Frontend
                     $data[$k]['cover'] = $goods['cover'];
                     $data[$k]['goods_id'] = $v['goods_id'];
                     $data[$k]['money_total'] = $goods['price']*$v['goods_num'];
+                    $total+=($goods['price']*$v['goods_num']);
+                    $num+=$v['goods_num'];
 
                 }
                 $address_list=Db::name('user_address')->where('user_id',Session::get('user_id'))->select();
+                $this->assign('all_total',$total);
+                $this->assign('num',$num);
                 $this->assign('address_list',$address_list);
                 $this->assign('order_list',$data);
             }
 
         }
+        $this->assign('title','确认订单');
         return  $this->fetch();
-
     }
 
 
     public function action_cart(){
 
-         $goods_id= input('goods_id/a');
+        $goods_id= input('goods_id/a');
         $goods_num= input('goods_num/a');
-        if (count($goods_id) > 1) {
+        $address_id= input('address_id');
+        if (count($goods_id) > 0) {
             $count=count($goods_id);
             $i = 0;
             $data = array();
@@ -108,6 +117,7 @@ class Cart extends Frontend
                     $fat['price'] =$price['price'];
                     $fat['money_total']=$v['goods_num']*$price['price'];
                     $fat['goods_sn'] =$price['freight_num'];
+                    $fat['address_id'] =$address_id;
                     $fat['order_sn'] =date('Y-m-d').time();
                     $fat['goods_id'] = $v['goods_id'];//这里都要加上下标
                     $fat['goods_num'] = $v['goods_num'];//这里都要加上下标
@@ -128,7 +138,6 @@ class Cart extends Frontend
                 $data = array(
                     'code' => 0,
                     'msg' => '订单生成失败！',
-
                 );
                 $this->ajaxReturn($data);
             }
