@@ -41,6 +41,51 @@ class Cart extends Frontend
 
     }
 
+
+    public function order_ok(){
+
+
+        $action=input('now_pay');
+        if($action=='now_pay'){
+            $goods_id=input('goods_id');
+            $goods_num= input('goods_num');
+            $list= Db::name('goods')->where('product_id',$goods_id)->find();
+            $list['money_total']=$goods_num*$list['price'];
+
+            $this->assign('order_list',$list);
+        }else {
+            $product_id = input('goods_id/a');
+           $goods_num = input('goods_num/a');
+            $count = count($product_id);
+            if ($count> 0) {
+                $i = 0;
+                $data = array();
+                for ($i = 0; $i < $count; $i++) {
+                    $data[$i]['goods_id'] = $product_id[$i];
+                    $data[$i]['goods_num'] = $goods_num[$i];
+                }
+                foreach ($data as $k => $v) {
+                     $goods= Db::name('goods')->where('product_id',$v['goods_id'])->find();
+                    $data[$k]['product_name'] = $goods['product_name'];
+                    $data[$k]['brand'] = $goods['brand'];
+                    $data[$k]['freight_num'] = $goods['freight_num'];
+                    $data[$k]['price'] = $goods['price'];
+                    $data[$k]['pricevip'] = $goods['pricevip'];
+                    $data[$k]['discount_price'] = $goods['discount_price'];
+                    $data[$k]['place_origin'] = $goods['place_origin']; //规格
+                    $data[$k]['cover'] = $goods['cover'];
+                    $data[$k]['goods_id'] = $v['goods_id'];
+                    $data[$k]['money_total'] = $goods['price']*$v['goods_num'];
+
+                }
+                $this->assign('order_list',$data);
+            }
+
+        }
+        return  $this->fetch();
+
+    }
+
     public function action_cart(){
 
          $goods_id= input('goods_id/a');
