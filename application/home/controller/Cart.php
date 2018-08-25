@@ -188,8 +188,6 @@ class Cart extends Frontend
             );
             $this->ajaxReturn($data);
         }
-
-
     }
 
 

@@ -1,0 +1,68 @@
+{include file="layout/public_head" /}
+<!--头部 str-->
+{include file="common/header"/}
+<!--头部 end-->
+<!-- 导航 str-->
+{include file="common/nav"/}
+	<body style="background: url(__TMPL_PUBLIC__/img/index_bg.jpg) repeat-y;">
+
+	 <div class="container shopping_cart" >
+	
+		<div class="row topstate" style="padding: 20px 30px">
+			<div class="alzx-crumbs alzx-crumbs-f1"> 
+	  			<div class="alzx-con"> 
+					<a class="crumbs-01" href="#">主頁</a> 
+		          <em>&gt;</em>
+		          <span class="crumbs-02">購物車</span> 
+		          <em>&gt;</em> 
+		          <span class="crumbs-02">確認訂單</span> 
+		          <em>&gt;</em> 
+		          <span class="crumbs-02">下單完成</span> 
+		  		</div> 
+	  		
+	  		</div>
+			<ul class="row">
+				<li class="col-md-3 col-sm-3 col-xs-3 on0" style=""><img src="img/shopping_cart_top_lc1_w.png" />購物車</li>
+				<li class="col-md-3 col-sm-3 col-xs-3 on0" style=""><img src="img/shopping_cart_top_lc2_w.png" />確認訂單</li>
+				<li class="col-md-3 col-sm-3 col-xs-3 on0" style=""><img src="img/shopping_cart_top_lc3_w.png" />支付</li>
+				<li class="col-md-3 col-sm-3 col-xs-3 on1" style="background-image: url();"><img src="img/shopping_cart_top_lc4_w.png" />訂單完成</li>
+			</ul>
+		</div>
+
+		<div class="order_ok">
+			<div class="row">
+				<div class="col-md-4 col-sm-2 col-xs-2" style=""></div>
+				<div class="col-md-6 col-sm-8 col-xs-8" style="">
+					<div class="row">
+						<div class="col-md-2 col-sm-2 col-xs-2">
+							<img src="img/order_ok.jpg" />
+						</div>
+						<div class="col-md-8 col-sm-8 col-xs-8" style="">
+							<h4>下單成功!</h4>
+							<p>恭喜您，增加<span class="color_ro">12</span>積分！</p>
+							<p>您的訂單編號為： 123456789</p>
+							<p>您可以 
+								<button type="button" class="btn btn-warning">查看訂單</button>
+							    <a href="" class="color_ro">繼續購物</a>
+							    <a href="">返回首頁</a>       
+							</p>
+ 
+						</div>
+ 
+					</div>
+					 
+				</div>
+				<div class="col-md-2 col-sm-2" style=""></div>
+			</div>
+			 
+
+
+		</div>
+
+	</div>
+	 {include file="common/footer" /}
+	 <script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
+	 <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
+	 {include file="common/script" /}
+	</body>
+</html>
