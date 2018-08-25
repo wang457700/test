@@ -120,7 +120,9 @@
 			</div>
 		</div>
 </form>
-
+ <script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
+ <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
+ {include file="common/script" /}
 	<script type="text/javascript">
 			function on_number(id,type){
 				//初始化数量为1,并失效减
@@ -182,21 +184,19 @@
 			});
 
             function cartform(){
-                console.log($('#cart-form').serializeArray());
-					alert(1);
+                //console.log($('#cart-form').serializeArray());
                 // jquery 表单提交
                 $("#cart-form").ajaxSubmit(function(data){
                     console.log(data);
                     if(data.code == 0){
                         $.message({message:data.msg,type:'warning',time:'3000'});
                     }else{
-                        $.message(data.msg);
-                        setTimeout(function () {
-                            window.location = data.url
-                        },2500);
+                        $.message(data.msg+ data.url);
+                        setTimeout(function (){
+                           window.location = data.url
+                        },1500);
                     }
                 });
-
                 return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
             }
 

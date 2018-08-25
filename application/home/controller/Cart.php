@@ -70,38 +70,21 @@ class Cart extends Frontend
             }
 
             if ($res) {
-                $data = array(
-                    'code' => 1,
-                    'msg' => '你已经生成订单！',
-                    'url'=>url('cart/submit_order',array('order'=>$order_sn))
-                );
-                $this->ajaxReturn($data);
+                $this->success('你已经生成订单！',url('cart/submit_order',array('order_sn'=>$order_sn)));
             }else{
-                $data = array(
-                    'code' => 0,
-                    'msg' => '订单生成失败！',
-
-                );
-                $this->ajaxReturn($data);
+                $this->error('订单生成失败！');
             }
-
         }
-
     }
-    
-    
-    
+
     /*确认订单 linjiahong*/
     public function submit_order(){
         
         if ($this->request->isPost()) {
-            
-            
-            
-            
+
+            $this->error('订单生成失败！');
         }
-        
-        
+
         $order_sn = input('order_sn');
         $address_list = Db::name('user_address')
         ->where('user_id',Session::get('user_id'))
@@ -111,17 +94,17 @@ class Cart extends Frontend
         ->alias('a')->field('a.*,c.price,product_name,a.goods_id as product_id')->join('__GOODS__ c','a.goods_id=c.product_id','RIGHT')
         ->where('order_sn',$order_sn)
         ->select();
-        
-        dump($address_list);
-        dump($order_info);
+
+        $total['money_total']= Db::name('order')->where('order_sn',$order_sn)->sum('money_total');
+        $total['goods_num_total'] = Db::name('order')->where('order_sn',$order_sn)->sum('goods_num');
         $this->assign('title','確認訂單');
         $this->assign('goods_list',$goods_list);
+        $this->assign('sum',$total);
         $this->assign('address_list',$address_list);
         return  $this->fetch();
     }
      
     public function shopping_cart(){
- 
         $user_id=  Session::get('user_id');
         $list= Db::name('cart_order')->alias('a')->field('c.*,a.product_id as goods_id,a.user_id,a.cart_id')->join('__GOODS__ c','a.product_id=c.product_id','RIGHT')->where('user_id', $user_id)->group('c.product_id')->select();
         $sum=0;

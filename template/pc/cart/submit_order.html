@@ -12,9 +12,10 @@
 	</style>
 	
 	<body style="background: url(__TMPL_PUBLIC__/img/index_bg.jpg) repeat-y;">
+	<form action="{:url('cart/submit_order')}"  method="post" enctype="multipart/form-data" onsubmit="return orderform()" id="order-form">
 
 	 <div class="container shopping_cart" style="padding: 0 30px;">
-	
+
 		<div class="row topstate">
 			<div class="alzx-crumbs alzx-crumbs-f1"> 
 	  			<div class="alzx-con"> 
@@ -30,20 +31,15 @@
 				<li class="col-md-3 col-sm-3 " style="background-image: url();"><img src="__TMPL_PUBLIC__/img/shopping_cart_top_lc4.png" />訂單完成</li>
 			</ul>
 		</div>
- 
+
 		<div class="item-address">
 			<h4>確認收貨地址</h4>
 			<ul class="row">
-			    
-			    
-				  
-			    
-			    
 			   {foreach name="address_list" item="vo"}
 				<li class="row li {$vo['default']==1?'on':'1'}" style="">
 					<div class="col-md-10 col-sm-9" style="">
-						<span class="bold">{$vo.name}	{:format_phone($vo['phone'])}</span>
-						<p>{$vo.country} {$vo.province} {$vo.city} {$vo.address}</p>
+						<span class="bold" id="name">{$vo.name}	{:format_phone($vo['phone'])}</span>
+						<p id="address">{$vo.country} {$vo.province} {$vo.city} {$vo.address}</p>
 					</div>
 					<div class="col-md-2 col-sm-3 asright" style="">
 							<a href="{:url('user/address_list',array('id'=>$vo['id']))}" target="_blank"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>修改</a>
@@ -51,7 +47,6 @@
 					</div>
 				</li>
 			    {/foreach} 
-			    
 				<li class="row" style="text-align: center;padding:20px;">
 					<a href="{:url('user/address_list')}" target="_blank">
 						<i class="fa fa-plus" aria-hidden="true"></i>
@@ -71,11 +66,11 @@
 		</div>
 
 		
-	    {foreach name="address_list" item="vo"}
+	    {foreach name="goods_list" item="vo"}
 		<div class="row cart-item-list">
 				<div class="col-md-4 col-sm-6 t2" style=""> 
 					<div class="row">
-						<img src="img/f2_1.jpg" class="col-md-5 col-xs-5">
+						<img src="__TMPL_PUBLIC__/img/f2_1.jpg" class="col-md-5 col-xs-5">
 						<p class="col-md-6 col-xs-6">
 							<span class="color_75 bold">{$vo.product_name}</span>
 							產品型號：{$vo.product_name}
@@ -87,7 +82,7 @@
 				<div class="col-md-2 col-sm-2" style="">
 				    {$vo.goods_num}
 				</div>
-				<div class="col-md-2 col-sm-2 color_ro bold" style="">$ {$vo['price'] * $vo['goods_num']}</div>
+				<div class="col-md-2 col-sm-2 color_ro bold" style="">$ {:number_format($vo['price'] * $vo['goods_num'],2)}</div>
 		</div>
         {/foreach} 
 	<!--	<div class="row cart-item-list">
@@ -107,38 +102,36 @@
 				</div>
 				<div class="col-md-2 col-sm-2 color_ro bold" style="">$ 10000.00</div>
 		</div>-->
- 
-
 
 		<div class="row" style="margin-bottom: 10px;">
 			<div class="col-md-12 border_1" style="text-align: right;padding:20px">
-				<span class="color_ro">2</span>件商品, 總計: <span class="color_ro">$ 20000.00</span><br/>運費: $ 0<br/>
+				<span class="color_ro">{$sum['goods_num_total']}</span>件商品, 總計: <span class="color_ro">$ {:number_format($sum['money_total'],2)}</span><br/>運費: $ 0<br/>
 			</div>
 			<div class="col-md-12 border_1" style="padding:20px">
-				<p style="display: inline-block;">
+				<!--<p style="display: inline-block;">
 					<input type="checkbox" class="checkbox" />您當前有<span class="color_ro bold">120</span>積分，可抵扣<span class="color_ro bold">$12.0</span>
-				</p>
-				<p style="font-size:22px;text-align: right;display: inline-block;float:right;">合計 (不含運費)：<span class="color_ro">$ 20000.00</span></p>
+				</p>-->
+				<p style="font-size:22px;text-align: right;display: inline-block;float:right;">合計 (不含運費)：<span class="color_ro">$ {:number_format($sum['money_total'],2)}</span></p>
 			</div>
 		</div>
 
 		
 		<div class="row cart-item-footer" style="padding: 20px;">
-			<div class="col-md-8" style="">
+			<div class="col-md-8" style="" id="on_address">
 				收件人：陳大文  134 8888 8888<br>
 				收件地址：九龍油塘高超道38號大本型商場2樓228號鋪
 			</div>
 			<div class="col-md-4" style="float: right;text-align: right;">
-				商品總計: <span>$ 20000.00</span>
+				商品總計: <span>$ {:number_format($sum['money_total'],2)}</span>
 				<br/>運費: <span>$ 0</span>
 				<br/>積分抵扣: <span>$ 0</span><br/>
-				<p>應付款：<span  style="font-size:22px ">$ 20000.00</span></p>
+				<p>應付款：<span  style="font-size:22px ">$ {:number_format($sum['money_total'],2)}</span></p>
 				<div class="row" style="padding:10px 0 ">
                    <div class="col-md-6" style="">
-                        <button type="button" class="btn-default-edit" style="">繼續購物</button>
+					   <a href="{:url('index/index')}"><button type="button" class="btn-default-edit" style="">繼續購物</button></a>
                     </div>
                      <div class="col-md-6" style="">
-                        <button type="button" class="btn-warning-edit">提交訂單</button>
+                        <button type="submit" class="btn-warning-edit">提交訂單</button>
                     </div> 
                 </div>
 			</div>
@@ -146,44 +139,44 @@
 
 
 
+</div>
+</form>
 {include file="common/footer"/}
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
 <script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
 <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
-{include file="common/script" /}
+{include file="common/script"/}
 	<script type="text/javascript">
         	$(function(){
         	//	$('.item-address .li').eq(0).addClass("on");
         		 $('.item-address .li').each(function(){
         		  $(this).click(function(){
         			$(this).addClass("on").siblings().removeClass("on");
+        			$('#on_address').html('收件人：' + $(this).find('#name').text() + '<br>收件地址：' +$(this).find('#address').text())
+        			console.log();
         		   });
         		 });
         	});
-        
-        	function on_number(id,type){
-        		//初始化数量为1,并失效减
-            	//$('#min' + id).attr('disabled',true);
-            	//获得文本框对象
-        		var t = $("#text_box_" + id);
-        		if(type=='add'){
-        			// 给获取的val加上绝对值，避免出现负数
-                 	 t.val(Math.abs(parseInt(t.val()))+1);
-        	          if (parseInt(t.val())!=1){
-        	          $('#min_' + id).attr('disabled',false);
-        	          };
-        		}
-        		if(type=='min'){
-        			 t.val(Math.abs(parseInt(t.val()))-1);
-        	          if (parseInt(t.val())==1){
-        	          $('#min_' + id).attr('disabled',true);
-        	          };
-        		}
-        	} 
+
+
+            function orderform(){
+                //console.log($('#cart-form').serializeArray());
+                // jquery 表单提交
+                $("#order-form").ajaxSubmit(function(data){
+
+                    console.log(data);
+                    if(data.code == 0){
+                        $.message({message:data.msg,type:'warning',time:'3000'});
+                    }else{
+                        $.message(data.msg+ data.url);
+                        setTimeout(function (){
+                            window.location = data.url
+                        },1500);
+                    }
+                });
+                return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
+            }
 	</script> 
-	
-	
-	
-	
+
 	</body>
 </html>
