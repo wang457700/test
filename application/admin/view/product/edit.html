@@ -1,19 +1,10 @@
 <style>
-    .plupload {
-        background: url(__CDN__/assets/img/upload_img.png) no-repeat;
-        background-size: 100%;
-        width: 60px;
-        height: 60px;
-    }
-    .plupload:active,.plupload:hover{
-        background: url(__CDN__/assets/img/upload_img.png) no-repeat;
-        background-size: 100%;
-        width: 60px;
-        height: 60px;
-        border:0;
-    }
-    .danxuan .fa-circle{color: #eee;}
-    .danxuan.on .fa-circle{display: inline-block;color: #18bc9b;}
+    .plupload{background:url(__CDN__/assets/img/upload_img.png) no-repeat;background-size:100%;width:60px;height:60px}
+    /*.plupload:active{background:url(__CDN__/assets/img/upload_img.png) no-repeat;background-size:100%;width:60px;height:60px;border:0}*/
+    .danxuan .fa-circle{color:#eee}
+    .danxuan.on .fa-circle{display:inline-block;color:#18bc9b}
+    .plupload-edit{background-color:#e74c3c;border-color:#e74c3c;width:100px;height:30px;background-image:none}
+
 </style>
 <form id="add-form" class="form-horizontal form-ajax" role="form" data-toggle="validator" method="POST" action="" style="min-height: 450px;background: #fff;padding: 20px">
 
@@ -124,13 +115,15 @@
             <input id="c-logintime" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="end_time" type="text" value="{$product_list.end_time}" style="width: 40%">
         </div>
     </div>
+
     <div class="form-group">
         <label for="c-image" class="control-label col-xs-12 col-sm-2">封面</label>
         <div class="col-xs-12 col-sm-8">
             <div class="input-group">
-                <input id="c-image" class="form-control" size="50" name="cover" type="hidden" value="">
+                <input id="c-image" class="form-control" size="50" name="cover" type="hidden" value="{$product_list.cover}">
                 <div class="input-group-addon no-border no-padding">
-                    <span><button type="button" id="plupload-image" class="btn btn-danger plupload" data-input-id="c-image" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image"></button></span>
+                    <span><button type="button" id="plupload-image" class="btn btn-danger plupload plupload-edit" data-input-id="c-image" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image"><i class="fa fa-upload"></i> 重新上传</button></span>
+                    <!--<span><button type="button" id="fachoose-image" class="btn btn-primary fachoose" data-input-id="c-image" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>-->
                 </div>
                 <span class="msg-box n-right"></span>
             </div>
@@ -141,7 +134,7 @@
         <label for="c-image1" class="control-label col-xs-12 col-sm-2">图片</label>
 
         {foreach name="img_url" item="vo"}
-        <div class="col-xs-12 col-sm-1">
+        <!--<div class="col-xs-12 col-sm-1">
             <div class="input-group">
                 <input id="c-image{$key}" class="form-control" size="50" name="img_url[]" type="hidden" value="__PUBLIC__/{$vo}">
                 <div class="input-group-addon no-border no-padding">
@@ -161,11 +154,24 @@
                     <a href="javascript:;" class="btn btn-danger btn-xs btn-trash"><i class="fa fa-trash"></i></a>
                 </li>
             </ul>
+        </div>-->
+
+        <div class="col-xs-12  col-sm-1">
+            <div class="input-group">
+                <input id="c-image{$key}" class="form-control" size="50" name="cover" type="hidden" value="{$vo}">
+                <div class="input-group-addon no-border no-padding">
+                    <span><button type="button" id="plupload-image{$key}" class="btn btn-danger plupload plupload-edit" data-input-id="c-image{$key}" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image{$key}"><i class="fa fa-upload"></i> 重新上传</button></span>
+                    <!--<span><button type="button" id="fachoose-image" class="btn btn-primary fachoose" data-input-id="c-image" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>-->
+                </div>
+                <span class="msg-box n-right"></span>
+            </div>
+            <ul class="row list-inline plupload-preview" id="p-image{$key}" data-template="uploadtpl"></ul>
         </div>
+
+
+
+
         {/foreach}
-
-
-
     </div>
 
     <div class="form-group">

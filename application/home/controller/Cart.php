@@ -41,6 +41,15 @@ class Cart extends Frontend
 
     }
 
+
+    public function order_ok(){
+
+
+
+
+    }
+
+
     public function action_cart(){
 
          $goods_id= input('goods_id/a');
@@ -54,6 +63,7 @@ class Cart extends Frontend
                 $data[$i]['goods_num'] = $goods_num[$i];
             }
             $res='';
+
             foreach ($data as $k => $v) {
                      $price=Db::name('goods')->where('product_id',$v['goods_id'])->find();
                     $fat['price'] =$price['price'];
@@ -70,40 +80,43 @@ class Cart extends Frontend
             }
 
             if ($res) {
-                $this->success('你已经生成订单！',url('cart/submit_order',array('order_sn'=>$order_sn)));
+                $this->success('你已经生成订单！',url('cart/submit_order'));
             }else{
                 $this->error('订单生成失败！');
             }
         }
     }
 
-    /*确认订单 linjiahong*/
-    public function submit_order(){
-        
-        if ($this->request->isPost()) {
-
-            $this->error('订单生成失败！');
-        }
-
-        $order_sn = input('order_sn');
-        $address_list = Db::name('user_address')
-        ->where('user_id',Session::get('user_id'))
-        ->select();
-        $is_default_id = Db::name('user_address')->where(array('user_id'=>Session::get('user_id'),'default'=>1))->value('id');
-         $goods_list = Db::name('order')
-        ->alias('a')->field('a.*,c.price,product_name,a.goods_id as product_id')->join('__GOODS__ c','a.goods_id=c.product_id','RIGHT')
-        ->where('order_sn',$order_sn)
-        ->select();
-
-        $total['money_total']= Db::name('order')->where('order_sn',$order_sn)->sum('money_total');
-        $total['goods_num_total'] = Db::name('order')->where('order_sn',$order_sn)->sum('goods_num');
-        $this->assign('title','確認訂單');
-        $this->assign('is_default_id',$is_default_id);
-        $this->assign('goods_list',$goods_list);
-        $this->assign('sum',$total);
-        $this->assign('address_list',$address_list);
-        return  $this->fetch();
-    }
+//    /*确认订单 linjiahong*/
+//    public function submit_order(){
+//
+//        if ($this->request->isPost()) {
+//
+//            $this->error('订单生成失败！');
+//        }
+//
+//       // $order_sn = input('order_sn');
+//        $user_id = Session::get('user_id');
+//
+//        $address_list = Db::name('user_address')
+//        ->where('user_id',Session::get('user_id'))
+//        ->select();
+//        $is_default_id = Db::name('user_address')->where(array('user_id'=>Session::get('user_id'),'default'=>1))->value('id');
+//         $goods_list = Db::name('order')
+//        ->alias('a')->field('a.*,c.price,product_name,a.goods_id as product_id')->join('__GOODS__ c','a.goods_id=c.product_id','RIGHT')
+//        ->where('order_sn',$order_sn)
+//        ->select();
+//
+//        $total['money_total']= Db::name('order')->where('order_sn',$order_sn)->sum('money_total');
+//        $total['goods_num_total'] = Db::name('order')->where('order_sn',$order_sn)->sum('goods_num');
+//
+//        $this->assign('is_default_id',$is_default_id);
+//        $this->assign('goods_list',$goods_list);
+//        $this->assign('sum',$total);
+//        $this->assign('address_list',$address_list);
+//        $this->assign('title','確認訂單');
+//        return  $this->fetch();
+//    }
      
     public function shopping_cart(){
         $user_id=  Session::get('user_id');
