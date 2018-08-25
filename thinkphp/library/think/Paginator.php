@@ -100,10 +100,8 @@ abstract class Paginator implements ArrayAccess, Countable, IteratorAggregate, J
         if (!$this->simple && $currentPage > $this->lastPage) {
             return $this->lastPage > 0 ? $this->lastPage : 1;
         }
-
         return $currentPage;
     }
-
     /**
      * 获取页码对应的链接
      *

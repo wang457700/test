@@ -211,7 +211,6 @@ class User extends Frontend
         $this->assign('page',$page);
          $this->assign('order_list',$result);
 
-
         return $this->view->fetch();
     }
 
