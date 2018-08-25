@@ -45,7 +45,7 @@
 			</div>
 			<div class="col-md-4 col-xs-4 t2" style="">
 				<div class="row">
-					<img src="__TMPL_PUBLIC__/img/f2_1.jpg" class="col-md-5  col-xs-12">
+					<img src="__PUBLIC__/{$vo.cover}" class="col-md-5  col-xs-12">
 					<p class="col-md-6 col-xs-12">
 						<span class="bold">{$vo.product_name} {$vo.model}</span>
 						產品型號：{$vo.model}
@@ -120,6 +120,7 @@
 			</div>
 		</div>
 </form>
+ {include file="common/footer" /}
  <script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
  <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
  {include file="common/script" /}
