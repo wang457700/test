@@ -51,7 +51,8 @@ class Cart extends Frontend
             $goods_num= input('goods_num');
             $list= Db::name('goods')->where('product_id',$goods_id)->find();
             $list['money_total']=$goods_num*$list['price'];
-
+            $address_list=Db::name('user_address')->where('user_id',Session::get('user_id'))->select();
+            $this->assign('address_list',$address_list);
             $this->assign('order_list',$list);
         }else {
             $product_id = input('goods_id/a');
@@ -78,6 +79,8 @@ class Cart extends Frontend
                     $data[$k]['money_total'] = $goods['price']*$v['goods_num'];
 
                 }
+                $address_list=Db::name('user_address')->where('user_id',Session::get('user_id'))->select();
+                $this->assign('address_list',$address_list);
                 $this->assign('order_list',$data);
             }
 
