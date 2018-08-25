@@ -95,11 +95,10 @@
                         <button type="submit" class="btn btn-default btn-default-edit" style="margin-bottom: 1em">快速購買</button>
                     </div>
                      <div class="col-md-5 col-xs-6" style="">
-                        <button type="button" class="btn btn-warning btn-warning-edit"><img src="__TMPL_PUBLIC__/img/invest_detail_addshop.png" style="width:  20px;margin-right:  10px;">加入購物車</button>
+                        <button type="button" class="btn btn-warning btn-warning-edit" id="adds"><img src="__TMPL_PUBLIC__/img/invest_detail_addshop.png" style="width:  20px;margin-right:  10px;">加入購物車</button>
                     </div> 
                 </div>
                 <input type="hidden" name="goods_id" value="{$goods.product_id}">
-
                 </form>
               <div></div>
             </div>
@@ -112,8 +111,13 @@
 
                     <ul class="row" style="border-top: 1px solid #e5e5e5;margin: 0;">
                         {foreach name="goods_list" item="vo"}
+                        {if condition="$key lt 5"}
                             <li class="col-md-2 col-xs-3">
-                                  <img src="__PUBLIC__/{$vo.cover}" style="width: 100%">
+                                {if condition="$vo['cover']"}
+                                    <img src="__PUBLIC__/{$vo.cover}" style="width: 100%">
+                                {else/}
+                                 <img src="__TMPL_PUBLIC__/img/default.jpg">
+                                {/if}
                                   <div class="d2">
                                     <p>{$vo.product_name}</p>
                                     <p class="color_ro">优惠全民享</p>
@@ -123,8 +127,8 @@
                                     </div>
                                   </div>
                             </li>
+                        {/if}
                         {/foreach}
-
                     </ul>
                </div>
           </div>

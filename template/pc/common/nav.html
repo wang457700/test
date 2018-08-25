@@ -5,9 +5,8 @@
       <div class="nav">
         <div class="list" id="navlist">
           <ul id="navfouce">
-            <li class="active">
+            <li>
               <a href="{:url('index/index')}">主頁</a></li>
-
             {foreach name="category" item="vo"}
               <li><a href="{:url('product/index',array('id',$vo['id']))}" class="true">{$vo.name}</a></li>
             {/foreach}
@@ -67,6 +66,11 @@
         }
     });
     if (!urlstatus) {$("#menu a").eq(0).addClass('cur'); }
+    $("#navfouce a").each(function(){
+        if ($(this)[0].href == String(window.location) && $(this).attr('href')!="") {
+            $(this).parents("li").addClass("active");
+        }
+    });
 </script>
 <script type="text/javascript">
       (function() {

@@ -3,7 +3,7 @@
 <script src='__PUBLIC__/assets/js/message/messageIE.js'></script>
 <script>
 /* 加入购物车 */
-$(".adds").click(function(){
+$(".adds,#adds").click(function(){
         var product_id = $(this).data('productid');
         var name = $(this).data('name');
         $.ajax({
@@ -38,6 +38,7 @@ $(".adds").click(function(){
         $.ajax({
             type: "GET",
             url: url,
+            dataType:"json",
             success: function(data) {
                 if(data.code == 0){
                     $.message({message:data.msg,type:'warning',time:'3000'});
@@ -50,6 +51,7 @@ $(".adds").click(function(){
             }
         });
     });
+
     /*删除*/
     $(".js-ajax-delete").click(function(){
         var url = $(this).attr('href');
@@ -57,6 +59,7 @@ $(".adds").click(function(){
             $.ajax({
                 type: "GET",
                 url: url,
+                dataType:"json",
                 success: function(data) {
                     if(data.code == 0){
                         $.message({message:data.msg,type:'warning',time:'3000'});
