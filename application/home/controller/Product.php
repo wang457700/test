@@ -48,6 +48,15 @@ class Product extends Frontend
         return $this->view->fetch();
     }
 
+    public function detail()
+    {
+        $goods_id = input('id');
+        $goods =  Db::name('goods')->where('product_id',$goods_id)->find();
+        $this->view->assign("goods",$goods);
+        $this->view->assign("title",'商品详情');
+        return $this->view->fetch();
+    }
+
 
 
 

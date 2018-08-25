@@ -89,7 +89,7 @@ class Cart extends Frontend
         $address_list = Db::name('user_address')
         ->where('user_id',Session::get('user_id'))
         ->select();
-        
+        $is_default_id = Db::name('user_address')->where(array('user_id'=>Session::get('user_id'),'default'=>1))->value('id');
          $goods_list = Db::name('order')
         ->alias('a')->field('a.*,c.price,product_name,a.goods_id as product_id')->join('__GOODS__ c','a.goods_id=c.product_id','RIGHT')
         ->where('order_sn',$order_sn)
@@ -98,6 +98,7 @@ class Cart extends Frontend
         $total['money_total']= Db::name('order')->where('order_sn',$order_sn)->sum('money_total');
         $total['goods_num_total'] = Db::name('order')->where('order_sn',$order_sn)->sum('goods_num');
         $this->assign('title','確認訂單');
+        $this->assign('is_default_id',$is_default_id);
         $this->assign('goods_list',$goods_list);
         $this->assign('sum',$total);
         $this->assign('address_list',$address_list);

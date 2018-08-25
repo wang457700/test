@@ -134,9 +134,11 @@
               <div class="swiper-wrapper row">
                   {foreach  name="top_ten" item='vo'}
                   <div class="swiper-slide col-md-3 list">
-                      <p></p>
-                      <img src="__PUBLIC__/{$vo.cover}">
-                      <span class="font24"><i class="font12">$</i>{$vo.price}</span>
+                      <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
+                          <p></p>
+                          <img src="__PUBLIC__/{$vo.cover}">
+                          <span class="font24"><i class="font12">$</i>{$vo.price}</span>
+                      </a>
                       <a class="adds" data-productid="{$vo.product_id}" data-name="{$vo.product_name}" >+</a>
                   </div>
                   {/foreach}
