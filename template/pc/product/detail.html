@@ -32,21 +32,21 @@
                     <div class="imgdet wrap">
                       <div class="imglist">
                         <ul>
-                          <li class="active">
-                            <img src="img/0001.png" alt=""></li>
-                          <li>
-                            <img src="img/0002.png" alt=""></li>
-                          <li>
-                            <img src="img/0003.png" alt=""></li>
+
+                        {foreach name="img_url" item="vo"}
+                          <li class="{$key=="0"?'active':''}"><img src="__PUBLIC__/{$vo}" alt=""></li>
+                        {/foreach}
                         </ul>
                       </div>
                       <div class="imgpart">
                         <div class="pic">
-                          <img src="img/0001.png" alt="">
+                          <img src="__PUBLIC__/{$goods.cover}" alt="">
                           <div class="magnify"></div>
                         </div>
                         <div class="bigpic">
-                          <img src="img/0001.png" alt=""></div>
+                          <img src="__PUBLIC__/{$goods.cover}" alt="">
+                      </div>
+
                       </div>
                     </div>
                     <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
@@ -54,30 +54,30 @@
             </div>
             <div class="col-md-6">
                 <div class="title_detail">
-                  <h4>強效專業運動鞋墊 41</h4>
-                  <p>澳洲科研設計,美國矯形足科協會成員,物料檢測由南德意志集團物料認證，護足部，防止運動創傷，強化肌腱及減低運動所張發的足部勞損的人士！</p>
+                  <h4>{$goods.product_name}</h4>
+                  <p>{$goods.summary}</p>
                 </div>
                 <div class="row price">
                     <div class="col-md-6" style="">
-                        港幣：<span>$<i>339</i></span>
+                        港幣：<span>$<i>{$goods.price}</i></span>
                     </div>
 
                     <div class="col-md-6" style="">
-                        人民幣約：$336.63元
+                        人民幣約：$xxxx元
                     </div>
                 </div>
                 <div class="row spec">
                     <div class="col-md-6" style="">
-                       商品編號：DRIEC3N41
+                       商品編號：{$goods.freight_num}
                     </div>
                     <div class="col-md-6" style="">
-                        商品品牌：RABYCH
+                        商品品牌：{$goods.brand}
                     </div>
                     <div class="col-md-6" style="">
-                        郵寄重量：160克（g）
+                        郵寄重量：{$goods.weight_ioc}克（g）
                     </div>
                     <div class="col-md-6" style="">
-                        可售庫存：200件
+                        可售庫存：{$goods.stock}件
                     </div>
                 </div>
                  <div class="row number">
@@ -99,7 +99,6 @@
               <div></div>
             </div>
           </div>
-
           <div> 
               <div  class="xg-title">
                   相關產品
@@ -107,69 +106,22 @@
               <div class="product"> 
 
                     <ul class="row" style="border-top: 1px solid #e5e5e5;margin: 0;">
-                        <li class="col-md-2 col-xs-3">
-                              <img src="img/f2_1.jpg">
-                              <div class="d2">
-                                <p>GH 人造皮 2 磅運動沙包</p>
-                                <p class="color_ro">优惠全民享</p>
-                                <div>
-                                    <span style="font-size: 20px;"><i>￥</i>1234</span>
-                                    <a class="adds">+</a>
-                                </div>
-                              </div>
-                        </li> 
-                        <li class="col-md-2 col-xs-3">
-                              <img src="img/f2_1.jpg">
-                              <div class="d2">
-                                <p>GH 人造皮 2 磅運動沙包</p>
-                                <p class="color_ro">优惠全民享</p>
-                                <div>
-                                    <span style="font-size: 20px;"><i>￥</i>1234</span>
-                                    <a class="adds">+</a>
-                                </div>
-                              </div>
-                        </li> 
-                        <li class="col-md-2 col-xs-3">
-                              <img src="img/f2_1.jpg">
-                              <div class="d2">
-                                <p>GH 人造皮 2 磅運動沙包</p>
-                                <p class="color_ro">优惠全民享</p>
-                                <div>
-                                    <span style="font-size: 20px;"><i>￥</i>1234</span>
-                                    <a class="adds">+</a>
-                                </div>
-                              </div>
-                        </li> 
-                        <li class="col-md-2 col-xs-3">
-                              <img src="img/f2_1.jpg">
-                              <div class="d2">
-                                <p>GH 人造皮 2 磅運動沙包</p>
-                                <p class="color_ro">优惠全民享</p>
-                                <div>
-                                    <span style="font-size: 20px;"><i>￥</i>1234</span>
-                                    <a class="adds">+</a>
-                                </div>
-                              </div>
-                        </li>
-                        <li class="col-md-2 col-xs-3">
-                              <img src="img/f2_1.jpg">
-                              <div class="d2">
-                                <p>GH 人造皮 2 磅運動沙包</p>
-                                <p class="color_ro">优惠全民享</p>
-                                <div>
-                                    <span style="font-size: 20px;"><i>￥</i>1234</span>
-                                    <a class="adds">+</a>
-                                </div>
-                              </div>
-                        </li> 
+                        {foreach name="goods_list" item="vo"}
+                            <li class="col-md-2 col-xs-3">
+                                  <img src="__PUBLIC__/{$vo.cover}" style="width: 100%">
+                                  <div class="d2">
+                                    <p>{$vo.product_name}</p>
+                                    <p class="color_ro">优惠全民享</p>
+                                    <div>
+                                        <span style="font-size: 20px;"><i>￥</i>{$vo.price}</span>
+                                        <a class="adds" data-productid="{$vo.product_id}">+</a>
+                                    </div>
+                                  </div>
+                            </li>
+                        {/foreach}
 
-
-                    </ul>   
-        
+                    </ul>
                </div>
-
-
-
           </div>
 
           <div>
@@ -180,11 +132,9 @@
                 </div>
                 <div class="investment_con">
                   <div class="investment_con_list" style="display: block;">
-                     
-                    这里是内容介绍
+                    {$goods.content}
                   </div>
                   <div class="investment_con_list comment">
-                    
                         <div class="xuan">
                           <a href="" class="color_ro">全部評價(115)</a>
                           <a href="">滿意 (13）</a>
@@ -272,8 +222,10 @@
 
       </div>
     </div>
- 
-	 
+
+<script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
+<script src="__TMPL_PUBLIC__/js/scripts.js"></script>
+{include file="common/script" /}
    <script>
       $(document).ready(function(){
       //获得文本框对象
@@ -313,8 +265,7 @@
               });
           }
           tabs(".investment_title", "on", ".investment_con");
-      })
-
+      });
     </script>
     {include file="common/footer"/}
   </body>

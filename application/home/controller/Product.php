@@ -52,7 +52,12 @@ class Product extends Frontend
     {
         $goods_id = input('id');
         $goods =  Db::name('goods')->where('product_id',$goods_id)->find();
+        $goods_list =  Db::name('goods')->select();
+
+        $img_url=explode(',',$goods['img_url']);
         $this->view->assign("goods",$goods);
+        $this->view->assign("goods_list",$goods_list);
+        $this->view->assign("img_url",$img_url);
         $this->view->assign("title",'商品详情');
         return $this->view->fetch();
     }

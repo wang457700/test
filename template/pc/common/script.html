@@ -13,7 +13,7 @@ $(".adds").click(function(){
                 data:{product_id:product_id},
               success: function(data) {
                 if (data.code) {
-                    $.message(data.code);
+                    $.message(data.msg);
                     $('.shopping span').text(Number(data.total));
                 }else{
                     $.message({message:data.msg,type:'warning',time:'3000'});
