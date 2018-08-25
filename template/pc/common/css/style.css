@@ -275,7 +275,10 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 .shopping_cart .cart-item-list input[type='checkbox'],.checkbox{width: 20px;height: 20px;background-color: #fff;-webkit-appearance:none;border: 1px solid #c9c9c9;border-radius: 2px;outline: none;vertical-align: middle;display: inline-block;margin: 0 5px 0 0 !important;}
 .shopping_cart .cart-item-list input[type=checkbox]:checked ,.checkbox:checked{background: url(../img/checkbox_icon.png)no-repeat center;}
 .shopping_cart .cart-item-list .t2 p{padding: 35px 0;color: #757575;line-height:25px}
-.shopping_cart .cart-item-list .t2 p span{display:block;color: #757575;font-size: 16px;}
+.shopping_cart .cart-item-list .t2 p span{display:block;color: #757575;font-size: 16px;    display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 1;
+	overflow: hidden;}
 .shopping_cart .cart-item-list .t6{color: #d3d3d3;}
 .shopping_cart .cart-item-list {vertical-align: middle;line-height: 110px;border-bottom: 1px solid #e5e5e5;padding: 10px 0;padding-left:20px;}
 .shopping_cart .cart-item-list .number{vertical-align: middle;line-height: 110px;}

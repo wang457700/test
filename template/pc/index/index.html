@@ -135,8 +135,12 @@
                   {foreach  name="top_ten" item='vo'}
                   <div class="swiper-slide col-md-3 list">
                       <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
-                          <p></p>
-                          <img src="__PUBLIC__/{$vo.cover}">
+                          <p class="nowrap">{$vo.product_name}</p>
+                          {if condition="$vo['cover']"};
+                            <img src="__PUBLIC__/{$vo.cover}">
+                            {else/}
+                             <img src="__TMPL_PUBLIC__/img/default.jpg">
+                          {/if}
                           <span class="font24"><i class="font12">$</i>{$vo.price}</span>
                       </a>
                       <a class="adds" data-productid="{$vo.product_id}" data-name="{$vo.product_name}" >+</a>
