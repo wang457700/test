@@ -314,5 +314,17 @@ function fa_get_image_url($file)
     return $url;
 }
 
+/*
+* 手机号码 正则表达式格式化 每4位隔空格显示
+* 格式后：138 1000 2000
+*/
+function format_phone($phone)
+{
+    preg_match('/([\d]{3})([\d]{4})([\d]{4})/', $phone,$match);
+     
+    unset($match[0]);
+    return implode(' ', $match);
+}
+
 
 

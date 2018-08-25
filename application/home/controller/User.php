@@ -164,9 +164,9 @@ class User extends Frontend
 
            $info = Db::name('user')->where(array('id'=>$user_id))->update($data);
             if($info!==false){
-                $this->success('修改成功！');
+                $this->success('修改成功！'.json_encode($data,true));
             }else{
-                $this->error('修改失败！'.json_encode($data,true));
+                $this->error('修改失败！');
             }
         }
         $edit_category = db('user_address')->where(array('user_id'=>8))->find();
