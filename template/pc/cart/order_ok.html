@@ -10,7 +10,7 @@
 	  .btn-default-edit{margin-bottom: 1em;background-color: #7dbe43;color: #fff;border-color: #f5f5f5;border-radius: 5px;border:1px solid #fff;}
 	  .btn-warning-edit{border-color: #fff;background-color: #fff;color: #f0ad4e;border-radius: 5px;border: 0;}
   </style>
-	<body style="background: url(img/index_bg.jpg) repeat-y;">
+	<body style="background: url(__TMPL_PUBLIC__/img/index_bg.jpg) repeat-y;">
 
 	 <div class="container shopping_cart" style="padding: 0 30px;">
 	
@@ -54,7 +54,7 @@
 					?>
 				{/foreach}
 				<li class="row" style="text-align: center;padding:20px;">
-					<a href="">
+					<a href="{:url('user/address_list')}" target="_blank">
 						<i class="fa fa-plus" aria-hidden="true"></i>
 						添加新的收貨地址
 					</a>
