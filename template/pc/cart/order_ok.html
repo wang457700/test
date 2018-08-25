@@ -154,13 +154,14 @@
 
         // jquery 表单提交
         $("#order-form").ajaxSubmit(function(data){
+            var data = $.parseJSON(data);
             if(data.code == 0){
                 $.message({message:data.msg,type:'warning',time:'3000'});
             }else{
-                $.message(data.msg+ data.url);
+                $.message(data.msg);
                 setTimeout(function (){
-                    //window.location = data.url
-                },1500);
+                     window.location = data.order_url;
+                },1000);
             }
         });
         return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转

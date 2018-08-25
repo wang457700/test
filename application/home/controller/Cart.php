@@ -83,7 +83,6 @@ class Cart extends Frontend
                     $data[$k]['money_total'] = $goods['price']*$v['goods_num'];
                     $total+=($goods['price']*$v['goods_num']);
                     $num+=$v['goods_num'];
-
                 }
                 $address_list=Db::name('user_address')->where('user_id',Session::get('user_id'))->select();
                 $this->assign('all_total',$total);
@@ -133,7 +132,7 @@ class Cart extends Frontend
                 $data = array(
                     'code' => 1,
                     'msg' => '你已经生成订单！',
-                    'order_sn' => $order_sn,
+                    'order_url' =>url('payment/go_pay',array('order_sn'=>base64_encode($order_sn))),
                 );
                 $this->ajaxReturn($data);
             }else{
@@ -151,7 +150,6 @@ class Cart extends Frontend
 
 
     public function shopping_cart(){
-
 
         $user_id=  Session::get('user_id');
         $list= Db::name('cart_order')->alias('a')->field('c.*,a.product_id as goods_id,a.user_id,a.cart_id')->join('__GOODS__ c','a.product_id=c.product_id','RIGHT')->where('user_id', $user_id)->group('c.product_id')->select();

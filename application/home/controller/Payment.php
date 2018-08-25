@@ -16,9 +16,11 @@ class Payment extends  Frontend
 
     public function go_pay(){
 
-            $order_sn=input('order_sn');
+            $order_sn=base64_decode(input('order_sn'));
 
-           $order_list= Db::name('order')->where(array('user_id',Session::get('user_id'),'order_sn'=>$order_sn))->select();
+           $order_list= Db::name('order');$order_list->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))->select();
+
+
 
         $this->assign('order_sn',$order_list);
         $this->assign('title','支付订单');
