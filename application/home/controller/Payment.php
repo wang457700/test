@@ -17,7 +17,7 @@ class Payment extends  Frontend
     public function go_pay(){
 
 
-
+            Db::name('order')->where('')
 
         $this->assign('title','支付订单');
        return $this->fetch();
