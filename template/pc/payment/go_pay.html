@@ -39,20 +39,20 @@
 				</div>
 				<div class="col-md-6 col-sm-8 col-xs-8 on0" style="">
 					<div class="row">
-							<div class="col-md-4 col-sm-4 col-xs-4 color_99"  style="text-align: right;">購物車:</div>
-							<div class="col-md-8 col-sm-8 col-xs-8" style="">陳大文  13138164021</div>
+							<div class="col-md-4 col-sm-4 col-xs-4 color_99"  style="text-align: right;">收貨人:</div>
+							<div class="col-md-8 col-sm-8 col-xs-8" style="">{$address_info.name} {$address_info.phone}</div>
 					</div>
 					<div class="row">
 							<div class="col-md-4 col-sm-4 col-xs-4 color_99" style="text-align: right;">收件地址:</div>
-							<div class="col-md-8 col-sm-8 col-xs-8 " style="">九龍油塘高超道38號大本型商場2樓228號鋪</div>
+							<div class="col-md-8 col-sm-8 col-xs-8 " style="">{$order_info.address}</div>
 					</div>
 					<div class="row">
 							<div class="col-md-4 col-sm-4 col-xs-4 color_99" style="text-align: right;">商品合計:</div>
-							<div class="col-md-8 col-sm-8 col-xs-8" style="">$20000.00</div>
+							<div class="col-md-8 col-sm-8 col-xs-8" style="">${:number_format($all_total,2)}</div>
 					</div>
 					<div class="row">
 							<div class="col-md-4 col-sm-4 col-xs-4 color_99" style="text-align: right;">運費:</div>
-							<div class="col-md-8 col-sm-8 col-xs-8" style="">$180.00</div>
+							<div class="col-md-8 col-sm-8 col-xs-8" style="">${:number_format($order_info['integral'],2)}</div>
 					</div>
 					<div class="row">
 							<div class="col-md-4 col-sm-4 col-xs-4 color_99" style="text-align: right;">積分抵扣:</div>
@@ -60,7 +60,7 @@
 					</div>
 					<div class="row">
 							<div class="col-md-4 col-sm-4 col-xs-4 color_99" style="text-align: right;">應付款:</div>
-							<div class="col-md-8 col-sm-8 col-xs-8" style="">$21800.00</div>
+							<div class="col-md-8 col-sm-8 col-xs-8" style="">${:number_format($all_total,2)}</div>
 					</div>
 				</div>
 				<div class="col-md-3 col-sm-2 on0" style=""></div>
@@ -118,7 +118,7 @@
 		                    <button type="button" class="btn btn-default btn-default-edit" style="margin-bottom: 1em;color: #333;">返回購物車</button>
 		                </div>
 		                 <div class="col-md-6" style="">
-							 <a href="{:url('payment/payment_done',array('order_sn'=>base64_encode($order_list['order_sn'])))}">
+							 <a href="{:url('payment/payment_done',array('order_sn'=>base64_encode($order_info['order_sn'])))}">
 								<button type="button" class="btn btn-success btn-success-edit">支付訂單</button>
 							 </a>
 		                </div>

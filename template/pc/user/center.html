@@ -75,9 +75,9 @@
                               <td class="col-md-3 "scope="row">
 
                                   {if condition="$vv['cover']"}
-                                    <img src="__PUBLIC__/{$vv.cover}" class="img_left" />
+                                    <img src="__PUBLIC__/{$vv.cover}" class="img_left"  style="width: 70px;float: left"/>
                                   {else/}
-                                    <img src="__TMPL_PUBLIC__/img/default.jpg" class="img_left">
+                                    <img src="__TMPL_PUBLIC__/img/default.jpg" class="img_left" style="width: 70px;float: left">
                                   {/if}
                                   <p>
                                     <h4 class="bold">{$vv.product_name}</h4>
@@ -90,7 +90,6 @@
                               <td class="col-md-2 "><span class="bold font16 color_ro">{$vv.money_total}</span> <span class="color_75">(HKD)</span></td>
                             </tr>
                           {/foreach}
-
                           </tbody>
                         </table>
                           <div class="row row3">
@@ -102,7 +101,8 @@
                                  (含運費:<span class="color_ro"> {$vo['info']['freight']} </span>HKD)
                               </div>
                               <div class="col-md-3 t2" style="">
-                                  <button type="button" class="btn btn-warning">查看訂單</button>
+
+                                  <a href="{:url('user/order_detail',array('order_sn'=>base64_encode($vo['info']['order_sn'])))}"><button type="button" class="btn btn-warning">查看訂單</button></a>
                                   <button type="button" class="btn btn-success">取消訂單</button>
                               </div>
                           </div>

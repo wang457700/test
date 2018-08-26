@@ -41,13 +41,14 @@
 							<h4>下單成功!</h4>
 							<p>恭喜您，增加<span class="color_ro">12</span>積分！</p>
 							<p>您的訂單編號為： {$order_sn}</p>
-							<p>您可以 
-								<button type="button" class="btn btn-warning">查看訂單</button>
+							<p>您可以
+								<a href="{:url('user/order_detail',array('order_sn'=>base64_encode($order_sn)))}">
+									<button type="button" class="btn btn-warning">查看訂單</button>
+								</a>
 							    <a href="{:url('index/index')}" class="color_ro">繼續購物</a>
 							    <a href="{:url('index/index')}">返回首頁</a>
 							</p>
 						</div>
- 
 					</div>
 					 
 				</div>

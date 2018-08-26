@@ -102,6 +102,11 @@ class Cart extends Frontend
         $goods_id= input('goods_id/a');
         $goods_num= input('goods_num/a');
         $address_id= input('address_id');
+        if($address_id){
+            $address = Db::name('user_address')->where('id',$address_id)->find();
+            $address = $address['country'].$address['province'].$address['city'].$address['address'];
+        }
+
         if (count($goods_id) > 0) {
             $count=count($goods_id);
             $i = 0;
@@ -118,6 +123,7 @@ class Cart extends Frontend
                     $fat['money_total']=$v['goods_num']*$price['price'];
                     $fat['goods_sn'] =$price['freight_num'];
                     $fat['address_id'] =$address_id;
+                    $fat['address'] =$address;
                     $fat['order_sn'] =$order_sn;
                     $fat['goods_id'] = $v['goods_id'];//这里都要加上下标
                     $fat['goods_num'] = $v['goods_num'];//这里都要加上下标
@@ -143,6 +149,12 @@ class Cart extends Frontend
                 $this->ajaxReturn($data);
             }
 
+        }else{
+            $data = array(
+                'code' => 0,
+                'msg' => '没有选择商品！',
+            );
+            $this->ajaxReturn($data);
         }
 
     }

@@ -37,10 +37,10 @@
 		<!--第{$key}个产品-->
 		<div class="row cart-item-list"  id="list_{$key}" >
 			<input type="hidden" value="{$vo.price}" name="price[]" id="unit_price_{$key}"/>
-			<input type="hidden" value="{$vo.price}" id="subtotal_{$key}"/>
+			<input type="hidden" value="{$vo['total']*$vo['price']}" id="subtotal_{$key}" class="subtotal"/>
 			<!-- <input type="hidden" value="2" id="number_1"/> -->
 			<div class="col-md-1 col-xs-1" style="">
-				<input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="goods_id[]" value="{$vo.product_id}" title="ID:106">
+				<input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="goods_id[]" value="{$vo.product_id}" title="ID:106" data-key="{$key}">
 				<label for='checkbox1'></label>
 			</div>
 			<div class="col-md-4 col-xs-4 t2" style="">
@@ -67,39 +67,6 @@
 		</div>
         <?php $total_num[] =  $vo['total']; ?>
 	 {/foreach}
-		 
-<!--第2个产品-->
-		 <!--
-		<div class="row cart-item-list"  id="list_2" >
-			<input type="hidden" value="1000.01" id="unit_price_2"/>
-			<input type="hidden" name="subtotal" value="1000.01" id="subtotal_2"/>
-
-			<div class="col-md-1 col-xs-1" style="">
-				<input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids" value="106" title="ID:106">
-			</div>
-			<div class="col-md-4 col-xs-4 t2" style="">
-				<div class="row">
-					<img src="__TMPL_PUBLIC__/img/f2_1.jpg" class="col-md-5  col-xs-12">
-					<p class="col-md-6 col-xs-12">
-						<span class="bold">強效專業運動鞋墊 41</span>
-						產品型號：1234567890
-					</p>
-				</div>
-			</div>
-			<div class="col-md-2 col-xs-2 color_ro font18" id="unit_price_span_2">$ 1000.00</div>
-			<div class="col-md-2 col-xs-2" style="">
-					<div class="row number">
-					  <div class="col-md-12" style="">
-						<input id="min_2" name="" type="button" value="-" class="reduce" disabled="disabled" onclick="on_number(2,'min')">  
-						<input id="number_2" name="" type="text" value="1" style="width:40px;text-align: center" class="color_75">  
-						<input id="add_2" name="" type="button" value="+" class="add" onclick="on_number(2,'add')">
-					  </div>
-					</div>
-			</div>
-			<div class="col-md-2 col-xs-2 color_ro font18">$ <span id="subtotal_span_2">10000.00</span></div>
-			<div class="col-md-1 col-xs-1 t6"><i class="fa fa-trash-o" aria-hidden="true" onclick="del('2')"></i></div>
-
-		</div>-->
 		<div class="row" style="padding: 20px;">
 			<div class="col-md-8" style="display: none">
 				<h4>積分抵扣現金</h4>
@@ -119,13 +86,42 @@
                 </div>
 			</div>
 		</div>
-		<input id="jump" value="0">
+		<input id="jump" value="0" type="hidden">
 </form>
+	 </div>
  {include file="common/footer" /}
  <script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
  <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
  {include file="common/script" /}
 	<script type="text/javascript">
+       		 //单选
+			$(".js-check").on('click',function(){
+				var key =  $(this).data('key');
+				if($(this).is(':checked') == true){
+                    $('#subtotal_' + key).addClass('subtotal');
+				}else {
+                    $('#subtotal_' + key).removeClass('subtotal');
+				}
+                total();
+			});
+
+            //全选或不选
+            $("#checked").on('click',function(){
+                if($(this).data('id') == 1){
+                    $("input[name^='goods_id[]']").each(function(){
+                        $(this).prop('checked', false);
+                    });
+                    $(this).data('id',0);
+
+                }else{
+                    $("input[name^='goods_id[]']").each(function(){
+                        $(this).prop('checked', true);
+                    });
+                    $(this).data('id',1);
+
+                }
+            });
+
 			function on_number(id,type){
 				//初始化数量为1,并失效减
 				//$('#min' + id).attr('disabled',true);
@@ -151,7 +147,6 @@
 				var subtotal_price = Number(unit_price)*Number(number);
 				$('#subtotal_span_' + id).text(subtotal_price.toFixed(2));
 				$('#subtotal_' + id).val(subtotal_price.toFixed(2));
-
 				total();
 			}
 
@@ -159,8 +154,9 @@
 			function total(){
 				var sum=0;
 				var total_sum=0;
-				$("input[id^='subtotal']").each(function(){
-						sum+= Number($(this).val()); 
+				$("input[class^='subtotal']").each(function(){
+						sum+= Number($(this).val());
+						console.log($(this).val());
 				});
                 $("input[name^='goods_num[]']").each(function(){
                     total_sum+= Number($(this).val());
@@ -173,39 +169,20 @@
             $("input[name^='goods_id[]']").each(function(){
                 $(this).prop('checked', true);
             });
-			//全选或不选
-			$("#checked").on('click',function(){
 
-				if($(this).data('id') == 1){
-					$("input[name^='goods_id[]']").each(function(){
-						$(this).prop('checked', false);
-					});
-					$(this).data('id',0);
-                    $("#submit").attr({"disabled":"disabled"});
-				}else{
-					$("input[name^='goods_id[]']").each(function(){
-						$(this).prop('checked', true);
-					});
-					$(this).data('id',1);
-                    $("#submit").removeAttr('disabled');
-				}
-			});
 
             function cartform(){
-                //console.log($('#cart-form').serializeArray());
-				var jump = $('#jump').val();
-                $("input[name^='goods_id[]']").each(function(){
-                    if($(this).is(':checked') == true){
-                        $('#jump').val(1);
+                var data = $('#cart-form').serializeArray();
+
+
+                $.each(data, function(i, field){
+                    console.log(field.name);
+                    if(field.name == 'goods_id[]'){
+                        console.log(1);
+					}else {
+                        console.log(0);
 					}
                 });
-
-				if(jump){
-                    return true;
-                }else {
-                    $.message({message:'请选择商品',type:'warning',time:'3000'});
-                    return false;
-				}
 
                 // jquery 表单提交
                 $("#cart-form").ajaxSubmit(function(data){
@@ -221,8 +198,6 @@
                 });
               //return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
             }
-
-
 	</script> 
 
 	</body>

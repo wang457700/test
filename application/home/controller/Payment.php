@@ -18,10 +18,20 @@ class Payment extends  Frontend
 
         $order_sn=base64_decode(input('order_sn'));
 
-        $order_list= Db::name('order')->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))->find();
+        $order_info= Db::name('order')
+        ->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))
+        ->find();
 
-        dump($order_list);
-        $this->assign('order_list',$order_list);
+        $address_info= Db::name('user_address')
+        ->where(array('user_id'=>Session::get('user_id'),'id'=>$order_info['address_id']))
+        ->find();
+
+        $all_total= Db::name('order')
+            ->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))
+            ->sum('money_total');
+        $this->assign('address_info',$address_info);
+        $this->assign('all_total',$all_total);
+        $this->assign('order_info',$order_info);
         $this->assign('title','支付订单');
        return $this->fetch();
     }

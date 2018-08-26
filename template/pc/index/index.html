@@ -136,7 +136,7 @@
                   <div class="swiper-slide col-md-3 list">
                       <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
                           <p class="nowrap">{$vo.product_name}</p>
-                          {if condition="$vo['cover']"};
+                          {if condition="$vo['cover']"}
                             <img src="__PUBLIC__/{$vo.cover}">
                             {else/}
                              <img src="__TMPL_PUBLIC__/img/default.jpg">

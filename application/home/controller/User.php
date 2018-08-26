@@ -217,15 +217,6 @@ class User extends Frontend
 
 
 
-    /**
-     * @return string
-     * 订单详情
-     */
-    public function user_order_detail(){
-        return $this->view->fetch();
-    }
-
-
 /******************************       share_list  产品共享        ************************************/
 
 
@@ -463,9 +454,6 @@ class User extends Frontend
         $user_id = Session::get('user_id');
     	if ($this->request->isPost()){
 
-
-
-
     		$user_id = Session::get('user_id');
     		$data = input('post.');
 
@@ -505,7 +493,7 @@ class User extends Frontend
 
     /******************************       my_order 我的订单  ************************************/
 
-    public function my_order(){
+    public function order_list(){
 
         $this->assign('title','我的订单');
         return $this->view->fetch();
@@ -513,6 +501,49 @@ class User extends Frontend
 
 
 
+    public function order_detail(){
+        $user_id = Session::get('user_id');
+        $order_sn=base64_decode(input('order_sn'));
+
+        $order_info= Db::name('order')
+            ->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))
+            ->find();
+        $order_info['address_info']= Db::name('user_address')
+            ->field('name,phone')
+            ->where(array('user_id'=>Session::get('user_id'),'id'=>$order_info['address_id']))
+            ->find();
+
+        if(empty($order_info)){
+            $this->error('非法操作！');
+        }
+
+        $goods_list= Db::name('order')
+            ->alias('a')
+            ->field('a.*,c.cover,product_name,freight_num')
+            ->join('__GOODS__ c','a.goods_id=c.product_id','LEFT')
+            ->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))
+            ->select();
+
+        $all_total = 0;
+        $all_goods_num =0;
+        foreach ($goods_list as $k => $v){
+                $all_total += $v['money_total'];
+                $all_goods_num += $v['goods_num'];
+        }
+
+        $this->assign('order_info',$order_info);
+        $this->assign('all_total',$all_total);
+        $this->assign('all_goods_num',$all_goods_num);
+        $this->assign('goods_list',$goods_list);
+        $this->assign('title','訂單詳情');
+        return $this->view->fetch();
+    }
+
+
+
+
+
+    /******************************       其他函数  ************************************/
     //CURL
     private static function CURLQueryString($url){
         //设置附加HTTP头
