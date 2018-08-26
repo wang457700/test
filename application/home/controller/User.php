@@ -203,8 +203,9 @@ class User extends Frontend
          foreach ($order_list as $key=>$item){
             $sel= Db::name('order')->where('order_sn',$item['order_sn'])->find();
             if($item['order_sn']==$sel['order_sn']){
-                $result[$item['order_sn']][] = $item;
+                $result[$item['order_sn']]['goods_list'][] = $item;
             }
+             $result[$item['order_sn']]['info'] = $sel;
          }
 
         $page = $order_list->render();

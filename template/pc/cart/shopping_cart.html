@@ -25,7 +25,7 @@
 			</ul>
 		</div>
 		<div class="row item-single">
-			<div class="col-md-1 col-xs-1" style="text-align: center;cursor: default;color: #7ac141;" id="checked" data-id='0' >全選</div>
+			<div class="col-md-1 col-xs-1" style="text-align: center;cursor: default;color: #7ac141;" id="checked" data-id='1' >全選</div>
 			<div class="col-md-4 col-xs-4" style="">商品</div>
 			<div class="col-md-1 col-xs-1" style="">單價</div>
 			<div class="col-md-3 col-xs-3" style="">購買數量	</div>
@@ -114,11 +114,12 @@
 					   <button type="button" class="btn btn-default btn-default-edit" style="margin-bottom: 1em">繼續購物</button></a>
                     </div>
                      <div class="col-md-6" style="">
-                        <button type="submit" class="btn btn-warning btn-warning-edit">提交訂單</button>
+                        <button type="submit" class="btn btn-warning btn-warning-edit" id="submit">提交訂單</button>
                     </div> 
                 </div>
 			</div>
 		</div>
+		<input id="jump" value="0">
 </form>
  {include file="common/footer" /}
  <script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
@@ -168,6 +169,10 @@
 				$('#total').text('$ '+ sum.toFixed(2));
 				$('#total_no_yunxfei').text('$ '+ sum.toFixed(2));
 			}
+
+            $("input[name^='goods_id[]']").each(function(){
+                $(this).prop('checked', true);
+            });
 			//全选或不选
 			$("#checked").on('click',function(){
 
@@ -176,16 +181,32 @@
 						$(this).prop('checked', false);
 					});
 					$(this).data('id',0);
+                    $("#submit").attr({"disabled":"disabled"});
 				}else{
 					$("input[name^='goods_id[]']").each(function(){
 						$(this).prop('checked', true);
 					});
 					$(this).data('id',1);
+                    $("#submit").removeAttr('disabled');
 				}
 			});
 
             function cartform(){
                 //console.log($('#cart-form').serializeArray());
+				var jump = $('#jump').val();
+                $("input[name^='goods_id[]']").each(function(){
+                    if($(this).is(':checked') == true){
+                        $('#jump').val(1);
+					}
+                });
+
+				if(jump){
+                    return true;
+                }else {
+                    $.message({message:'请选择商品',type:'warning',time:'3000'});
+                    return false;
+				}
+
                 // jquery 表单提交
                 $("#cart-form").ajaxSubmit(function(data){
                     console.log(data);
@@ -198,7 +219,7 @@
                         },1500);
                     }
                 });
-              //  return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
+              //return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
             }
 
 

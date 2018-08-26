@@ -8,7 +8,7 @@
             <li>
               <a href="{:url('index/index')}">主頁</a></li>
             {foreach name="category" item="vo"}
-              <li><a href="{:url('product/index',array('id',$vo['id']))}" class="true">{$vo.name}</a></li>
+              <li><a href="{:url('product/index',array('categoryid'=>$vo['id']))}" class="true">{$vo.name}</a></li>
             {/foreach}
             <li>
               <a href="{:url('share/index')}">共享平台</a></li>
@@ -30,12 +30,12 @@
                 <?php $category_2 = model('category')->where('pid',$vo['id'])->select(); ?>
                 {foreach name="$category_2" item="vov"}
                   <li>
-                    <h3 class="mcate-item-hd">
-                      <span>{$vov.name}</span></h3>
+                    <a href="{:url('product/index',array('categoryid'=>$vov['id']))}"><h3 class="mcate-item-hd">
+                      <span>{$vov.name}</span></h3></a>
                     <p class="mcate-item-bd">
                       <?php $category_3 = model('category')->where('pid',$vov['id'])->select(); ?>
                       {foreach name="$category_3" item="vovv"}
-                        <a href="">{$vovv.name}</a>
+                        <a href="{:url('product/index',array('categoryid'=>$vovv['id']))}">{$vovv.name}</a>
                       {/foreach}
                     </p>
                   </li>

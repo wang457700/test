@@ -47,10 +47,8 @@
                         </div>
 
                     </div>
-
                     <div class="pr_name">近期訂單</div>
-
-
+            {foreach name="order_list" item="vo"}
 				<!--订单列表-->
                     <div class="row item-single">
                         <div class="col-md-3" style="">商品信息</div>
@@ -64,7 +62,7 @@
                     <div class="cart-item-list">
                         <div class="row row1">
                               <div class="col-md-10 color_75" style="">
-                                 2018-06-28  訂單編號: <span class="color_ro bold">1608766834</span>
+                                 {:date('Y-m-d',strtotime($vo['info']['addtime']))}  訂單編號: <span class="color_ro bold">{$key}</span>
                               </div>
                               <div class="col-md-2 t2" style="">
                                     訂單狀態: <span class="color_ro">待付款</span>
@@ -72,36 +70,44 @@
                         </div>
                         <table class="table table-bordered row2" style="width: 98%;margin: 0;">
                           <tbody>
+                          {foreach name="vo.goods_list" item="vv"}
                             <tr>
                               <td class="col-md-3 "scope="row">
-                                  <img src="__TMPL_PUBLIC__/img/f2_1.jpg" class="left_img"/>
+
+                                  {if condition="$vv['cover']"}
+                                    <img src="__PUBLIC__/{$vv.cover}" class="img_left" />
+                                  {else/}
+                                    <img src="__TMPL_PUBLIC__/img/default.jpg" class="img_left">
+                                  {/if}
                                   <p>
-                                    <h4 class="bold">高效運動鞋墊</h4>
+                                    <h4 class="bold">{$vv.product_name}</h4>
                                       <span class="color_66">返還積分：</span>
-                                      <span class="color_ro bold">688</span>
+                                      <span class="color_ro bold">{$vv.integral|default='0'}</span>
                                   </p>
                               </td>
-                              <td class="col-md-2 color_ro"><span class="bold font16">688.00</span> (HKD)</td>
-                              <td class="col-md-1 bold font16">2</td>
-                              <td class="col-md-2 "><span class="bold font16 color_ro">628.00</span> <span class="color_75">(HKD)</span></td>
+                              <td class="col-md-2 color_ro"><span class="bold font16">{$vv.price}</span> (HKD)</td>
+                              <td class="col-md-1 bold font16">{$vv.goods_num}</td>
+                              <td class="col-md-2 "><span class="bold font16 color_ro">{$vv.money_total}</span> <span class="color_75">(HKD)</span></td>
                             </tr>
+                          {/foreach}
+
                           </tbody>
                         </table>
                           <div class="row row3">
                               <div class="col-md-5 color_75" style="text-align:left">
-                                 下單時間: 2018-06-28 10:02:20 支付方式：信用卡
+                                 下單時間: {$vo['info']['addtime']}  支付方式：信用卡
                               </div>
                               <div class="col-md-4 t2 color_75" style="">
-                                    訂單總價: <span class="bold font16 color_ro">628.00</span> (HKD)
-                                 (含運費:<span class="color_ro">15.00</span>HKD)
+                                    訂單總價: <span class="bold font16 color_ro"></span> (HKD)
+                                 (含運費:<span class="color_ro"> {$vo['info']['freight']} </span>HKD)
                               </div>
                               <div class="col-md-3 t2" style="">
-
                                   <button type="button" class="btn btn-warning">查看訂單</button>
                                   <button type="button" class="btn btn-success">取消訂單</button>
                               </div>
                           </div>
                     </div>
+                {/foreach}
 
                     <!--订单列表-->
                     <div class="row item-single">
@@ -158,22 +164,7 @@
 
                 </div>
             </div>
-
-            <div class="pagination">
-                <ul>
-                    <li><a href="#">上一頁</a> </li>
-                    <li class="active current"><span class="current">1</span> </li>
-                    <li><a href="#"> 2</a> </li>
-                    <li><a href="#"> 3</a> </li>
-                    <li><a href="#"> 4</a> </li>
-                    <li><a href="#"> 5</a> </li>
-                    <li><a href="#"> 6</a> </li>
-                    <li><a href="#"> ...</a> </li>
-                    <li><a href="#"> 234</a> </li>
-                    <li><a href="#">下一頁</a> </li>
-                    <li><a href="#">尾页</a> </li>
-                </ul>
-            </div>
+            {$page}
         </div>
     </div>
 

@@ -4,15 +4,17 @@
 <!--头部 end-->
 {include file="common/nav"/}
   <body style="background: url(img/index_bg.jpg) repeat-y;">
- 
- 
- 
- 
-    <div class="container bgcolor_white">
-      <div class="pr_name">产品列表2</div>
-      <div class="product2">
-          
 
+    <div class="container bgcolor_white">
+      <div class="pr_name">
+          {foreach name="getparents" item="vo"}
+              {if condition="$vo['id'] neq 14"}
+                {$vo.name}
+              {/if}
+          {/foreach}
+
+      </div>
+      <div class="product2">
 
         <div class="row" style="padding: 20px 0;">
             <div class="product-top-item col-md-6">
@@ -22,43 +24,49 @@
                   <a href="">新品</a>
             </div>
             <div class="product-top-right col-md-6">
-                  <a href="{:url('product/index_grid')}"><i class="fa fa-th-large" aria-hidden="true"></i></a>
-
-                  共 <span class="color_ro">68</span> 件商品      
-                  <span><i class="color_ro" style="font-style: inherit;">10</i>/68</span>
+                  <a href="{:url('product/index',array('style'=>'grid','categoryid'=>$input['categoryid']))}"><i class="fa fa-th-large" aria-hidden="true"></i></a>
+                  共 <span class="color_ro">{$count}</span> 件商品
+                  <span><i class="color_ro" style="font-style: inherit;">1</i>/1</span>
                   <a href="javascript: void(0);"><i class="fa fa-angle-left angle" aria-hidden="true"></i></a>
                   <a href="javascript: void(0);"><i class="fa fa-angle-right angle" aria-hidden="true"></i></a>
             </div>
 
         </div>
-
           <ul class="row">
-
               <?php $list = array('1',2,3,4,5,6,7,8,9); ?>
-
-              {foreach name="list" item="vo"}
+              {foreach name="product_list" item="vo"}
                   <li class="col-md-6 col-xs-6">
                     <div class="row">
-                      <img src="__TMPL_PUBLIC__/img/f2_1.jpg" class="img_left col-md-4" />
+                        <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
+
+                            {if condition="$vo['cover']"}
+                                <img src="__PUBLIC__/{$vo.cover}" class="img_left col-md-4" />
+                            {else/}
+                                <img src="__TMPL_PUBLIC__/img/default.jpg" class="img_left col-md-4">
+                            {/if}
+                        </a>
                       <div class="d1 col-md-8">
-                        <p>GH 人造皮 2 磅運動沙包GH 人造皮 2 磅運動沙包 ...</p>
+                      <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
+                        <p>{$vo.product_name}</p>
                         <p class="color_ro">优惠全民享</p>
+                      </a>
                         <div style="padding-top: 1.5em;">
-                            <span style="font-size: 20px;"><i>$</i>1234</span>
-                            <a class="adds">+</a>
+                            <span style="font-size: 20px;"><i>$</i>{$vo.price}</span>
+                            <a class="adds" data-id="{$vo.product_id}">+</a>
                         </div>
                       </div>
                     </div>
                   </li>
               {/foreach}
-
           </ul>	  
 
         </div>
  
  
     </div>
-
+    <script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
+    <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
+    {include file="common/script" /}
     {include file="common/footer"/}
   </body>
 
