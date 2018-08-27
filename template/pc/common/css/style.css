@@ -57,7 +57,7 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 .header .phone {padding: 15px 30px;color:#fff;font-size: 21px;padding-left: 60px;background:#7ac141 url(../img/hd_phone.png) no-repeat left;background-position: 30px;float:left;border-radius: 10px;text-align:  center;font-weight:  bold;}
 .header-d{padding-left: 25%;background: #fff url(../img/logo.png) no-repeat left top;background-size: 90%;margin-bottom: 20px;}
 
-.header-search {width: 32%;text-align:center;margin:0em 1em;display:inline-block;/* margin-top:20px;*/}
+.header-search {width: 32%;text-align:center;margin:0em 1em;display:inline-block;/* margin-top:20px;*/position: relative;z-index: 99999;}
 .header-search form {position:relative}
 .header-search input[type=search] {width:100%;padding:0.2em 5em 0.2em 1em;font-size:1em;color:#999;outline:0;border:2px solid #7ac141;background:0 0;-webkit-appearance:none;transition:.5s all;-webkit-transition:.5s all;-moz-transition:.5s all;margin-bottom:5px;border-radius: 10px;}
 .header-search input[type=search]:focus {border-color:#ffa800;}

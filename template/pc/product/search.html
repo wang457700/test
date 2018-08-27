@@ -6,46 +6,30 @@
   <body style="background: url(img/index_bg.jpg) repeat-y;">
     <div class="container bgcolor_white">
       <div class="pr_name">搜索結果</div>
+
+        {if condition="!$product_list"}
+            <div class="search_page_empty"></div>
+        {/if}
       <div class="product">
            
           <ul class="row">
-              <li class="col-md-3 col-xs-3">
-                    <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
-                    <div class="d2">
-                      <p>GH 人造皮 2 磅運動沙包GH 人造皮 2 磅運動沙包 ...</p>
-                      <p class="color_ro">优惠全民享</p>
-                      <div>
-                          <span style="font-size: 20px;"><i>$</i>1234</span>
-                          <a class="adds">+</a>
-                      </div>
-                    </div>
-              </li> 
-
-              <li class="col-md-3 col-xs-3">
-                    <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
-                    <div class="d2">
-                      <p>GH 人造皮 2 磅運動沙包GH 人造皮 2 磅運動沙包 ...</p>
-                      <p class="color_ro">优惠全民享</p>
-                      <div>
-                          <span style="font-size: 20px;"><i>$</i>1234</span>
-                          <a class="adds">+</a>
-                      </div>
-                    </div>
-              </li> 
-              
-              <li class="col-md-3 col-xs-3">
-                    <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
-                    <div class="d2">
-                      <p>GH 人造皮 2 磅運動沙包GH 人造皮 2 磅運動沙包 ...</p>
-                      <p class="color_ro">优惠全民享</p>
-                      <div>
-                          <span style="font-size: 20px;"><i>$</i>1234</span>
-                          <a class="adds">+</a>
-                      </div>
-                    </div>
-              </li>
-
-
+              {foreach name="product_list" item="vo"}
+                  <li class="col-md-3 col-xs-3">
+                          {if condition="$vo['cover']"}
+                          <img src="__PUBLIC__/{$vo.cover}"/>
+                          {else/}
+                          <img src="__TMPL_PUBLIC__/img/default.jpg">
+                          {/if}
+                        <div class="d2">
+                          <p>{$vo.product_name}</p>
+                          <p class="color_ro">优惠全民享</p>
+                          <div>
+                              <span style="font-size: 20px;"><i>$</i>{$vo.price}</span>
+                              <a class="adds" data-id="{$vo.product_id}">+</a>
+                          </div>
+                        </div>
+                  </li>
+              {/foreach}
 
           </ul>	 
         </div>
@@ -53,7 +37,6 @@
         <div class="info_list">
           <div class="right-list">
                 <ul>
-
 
 
                 {foreach name="new_list" item="vo"}

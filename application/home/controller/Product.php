@@ -72,11 +72,11 @@ class Product extends Frontend
 
     public function search()
     {
-        $keyword = input('get.keyword');
-
+        $keyword = input('keyword');
         $new_list =  Db::name('article')->where(array('post_type'=>2,'post_title'=>array('like',"%$keyword%")))->select();
-        dump($new_list);
+        $goods_list =  Db::name('goods')->where(array('is_on_sale'=>1,'product_name'=>array('like',"%$keyword%")))->select();
         $this->view->assign("new_list",$new_list);
+        $this->view->assign("product_list",$goods_list);
         $this->view->assign("title",$keyword.' - 搜索結果');
         return $this->view->fetch();
     }

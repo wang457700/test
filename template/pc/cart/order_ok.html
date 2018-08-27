@@ -40,7 +40,7 @@
 				<li class="row li {$vo['default']==1?'on':'1'}" style="" data-id="{$vo.id}">
 					<div class="col-md-10 col-sm-9" style="">
 						<span class="bold" id="name">{$vo.name}	{:format_phone($vo['phone'])}</span>
-						<p id="address">{$vo.country} {$vo.province} {$vo.city} {$vo.address}</p>
+						<p id="address">{$vo.province}{$vo.city}{$vo.district}{$vo.address}</p>
 					</div>
 					<div class="col-md-2 col-sm-3 asright" style="">
 						<a href="{:url('user/address_list',array('id'=>$vo['id']))}" target="_blank"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>修改</a>
@@ -111,7 +111,7 @@
 				{foreach name="address_list" item="vo"}
 				{if condition="$vo['default'] == 1"}
 					收件人：{$vo.name} {$vo.phone}<br>
-					收件地址：{$vo.country}{$vo.province}{$vo.city}{$vo.address}
+					收件地址：{$vo.province}{$vo.city}{$vo.district}{$vo.address}
 				{else/}
 
 				{/if}

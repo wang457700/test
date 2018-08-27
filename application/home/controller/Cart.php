@@ -52,7 +52,12 @@ class Cart extends Frontend
             $list= Db::name('goods')->where('product_id',$goods_id)->find();
             $list['money_total']=$goods_num*$list['price'];
             $address_list=Db::name('user_address')->where('user_id',Session::get('user_id'))->select();
-            $this->assign('address_list',$address_list);
+            foreach ($address_list as $key =>$v){
+                $v['province'] = Db::name('region')->where(array('id'=>$v['province']))->value('name');
+                $v['city'] =Db::name('region')->where(array('id'=>$v['city']))->value('name');
+                $v['district'] =Db::name('region')->where(array('id'=>$v['district']))->value('name');
+                $address_list[$key] = $v;
+            }
             $this->assign('order_list',$list);
         }else {
 
@@ -87,11 +92,19 @@ class Cart extends Frontend
                 $address_list=Db::name('user_address')->where('user_id',Session::get('user_id'))->select();
                 $this->assign('all_total',$total);
                 $this->assign('num',$num);
+                foreach ($address_list as $key =>$v){
+                    $v['province'] = Db::name('region')->where(array('id'=>$v['province']))->value('name');
+                    $v['city'] =Db::name('region')->where(array('id'=>$v['city']))->value('name');
+                    $v['district'] =Db::name('region')->where(array('id'=>$v['district']))->value('name');
+                    $address_list[$key] = $v;
+                }
                 $this->assign('address_list',$address_list);
                 $this->assign('order_list',$data);
             }
 
         }
+
+
         $this->assign('title','确认订单');
         return  $this->fetch();
     }
@@ -104,7 +117,10 @@ class Cart extends Frontend
         $address_id= input('address_id');
         if($address_id){
             $address = Db::name('user_address')->where('id',$address_id)->find();
-            $address = $address['country'].$address['province'].$address['city'].$address['address'];
+            $address['province'] = Db::name('region')->where(array('id'=>$address['province']))->value('name');
+            $address['city'] =Db::name('region')->where(array('id'=>$address['city']))->value('name');
+            $address['district'] =Db::name('region')->where(array('id'=>$address['district']))->value('name');
+            $address = $address['province'].$address['city'].$address['district'].$address['address'];
         }
 
         if (count($goods_id) > 0) {
