@@ -36,8 +36,8 @@
                             </div>
                             <div class="col-md-4" style="">
                               <h5>我的捐款</h5>
-                              <span class="color_ro font24">260.00</span><br>
-							              <span class="font12">(查看消費記錄) </span>
+                              <span class="color_ro font24">0.00</span><br>
+                                      <span class="font12">(查看消費記錄) </span>
                             </div>
                             <div class="col-md-4" style="border: 0">
                               <h5>會員區別</h5>
@@ -98,7 +98,7 @@
                               </div>
                               <div class="col-md-4 t2 color_75" style="">
                                     訂單總價: <span class="bold font16 color_ro"></span> (HKD)
-                                 (含運費:<span class="color_ro"> {$vo['info']['freight']} </span>HKD)
+                                 (含運費:<span class="color_ro"> {$vo['info']['freight']|default='0'} </span>HKD)
                               </div>
                               <div class="col-md-3 t2" style="">
 
@@ -108,60 +108,6 @@
                           </div>
                     </div>
                 {/foreach}
-
-                    <!--订单列表-->
-                    <div class="row item-single">
-                        <div class="col-md-3" style="">商品信息</div>
-                        <div class="col-md-3" style="">收貨地址</div>
-                        <div class="col-md-2" style="">價格</div>
-                        <div class="col-md-1" style="">數量</div>
-                        <div class="col-md-1" style="padding: 0;">物流狀態</div>
-                        <div class="col-md-2" style="">實付款</div>
-                    </div>
-
-                    <div class="cart-item-list">
-                        <div class="row row1">
-                            <div class="col-md-10 color_75" style="">
-                                2018-06-28  訂單編號: <span class="color_ro bold">1608766834</span>
-                            </div>
-                            <div class="col-md-2 t2" style="">
-                                訂單狀態: <span class="color_ro">待付款</span>
-                            </div>
-                        </div>
-                        <table class="table table-bordered row2" style="width: 98%;margin: 0;">
-                            <tbody>
-                            <tr>
-                                <td class="col-md-3 "scope="row">
-                                    <img src="__TMPL_PUBLIC__/img/f2_1.jpg" class="left_img"/>
-                                    <p>
-                                    <h4 class="bold">高效運動鞋墊</h4>
-                                    <span class="color_66">返還積分：</span>
-                                    <span class="color_ro bold">688</span>
-                                    </p>
-                                </td>
-                                <td class="col-md-2 color_ro"><span class="bold font16">688.00</span> (HKD)</td>
-                                <td class="col-md-1 bold font16">2</td>
-                                <td class="col-md-2 "><span class="bold font16 color_ro">628.00</span> <span class="color_75">(HKD)</span></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <div class="row row3">
-                            <div class="col-md-5 color_75" style="text-align:left">
-                                下單時間: 2018-06-28 10:02:20 支付方式：信用卡
-                            </div>
-                            <div class="col-md-4 t2 color_75" style="">
-                                訂單總價: <span class="bold font16 color_ro">628.00</span> (HKD)
-                                (含運費:<span class="color_ro">15.00</span>HKD)
-                            </div>
-                            <div class="col-md-3 t2" style="">
-                                <button type="button" class="btn btn-warning">查看訂單</button>
-                                <button type="button" class="btn btn-success">取消訂單</button>
-                            </div>
-                        </div>
-                    </div>
-
-
-
                 </div>
             </div>
             {$page}

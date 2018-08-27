@@ -29,176 +29,100 @@
             				<div class="product">
 
                       <ul class="row">
-                          <li class="col-md-3 col-xs-3">
-                                <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
-                                <div class="d2">
-                                  <p>GH 人造皮 2 磅運動沙包GH 人造皮 2 磅運動沙包 ...</p>
-                                  <p class="color_ro">优惠全民享</p>
-                                  <div>
-                                      <span style="font-size: 20px;"><i>$</i>1234</span>
-                                      <a class="adds">+</a>
-                                  </div>
-                                </div>
-                          </li>
 
-                          <li class="col-md-3 col-xs-3">
-                                <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
-                                <div class="d2">
-                                  <p>GH 人造皮 2 磅運動沙包GH 人造皮 2 磅運動沙包 ...</p>
-                                  <p class="color_ro">优惠全民享</p>
-                                  <div>
-                                      <span style="font-size: 20px;"><i>$</i>1234</span>
-                                      <a class="adds">+</a>
-                                  </div>
-                                </div>
-                          </li>
+                          {foreach name="goods_list" item="vv"}
+                              <li class="col-md-3 col-xs-3">
+                                      {if condition="$vv['cover']"}
+                                          <img src="__PUBLIC__/{$vv.cover}"/>
+                                      {else/}
+                                         <img src="__TMPL_PUBLIC__/img/default.jpg">
+                                      {/if}
+                                    <div class="d2">
+                                      <p>{$vv.product_name}</p>
+                                      <p class="color_ro">优惠全民享</p>
+                                      <div>
+                                          <span style="font-size: 20px;"><i>$</i>{$vv.price}</span>
+                                          <a class="adds" data-id="{$vv.product_id}">+</a>
+                                      </div>
+                                    </div>
+                              </li>
+                          {/foreach}
 
-                          <li class="col-md-3 col-xs-3">
-                                <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
-                                <div class="d2">
-                                  <p>GH 人造皮 2 磅運動沙包GH 人造皮 2 磅運動沙包 ...</p>
-                                  <p class="color_ro">优惠全民享</p>
-                                  <div>
-                                      <span style="font-size: 20px;"><i>$</i>1234</span>
-                                      <a class="adds">+</a>
-                                  </div>
-                                </div>
-                          </li>
-
-                          <li class="col-md-3 col-xs-3">
-                                <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
-                                <div class="d2">
-                                  <p>GH 人造皮 2 磅運動沙包GH 人造皮 2 磅運動沙包 ...</p>
-                                  <p class="color_ro">优惠全民享</p>
-                                  <div>
-                                      <span style="font-size: 20px;"><i>$</i>1234</span>
-                                      <a class="adds">+</a>
-                                  </div>
-                                </div>
-                          </li>
 
                       </ul>
                     </div>
-
                     <div class="pr_name">近期訂單</div>
+                    {foreach name="order_list" item="vo"}
+                    <!--订单列表-->
                     <div class="row item-single">
-                        <div class="col-md-3 col-xs-3" style="">商品信息</div>
-                        <div class="col-md-3 col-xs-3" style="">收貨地址</div>
-                        <div class="col-md-2 col-xs-2" style="">價格</div>
-                        <div class="col-md-1 col-xs-1" style="">數量</div>
-                        <div class="col-md-1 col-xs-1" style="padding: 0;">物流狀態</div>
-                        <div class="col-md-2 col-xs-2" style="">實付款</div>
+                        <div class="col-md-3" style="">商品信息</div>
+                        <div class="col-md-3" style="">收貨地址</div>
+                        <div class="col-md-2" style="">價格</div>
+                        <div class="col-md-1" style="">數量</div>
+                        <div class="col-md-1" style="padding: 0;">物流狀態</div>
+                        <div class="col-md-2" style="">實付款</div>
                     </div>
 
                     <div class="cart-item-list">
                         <div class="row row1">
-                              <div class="col-md-10  col-xs-9" style="">
-                                 2018-06-28  訂單編號: 1608766834
-                              </div>
-                              <div class="col-md-2 col-xs-3 t2" style="">
-                                    訂單狀態: <span class="color_ro">待付款</span>
-                              </div>
+                            <div class="col-md-10 color_75" style="">
+                                {:date('Y-m-d',strtotime($vo['info']['addtime']))}  訂單編號: <span class="color_ro bold">{$key}</span>
+                            </div>
+                            <div class="col-md-2 t2" style="">
+                                訂單狀態: <span class="color_ro">待付款</span>
+                            </div>
                         </div>
                         <table class="table table-bordered row2" style="width: 98%;margin: 0;">
-                          <tbody>
+                            <tbody>
+                            {foreach name="vo.goods_list" item="vv"}
                             <tr>
-                              <td class="col-md-3 col-xs-4"scope="row">
-                                  <img src="__TMPL_PUBLIC__/img/f2_1.jpg" style="width: 70px;float: left" />
-                                  <p><h4 class="bold">高效運動鞋墊</h4>返還積分：<span class="color_ro">688</span></p>
-                              </td>
-                              <td class="col-md-3 col-xs-2">九龍油塘高超道38號大本型商場2樓228號鋪</td>
-                              <td class="col-md-2 col-xs-2 color_ro"><span class="bold font16">688.00</span> (HKD)</td>
-                              <td class="col-md-1 col-xs-1 bold font16">2</td>
-                              <td class="col-md-1 col-xs-1 ">運輸中</td>
-                              <td class="col-md-2 col-xs-2 "><span class="bold font16 color_ro">628.00 (HKD)</span><br>(含運費:<span class="color_ro">15.00</span>HKD)</td>
+                                <td class="col-md-3 "scope="row">
+
+                                    {if condition="$vv['cover']"}
+                                    <img src="__PUBLIC__/{$vv.cover}" class="img_left"  style="width: 70px;float: left"/>
+                                    {else/}
+                                    <img src="__TMPL_PUBLIC__/img/default.jpg" class="img_left" style="width: 70px;float: left">
+                                    {/if}
+                                    <p>
+                                    <h4 class="bold">{$vv.product_name}</h4>
+                                    <span class="color_66">返還積分：</span>
+                                    <span class="color_ro bold">{$vv.integral|default='0'}</span>
+                                    </p>
+                                </td>
+                                <td class="col-md-2 color_ro"><span class="bold font16">{$vv.price}</span> (HKD)</td>
+                                <td class="col-md-1 bold font16">{$vv.goods_num}</td>
+                                <td class="col-md-2 "><span class="bold font16 color_ro">{$vv.money_total}</span> <span class="color_75">(HKD)</span></td>
                             </tr>
-                          </tbody>
+                                <?php
+                                    $all_money_total[] = $vv['money_total'];
+                                ?>
+                            {/foreach}
+                            </tbody>
                         </table>
-                          <div class="row row3">
-                              <div class="col-md-6 col-xs-6" style="text-align:left">
-                                 下單時間: 2018-06-28 10:02:20 支付方式：信用卡
-                              </div>
-                              <div class="col-md-3 col-xs-4 t2" style="">
-                                    訂單總價: <span class="bold font16 color_ro">628.00</span> (HKD)
-                              </div>
-                              <div class="col-md-3 col-xs-2 t2" style="">
+                        <?php
 
-                                  <button type="button" class="btn btn-warning">查看訂單</button>
-                                  <button type="button" class="btn btn-success">取消訂單</button>
-                              </div>
-                          </div>
-                    </div>
-
-                   <div class="row item-single">
-                        <div class="col-md-3 col-xs-3" style="">商品信息</div>
-                        <div class="col-md-3 col-xs-3" style="">收貨地址</div>
-                        <div class="col-md-2 col-xs-2" style="">價格</div>
-                        <div class="col-md-1 col-xs-1" style="">數量</div>
-                        <div class="col-md-1 col-xs-1" style="padding: 0;">物流狀態</div>
-                        <div class="col-md-2 col-xs-2" style="">實付款</div>
-                    </div>
-
-                    <div class="cart-item-list">
-                        <div class="row row1">
-                              <div class="col-md-10  col-xs-9" style="">
-                                 2018-06-28  訂單編號: 1608766834
-                              </div>
-                              <div class="col-md-2 col-xs-3 t2" style="">
-                                    訂單狀態: <span class="color_ro">待付款</span>
-                              </div>
+                        ?>
+                        <div class="row row3">
+                            <div class="col-md-5 color_75" style="text-align:left">
+                                下單時間: {$vo['info']['addtime']}  支付方式：信用卡
+                            </div>
+                            <div class="col-md-4 t2 color_75" style="">
+                                訂單總價: <span class="bold font16 color_ro">{:number_format(array_sum($all_money_total),2)}</span> (HKD)
+                                (含運費:<span class="color_ro"> {$vo['info']['freight']|default='0'} </span>HKD)
+                            </div>
+                            <div class="col-md-3 t2" style="">
+                                <a href="{:url('user/order_detail',array('order_sn'=>base64_encode($vo['info']['order_sn'])))}"><button type="button" class="btn btn-warning">查看訂單</button></a>
+                                <button type="button" class="btn btn-success">取消訂單</button>
+                            </div>
                         </div>
-                        <table class="table table-bordered row2" style="width: 98%;margin: 0;">
-                          <tbody>
-                            <tr>
-                              <td class="col-md-3 col-xs-4"scope="row">
-                                  <img src="__TMPL_PUBLIC__/img/f2_1.jpg" style="width: 70px;float: left" />
-                                  <p><h4 class="bold">高效運動鞋墊</h4>返還積分：<span class="color_ro">688</span></p>
-                              </td>
-                              <td class="col-md-3 col-xs-2">九龍油塘高超道38號大本型商場2樓228號鋪</td>
-                              <td class="col-md-2 col-xs-2 color_ro"><span class="bold font16">688.00</span> (HKD)</td>
-                              <td class="col-md-1 col-xs-1 bold font16">2</td>
-                              <td class="col-md-1 col-xs-1 ">運輸中</td>
-                              <td class="col-md-2 col-xs-2 "><span class="bold font16 color_ro">628.00 (HKD)</span><br>(含運費:<span class="color_ro">15.00</span>HKD)</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                          <div class="row row3">
-                              <div class="col-md-6 col-xs-6" style="text-align:left">
-                                 下單時間: 2018-06-28 10:02:20 支付方式：信用卡
-                              </div>
-                              <div class="col-md-3 col-xs-4 t2" style="">
-                                    訂單總價: <span class="bold font16 color_ro">628.00</span> (HKD)
-                              </div>
-                              <div class="col-md-3 col-xs-2 t2" style="">
-
-                                  <button type="button" class="btn btn-warning">查看訂單</button>
-                                  <button type="button" class="btn btn-success">取消訂單</button>
-                              </div>
-                          </div>
                     </div>
-
-
-
+                    {/foreach}
                 </div>
 
             </div>
 
             <div class="pagination">
-
-                <ul>
-                    <li><a href="#">上一頁</a> </li>
-                    <li class="active current"><span class="current">1</span> </li>
-                    <li><a href="#"> 2</a> </li>
-                    <li><a href="#"> 3</a> </li>
-                    <li><a href="#"> 4</a> </li>
-                    <li><a href="#"> 5</a> </li>
-                    <li><a href="#"> 6</a> </li>
-                    <li><a href="#"> ...</a> </li>
-                    <li><a href="#"> 234</a> </li>
-                    <li><a href="#">下一頁</a> </li>
-                    <li><a href="#">尾页</a> </li>
-                </ul>
-
+                {$page}
             </div>
 
 
