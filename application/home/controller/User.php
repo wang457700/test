@@ -49,7 +49,7 @@ class User extends Frontend
 	    		$this->error('账号还没有激活，请到电邮激活');
 	    	}
 
-	    	if($password !== $user['password']){
+	    	if(md5($password) !== $user['password']){
 	    		$this->error('密码不正确，请重新输入！');
 	    	}
 	    	Session::set("user_id", $user['id']);
@@ -197,7 +197,7 @@ class User extends Frontend
 
     public function center(){
         $this->assign('title','用户中心');
-         $order_list= Db::name('order')->alias('a')->join('__GOODS__ c','a.goods_id=c.product_id','LEFT')->where('user_id',Session::get('user_id'))->order('addtime desc')->paginate(10);
+        $order_list= Db::name('order')->alias('a')->join('__GOODS__ c','a.goods_id=c.product_id','LEFT')->where('user_id',Session::get('user_id'))->order('addtime desc')->paginate(10);
 
         $result= array();
          foreach ($order_list as $key=>$item){
@@ -420,6 +420,7 @@ class User extends Frontend
         	$row = array('address'=>null,'name'=>null,'phone'=>null);
         }
 		$this->assign('address_list',$address_list);
+        dump($address_list);
 
 		$this->assign('row',$row);
         $this->assign('title','我的地址');
@@ -495,6 +496,25 @@ class User extends Frontend
 
     public function order_list(){
 
+        $order_list= Db::name('order')->alias('a')->join('__GOODS__ c','a.goods_id=c.product_id','LEFT')->where('user_id',Session::get('user_id'))->order('addtime desc')->paginate(10);
+
+        $result= array();
+        foreach ($order_list as $key=>$item){
+            $sel= Db::name('order')->where('order_sn',$item['order_sn'])->find();
+            if($item['order_sn']==$sel['order_sn']){
+                $result[$item['order_sn']]['goods_list'][] = $item;
+            }
+            $result[$item['order_sn']]['info'] = $sel;
+        }
+
+        $goods_list= Db::name('order')->alias('a')->join('__GOODS__ c','a.goods_id=c.product_id','LEFT')->where('user_id',Session::get('user_id'))->order('addtime desc')->paginate(4);
+        dump($goods_list);
+
+        $page = $order_list->render();
+        $this->assign('page',$page);
+        $this->assign('order_list',$result);
+        $this->assign('goods_list',$goods_list);
+      //   dump($result);
         $this->assign('title','我的订单');
         return $this->view->fetch();
     }

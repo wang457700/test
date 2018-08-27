@@ -107,9 +107,15 @@
 		</div>
 
 		<div class="row cart-item-footer" style="padding: 20px;">
-			<div class="col-md-8" style="">
-				收件人：陳大文  134 8888 8888<br>
-				收件地址：九龍油塘高超道38號大本型商場2樓228號鋪
+			<div class="col-md-8" style="" id="on_address">
+				{foreach name="address_list" item="vo"}
+				{if condition="$vo['default'] == 1"}
+					收件人：{$vo.name} {$vo.phone}<br>
+					收件地址：{$vo.country}{$vo.province}{$vo.city}{$vo.address}
+				{else/}
+
+				{/if}
+				{/foreach}
 			</div>
 			<div class="col-md-4" style="float: right;text-align: right;">
 				商品總計: <span>$ {:number_format($all_total,2)}</span>
