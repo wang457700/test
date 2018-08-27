@@ -113,7 +113,6 @@
     </div>
 
     <div class="container">
-
        <div class="row" style="padding: 20px 0;">
         <div class="col-md-5 col-xs-5" style="padding-left: 0;">
              <p class="index_title">我的記錄</p>
@@ -148,8 +147,6 @@
                   {/foreach}
                 </div>
                 <!-- Add Arrows -->
-
-
               </div>
                <div class="swiper-button-next"></div>
                 <script>
@@ -173,14 +170,14 @@
           <div class="col-md-4 col-xs-4" style="padding: 0;">
               {foreach name="slide" item="vo"}
                   {eq name="vo['slide_type']" value="center_lefe_banner"}
-                        <img src="{:fa_get_image_url($vo['slide_pic'])}">
+                        <a href="{$vo.slide_url}" target="_blank"><img src="{:fa_get_image_url($vo['slide_pic'])}"></a>
                   {/eq}
               {/foreach}
           </div>
           <div class="col-md-8 col-xs-8 p_right_0">
               {foreach name="slide" item="vo"}
                 {eq name="vo['slide_type']" value="center_right_banner"}
-                         <img src="{:fa_get_image_url($vo['slide_pic'])}" style="margin-bottom: 1.5em;"> <br>
+                     <a href="{$vo.slide_url}" target="_blank"><img src="{:fa_get_image_url($vo['slide_pic'])}" style="margin-bottom: 1.5em;"></a> <br>
                  {/eq}
               {/foreach}
           </div>
@@ -191,105 +188,70 @@
         <div class="row f3" style="padding: 20px 0;">
           <p class="index_title" style="background-position-y: -50px;"> 復康產品</p>
           <div class="border_top1"></div>
-          <div class="col-md-2 col-xs-2 n1">
-              <img src="__TMPL_PUBLIC__/data/index_2.png">
-              <div class="d1">
-                <p class="font16 bold">Polar 心率錶</p>
-                <p class="font12 miaosu">Polar 心率錶 銀黑色 - FT4-SBLK，針對想透過基於心率的基本功能保持簡單健身訓練的人們</p>
-                <div>
-                    <span class="font24"><i class="font12">$</i>1234</span>
-                    <a class="adds">+</a>
+            <div class="col-md-2 col-xs-2 n1">
+                <img src="__TMPL_PUBLIC__/data/index_2.png">
+                <div class="d1">
+                    <p class="font16 bold">Polar 心率錶</p>
+                    <p class="font12 miaosu">Polar 心率錶 銀黑色 - FT4-SBLK，針對想透過基於心率的基本功能保持簡單健身訓練的人們</p>
+                    <div>
+                        <span class="font24"><i class="font12">$</i>1234</span>
+                        <a class="adds">+</a>
+                    </div>
                 </div>
-              </div>
-          </div>
-          <div class="col-md-10 col-xs-10 " style="background: #fff;">
+            </div>
+            <div class="col-md-10 col-xs-10 " style="background: #fff;">
               <div class="row">
                 <div class="col-md-12">
                         <div class="row">
-                          <div class="col-md-6 col-xs-6 n2">
-								<div style="text-;text-align:  center;"><img src="__TMPL_PUBLIC__/img/f2_1.jpg" class="first"></div>
-                                <div class="d2">
-                                  <p>GH 人造皮 1-5 磅可調重量運動沙包</p>
-                                  <p class="color_ro">优惠全民享</p>
-                                  <div>
-                                       <span class="font24"><i class="font12">$</i>1234</span>
-                                      <a class="adds" style="padding: 0.4em 0.8em;">+</a>
-                                  </div>
+                            {foreach name="product_list" key="k" item="vo"}
+                            {if condition="$k eq  0"}
+                                <div class="col-md-6 col-xs-6 n2">
+                                    <div style="text-;text-align:  center;"><img src="__PUBLIC__{$vo['cover']}" class="first" style="width:189px;height:189px;"></div>
+                                    <div class="d2">
+                                        <p class="nowrap">{$vo['product_name']}</p>
+                                        <p class="color_ro">优惠全民享</p>
+                                        <div>
+                                            <span class="font24"><i class="font12">$</i>{$vo['price']}</span>
+                                            <a class="adds" style="padding: 0.4em 0.8em;" data-id="{$vo['product_id']}">+</a>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-
+                            {/if}
+                            {if condition="$k egt 1 && $k  elt 2"}
                             <div class="col-md-3 col-xs-3 n2">
-                                <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
+                                <img src="__PUBLIC__{$vo['cover']}">
                                 <div class="d2">
-                                  <p>GH 人造皮 2 磅運動沙包</p>
+                                  <p class="nowrap">{$vo['product_name']}</p>
                                   <p class="color_ro">优惠全民享</p>
                                   <div>
-                                       <span class="font24"><i class="font12">$</i>1234</span>
-                                      <a class="adds">+</a>
+                                       <span class="font24"><i class="font12">$</i>{$vo['price']}</span>
+                                      <a class="adds" data-id="{$vo['product_id']}">+</a>
                                   </div>
                                 </div>
                             </div>
-                            <div class="col-md-3 col-xs-3 n2">
-                                 <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
-                                <div class="d2">
-                                  <p>GH 人造皮 2 磅運動沙包</p>
-                                  <p class="color_ro">优惠全民享</p>
-                                  <div>
-                                       <span class="font24"><i class="font12">$</i>1234</span>
-                                      <a class="adds">+</a>
-                                  </div>
-                                </div>
-                            </div>
+                            {/if}
+                            {/foreach}
                        </div>
-
                   </div>
 
                   <div class="col-md-12">
                       <div class="row">
-                            <div class="col-md-3 col-xs-3 n2">
-                                <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
-                                <div class="d2">
-                                  <p>GH 人造皮 2 磅運動沙包</p>
+                      {foreach name="product_list" key="k" item="vo"}
+                          {if condition="$k egt 3 && $k elt 7"}
+                          <div class="col-md-3 col-xs-3 n2">
+                              <img src="__PUBLIC__{$vo['cover']}">
+                              <div class="d2">
+                                  <p class="nowrap">{$vo['product_name']}</p>
                                   <p class="color_ro">优惠全民享</p>
                                   <div>
-                                       <span class="font24"><i class="font12">$</i>1234</span>
-                                      <a class="adds" style="padding: 0.4em 0.8em;">+</a>
+                                      <span class="font24"><i class="font12">$</i>{$vo['price']}</span>
+                                      <a class="adds" data-id="{$vo['product_id']}">+</a>
                                   </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-xs-3 n2">
-                                 <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
-                                <div class="d2">
-                                  <p>GH 人造皮 2 磅運動沙包</p>
-                                  <p class="color_ro">优惠全民享</p>
-                                  <div>
-                                       <span class="font24"><i class="font12">$</i>1234</span>
-                                      <a class="adds">+</a>
-                                  </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-xs-3 n2">
-                                 <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
-                                <div class="d2">
-                                  <p>GH 人造皮 2 磅運動沙包</p>
-                                  <p class="color_ro">优惠全民享</p>
-                                  <div>
-                                       <span class="font24"><i class="font12">$</i>1234</span>
-                                      <a class="adds">+</a>
-                                  </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-xs-3 n2">
-                                 <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
-                                <div class="d2">
-                                  <p>GH 人造皮 2 磅運動沙包</p>
-                                  <p class="color_ro">优惠全民享</p>
-                                  <div>
-                                       <span class="font24"><i class="font12">$</i>1234</span>
-                                      <a class="adds">+</a>
-                                  </div>
-                                </div>
-                            </div>
+                              </div>
+                          </div>
+                          {/if}
+                          {/foreach}
+
                        </div>
                   </div>
              </div>
@@ -315,96 +277,136 @@
           <div class="col-md-10 col-xs-10" style="background: #fff;">
               <div class="row">
                  <div class="col-md-12">
-                        <div class="row">
-                          <div class="col-md-6 col-xs-6 n2">
-                                <div style="text-;text-align:  center;"><img src="__TMPL_PUBLIC__/img/f2_1.jpg" class="first"></div>
-                                <div class="d2">
-                                  <p>GH 人造皮 1-5 磅可調重量運動沙包</p>
-                                  <p class="color_ro">优惠全民享</p>
-                                  <div>
-                                       <span class="font24"><i class="font12">$</i>1234</span>
-                                      <a class="adds" style="padding: 0.4em 0.8em;">+</a>
-                                  </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3 col-xs-3 n2">
-                                <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
-                                <div class="d2">
-                                  <p>GH 人造皮 2 磅運動沙包</p>
-                                  <p class="color_ro">优惠全民享</p>
-                                  <div>
-                                       <span class="font24"><i class="font12">$</i>1234</span>
-                                      <a class="adds">+</a>
-                                  </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-xs-3 n2">
-                                 <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
-                                <div class="d2">
-                                  <p>GH 人造皮 2 磅運動沙包</p>
-                                  <p class="color_ro">优惠全民享</p>
-                                  <div>
-                                       <span class="font24"><i class="font12">$</i>1234</span>
-                                      <a class="adds">+</a>
-                                  </div>
-                                </div>
-                            </div>
-                       </div>
+                     <div class="row">
+                         {foreach name="health_food" key="k" item="vo"}
+                         {if condition="$k eq  0"}
+                         <div class="col-md-6 col-xs-6 n2">
+                             <div style="text-;text-align:  center;"><img src="__PUBLIC__{$vo['cover']}" class="first" style="width:189px;height:189px;"></div>
+                             <div class="d2">
+                                 <p class="nowrap">{$vo['product_name']}</p>
+                                 <p class="color_ro">优惠全民享</p>
+                                 <div>
+                                     <span class="font24"><i class="font12">$</i>{$vo['price']}</span>
+                                     <a class="adds" style="padding: 0.4em 0.8em;" data-id="{$vo['product_id']}">+</a>
+                                 </div>
+                             </div>
+                         </div>
+                         {/if}
+                         {if condition="$k egt 1 && $k  elt 2"}
+                         <div class="col-md-3 col-xs-3 n2">
+                             <img src="__PUBLIC__{$vo['cover']}">
+                             <div class="d2">
+                                 <p class="nowrap">{$vo['product_name']}</p>
+                                 <p class="color_ro">优惠全民享</p>
+                                 <div>
+                                     <span class="font24"><i class="font12">$</i>{$vo['price']}</span>
+                                     <a class="adds" data-id="{$vo['product_id']}">+</a>
+                                 </div>
+                             </div>
+                         </div>
+                         {/if}
+                         {/foreach}
+                     </div>
                   </div>
 
                   <div class="col-md-12">
                       <div class="row">
-                            <div class="col-md-3 col-xs-3 n2">
-                                 <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
-                                <div class="d2">
-                                  <p>GH 人造皮 2 磅運動沙包</p>
+                          {foreach name="health_food" key="k" item="vo"}
+                          {if condition="$k egt 3 && $k  elt 6"}
+                          <div class="col-md-3 col-xs-3 n2">
+                              <img src="__PUBLIC__{$vo['cover']}">
+                              <div class="d2">
+                                  <p class="nowrap">{$vo['product_name']}</p>
                                   <p class="color_ro">优惠全民享</p>
                                   <div>
-                                       <span class="font24"><i class="font12">$</i>1234</span>
-                                      <a class="adds">+</a>
+                                      <span class="font24"><i class="font12">$</i>{$vo['price']}</span>
+                                      <a class="adds" data-id="{$vo['product_id']}">+</a>
                                   </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-xs-3 n2">
-                                 <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
-                                <div class="d2">
-                                  <p>GH 人造皮 2 磅運動沙包</p>
-                                  <p class="color_ro">优惠全民享</p>
-                                  <div>
-                                       <span class="font24"><i class="font12">$</i>1234</span>
-                                      <a class="adds">+</a>
-                                  </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-xs-3 n2">
-                                 <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
-                                <div class="d2">
-                                  <p>GH 人造皮 2 磅運動沙包</p>
-                                  <p class="color_ro">优惠全民享</p>
-                                  <div>
-                                       <span class="font24"><i class="font12">$</i>1234</span>
-                                      <a class="adds">+</a>
-                                  </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-xs-3 n2">
-                                 <img src="__TMPL_PUBLIC__/img/f2_1.jpg">
-                                <div class="d2">
-                                  <p>GH 人造皮 2 磅運動沙包</p>
-                                  <p class="color_ro">优惠全民享</p>
-                                  <div>
-                                       <span class="font24"><i class="font12">$</i>1234</span>
-                                      <a class="adds" >+</a>
-                                  </div>
-                                </div>
-                            </div>
-                       </div>
+                              </div>
+                          </div>
+                          {/if}
+                          {/foreach}
+
+                      </div>
                   </div>
              </div>
           </div>
         </div>
 <!--- f4 end-->
+
+        <!--- f5 str-->
+        <div class="row f3" style="padding: 20px 0;">
+            <p class="index_title" style="background-position-y: -75px;">科技產品</p>
+            <div class="border_top1"></div>
+            <div class="col-md-2 col-xs-2 n1">
+                <img src="__TMPL_PUBLIC__/data/index_1.png">
+                <div class="d1">
+                    <p class="font16 bold">Polar 心率錶</p>
+                    <p class="font12 miaosu">Polar 心率錶 銀黑色 - FT4-SBLK，針對想透過基於心率的基本功能保持簡單健身訓練的人們</p>
+                    <div>
+                        <span class="font24"><i class="font12">$</i>1234</span>
+                        <a class="adds">+</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10 col-xs-10" style="background: #fff;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            {foreach name="science_food" key="k" item="vo"}
+                            {if condition="$k eq  0"}
+                            <div class="col-md-6 col-xs-6 n2">
+                                <div style="text-;text-align:  center;"><img src="__PUBLIC__{$vo['cover']}" class="first" style="width:189px;height:189px;"></div>
+                                <div class="d2">
+                                    <p class="nowrap">{$vo['product_name']}</p>
+                                    <p class="color_ro">优惠全民享</p>
+                                    <div>
+                                        <span class="font24"><i class="font12">$</i>{$vo['price']}</span>
+                                        <a class="adds" style="padding: 0.4em 0.8em;" data-id="{$vo['product_id']}">+</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {/if}
+                            {if condition="$k egt 1 && $k  elt 2"}
+                            <div class="col-md-3 col-xs-3 n2">
+                                <img src="__PUBLIC__{$vo['cover']}">
+                                <div class="d2">
+                                    <p class="nowrap">{$vo['product_name']}</p>
+                                    <p class="color_ro">优惠全民享</p>
+                                    <div>
+                                        <span class="font24"><i class="font12">$</i>{$vo['price']}</span>
+                                        <a class="adds" data-id="{$vo['product_id']}">+</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {/if}
+                            {/foreach}
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            {foreach name="science_food" key="k" item="vo"}
+                            {if condition="$k egt 3 && $k  elt 6"}
+                            <div class="col-md-3 col-xs-3 n2">
+                                <img src="__PUBLIC__{$vo['cover']}">
+                                <div class="d2">
+                                    <p class="nowrap">{$vo['product_name']}</p>
+                                    <p class="color_ro">优惠全民享</p>
+                                    <div>
+                                        <span class="font24"><i class="font12">$</i>{$vo['price']}</span>
+                                        <a class="adds" data-id="{$vo['product_id']}">+</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {/if}
+                            {/foreach}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--- f5 end-->
 
 
 
