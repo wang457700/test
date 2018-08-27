@@ -42,11 +42,11 @@ class Index extends Frontend
 
         $slide =  Db::name('slide')->where(array('slide_status'=>1))->select();
 
-
+        $where['is_on_sale'] = 1;
         $top_ten= Db::name('goods')->where('is_best_status',0)->limit(10)->select();
-        $product_list= Db::name('goods')->where(array('cat_id'=>array('in',$tree->getChildrenIds(input('categoryid',15)))))->limit(9)->select();
-        $health_food= Db::name('goods')->where(array('cat_id'=>array('in',$tree->getChildrenIds(input('categoryid',16)))))->limit(9)->select();
-        $science_food= Db::name('goods')->where(array('cat_id'=>array('in',$tree->getChildrenIds(input('categoryid',17)))))->limit(9)->select();
+        $product_list= Db::name('goods')->where(array('cat_id'=>array('in',$tree->getChildrenIds(input('categoryid',15))),'is_on_sale'=>1))->limit(9)->select();
+        $health_food= Db::name('goods')->where(array('cat_id'=>array('in',$tree->getChildrenIds(input('categoryid',16))),'is_on_sale'=>1))->limit(9)->select();
+        $science_food= Db::name('goods')->where(array('cat_id'=>array('in',$tree->getChildrenIds(input('categoryid',17))),'is_on_sale'=>1))->limit(9)->select();
 
         $share= Db::name('user_share')->limit(4)->select();
         $this->view->assign("top_ten", $top_ten);   //Top Ten

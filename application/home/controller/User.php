@@ -410,20 +410,31 @@ class User extends Frontend
         {
             $v['default_text'] = $default[$v['default']];
             $v['createtime'] = date('Y-m-d',$v['createtime']);
+            $v['province'] = Db::name('region')->where(array('id'=>$v['province']))->value('name');
+            $v['city'] =Db::name('region')->where(array('id'=>$v['city']))->value('name');
+            $v['district'] =Db::name('region')->where(array('id'=>$v['district']))->value('name');
             $address_list[$k] = $v;
         }
 
+        $region_province = 0;
+        $region_city = 0;
+        $region_district = 0;
         $id = input('id');
         if($id){
         	$row= Db::name('user_address')->where(array('id'=>$id,'user_id'=>$user_id))->find();
+
+            $region_province = Db::name('region')->where(array('id'=>$row['province']))->find();
+            $region_city = Db::name('region')->where(array('id'=>$row['city']))->find();
+            $region_district = Db::name('region')->where(array('id'=>$row['district']))->find();
         }else{
         	$row = array('address'=>null,'name'=>null,'phone'=>null);
         }
 		$this->assign('address_list',$address_list);
-        dump($address_list);
-
 		$this->assign('row',$row);
         $this->assign('title','我的地址');
+        $this->assign('region_province',$region_province);
+        $this->assign('region_city',$region_city);
+        $this->assign('region_district',$region_district);
         return $this->view->fetch();
     }
 
@@ -508,13 +519,12 @@ class User extends Frontend
         }
 
         $goods_list= Db::name('order')->alias('a')->join('__GOODS__ c','a.goods_id=c.product_id','LEFT')->where('user_id',Session::get('user_id'))->order('addtime desc')->paginate(4);
-        dump($goods_list);
 
         $page = $order_list->render();
         $this->assign('page',$page);
         $this->assign('order_list',$result);
         $this->assign('goods_list',$goods_list);
-      //   dump($result);
+
         $this->assign('title','我的订单');
         return $this->view->fetch();
     }

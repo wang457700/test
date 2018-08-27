@@ -41,7 +41,6 @@ class Product extends Frontend
         $tree = Tree::instance();
         $categoryid = $tree->getChildrenIds(input('categoryid',14));
         $getParents = $tree->getParents(input('categoryid',14));
-
         $where['is_on_sale'] = 1;
         $where['cat_id'] = array('in',$categoryid);
         $product_list =  Db::name('goods')->where($where)->select();
