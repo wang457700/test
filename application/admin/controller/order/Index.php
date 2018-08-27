@@ -3,7 +3,7 @@
 namespace app\admin\controller\order;
 
 use app\common\controller\Backend;
-
+use think\Db;
 /**
  * 共享平台
  * 用户发布的共享列表
@@ -23,40 +23,20 @@ class Index extends Backend
      */
     public function index()
     {
-        if ($this->request->isAjax()) {
 
-            $total = 1;
-            $list =array(
-                array(
-                    'order_id'=>201807001,
-                    'order_time'=>'2018/06/30',
-                    'user_name'=>'Alan Fox',
-                    'total_amount'=>'$1,210.40',
-                    'amount_payable'=>'$1,210.40',
-                    'address'=>'廣東省深圳市龍翔大道志聯佳大厦',
-                    'freight'=>'$45.00',
-                    'donated_amount'=>'$180.00',
-                    'payment_type'=>'信用卡',
-                    'status'=>'未發貨',
-                ),
-                array(
-                    'order_id'=>201807001,
-                    'order_time'=>'2018/06/30',
-                    'user_name'=>'Alan Fox',
-                    'total_amount'=>'$1,210.40',
-                    'amount_payable'=>'$1,210.40',
-                    'address'=>'廣東省深圳市龍翔大道志聯佳大厦',
-                    'freight'=>'$45.00',
-                    'donated_amount'=>'$180.00',
-                    'payment_type'=>'信用卡',
-                    'status'=>'未發貨',
-                ),
-                
-            );
+        $order_list= Db::name('order')->alias('a')->join('__GOODS__ c','a.goods_id=c.product_id','LEFT')
+            ->join('__USER_ADDRESS__ e','a.address_id=e.id','LEFT')
+            ->group('a.order_sn')
+            ->order('addtime desc')->paginate(10);
 
-            $result = array("total" => $total, "rows" => $list);
-            return json($result);
-        }
+           $page=$order_list->render();
+
+        $this->assign('page',$page);
+
+
+        $this->assign('order_list',$order_list);
+
+
         return $this->view->fetch();
     }
 
@@ -65,7 +45,7 @@ class Index extends Backend
      */
     public function detail($ids)
     {
-       
+
         $row = array(
             'order_id'=>201807001,
             'order_time'=>'2018/06/30',
@@ -100,7 +80,7 @@ class Index extends Backend
      */
     public function edit($ids = NULL)
     {
-         
+
         if ($this->request->isPost())
         {
             $params = 1;
@@ -115,6 +95,6 @@ class Index extends Backend
     }
 
 
-         
+
 
 }
