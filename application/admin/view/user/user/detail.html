@@ -11,40 +11,43 @@
     <h4>用戶信息</h4>
     <table class="table table-striped col-sm-4 notable">
         <thead>
-            
+
         </thead>
         <tbody class="col-xs-12 col-sm-12">
             <tr class="col-xs-4 col-sm-4">
                 <th>用戶名：</th>
-                <td>maychan</td>
+                <td>{$row.username}</td>
             </tr>
             <tr class="col-xs-4 col-sm-4">
                 <th>用戶ID：</th>
-                <td>100086</td>
+                <td>{$row.id}</td>
             </tr>
             <tr class="col-xs-4 col-sm-4">
                 <th>出生日期：</th>
-                <td>1992/10/01</td>
+                <td>{$row.birthday}</td>
             </tr>
             <tr class="col-xs-4 col-sm-4">
                 <th>注册類型：</th>
-                <td>微信</td>
+                <td>普通</td>
             </tr> 
             <tr class="col-xs-4 col-sm-4">
                 <th>電郵：</th>
-                <td>may.chan@teamotto.net</td>
+                <td>{$row.email}</td>
             </tr> 
             <tr class="col-xs-4 col-sm-4">
                 <th>手機號碼：</th>
-                <td>131929639666</td>
+                <td>{$row.mobile|default='未填写'}</td>
             </tr> 
             <tr class="col-xs-4 col-sm-4">
                 <th>用戶類型：</th>
-                <td>金牌</td>
+                <?php
+                    $level = array('0'=>'普通会员','1'=>'白金会员','2'=>'金牌会员','3'=>'商业会员');
+                ?>
+                <td>{$level[$row['level']]}</td>
             </tr> 
             <tr class="col-xs-4 col-sm-4">
                 <th>積分：</th>
-                <td>10000</td>
+                <td>{$row.score}</td>
             </tr> 
             <tr class="col-xs-4 col-sm-4">
                 <th>本月失效積分：</th>
@@ -59,19 +62,14 @@
            
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>收貨人姓名：陳大大</td>
-                <td>聯繫電話：131929639666</td>
-                <td>收貨地址：九龍油塘高超到38號大本型商場2樓</td>
-            </tr>
-           <tr>
-                <td>2</td>
-                <td>收貨人姓名：陳大大</td>
-                <td>聯繫電話：131929639666</td>
-                <td>收貨地址：九龍油塘高超到38號大本型商場2樓</td>
-            </tr>
-            
+            {foreach name="address_list" item="vo"}
+                <tr>
+                    <td>{$key+1}</td>
+                    <td>收貨人姓名：{$vo.name}</td>
+                    <td>聯繫電話：{$vo.phone}</td>
+                    <td>收貨地址：{$vo.country}{$vo.province}{$vo.city}{$vo.address}</td>
+                </tr>
+            {/foreach}
         </tbody>
     </table>
 </div>
@@ -92,27 +90,18 @@
             </tr>
         </thead>
         <tbody>
+        {foreach name="order_list" item="vo"}
             <tr>
-                <td>2018070102</td>
-                <td>2018/07/01 09:33:69</td>
-                <td>收貨人姓名：陳大大</td>
-                <td>聯繫電話：131929639666</td>
-                <td>收貨地址：九龍油塘高超到38號大本型商場2樓</td>
-                 <td>$1,174.32</td>
+                <td>{$vo.order_sn}</td>
+                <td>{$vo.addtime}</td>
+                <td>收貨人姓名：{$vo.address_info.name}</td>
+                <td>聯繫電話：{$vo.address_info.phone}</td>
+                <td>收貨地址：{$vo.address}</td>
+                 <td>$ {:number_format($vo.all_money_total,2)}</td>
                  <td>已付款</td>
                  <td><a>查看详情</a></td>
             </tr>
-            <tr>
-                <td>2018070102</td>
-                <td>2018/07/01 09:33:69</td>
-                <td>收貨人姓名：陳大大</td>
-                <td>聯繫電話：131929639666</td>
-                <td>收貨地址：九龍油塘高超到38號大本型商場2樓</td>
-                 <td>$1,174.32</td>
-                 <td>已付款</td>
-                 <td><a>查看详情</a></td>
-            </tr>
-            
+        {/foreach}
         </tbody>
     </table>
 </div>

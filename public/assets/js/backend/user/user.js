@@ -5,7 +5,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             // 初始化表格参数配置
             Table.api.init({
                 extend: {
-                    index_url: 'Myadminjson/user_index',
+                    index_url: 'user/user/index',
                     multi_url: 'user/user/multi',
                     table: 'user',
                 }
@@ -25,10 +25,10 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'username', title: '用戶名稱', operate: 'LIKE'},
                         {field: 'email', title:'用戶電郵', operate: 'LIKE'},
                         {field: 'mobile', title: '手機號碼', operate: 'LIKE'},
-                        {field: 'data1', title:'用户类型', operate:false},
+                        {field: 'level', title:'用户类型', visible: true, searchList: {1: __('Male'), 0: __('Female')}, operate:false},
                         {field: 'score', title: '積分', operate: 'BETWEEN', sortable: true},
-                        {field: 'data2', title:'注册類型', operate:false},
-                        {field: 'data3', title:'注册日期', operate:false},
+                        {field: 'join_source', title:'注册類型', operate:false},
+                        {field: 'jointime', title:'注册日期', formatter: Table.api.formatter.datetime, operate:false},
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate,
                             buttons: [
                                 {

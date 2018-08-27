@@ -178,6 +178,7 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 .product ul{padding: 0;}
 .product li{padding: 20px;border-top: 1px solid #eee;}
 .product li.col-md-2{margin: 0 15px;}
+.product li img{width:190px;height:190px;}
 .product li .n2{border-right:1px solid #eee;border-bottom: 1px solid #eee;}
 .product li i{font-style: inherit;font-size: 14px;}
 .product li p{margin: 0;}

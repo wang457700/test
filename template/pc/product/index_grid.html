@@ -35,28 +35,34 @@
           <ul class="row">
               {foreach name="product_list" item="vo"}
                   <li class="col-md-3 col-xs-3">
-                      {if condition="$vo['cover']"}
-                         <img src="__PUBLIC__/{$vo.cover}"/>
-                      {else/}
-                         <img src="__TMPL_PUBLIC__/img/default.jpg">
-                      {/if}
-                        <div class="d2">
-                            <p>{$vo.product_name}</p>
+                      <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
+                          {if condition="$vo['cover']"}
+                             <img src="__PUBLIC__/{$vo.cover}"/>
+                          {else/}
+                             <img src="__TMPL_PUBLIC__/img/default.jpg">
+                          {/if}
+                      </a>
+                      <div class="d2">
+                          <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
+                             <p>{$vo.product_name}</p>
+                          </a>
                           <p class="color_ro">优惠全民享</p>
                           <div>
                               <span style="font-size: 20px;"><i>￥</i>{$vo.price}</span>
                               <a class="adds" data-id="{$vo.product_id}">+</a>
                           </div>
-                        </div>
+                      </div>
                   </li>
               {/foreach}
 
 
           </ul>
         </div>
- 
- 
+
     </div>
+    <script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
+    <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
+    {include file="common/script" /}
     {include file="common/footer"/}
   </body>
 

@@ -1,7 +1,7 @@
 <?php
 
 namespace app\admin\controller\user;
-
+use think\Db;
 use app\common\controller\Backend;
 
 /**
@@ -53,6 +53,8 @@ class User extends Backend
                     ->select();
             foreach ($list as $k => $v)
             {
+                $v['join_source'] = '普通注册';
+                $v['level'] = '普通';
                 $v->hidden(['password', 'salt']);
             }
             $result = array("total" => $total, "rows" => $list);
@@ -79,9 +81,19 @@ class User extends Backend
      */
     public function detail($ids = NULL)
     {
+       $row = Db::name('user')->where(array('id'=>$ids))->find();
+       $address_list = Db::name('user_address')->where('user_id',$ids)->select();
 
-
-
+       $order_list = Db::name('order')->where('user_id',$ids)->column('order_sn,order_id');
+       foreach ($order_list as $k=>$vo){
+          $order_list[$k] = Db::name('order')->where(array('order_sn'=>$k))->find();
+          $order_list[$k]['address_info'] = Db::name('user_address')->where(array('id'=>$order_list[$k]['address_id']))->find();
+          $order_list[$k]['all_goods_num'] = Db::name('order')->where(array('order_sn'=>$k))->sum('goods_num');
+          $order_list[$k]['all_money_total'] =  Db::name('order')->where(array('order_sn'=>$k))->sum('money_total');
+       }
+       $this->view->assign('row',$row);
+       $this->view->assign('address_list',$address_list);
+       $this->view->assign('order_list',$order_list);
       return $this->view->fetch();
     }
 
