@@ -76,7 +76,15 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                     }
                                 },
                             ], 
-                        formatter: Table.api.formatter.operate},
+                        formatter: Table.api.formatter.operate,formatter: function (value, row, index) {
+                            var that = $.extend({}, this);
+                            var table = $(that.table).clone(true); 
+                            if (row.status != 0)
+                                $(table).data("operate-ajax", null);
+                            that.table = table;
+                             console.log($(table).data());
+                            return Table.api.formatter.operate.call(that, value, row, index);
+                        }},
                     ]
                 ]
             });
