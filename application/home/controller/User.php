@@ -134,7 +134,7 @@ class User extends Frontend
         if($res){
         	 $this->success('账号已经激活，去登陆！',url('user/login'));
         }
- 	 	$res= Db::name('user')->where(array('id'=>$user_id))->find(array('is_eamil_status'=>1));
+ 	 	$res= Db::name('user')->where(array('id'=>$user_id))->update(array('is_eamil_status'=>1));
  		if($res){
           $this->success('激活成功！',url('user/login'));
 	  	}else{
