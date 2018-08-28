@@ -54,8 +54,8 @@ class Product extends Backend
                 $this->error('请选择分类');
             }
             $data['add_time']=date('Y-m-d H:i:s',time());
-            $img_url=array_filter(input('img_url/a'));
-            $data['img_url']=implode(',',$img_url);
+            //$img_url=array_filter(input('img_url/a'));
+            //$data['img_url']=implode(',',$img_url);
             $res=Db::name('goods')->insertGetId($data);
             if($res){
                 $this->success('添加成功！',url('product/index'));
@@ -67,7 +67,6 @@ class Product extends Backend
         }
 
         $this->assign('cat_list',$cat_list);
-
         return $this->view->fetch();
     }
 
@@ -77,7 +76,7 @@ class Product extends Backend
         $product_id=input('product_id');
         $product_list=Db::name('goods')->where('product_id',$product_id)->find();
 
-        $img_url=explode(',',$product_list['img_url']);
+        //$img_url=explode(',',$product_list['img_url']);
 
         //cai_id 为 三级
         $parent_two_id = Db::name('category')->where('id',$product_list['cat_id'])->value('pid');
@@ -108,8 +107,6 @@ class Product extends Backend
             $this->get_category($parent_two_id),
         );
 
-
-        $this->assign('img_url',$img_url);
         $this->assign('product_id',$product_id);
 
         $this->assign('category_list',$category_list);
