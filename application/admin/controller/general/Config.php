@@ -6,6 +6,7 @@ use app\common\controller\Backend;
 use app\common\library\Email;
 use app\common\model\Config as ConfigModel;
 use think\Exception;
+use think\Db;
 
 /**
  * 系统配置
@@ -70,32 +71,54 @@ class Config extends Backend
         $siteList = [];
         $groupList = ConfigModel::getGroupList();
         foreach ($groupList as $k => $v) {
-            $siteList[$k]['name'] = $k;
-            $siteList[$k]['title'] = $v;
             $siteList[$k]['list'] = [];
         }
-
         foreach ($this->model->all() as $k => $v) {
             if (!isset($siteList[$v['group']])) {
                 continue;
             }
             $value = $v->toArray();
-            $value['title'] = __($value['title']);
-            if (in_array($value['type'], ['select', 'selects', 'checkbox', 'radio'])) {
-                $value['value'] = explode(',', $value['value']);
+
+            if($value['name'] == 'integral'){
+                $integral = json_decode($value['value'],true);
             }
-            $value['content'] = json_decode($value['content'], TRUE);
-            $siteList[$v['group']]['list'][] = $value;
+            if($value['name'] == 'user_upgrade'){
+                $user_upgrade = json_decode($value['value'],true);
+            }
+            if($value['name'] == 'index_seo'){
+                $index_seo = json_decode($value['value'],true);
+            }
+            if($value['name'] == 'product_seo'){
+                $product_seo = json_decode($value['value'],true);
+            }
+            if($value['name'] == 'info_seo'){
+                $info_seo = json_decode($value['value'],true);
+            }
         }
-        $index = 0;
-        foreach ($siteList as $k => &$v) {
-            $v['active'] = !$index ? true : false;
-            $index++;
-        }
-        $this->view->assign('siteList', $siteList);
-        $this->view->assign('typeList', ConfigModel::getTypeList());
-        $this->view->assign('groupList', ConfigModel::getGroupList());
+
+        $this->view->assign('index_seo', $index_seo);
+        $this->view->assign('product_seo', $product_seo);
+        $this->view->assign('info_seo', $info_seo);
+        $this->view->assign('integral', $integral);
+        $this->view->assign('user_upgrade', $user_upgrade);
         return $this->view->fetch();
+    }
+
+    /**
+     * 修改其他设置
+     */
+    public function meta_edit()
+    {
+        if ($this->request->isPost()) {
+            $row = $this->request->post("row/a");
+            foreach ($row as $name=>$item){
+                $item = json_encode($item,true);
+                $info= Db::name('config')->where('name',$name)->update(array('value'=>$item));
+            }
+            if($info!==false){
+                $this->success('保存成功');
+            }
+        }
     }
     /**
      * 添加
@@ -141,6 +164,7 @@ class Config extends Backend
     public function edit($ids = NULL)
     {
         if ($this->request->isPost()) {
+
             $row = $this->request->post("row/a");
             if ($row) {
                 $configList = [];

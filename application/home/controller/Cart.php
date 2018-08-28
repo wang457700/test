@@ -59,7 +59,7 @@ class Cart extends Frontend
                 $address_list[$key] = $v;
             }
             $this->assign('order_list',$list);
-        }else {
+        }else{
 
             $product_id = input('goods_id/a');
             $goods_num = input('goods_num/a');
@@ -197,7 +197,6 @@ class Cart extends Frontend
         $this->assign('title','我的购物车');
         return  $this->fetch();
     }
-
 
     public function cart_del(){
         $product_id=input('product_id');

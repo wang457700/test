@@ -14,6 +14,8 @@
     </style>
     <div class="container bgcolor_white">
       <div class="pr_name">發佈共享</div>
+
+      <?php dump($site['configgroup'])?>
       <div class="share_product_add">
             <form action="{:url('user/share_edit')}" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return share()" id="share-form"  style="padding: 0 20px;">
               <input type="hidden"  name="id" value="{$info.id}" >
@@ -138,7 +140,6 @@
 
 
     </div>
-
     {include file="common/footer"/}
     <script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
     <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
@@ -157,13 +158,11 @@
               $.message(data.msg);
               setTimeout(function () {
                   window.location = data.url
-              },2500);
+              },1500);
           }
-
         }); 
         return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转 
       }
-
 
       //选择分类
       var cat_id_01 = {$info.product_category[0]};

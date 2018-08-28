@@ -262,7 +262,7 @@ class User extends Frontend
 			$imgstr = $post['pic'];
 			$imgdata = substr($imgstr,strpos($imgstr,",") + 1);
 			$decodedData = base64_decode($imgdata);
-			$pic_url = '/uploads/usershare/img_'.time().'.jpg';
+			$pic_url = 'uploads/usershare/img_'.time().'.jpg';
 			file_put_contents($pic_url,$decodedData);
 
 			$data['product_content'] =htmlspecialchars_decode($post['customized-buttonpane']);
@@ -306,7 +306,7 @@ class User extends Frontend
                 $imgstr = $post['pic'];
                 $imgdata = substr($imgstr,strpos($imgstr,",") + 1);
                 $decodedData = base64_decode($imgdata);
-                $pic_url = '/uploads/usershare/img_'.time().'.jpg';
+                $pic_url = 'uploads/usershare/img_'.time().'.jpg';
                 file_put_contents($pic_url,$decodedData);
                 $data['product_pic'] = $pic_url;
             }

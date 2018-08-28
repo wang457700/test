@@ -37,4 +37,34 @@ return array (
   'mail_smtp_pass' => 'ljwszifunczgcaej',
   'mail_verify_type' => '1',
   'mail_from' => '457700516@qq.com',
+  'integral' => 
+  array (
+    'obtain' => '20011',
+    'use' => '400',
+  ),
+  'user_upgrade' => 
+  array (
+    'level1' => '200',
+    'level2' => '400',
+    'level3' => '600',
+    'level4' => '600',
+  ),
+  'index_seo' => 
+  array (
+    'title' => '杀杀杀',
+    'keywords' => '水水',
+    'description' => '水水',
+  ),
+  'product_seo' => 
+  array (
+    'title' => '水水',
+    'keywords' => '水水',
+    'description' => '水水',
+  ),
+  'info_seo' => 
+  array (
+    'title' => '事实上',
+    'keywords' => '水水',
+    'description' => '事实上水水',
+  ),
 );
