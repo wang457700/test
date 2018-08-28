@@ -1,12 +1,11 @@
 {include file="layout/public_head" /}
 <!--头部 str-->
-{include file="common/header"/}
-<!--头部 end-->
-<!-- 导航 str-->
-{include file="common/nav"/}
-<!--导航 end-->
 	<body style="background: url(__TMPL_PUBLIC__/img/index_bg.jpg) repeat-y;">
-
+	{include file="common/header"/}
+	<!--头部 end-->
+	<!-- 导航 str-->
+	{include file="common/nav"/}
+	<!--导航 end-->
 	 <div class="container shopping_cart">
 	
 		<div class="row topstate">
@@ -33,7 +32,8 @@
 			<div class="col-md-1 col-xs-1" style="">操作</div>
 		</div>
 <form action="{:URL('cart/order_ok')}" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return cartform()" id="cart-form">
-		 {foreach name="car_list" item="vo"}
+
+	{foreach name="car_list" item="vo"}
 		<!--第{$key}个产品-->
 		<div class="row cart-item-list"  id="list_{$key}" >
 			<input type="hidden" value="{$vo.price}" name="price[]" id="unit_price_{$key}"/>
@@ -63,9 +63,9 @@
 					</div>
 			</div>
 			<div class="col-md-2 col-xs-2 color_ro font18" style="">$ <span id="subtotal_span_{$key}">{:number_format($vo['price']*$vo['total'],2)}</span></div>
-			<div class="col-md-1 col-xs-1 t6" style=""><a href="{:url('cart/cart_del',array('product_id'=>$vo['product_id']))}" class="js-ajax-delete" onclick="return false;"><i class="fa fa-trash-o" aria-hidden="true" style="color:#666"></i></a></div>
+			<div class="col-md-1 col-xs-1 t6" style=""><a href="{:url('cart/cart_del',array('product_id'=>$vo['product_id']))}" class="js-ajax-delete" onclick="return false;"><i class="fa fa-trash-o" aria-hidden="true" style="color:#666;line-height: 110px;"></i></a></div>
 		</div>
-        <?php $total_num[] =  $vo['total']; ?>
+
 	 {/foreach}
 		<div class="row" style="padding: 20px;">
 			<div class="col-md-8" style="display: none">
@@ -73,7 +73,7 @@
 				<input type="checkbox" class="checkbox"/>您當前有<span class="color_ro">120</span>積分，可抵扣<span class="color_ro">$12.0</span>
 			</div>
 			<div class="col-md-4" style="float: right;text-align: right;">
-				<span class="color_ro" id="total_sum">{:array_sum($total_num)}</span>件商品, 總計: <span class="color_ro" id="total">$ {:number_format($all_price,2)}</span>
+				<span class="color_ro" id="total_sum">{$goods_sum}</span>件商品, 總計: <span class="color_ro" id="total">$ {:number_format($all_price,2)}</span>
 				<br/>運費: $ 0<br/>
 				<p style="font-size:22px ">合計 (不含運費)：<span class="color_ro" id="total_no_yunxfei">$ {:number_format($all_price,2)}</span></p>
 				<div class="row" style="padding:10px 0 ">
