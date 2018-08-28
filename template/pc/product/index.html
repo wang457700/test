@@ -7,9 +7,10 @@
 
     <div class="container bgcolor_white">
       <div class="pr_name">
+          <?php dump($getparents);?>
           {foreach name="getparents" item="vo"}
               {if condition="$vo['id'] neq 14"}
-                {$vo.name}
+                 {$vo.name}
               {/if}
           {/foreach}
 

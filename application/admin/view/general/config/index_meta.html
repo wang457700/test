@@ -18,29 +18,28 @@
 
         <div class="tab-pane active">
 
-            <form id="edit-form" class="form-horizontal form-ajax" role="form" data-toggle="validator" method="POST"action="{:url('general.config/edit')}" >
+            <form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="{:url('general.config/meta_edit')}" >
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <label for="rule" class="control-label col-xs-12 col-sm-4">運費：</label>
+                        <div class="col-xs-12 col-sm-6">
+                            <input type="text" class="form-control NumText" id="rule" name="row[freight][freight]" value="{$config_data.freight.freight}">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="rule" class="control-label col-xs-12 col-sm-6">免運費金額：</label>
+                        <div class="col-xs-12 col-sm-6">
+                            <input type="text" class="form-control NumText" id="rule" name="row[freight][no_freight]" value="{$config_data.freight.no_freight}">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="rule" class="control-label col-xs-12 col-sm-6">偏遠地區服務費：</label>
+                        <div class="col-xs-12 col-sm-6">
+                            <input type="text" class="form-control NumText" id="rule" name="row[freight][remote_area]" value="{$config_data.freight.remote_area}">
+                        </div>
+                    </div>
+                </div>
 
-                <div class="form-group">
-                    <label for="group" class="control-label col-xs-12 col-sm-2">{:__('Group')}:</label>
-                    <div class="col-xs-12 col-sm-4">
-                        <select name="row[group]" class="form-control">
-                            <option value="0" selected>0</option>
-                            <option value="1" >1</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="rule" class="control-label col-xs-12 col-sm-2">运费：</label>
-                    <div class="col-xs-12 col-sm-4">
-                        <input type="text" class="form-control" id="rule" name="row[rule]" value="" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="extend" class="control-label col-xs-12 col-sm-2">免服务费区域</label>
-                    <div class="col-xs-12 col-sm-4">
-                        <textarea name="row[extend]" id="extend" cols="30" rows="5" class="form-control" data-rule=""></textarea>
-                    </div>
-                </div>
                 <div class="form-group">
                     <label class="control-label col-xs-12 col-sm-2"></label>
                     <div class="col-xs-12 col-sm-4">
@@ -62,14 +61,14 @@
                         <div class="col-sm-6">
                             <label for="rule" class="control-label col-xs-12 col-sm-4">积分获取：</label>
                             <div class="col-xs-12 col-sm-6">
-                                <input type="text" class="form-control NumText" id="rule" name="row[integral][obtain]" value="{$integral.obtain}" />
+                                <input type="text" class="form-control NumText" id="rule" name="row[integral][obtain]" value="{$config_data.integral.obtain}" />
                             </div>
                             <div class="col-xs-12 col-sm-2">=1分</div>
                         </div>
                         <div class="col-sm-6">
                             <label for="rule" class="control-label col-xs-12 col-sm-4">积分使用：</label>
                             <div class="col-xs-12 col-sm-6">
-                                <input type="text" class="form-control NumText" id="rule" name="row[integral][use]" value="{$integral.use}" />
+                                <input type="text" class="form-control NumText" id="rule" name="row[integral][use]" value="{$config_data.integral.use}" />
                             </div>
                             <div class="col-xs-12 col-sm-2">=$1</div>
                         </div>
@@ -77,7 +76,7 @@
                     <div class="title" style="padding-top: 0;">会员升级</div>
                     <?php $level = array('level1'=>'普通会员','level2'=>'白金会员','level3'=>'金牌会员','level4'=>'商业会员',);?>
                     <div  class="form-group">
-                        {foreach $user_upgrade as $index=>$item}
+                        {foreach $config_data.user_upgrade as $index=>$item}
                         <div class="col-sm-6" style="margin-bottom: 10px;">
                             <label for="rule" class="control-label col-xs-12 col-sm-4">{$level[$index]}：</label>
                             <div class="col-xs-12 col-sm-6">
@@ -111,7 +110,7 @@
                     </div>
                     <div  class="form-group form-group2 col-sm-11" style="border-bottom:  1px solid #eee;padding-bottom:  20px;margin: 0;">
                         <?php $ch = array('title'=>'标题','keywords'=>'关键字','description'=>'描述');?>
-                        {foreach $index_seo as $index=>$item}
+                        {foreach $config_data.index_seo as $index=>$item}
                         <div class="col-sm-12">
                             <label for="rule" class="control-label col-xs-12 col-sm-1">{$ch[$index]}</label>
                             <div class="col-xs-12 col-sm-6">
@@ -124,7 +123,7 @@
                         产品列表
                     </div>
                     <div  class="form-group form-group2 col-sm-11" style="border-bottom:  1px solid #eee;padding-bottom:  20px;margin: 0;">
-                        {foreach $product_seo as $index=>$item}
+                        {foreach $config_data.product_seo as $index=>$item}
                         <div class="col-sm-12">
                             <label for="rule" class="control-label col-xs-12 col-sm-1">{$ch[$index]}</label>
                             <div class="col-xs-12 col-sm-6">
@@ -138,7 +137,7 @@
                     </div>
                     <div  class="form-group form-group2 col-sm-11" style="border-bottom:  1px solid #eee;padding-bottom:  20px;margin: 0;">
 
-                        {foreach $info_seo as $index=>$item}
+                        {foreach $config_data.info_seo as $index=>$item}
                         <div class="col-sm-12">
                             <label for="rule" class="control-label col-xs-12 col-sm-1">{$ch[$index]}</label>
                             <div class="col-xs-12 col-sm-6">

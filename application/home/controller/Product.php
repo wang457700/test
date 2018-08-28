@@ -15,7 +15,6 @@ class Product extends Frontend
     protected $noNeedLogin = '*';
     protected $noNeedRight = '*';
     protected $layout = '';
-
     public function _initialize()
     {
 
@@ -31,6 +30,7 @@ class Product extends Frontend
         {
             $categorydata[$v['id']] = $v;
         }
+
         $this->view->assign("flagList", $this->model->getFlagList());
         $this->view->assign("typeList", CategoryModel::getTypeList());
         $this->view->assign("parentList", $categorydata);
@@ -52,6 +52,10 @@ class Product extends Frontend
         $input = array('categoryid'=>input('categoryid',14));
         $this->view->assign("input",$input);
         $style = input('style');
+
+        $cat_name = Db::name('category')->where('id',$categoryid)->count();
+        $this->view->assign("cat_name", $cat_name);
+
         if($style == 'grid'){
             return $this->view->fetch('index_grid');
         }else{

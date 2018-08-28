@@ -78,29 +78,16 @@ class Config extends Backend
                 continue;
             }
             $value = $v->toArray();
-
-            if($value['name'] == 'integral'){
-                $integral = json_decode($value['value'],true);
-            }
-            if($value['name'] == 'user_upgrade'){
-                $user_upgrade = json_decode($value['value'],true);
-            }
-            if($value['name'] == 'index_seo'){
-                $index_seo = json_decode($value['value'],true);
-            }
-            if($value['name'] == 'product_seo'){
-                $product_seo = json_decode($value['value'],true);
-            }
-            if($value['name'] == 'info_seo'){
-                $info_seo = json_decode($value['value'],true);
+            if($value['type'] == 'array') {
+                $data [] = $value;
             }
         }
+        foreach ($data as $index=>$item){
+            $item['value'] = json_decode($item['value'],true);
+            $config_data[$item['name']] =  $item['value'];
+        }
 
-        $this->view->assign('index_seo', $index_seo);
-        $this->view->assign('product_seo', $product_seo);
-        $this->view->assign('info_seo', $info_seo);
-        $this->view->assign('integral', $integral);
-        $this->view->assign('user_upgrade', $user_upgrade);
+        $this->view->assign('config_data', $config_data);
         return $this->view->fetch();
     }
 
@@ -164,7 +151,6 @@ class Config extends Backend
     public function edit($ids = NULL)
     {
         if ($this->request->isPost()) {
-
             $row = $this->request->post("row/a");
             if ($row) {
                 $configList = [];
