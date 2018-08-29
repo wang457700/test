@@ -11,6 +11,7 @@ use app\common\controller\Frontend;
 use think\Db;
 use app\common\library\Token;
 use think\Session;
+
 class Payment extends  Frontend
 {
 
@@ -19,6 +20,21 @@ class Payment extends  Frontend
         if ($this->request->isPost()){
             $post= input('post.');
             $order_sn = base64_decode(base64_decode($post['order_sn']));
+            $all_price = Db::name('order')->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))->sum('price');
+            $integral = config('site')['integral']['obtain'];
+
+
+            dump($integral);
+            dump($order_sn);
+
+            //支付成功处理
+            $int = array(
+                'integral'=>1,
+            );
+            $res= db("integral_log")->insert($int);
+
+            $this->error('支付失败！');
+            exit;
             $data = array(
                 'payment'=>$post['payment'],
                 'pay_time'=>date('Y-m-d H:i:s',time()),
@@ -26,6 +42,9 @@ class Payment extends  Frontend
             );
             $res = Db::name('order')->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))->update($data);
             if($res){
+
+
+
                 $this->success('支付成功！',url('payment/payment_done',array('order_sn'=>base64_encode($order_sn))));
             }else{
                 $this->error('支付失败！');
