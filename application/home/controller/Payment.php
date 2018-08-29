@@ -16,8 +16,24 @@ class Payment extends  Frontend
 
     public function go_pay(){
 
-        $order_sn=base64_decode(input('order_sn'));
+        if ($this->request->isPost()){
+            $post= input('post.');
+            $order_sn = base64_decode(base64_decode($post['order_sn']));
+            $data = array(
+                'payment'=>$post['payment'],
+                'pay_time'=>date('Y-m-d H:i:s',time()),
+                'pay_status'=>2,
+            );
+            $res = Db::name('order')->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))->update($data);
+            if($res){
+                $this->success('支付成功！',url('payment/payment_done',array('order_sn'=>base64_encode($order_sn))));
+            }else{
+                $this->error('支付失败！');
+            }
+        }
 
+
+        $order_sn=base64_decode(input('order_sn'));
         $order_info= Db::name('order')
         ->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))
         ->find();
@@ -32,13 +48,14 @@ class Payment extends  Frontend
         $this->assign('address_info',$address_info);
         $this->assign('all_total',$all_total);
         $this->assign('order_info',$order_info);
+        $this->assign('order_sn',base64_encode(input('order_sn')));
         $this->assign('title','支付订单');
        return $this->fetch();
     }
 
-    public function Payment_done(){
-
+    public function payment_done(){
         $order_sn=base64_decode(input('order_sn'));
+
         $this->assign('order_sn',$order_sn);
         $this->assign('title','完成支付');
         return $this->fetch();

@@ -18,7 +18,10 @@ class Order extends Backend
     public function index()
     {
 
-        $order_list = Db::name('order')->alias('a')->join('__GOODS__ c', 'a.goods_id=c.product_id', 'LEFT')
+        $order_list = Db::name('order')->alias('a')
+
+            //->join('__GOODS__ c', 'a.goods_id=c.product_id', 'LEFT')
+
             ->join('__USER_ADDRESS__ e', 'a.address_id=e.id', 'LEFT')
             ->group('a.order_sn')
             ->order('addtime desc')->paginate(10);

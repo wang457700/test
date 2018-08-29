@@ -572,7 +572,12 @@ class User extends Frontend
 
     public function order_list(){
 
-        $order_list= Db::name('order')->alias('a')->join('__GOODS__ c','a.goods_id=c.product_id','LEFT')->where('user_id',Session::get('user_id'))->order('addtime desc')->paginate(10);
+        $order_list= Db::name('order')
+            ->alias('a')
+            ->join('__GOODS__ c','a.goods_id=c.product_id','LEFT')
+            ->where('user_id',Session::get('user_id'))
+            ->group('a.order_sn')
+            ->order('addtime desc')->paginate(2);
 
         $result= array();
         foreach ($order_list as $key=>$item){
@@ -582,7 +587,6 @@ class User extends Frontend
             }
             $result[$item['order_sn']]['info'] = $sel;
         }
-
         $goods_list= Db::name('order')->alias('a')->join('__GOODS__ c','a.goods_id=c.product_id','LEFT')->where('user_id',Session::get('user_id'))->order('addtime desc')->paginate(4);
 
         $page = $order_list->render();
