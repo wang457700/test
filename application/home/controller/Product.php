@@ -53,8 +53,7 @@ class Product extends Frontend
         $this->view->assign("input",$input);
         $style = input('style');
 
-        $cat_name = Db::name('category')->where('id',$categoryid)->count();
-        $this->view->assign("cat_name", $cat_name);
+     
 
         if($style == 'grid'){
             return $this->view->fetch('index_grid');

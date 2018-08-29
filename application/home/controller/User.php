@@ -18,7 +18,7 @@ use app\home\common\common;
  */
 class User extends Frontend
 {
-	protected $noNeedLogin = ['login', 'register', 'third'];
+	protected $noNeedLogin = ['login', 'register', 'forgetpwd', 'is_forgetpwd_email', 'third'];
 
     const APPKEY='4119214287';
     const URL ="www.baidu.com";
@@ -61,7 +61,7 @@ class User extends Frontend
 		}
 
 
-        $this->assign('title','会员登录');
+        $this->assign('title','會員登錄');
         return $this->view->fetch();
     }
 
@@ -97,6 +97,71 @@ class User extends Frontend
         $this->assign('title','会员注册');
         return $this->view->fetch();
     }
+
+
+
+    /**
+     * 重置密码
+     */
+    function  forgetpwd(){
+        if ($this->request->isPost()) {
+            $data= input('post.');
+            $res=Db::name('user')->where('email',$data['email'])->find();
+            if(empty($res['email'])){
+                $this->error('郵箱不存在！'.$res['email']);
+            };
+
+            $email = new Email;
+            $encodeurl=url('User/is_forgetpwd_email',array('token'=>urlencode(base64_encode($res['id']))));
+            $message= 'http://'.$_SERVER['SERVER_NAME'].urlencode($encodeurl);
+            $url=self::getShort($message);
+            $result = $email
+                ->to($res['email'])
+                ->subject(__("重置您的密码"))
+                ->message('<div style="padding:30px"><div><p>您好，<b>'.$res['username'].'</b> ：</p></div><div style="margin:6px 0 60px 0"><p>请点击下面的链接来重置您的密码。</p><p><a href="'.$url.'" rel="noopener" target="_blank">'.$url.'</a></p><p>如果您的邮箱不支持链接点击，请将以上链接地址拷贝到你的浏览器地址栏中。</p></div><div style="color:#999"><p>发件时间：<span style="border-bottom:1px dashed #ccc;position:relative" t="5" times=" 14:30">'.date('Y-m-d H:i:s',time()).'</span></p><p>此邮件为系统自动发出的，请勿直接回复。</p></div></div>')
+                ->send();
+            if($result){
+                $this->success('重置密碼郵件已經發送到<span class="color_ro">'.$res['email'].'，</span>請登入郵箱重置！');
+            }else{
+                $this->error('发送失败！');
+            }
+        }
+        $this->assign('title','找回密码');
+        return $this->view->fetch();
+
+    }
+
+    function  is_forgetpwd_email(){
+
+        if ($this->request->isPost()){
+            $user_id=base64_decode(input('token'));
+            $user=Db::name('user')->where('id',$user_id)->find();
+            $post= input('post.');
+            if($post['password2'] != $post['password']){
+                $this->error('二次輸入的密碼不一致');
+            };
+
+            if(md5($post['password']) == $user['password']){
+                $this->error('新密码与旧密码相同！');
+            };
+            $data['password']=md5($post['password']);
+            $res=Db::name('user')->where('id',$user_id)->update($data);
+            if($res){
+                Session::set('user_id',$res);
+                $this->success('修改成功！',url('user/login'));
+            }else{
+                $this->error('修改失败！');
+            }
+        }
+
+        $user_id=base64_decode(input('token'));
+        $user=Db::name('user')->where('id',$user_id)->find();
+        $this->assign('title','填写重置密码');
+        $this->assign('user',$user);
+        $this->assign('token',input('token'));
+        return $this->view->fetch();
+    }
+
 
 	/**
      * 邮箱激活
