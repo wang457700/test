@@ -39,7 +39,7 @@ return array (
   'mail_from' => '457700516@qq.com',
   'integral' => 
   array (
-    'obtain' => '20011',
+    'obtain' => '10',
     'use' => '400',
   ),
   'user_upgrade' => 
@@ -47,7 +47,7 @@ return array (
     'level1' => '200',
     'level2' => '400',
     'level3' => '600',
-    'level4' => '600',
+    'level4' => '60066',
   ),
   'index_seo' => 
   array (
@@ -66,5 +66,11 @@ return array (
     'title' => '事实上',
     'keywords' => '水水',
     'description' => '事实上水水',
+  ),
+  'freight' => 
+  array (
+    'freight' => '10000',
+    'no_freight' => '4001',
+    'remote_area' => '4000',
   ),
 );

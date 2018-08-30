@@ -86,7 +86,6 @@ class Config extends Backend
             $item['value'] = json_decode($item['value'],true);
             $config_data[$item['name']] =  $item['value'];
         }
-
         $this->view->assign('config_data', $config_data);
         return $this->view->fetch();
     }
@@ -103,6 +102,7 @@ class Config extends Backend
                 $info= Db::name('config')->where('name',$name)->update(array('value'=>$item));
             }
             if($info!==false){
+                $this->refreshFile();
                 $this->success('保存成功');
             }
         }

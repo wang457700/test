@@ -261,6 +261,7 @@ class User extends Frontend
 
 
     public function center(){
+        $user = Db::name('order')->find();
         $this->assign('title','用户中心');
         $order_list= Db::name('order')->alias('a')->join('__GOODS__ c','a.goods_id=c.product_id','LEFT')->where('user_id',Session::get('user_id'))->order('addtime desc')->paginate(10);
 
@@ -275,7 +276,7 @@ class User extends Frontend
 
         $page = $order_list->render();
         $this->assign('page',$page);
-         $this->assign('order_list',$result);
+        $this->assign('order_list',$result);
 
         return $this->view->fetch();
     }

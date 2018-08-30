@@ -9,20 +9,16 @@
   </style>>
   <body style="background: url(__TMPL_PUBLIC__/img/index_bg.jpg) repeat-y;"> 
     <div class="container">
-		
   		<div class="alzx-crumbs alzx-crumbs-f1"> 
   			<div class="alzx-con" style="border:  0;margin: 0;"> 
-  				<a class="crumbs-01" href="#">主頁</a> 
-				<em>&gt;</em> 
-				<span class="crumbs-02">養生沖調</span> 
-				<em>&gt;</em> 
-				<span class="crumbs-02">健康及有機產品</span> 
-				<em>&gt;</em> 
-				<span class="crumbs-02">健康養生飲品</span> 
-  				<em>&gt;</em> 
-  				<span class="crumbs-02">養生沖調</span>
-  			</div> 
-  		
+  				<a class="crumbs-01" href="{:url('index/index')}">主頁</a>
+                {foreach name="getparents" item="vo"}
+                    {if condition="$vo['id'] neq 14"}
+                        <em>&gt;</em>
+                        <a href="{:url('product/index',array('categoryid'=>$vo['id']))}"><span class="crumbs-02">{$vo.name}</span></a>
+                    {/if}
+                {/foreach}
+  			</div>
   		</div>
 	
       <div class="product_detail bgcolor_white">

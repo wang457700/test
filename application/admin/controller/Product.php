@@ -96,9 +96,9 @@ class Product extends Backend
             $data['img_url']=implode(',',$img_url);
             $res=Db::name('goods')->where('product_id',$data['product_id'])->update($data);
             if($res){
-                $this->success('添加成功！'.json_encode($img_url,true));
+                $this->success('修改成功！');
             }else{
-                $this->error('添加失败');
+                $this->error('修改失败');
             }
         }
 
@@ -124,7 +124,7 @@ class Product extends Backend
      */
     public function index()
     {
-        $list=Db::name('goods')->paginate(3);
+        $list=Db::name('goods')->paginate(10);
         $is_on_sale=array(
             '0'=>'下架',
             '1'=>'上架'

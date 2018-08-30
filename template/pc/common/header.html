@@ -3,7 +3,7 @@
         <div class="h_left">
         <?php
             $user_id = Session('user_id');
-            $user = Session('user');
+            $user = model('user')->where('id',$user_id)->find();
             $total = Session('total');
         ?>
         {if condition="$user_id neq ''"}

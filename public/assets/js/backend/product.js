@@ -172,8 +172,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 var url = Backend.api.cdnurl($("#c-avatar").val());
                 top.window.$(".user-panel .image img,.user-menu > a > img,.user-header > img").prop("src", url);
 
-
-
                 var cid = $('#sub_pid').val();
                 $('#form-group').html('');
                 $.ajax({
@@ -241,15 +239,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 }
             });
 
-            $(function(){
-                $('.danxuan').eq(0).addClass("on");
-                 $('.danxuan').each(function(){
-                  $(this).click(function(){
-                    $(this).addClass("on").siblings().removeClass("on");
-                   });
-                 });
-            });
-
             //选择分类
             $(function(){
                 get_category(14,'cat_id','0');  // 14：产品分类
@@ -271,7 +260,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
         edit: function () {
             Controller.api.bindevent();
             $(function(){
-
 
                 $('.danxuan').eq(0).addClass("on");
                  $('.danxuan').each(function(){
@@ -312,6 +300,22 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
         }
     };
 
+
+    $(function(){
+        $('.discount input').each(function(){
+            $(this).click(function(){
+                console.log($(this).val());
+                var type = $(this).val();
+                if(type == 3){
+                    $('#discount_time').show();
+                }else{
+                    $('#discount_time').hide();
+                }
+
+               // $(this).addClass("on").siblings().removeClass("on");
+            });
+        });
+    });
 
 
     /*JQuery 限制文本框只能输入数字*/

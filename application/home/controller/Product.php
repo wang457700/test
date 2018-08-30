@@ -39,22 +39,36 @@ class Product extends Frontend
     public function index()
     {
         $tree = Tree::instance();
-        $categoryid = $tree->getChildrenIds(input('categoryid',14));
-        $getParents = $tree->getParents(input('categoryid',14));
+        $categoryid = $tree->getChildrenIds(input('categoryid',14),true);
+        $getParents = $tree->getParents(input('categoryid',14),true);
         $where['is_on_sale'] = 1;
         $where['cat_id'] = array('in',$categoryid);
-        $product_list =  Db::name('goods')->where($where)->select();
+
+        $sort =  input('sort');
+        if($sort){
+            if($sort == 'new'){
+                $order  = 'add_time desc';
+            }else{
+                $sort =  explode('_',input('sort'));
+                $order  = array($sort[1]=>$sort[0]);
+            }
+        }else{
+            $order='price desc';
+        }
+
+        $product_list =  Db::name('goods')
+            ->where($where)
+            ->order($order)
+            ->select();
         $count =  Db::name('goods')->where($where)->count();
         $this->view->assign("product_list", $product_list);
         $this->view->assign("count", $count);
         $this->view->assign("title",'产品列表');
         $this->view->assign("getparents",$getParents);
-        $input = array('categoryid'=>input('categoryid',14));
-        $this->view->assign("input",$input);
+        $this->view->assign("input",input());
+       // $input = array('categoryid'=>input('categoryid',14));
+       // $this->view->assign("input",$input);
         $style = input('style');
-
-     
-
         if($style == 'grid'){
             return $this->view->fetch('index_grid');
         }else{
@@ -62,16 +76,6 @@ class Product extends Frontend
         }
 
     }
-
-
-    public function index_grid()
-    {
-        $slide =  Db::name('slide')->where(array('slide_status'=>1,))->select();
-        $this->view->assign("slide", $slide);
-        $this->view->assign("title",'产品列表');
-        return $this->view->fetch();
-    }
-
 
     public function search()
     {
@@ -89,10 +93,12 @@ class Product extends Frontend
         $goods_id = input('id');
         $goods =  Db::name('goods')->where('product_id',$goods_id)->find();
         $goods_list =  Db::name('goods')->select();
-
+        $tree = Tree::instance();
+        $getparents = $tree->getParents($goods['cat_id'],true);
         $img_url=explode(',',$goods['img_url']);
         $this->view->assign("goods",$goods);
         $this->view->assign("goods_list",$goods_list);
+        $this->view->assign("getparents",$getparents);
         $this->view->assign("img_url",$img_url);
         $this->view->assign("title",'商品详情');
         return $this->view->fetch();

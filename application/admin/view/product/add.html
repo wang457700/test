@@ -1,17 +1,6 @@
 <style>
-.plupload {
-    background: url(__CDN__/assets/img/upload_img.png) no-repeat;
-    background-size: 100%;
-    width: 60px;
-    height: 60px;
-}
-.plupload:active,.plupload:hover{
-    background: url(__CDN__/assets/img/upload_img.png) no-repeat;
-    background-size: 100%;
-    width: 60px;
-    height: 60px;
-    border:0;
-}
+.plupload {background:url(__CDN__/assets/img/upload_img.png) no-repeat;background-size:100%;width:60px;height:60px;}
+.plupload:active,.plupload:hover {background:url(__CDN__/assets/img/upload_img.png) no-repeat;background-size:100%;width:60px;height:60px;border:0;}
 .danxuan .fa-circle{color: #eee;}
 .danxuan.on .fa-circle{display: inline-block;color: #18bc9b;}
 </style>
@@ -79,27 +68,33 @@
                     </div>
                 </div>
 
-                <div class="form-group on danxuan">
+                <div class="form-group">
                     <div class="col-sm-12">
-                        <label for="username" class="control-label col-xs-12 col-sm-3"><i class="fa fa-circle"></i> 價格</label>
+                        <label for="discount_type-1" class="control-label col-xs-12 col-sm-3 discount on">
+                            <input id="discount_type-1" type="radio" value="1" name="discount_type" checked="checked"/>
+                        價格</label>
                         <div class="col-xs-12 col-sm-5">
                             <input type="text" class="form-control NumDecText" id="data5" name="price" value="" data-rule=";data5" />
                         </div>
                     </div>
-                </div>
-                <div class="form-group danxuan">
+                </div>  <i class="fa fa-circle" style="display: none"></i>
+                <div class="form-group">
                     <div class="col-sm-12">
-                        <label for="username" class="control-label col-xs-12 col-sm-3"><i class="fa fa-circle"></i> 特價</label>
+                        <label for="discount_type-2" class="control-label col-xs-12 col-sm-3 discount on">
+                            <input id="discount_type-2" type="radio" value="2" name="discount_type" />
+                            特價</label>
                         <div class="col-xs-12 col-sm-5">
-                            <input type="text" class="form-control NumDecText" id="data6" name="pricevip" value="" data-rule=";data6" />
+                            <input type="text" class="form-control NumDecText" id="data6" name="pricevip" value="" data-rule="" />
                         </div>
                     </div>
                 </div>
-                <div class="form-group danxuan" >
+                <div class="form-group" >
                     <div class="col-sm-12">
-                        <label for="username" class="control-label col-xs-12 col-sm-3"><i class="fa fa-circle"></i> 優惠</label>
+                        <label for="discount_type-3" class="control-label col-xs-12 col-sm-3 discount on">
+                            <input id="discount_type-3" type="radio" value="3" name="discount_type" />
+                            優惠</label>
                         <div class="col-xs-12 col-sm-4">
-                            <input type="text" class="form-control NumDecText" id="data7" name="discount_price" value="" data-rule=";data7" />
+                            <input type="text" class="form-control NumDecText" id="data7" name="discount_price" value="" data-rule="" />
                         </div>
                         <div class="col-xs-12 col-sm-1">%</div>
                     </div>
