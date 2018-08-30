@@ -60,7 +60,6 @@ class Cart extends Frontend
             }
             $this->assign('order_list',$list);
         }else{
-
             $product_id = input('goods_id/a');
             $goods_num = input('goods_num/a');
 
@@ -101,9 +100,7 @@ class Cart extends Frontend
                 $this->assign('address_list',$address_list);
                 $this->assign('order_list',$data);
             }
-
         }
-
 
         $this->assign('title','确认订单');
         return  $this->fetch();
@@ -115,6 +112,7 @@ class Cart extends Frontend
         $goods_id= input('goods_id/a');
         $goods_num= input('goods_num/a');
         $address_id= input('address_id');
+        $integral= input('integral');
         if($address_id){
             $address = Db::name('user_address')->where('id',$address_id)->find();
             $address['province'] = Db::name('region')->where(array('id'=>$address['province']))->value('name');
@@ -132,21 +130,29 @@ class Cart extends Frontend
                 $data[$i]['goods_num'] = $goods_num[$i];
             }
             $res='';
-             $order_sn=date('Ymd').time();
+            $order_sn=date('Ymd').time();
+
+            $score_price = 0;
             foreach ($data as $k => $v) {
-                     $price=Db::name('goods')->where('product_id',$v['goods_id'])->find();
+                    $price=Db::name('goods')->where('product_id',$v['goods_id'])->find();
+                    if($integral){
+                        $cofing_integral = config('site')['integral']['use'];
+                        $user_integral = Db::name('user')->where('id',Session::get('user_id'))->value('score');
+                        $score_price = sprintf("%.2f",$user_integral/$cofing_integral);
+                    }
                     $fat['price'] =$price['price'];
                     $fat['money_total']=$v['goods_num']*$price['price'];
                     $fat['goods_sn'] =$price['freight_num'];
                     $fat['address_id'] =$address_id;
                     $fat['address'] =$address;
+                    $fat['integral_price'] =$score_price;
                     $fat['order_sn'] =$order_sn;
                     $fat['goods_id'] = $v['goods_id'];//这里都要加上下标
                     $fat['goods_num'] = $v['goods_num'];//这里都要加上下标
                     $fat['user_id'] = Session::get('user_id');
                     $fat['addtime'] = date('Y-m-d H:i:s',time());
                     if ($v != "") {
-                        $res= db("order")->insert($fat);
+                       $res= db("order")->insert($fat);
                     }
             }
 

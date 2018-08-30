@@ -50,15 +50,15 @@
 					</div>
 					<div class="row">
 							<div class="col-md-4 col-sm-4 col-xs-4 color_99" style="text-align: right;">運費:</div>
-							<div class="col-md-8 col-sm-8 col-xs-8" style="">${:number_format($order_info['integral'],2)}</div>
-					</div>
-					<div class="row">
-							<div class="col-md-4 col-sm-4 col-xs-4 color_99" style="text-align: right;">積分抵扣:</div>
 							<div class="col-md-8 col-sm-8 col-xs-8" style="">$0</div>
 					</div>
 					<div class="row">
+							<div class="col-md-4 col-sm-4 col-xs-4 color_99" style="text-align: right;">積分抵扣:</div>
+							<div class="col-md-8 col-sm-8 col-xs-8" style="">${:number_format($order_info['integral_price'],2)}</div>
+					</div>
+					<div class="row">
 							<div class="col-md-4 col-sm-4 col-xs-4 color_99" style="text-align: right;">應付款:</div>
-							<div class="col-md-8 col-sm-8 col-xs-8" style="">${:number_format($all_total,2)}</div>
+							<div class="col-md-8 col-sm-8 col-xs-8" style="">${:number_format($all_total-$order_info['integral_price'],2)}</div>
 					</div>
 				</div>
 				<div class="col-md-3 col-sm-2 on0" style=""></div>

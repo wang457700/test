@@ -97,9 +97,13 @@
 			<div class="col-md-12 border_1" style="text-align: right;padding:20px">
 				<span class="color_ro">{$num}</span>件商品, 總計: <span class="color_ro">$ {:number_format($all_total,2)}</span><br/>運費: $ 0<br/>
 			</div>
+			<?php
+				$config_score = config('site')['integral']['use'];
+				$score_price =$user['score']/$config_score;
+			?>
 			<div class="col-md-12 border_1" style="padding:20px">
 				<p style="display: inline-block;">
-					<input type="checkbox" class="checkbox" />您當前有<span class="color_ro bold">120</span>積分，可抵扣<span class="color_ro bold">$12.0</span>
+					<input type="checkbox" class="checkbox" name="integral" data-scoreprice="{$score_price}"/>您當前有<span class="color_ro bold">{$user.score}</span>積分，可抵扣<span class="color_ro bold">${:number_format($score_price,2)}</span>
 				</p>
 				<p style="font-size:22px;text-align: right;display: inline-block;float:right;">合計 (不含運費)：<span class="color_ro">$ {:number_format($all_total,2)}</span></p>
 			</div>
@@ -117,8 +121,8 @@
 			<div class="col-md-4" style="float: right;text-align: right;">
 				商品總計: <span>$ {:number_format($all_total,2)}</span>
 				<br/>運費: <span>$ 0</span>
-				<br/>積分抵扣: <span>$ 0</span><br/>
-				<p>應付款：<span  style="font-size:22px ">$ {:number_format($all_total,2)}</span></p>
+				<br/>積分抵扣: <span id="score_price_text">$ 0</span><br/>
+				<p>應付款：<span  style="font-size:22px " id="all_total" data-alltotal="{$all_total}">$ {:number_format($all_total,2)}</span></p>
 				<div class="row" style="padding:10px 0 ">
                    <div class="col-md-6" style="">
                         <button type="button" class="btn-default-edit" style="">繼續購物</button>
@@ -130,6 +134,7 @@
 			</div>
 		</div>
 </form>
+</div>
 
  {include file="common/footer" /}
  <script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
@@ -137,7 +142,6 @@
  {include file="common/script" /}
 <script type="text/javascript">
 	$(function(){
-		//$('.item-address .li').eq(0).addClass("on");
 		 $('.item-address .li').each(function(){
 		  $(this).click(function(){
 			$(this).addClass("on").siblings().removeClass("on");
@@ -145,7 +149,22 @@
               $('#address_id').val($(this).data('id'));
 		   });
 		 });
-	});
+
+        $("input[type=checkbox]").click(function(){
+            var scoreprice = $(this).data("scoreprice").toFixed(2);
+            var all_total = $('#all_total').data("alltotal").toFixed(2);
+
+            if($(this).attr("checked")){
+                $(this).removeAttr("checked");
+                $('#score_price_text').text('$ 0') ;
+                $('#all_total').text('$ ' + all_total) ;
+            }else {
+                $(this).attr("checked","true");
+               $('#score_price_text').text('$ ' + scoreprice) ;
+               $('#all_total').text('$ ' + (Number(all_total)-Number(scoreprice))) ;
+            }
+        })
+    });
 
     function orderform(){
         //console.log($('#cart-form').serializeArray());

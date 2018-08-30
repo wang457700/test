@@ -56,7 +56,7 @@ class Payment extends  Frontend
         ->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))
         ->find();
 
-        if($order_info['pay_status']!=0 ||$order_info['pay_status']!=1){
+        if($order_info['pay_status']!=0 && $order_info['pay_status']!=1){
             $this->error('订单已成功支付！',url('user/center'));
         }
         $address_info= Db::name('user_address')
