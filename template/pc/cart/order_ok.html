@@ -105,7 +105,11 @@
 				<p style="display: inline-block;">
 					<input type="checkbox" class="checkbox" name="integral" data-scoreprice="{$score_price}"/>您當前有<span class="color_ro bold">{$user.score}</span>積分，可抵扣<span class="color_ro bold">${:number_format($score_price,2)}</span>
 				</p>
+
 				<p style="font-size:22px;text-align: right;display: inline-block;float:right;">合計 (不含運費)：<span class="color_ro">$ {:number_format($all_total,2)}</span></p>
+				<p style="">
+					<input type="text" class="checkbox" name="integral" data-scoreprice="{$score_price}" placeholder="請輸入優惠碼"/>您當前有<span class="color_ro bold">{$user.score}</span>積分，可抵扣<span class="color_ro bold">${:number_format($score_price,2)}</span>
+				</p>
 			</div>
 		</div>
 

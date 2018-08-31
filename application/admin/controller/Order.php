@@ -27,10 +27,7 @@ class Order extends Backend
             ->order('addtime desc')->paginate(10);
 
         $page = $order_list->render();
-
         $this->assign('page', $page);
-
-
         $this->assign('order_list', $order_list);
 
         return $this->view->fetch();

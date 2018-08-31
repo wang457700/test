@@ -154,9 +154,11 @@ class Cart extends Frontend
                     if ($v != "") {
                        $res= db("order")->insert($fat);
                     }
+                    $goods_id[]  = $v['goods_id'];
             }
 
             if ($res) {
+                Db::name('cart_order')->where(array('user_id'=>Session::get('user_id'),'product_id'=>array('in',implode(',',$goods_id))))->delete();
                 $data = array(
                     'code' => 1,
                     'msg' => '你已经生成订单！',

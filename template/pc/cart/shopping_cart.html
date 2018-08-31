@@ -67,7 +67,10 @@
 		</div>
 
 	 {/foreach}
-		<div class="row" style="padding: 20px;">
+	{if condition="count($car_list) eq 0"}
+		<div class="search_page_empty"></div>
+	{/if}
+		<div class="row" style="padding: 20px;display: {if condition="count($car_list) eq 0"}none{/if}">
 			<div class="col-md-8" style="display: none">
 				<h4>積分抵扣現金</h4>
 				<input type="checkbox" class="checkbox"/>您當前有<span class="color_ro">120</span>積分，可抵扣<span class="color_ro">$12.0</span>

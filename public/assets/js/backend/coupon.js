@@ -5,7 +5,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             // 初始化表格参数配置
             Table.api.init({
                 extend: {
-                    index_url: 'Myadminjson/coupon_index',
+                    index_url: 'coupon/index',
                     add_url: 'coupon/add',
                     edit_url: '',
                     del_url: '',
@@ -18,8 +18,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             //在普通搜索渲染后
             table.on('post-common-search.bs.table', function (event, table) {
                 var form = $("form", table.$commonsearch);
-                $("input[name='title']", form).addClass("selectpage").data("source", "auth/adminlog/selectpage").data("primaryKey", "title").data("field", "title").data("orderBy", "id desc");
-                $("input[name='username']", form).addClass("selectpage").data("source", "auth/admin/index").data("primaryKey", "username").data("field", "username").data("orderBy", "id desc");
                 Form.events.cxselect(form);
                 Form.events.selectpage(form);
             });
@@ -28,19 +26,18 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             // 初始化表格
             table.bootstrapTable({
                 url: $.fn.bootstrapTable.defaults.extend.index_url,
-                pk: 'id',
-                sortName: 'user.id',
+                pk: 'coupon_id',
+                sortName: 'coupon_id',
                 columns: [
                     [
                         {checkbox: true},
-                        {field: 'data1', title: __('ID'), operate: false},
-                        {field: 'data2', title: __('優惠名稱'),operate: false},
-                        {field: 'data3', title: __('有效期'), operate: false},
-                        {field: 'data4', title: __('優惠碼'), operate: false},
-                        {field: 'data5', title: __('優惠內容'), operate: false},
-                        {field: 'data6', title: __('剩餘數量'),operate: false},
-                        {field: 'data7', title: __('會員類別'), operate: false},
- 
+                        {field: 'coupon_id', title: __('ID'), operate: false},
+                        {field: 'coupon_name', title: __('優惠名稱'),operate: false},
+                        {field: 'coupon_time_text', title: __('有效期'), operate: false},
+                        {field: 'coupon_sn', title: __('優惠碼'), operate: false},
+                        {field: 'coupon_content', title: __('優惠內容'), operate: false},
+                        {field: 'coupon_num', title: __('剩餘數量'),operate: false},
+                        {field: 'user_level_text', title: __('會員類別'), operate: false},
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate,
                             buttons: [
                                 {
@@ -90,8 +87,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             // 初始化表格参数配置
             Table.api.init({
                 extend: {
-                    index_url: 'Myadminjson/coupon_index',
-                    add_url: 'coupon/disposable_add',
+                    index_url: 'coupon/index/type/2',
+                    add_url: 'coupon/add/type/2',
                     edit_url: '',
                     del_url: '',
                     multi_url: 'order/index/multi',
@@ -113,27 +110,26 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             // 初始化表格
             table.bootstrapTable({
                 url: $.fn.bootstrapTable.defaults.extend.index_url,
-                pk: 'id',
-                sortName: 'user.id',
+                pk: 'coupon_id',
+                sortName: 'coupon_id',
                 columns: [
                     [
                         {checkbox: true},
-                        {field: 'data1', title: __('ID'), operate: false},
-                        {field: 'data2', title: __('優惠名稱'),operate: false},
-                        {field: 'data3', title: __('有效期'), operate: false},
-                        {field: 'data4', title: __('優惠碼'), operate: false},
-                        {field: 'data5', title: __('優惠內容'), operate: false},
-                        {field: 'data6', title: __('剩餘數量'),operate: false},
-                        {field: 'data7', title: __('會員類別'), operate: false},
- 
+                        {field: 'coupon_id', title: __('ID'), operate: false},
+                        {field: 'coupon_name', title: __('優惠名稱'),operate: false},
+                        {field: 'coupon_time_text', title: __('有效期'), operate: false},
+                        {field: 'coupon_sn', title: __('優惠碼'), operate: false},
+                        {field: 'coupon_content', title: __('優惠內容'), operate: false},
+                        {field: 'coupon_num', title: __('剩餘數量'),operate: false},
+                        {field: 'user_level_text', title: __('會員類別'), operate: false},
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate,
                             buttons: [
                                 {
                                     name: 'detail',
                                     title: __('修改'),
                                     classname: 'btn btn-xs btn-detail btn-dialog',
-                                      text:'修改',
-                                    url: 'coupon/disposable_edit',
+                                    text:'修改',
+                                    url: 'coupon/edit',
                                     callback: function (data) {
                                         Layer.alert("接收到回传数据：" + JSON.stringify(data), {title: "回传数据"});
                                     }
@@ -157,15 +153,15 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                 {
                                     name: 'detail',
                                     title: __('詳情'),
-                                     text:'詳情',
-                                    url: 'coupon/disposable_detail',
+                                    classname: 'btn btn-xs btn-detail',
+                                    text:'詳情',
+                                    url: 'coupon/detail',
                                     callback: function (data) {
                                         Layer.alert("接收到回传数据：" + JSON.stringify(data), {title: "回传数据"});
                                     }
                                 },
-
-                            ], 
-                        formatter: Table.api.formatter.operate},
+                            ],
+                            formatter: Table.api.formatter.operate},
                     ]
                 ]
             });
@@ -176,28 +172,12 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
         add: function () {
             Controller.api.bindevent();
 
-            
-            $(function(){
-                $('.danxuan').eq(0).addClass("on");
-                 $('.danxuan').each(function(){
-                  $(this).click(function(){
-                    $(this).addClass("on").siblings().removeClass("on");
-                   });
-                 });
-            });
 
         },
         edit: function () {
 
             Controller.api.bindevent();
-            $(function(){
-                $('.danxuan').eq(0).addClass("on");
-                 $('.danxuan').each(function(){
-                  $(this).click(function(){
-                    $(this).addClass("on").siblings().removeClass("on");
-                   });
-                 });
-            });
+
         },detail: function () {
 
              // 初始化表格参数配置
@@ -254,27 +234,13 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             Controller.api.bindevent();
 
             
-            $(function(){
-                $('.danxuan').eq(0).addClass("on");
-                 $('.danxuan').each(function(){
-                  $(this).click(function(){
-                    $(this).addClass("on").siblings().removeClass("on");
-                   });
-                 });
-            });
+
 
         },
         disposable_edit: function () {
 
             Controller.api.bindevent();
-            $(function(){
-                $('.danxuan').eq(0).addClass("on");
-                 $('.danxuan').each(function(){
-                  $(this).click(function(){
-                    $(this).addClass("on").siblings().removeClass("on");
-                   });
-                 });
-            });
+
         },
         api: {
             bindevent: function () {
@@ -282,5 +248,30 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             }
         }
     };
+
+    $('.danxuan').eq(0).addClass("on");
+    $('.danxuan').each(function(){
+
+
+        $(this).click(function(){
+            console.log($(this).attr('class'));
+            $(this).addClass("on").siblings().removeClass("on");
+        });
+    });
+
+    /*JQuery 限制文本框只能输入数字*/
+    $(".NumText").keyup(function(){
+        $(this).val($(this).val().replace(/[^0-9]/g,''));
+    }).bind("paste",function(){  //CTR+V事件处理
+        $(this).val($(this).val().replace(/[^0-9]/g,''));
+    }).css("ime-mode", "disabled"); //CSS设置输入法不可用
+
+    /*JQuery 限制文本框只能输入数字和小数点*/
+    $(".NumDecText").keyup(function(){
+        $(this).val($(this).val().replace(/[^0-9.]/g,''));
+    }).bind("paste",function(){  //CTR+V事件处理
+        $(this).val($(this).val().replace(/[^0-9.]/g,''));
+    }).css("ime-mode", "disabled"); //CSS设置输入法不可用
+
     return Controller;
 });

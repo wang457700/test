@@ -32,16 +32,16 @@
                             <div class="col-md-4" style="">
                               <h5>我的積分</h5>
                               <span class="color_ro font24">{$user.score}</span><br>
-                              <span class="font12">(100積分=1元)</span>
+                              <span class="font12">({$config_use}積分=1元)</span>
                             </div>
                             <div class="col-md-4" style="">
                               <h5>我的捐款</h5>
-                              <span class="color_ro font24">0.00</span><br>
+                              <span class="color_ro font24">{:number_format($contribution_price,2)}</span><br>
                                       <span class="font12">(查看消費記錄) </span>
                             </div>
                             <div class="col-md-4" style="border: 0">
                               <h5>會員區別</h5>
-                              <span class="color_ro font24">{$user.level}</span><br>
+                              <span class="color_ro font24">{$level_text}</span><br>
                              <span class="font12">(升级成高級會員)</span>
                             </div>
                         </div>
@@ -51,18 +51,16 @@
             {foreach name="order_list" item="vo"}
 				<!--订单列表-->
                     <div class="row item-single">
-                        <div class="col-md-3" style="">商品信息</div>
-                        <div class="col-md-3" style="">收貨地址</div>
+                        <div class="col-md-6" style="">商品信息</div>
                         <div class="col-md-2" style="">價格</div>
                         <div class="col-md-1" style="">數量</div>
-                        <div class="col-md-1" style="padding: 0;">物流狀態</div>
-                        <div class="col-md-2" style="">實付款</div>
+                        <div class="col-md-3" style="">實付款</div>
                     </div>
 
                     <div class="cart-item-list">
                         <div class="row row1">
                               <div class="col-md-10 color_75" style="">
-                                 {:date('Y-m-d',strtotime($vo['info']['addtime']))}  訂單編號: <span class="color_ro bold">{$key}</span>
+                                 {:date('Y-m-d',strtotime($vo['addtime']))}  訂單編號: <span class="color_ro bold">{$vo['order_sn']}</span>
                               </div>
                               <div class="col-md-2 t2" style="">
                                     訂單狀態: <span class="color_ro">待付款</span>
@@ -71,6 +69,7 @@
                         <table class="table table-bordered row2" style="width: 98%;margin: 0;">
                           <tbody>
                           {foreach name="vo.goods_list" item="vv"}
+
                             <tr>
                               <td class="col-md-3 "scope="row">
 
@@ -94,15 +93,14 @@
                         </table>
                           <div class="row row3">
                               <div class="col-md-5 color_75" style="text-align:left">
-                                 下單時間: {$vo['info']['addtime']}  支付方式：信用卡
+                                 下單時間: {$vo['addtime']}  支付方式：信用卡
                               </div>
                               <div class="col-md-4 t2 color_75" style="">
-                                    訂單總價: <span class="bold font16 color_ro"></span> (HKD)
-                                 (含運費:<span class="color_ro"> {$vo['info']['freight']|default='0'} </span>HKD)
+                                    訂單總價: <span class="bold font16 color_ro">{:number_format($vo['all_total'],2)}</span> (HKD)
+                                 (含運費:<span class="color_ro"> {$vo['freight']|default='0'} </span>HKD)
                               </div>
                               <div class="col-md-3 t2" style="">
-
-                                  <a href="{:url('user/order_detail',array('order_sn'=>base64_encode($vo['info']['order_sn'])))}"><button type="button" class="btn btn-warning">查看訂單</button></a>
+                                  <a href="{:url('user/order_detail',array('order_sn'=>base64_encode($vo['order_sn'])))}"><button type="button" class="btn btn-warning">查看訂單</button></a>
                                   <button type="button" class="btn btn-success">取消訂單</button>
                               </div>
                           </div>
@@ -110,7 +108,9 @@
                 {/foreach}
                 </div>
             </div>
-            {$page}
+            <div class="pagination">
+                {$page}
+            </div>
         </div>
     </div>
 

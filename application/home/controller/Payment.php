@@ -20,7 +20,7 @@ class Payment extends  Frontend
         if ($this->request->isPost()){
             $post= input('post.');
             $order_sn = base64_decode(base64_decode($post['order_sn']));
-
+            $order_info = Db::name('order')->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))->find();
             $data = array(
                 'payment'=>$post['payment'],
                 'contribution_price'=>$post['contribution_price'],
@@ -30,13 +30,31 @@ class Payment extends  Frontend
             $res = Db::name('order')->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))->update($data);
             if($res){
 
-                $all_price = Db::name('order')->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))->sum('price');
-                $cofing_integral = config('site')['integral']['obtain'];
-                //支付成功处理
+
+                $all_price = Db::name('order')->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))->sum('money_total');
+                $cofing_integral = config('site')['integral'];
+            //支付成功处理
+               /* 选中使用积分 */
+                if(!empty($order_info['integral_price']) && $order_info['integral_price']!= '0.00'){
+                    $user_score= Db::name("user")->where(array('id'=>Session::get('user_id')))->value('score');
+                    $int = array(
+                        'order_sn'=>$order_sn,
+                        'user_id'=>Session::get('user_id'),
+                        'integral'=>$user_score,
+                        'type'=>'reduce',
+                        'createtime'=>date('Y-m-d H:i:s',time()),
+                    );
+                    $res= Db::name("integral_log")->insertGetId($int);
+                    if($res!==false){
+                        $res= Db::name("user")->where(array('id'=>Session::get('user_id')))->setDec('score',$user_score);
+                    }
+                }
+
+                /* 获得积分 */
                 $int = array(
                     'order_sn'=>$order_sn,
                     'user_id'=>Session::get('user_id'),
-                    'integral'=>$all_price/$cofing_integral,
+                    'integral'=>$all_price/$cofing_integral['obtain'],
                     'type'=>'add',
                     'createtime'=>date('Y-m-d H:i:s',time()),
                 );
@@ -44,13 +62,14 @@ class Payment extends  Frontend
                 if($res!==false){
                     $res= Db::name("user")->where(array('id'=>Session::get('user_id')))->setInc('score',$int['integral']);
                 }
-                $this->success('支付成功！',url('payment/payment_done',array('order_sn'=>base64_encode($order_sn))));
+
+                $this->success('支付成功！'.$all_price,url('payment/payment_done',array('order_sn'=>base64_encode($order_sn))));
             }else{
                 $this->error('支付失败！');
             }
         }
 
-
+dump(input());
         $order_sn=base64_decode(input('order_sn'));
         $order_info= Db::name('order')
         ->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))
@@ -66,9 +85,6 @@ class Payment extends  Frontend
         $all_total= Db::name('order')
             ->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))
             ->sum('money_total');
-        $integral = Db::name('order')->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))->value('integral');
-
-        $this->assign('integral',$integral);
         $this->assign('address_info',$address_info);
         $this->assign('all_total',$all_total);
         $this->assign('order_info',$order_info);
@@ -79,7 +95,6 @@ class Payment extends  Frontend
 
     public function payment_done(){
         $order_sn=base64_decode(input('order_sn'));
-
 
         $integral= Db::name('integral_log')
             ->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))

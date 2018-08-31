@@ -45,6 +45,9 @@ class Product extends Backend
         $cat_list = Db::name('category')->where("pid = 14")->select();
         if($this->request->isAjax()){
             $data=input('post.');
+            if($data['discount_type'] == 2 && $data['pricevip'] =='0'){
+                $this->error('特價不能為零！');
+            }
 
             $product_name=Db::name('goods')->where('product_name',$data['product_name'])->find();
             if($product_name){
@@ -88,6 +91,9 @@ class Product extends Backend
         $cat_list = Db::name('category')->where("pid = 14")->select();
         if($this->request->isAjax()){
             $data=input('post.');
+            if($data['discount_type'] == 2 && $data['pricevip'] =='0'){
+                $this->error('特價不能為零！');
+            }
 
             if(empty($data['cat_id'])){
                 $this->error('请选择分类');
@@ -143,7 +149,6 @@ class Product extends Backend
     }
 
     public function is_on_sale(){
-
         $product_id = input('product_id');
         $is_on_sale = input('is_on_sale');
         $on_sale="";
@@ -155,7 +160,6 @@ class Product extends Backend
              $on_sale=0;
              break;
         }
-
        $res=Db::name('goods')->where('product_id',$product_id)->update(array('is_on_sale'=>$on_sale));
         if ($res) {
             $this->success();
@@ -163,11 +167,9 @@ class Product extends Backend
             $this->error();
         }
 
-
     }
 
     public function del($ids =null){
-
         if ($this->request->isPost()) {
             $product_id = input('product_id');
             $res = Db::name('goods')->where('product_id', $product_id)->delete();
@@ -176,11 +178,7 @@ class Product extends Backend
             } else {
                 $this->error();
             }
-
-
         }
-
-
     }
     /**
      * 分类
@@ -189,7 +187,6 @@ class Product extends Backend
     {
         if ($this->request->isAjax()) {
             //数据输出ajax
-            //
             $total = 1;
             $where = array();
             $cid = $this->request->get('type');
