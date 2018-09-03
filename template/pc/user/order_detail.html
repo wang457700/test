@@ -91,14 +91,18 @@
 				{/foreach}
 					<div class="row" style="margin-bottom: 10px;">
 						<div class="col-md-12 border_1" style="text-align: right;padding:20px">
-							<span class="color_ro">{$all_goods_num}</span>件商品, 總計: <span class="color_ro">$ {:number_format($all_total,2)}</span><br/>運費: $ 0<br/>
+							<span class="color_ro">{$all_goods_num}</span>件商品,  總計(不含運費): <span class="color_ro">$ {:number_format($all_money_total,2)}</span><br/>
+							運費: $ {$order_info['freight']}<br/>
+							优惠: <span class="color_ro">$ {$order_info['coupon_price']|default='0'}</span><br/>
 						</div>
 						<div class="col-md-12 border_1" style="padding:20px">
 							<p style="display: inline-block;">
-								<span class="color_ro">{$order_info['integral']|default='0'}</span>積分可抵扣<span class="color_ro">${$order_info['integral_price']|default='0'}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+								<span class="color_ro">{$order_info['integral']|default='0'}</span>積分可抵扣
+								<span class="color_ro">${$order_info['integral_price']|default='0'}</span>&nbsp;&nbsp;&nbsp;&nbsp;
 								捐款<span class="color_ro">${$order_info['contribution_price']|default='0'}</span>
+
 							</p>
-							<p style="font-size:22px;text-align: right;display: inline-block;float:right;">合計 (不含運費)：<span class="color_ro">$ {:number_format($all_total,2)}</span></p>
+							<p style="font-size:22px;text-align: right;display: inline-block;float:right;">合計 ：<span class="color_ro">$ {:number_format($all_total,2)}</span></p>
 						</div>
 					</div>
 					<div class="row">

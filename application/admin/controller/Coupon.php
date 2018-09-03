@@ -27,11 +27,18 @@ class Coupon extends Backend
             //数据输出ajax
             list($where, $sort, $order, $offset, $limit) = $this->buildparams(NULL);
 
+            $category=input('category',1);
             $list = Db::name('coupon')
-                ->where($where)
+                ->where('coupon_category',$category)
                 ->order($sort, $order)
                 ->limit($offset, $limit)
                 ->select();
+
+            $total = Db::name('coupon')
+                ->where('coupon_category',$category)
+                ->count();
+
+
             $level = array('0'=>'不限','1'=>'普通会员','2'=>'白金会员','3'=>'金牌会员','4'=>'商业会员');
             foreach ($list as $key=>$item){
                 $list[$key]['coupon_time_text'] = ''.date('Y/m/d',strtotime($item['coupon_end_time']));
@@ -45,7 +52,7 @@ class Coupon extends Backend
                     $list[$key]['user_level_text']=  $level[$item['user_level']];
                 }
             }
-            $result = array("total" => 1, "rows" => $list, "extend" => ['money' => mt_rand(100000,999999), 'price' => 200]);
+            $result = array("total" => $total, "rows" => $list, "extend" => ['money' => mt_rand(100000,999999), 'price' => 200]);
             return json($result);
 
         }
@@ -131,28 +138,63 @@ class Coupon extends Backend
         if ($this->request->isPost())
         {
             $data=input('post.');
-            $info = Db::name('coupon')->where(array('coupon_sn'=>$data['coupon_sn']))->find();
-            if($info){
-                $this->error();
-            }
-            if($data['coupon_term']){
-                if($data['coupon_cash'] == '0'){
+            if($data['row']['coupon_term']){
+                if($data['row']['coupon_cash'] == '0'){
                     $this->error('現金券不能為零！');
                 }
             }
-            $data['row']['user_level'] = implode(',',$data['row']['user_level']);
-            $data['row']['createtime'] = date('Y-m-d H:i:s',time());
-            $res=Db::name('coupon')->insertGetId($data['row']);
+
+            if($data['row']['coupon_category'] ==1){
+                $info = Db::name('coupon')->where(array('coupon_sn'=>$data['row']['coupon_sn']))->find();
+                if($info){
+                    $this->error('優惠碼已存在！');
+                }
+                $data['row']['user_level'] = implode(',',$data['row']['user_level']);
+                $data['row']['createtime'] = date('Y-m-d H:i:s',time());
+                $res=Db::name('coupon')->insertGetId($data['row']);
+            }else{
+                $coupon_num = $data['row']['coupon_num'];
+                $data['row']['user_level'] = implode(',',$data['row']['user_level']);
+                $data['row']['createtime'] = date('Y-m-d H:i:s',time());
+                for ($x=0; $x<=$coupon_num; $x++) {
+                    $data['row']['coupon_sn'] = uniqid();
+                    $data['row']['coupon_num'] = 1;
+                    $res=Db::name('coupon')->insertGetId($data['row']);
+                }
+
+
+            }
+
+
             if ($res)
             {
                 $this->success('添加成功！');
             }
             $this->error();
         }
+
+        $this->view->assign("coupon_category",input('category',1));
         return $this->view->fetch();
     }
-    
 
+
+
+    /**
+     * 编辑
+     */
+    public function status($ids = null)
+    {
+        if ($this->request->isPost())
+        {
+            $is = input('is');
+            $res =  Db::name('coupon')->where('coupon_id',$ids)->update(array('status'=>$is));
+            if ($res)
+            {
+                $this->success('成功！');
+            }
+            $this->error();
+        }
+    }
 
 
     /**

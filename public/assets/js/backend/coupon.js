@@ -50,15 +50,27 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                         Layer.alert("接收到回传数据：" + JSON.stringify(data), {title: "回传数据"});
                                     }
                                 },{
-                                    name: 'ajax',
-                                    title: __('发送Ajax'),
+                                    name: 'dongjie',
+                                    title: __('冻结'),
                                     text:'冻结',
                                     classname: 'btn btn-xs btn-detail btn-magic btn-ajax',
-                                    url: 'order/index/detail',
+                                    url: 'coupon/status/is/0',
                                     success: function (data, ret) {
-                                        //Layer.alert(ret.msg + ",返回数据：" + JSON.stringify(data));
-                                        //如果需要阻止成功提示，则必须使用return false;
-                                        //return false;
+                                        $(".btn-refresh").trigger("click");
+                                    },
+                                    error: function (data, ret) {
+                                        console.log(data, ret);
+                                        //Layer.alert(ret.msg);
+                                        return false;
+                                    }
+                                },{
+                                    name: 'jiedong',
+                                    title: __('解冻'),
+                                    text:'解冻',
+                                    classname: 'btn btn-xs btn-detail btn-magic btn-ajax',
+                                    url: 'coupon/status/is/1',
+                                    success: function (data, ret) {
+                                        $(".btn-refresh").trigger("click");
                                     },
                                     error: function (data, ret) {
                                         console.log(data, ret);
@@ -76,8 +88,21 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                         Layer.alert("接收到回传数据：" + JSON.stringify(data), {title: "回传数据"});
                                     }
                                 },
-                            ], 
-                        formatter: Table.api.formatter.operate},
+                            ],
+                            formatter: Table.api.formatter.operate,formatter: function (value, row, index) {
+                                console.log(row.status);
+                                var that = $.extend({}, this);
+                                var table = $(that.table).clone(true);
+                                if (row.status != 1){
+                                    $(table).data("operate-dongjie", null);
+                                }
+                                if (row.status != 0){
+                                    $(table).data("operate-jiedong", null);
+                                }
+                                that.table = table;
+                                console.log($(table).data());
+                                return Table.api.formatter.operate.call(that, value, row, index);
+                            }},
                     ]
                 ]
             });
@@ -87,8 +112,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             // 初始化表格参数配置
             Table.api.init({
                 extend: {
-                    index_url: 'coupon/index/type/2',
-                    add_url: 'coupon/add/type/2',
+                    index_url: 'coupon/index/category/2',
+                    add_url: 'coupon/add/category/2',
                     edit_url: '',
                     del_url: '',
                     multi_url: 'order/index/multi',
@@ -129,20 +154,32 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                     title: __('修改'),
                                     classname: 'btn btn-xs btn-detail btn-dialog',
                                     text:'修改',
-                                    url: 'coupon/edit',
+                                    url: 'coupon/edit/category/2',
                                     callback: function (data) {
                                         Layer.alert("接收到回传数据：" + JSON.stringify(data), {title: "回传数据"});
                                     }
                                 },{
-                                    name: 'ajax',
-                                    title: __('发送Ajax'),
+                                    name: 'dongjie',
+                                    title: __('冻结'),
                                     text:'冻结',
                                     classname: 'btn btn-xs btn-detail btn-magic btn-ajax',
-                                    url: 'order/index/detail',
+                                    url: 'coupon/status/is/0',
                                     success: function (data, ret) {
-                                        //Layer.alert(ret.msg + ",返回数据：" + JSON.stringify(data));
-                                        //如果需要阻止成功提示，则必须使用return false;
-                                        //return false;
+                                        $(".btn-refresh").trigger("click");
+                                    },
+                                    error: function (data, ret) {
+                                        console.log(data, ret);
+                                        //Layer.alert(ret.msg);
+                                        return false;
+                                    }
+                                },{
+                                    name: 'jiedong',
+                                    title: __('解冻'),
+                                    text:'解冻',
+                                    classname: 'btn btn-xs btn-detail btn-magic btn-ajax',
+                                    url: 'coupon/status/is/1',
+                                    success: function (data, ret) {
+                                        $(".btn-refresh").trigger("click");
                                     },
                                     error: function (data, ret) {
                                         console.log(data, ret);
@@ -161,7 +198,20 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                     }
                                 },
                             ],
-                            formatter: Table.api.formatter.operate},
+                            formatter: Table.api.formatter.operate,formatter: function (value, row, index) {
+                                console.log(row.status);
+                                var that = $.extend({}, this);
+                                var table = $(that.table).clone(true);
+                                if (row.status != 1){
+                                    $(table).data("operate-dongjie", null);
+                                }
+                                if (row.status != 0){
+                                    $(table).data("operate-jiedong", null);
+                                }
+                                that.table = table;
+                                //console.log($(table).data("operate-dongjie"));
+                                return Table.api.formatter.operate.call(that, value, row, index);
+                            }},
                     ]
                 ]
             });

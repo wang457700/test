@@ -29,11 +29,11 @@ class Payment extends  Frontend
             );
             $res = Db::name('order')->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))->update($data);
             if($res){
-
-
                 $all_price = Db::name('order')->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))->sum('money_total');
+                $all_price = $all_price-$order_info['integral_price']-$order_info['coupon_price'];
                 $cofing_integral = config('site')['integral'];
             //支付成功处理
+
                /* 选中使用积分 */
                 if(!empty($order_info['integral_price']) && $order_info['integral_price']!= '0.00'){
                     $user_score= Db::name("user")->where(array('id'=>Session::get('user_id')))->value('score');

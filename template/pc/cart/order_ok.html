@@ -95,7 +95,7 @@
 
 		<div class="row" style="margin-bottom: 10px;">
 			<div class="col-md-12 border_1" style="text-align: right;padding:20px">
-				<span class="color_ro">{$num}</span>件商品, 總計: <span class="color_ro">$ {:number_format($all_total,2)}</span><br/>運費: $ 0<br/>
+				<span class="color_ro">{$num}</span>件商品, 總計: <span class="color_ro">$ {:number_format($all_total,2)}</span>
 			</div>
 			<?php
 				$config_score = config('site')['integral']['use'];
@@ -108,7 +108,7 @@
 
 				<p style="font-size:22px;text-align: right;display: inline-block;float:right;">合計 (不含運費)：<span class="color_ro">$ {:number_format($all_total,2)}</span></p>
 				<p style="">
-					<input type="text" class="checkbox" name="integral" data-scoreprice="{$score_price}" placeholder="請輸入優惠碼"/>您當前有<span class="color_ro bold">{$user.score}</span>積分，可抵扣<span class="color_ro bold">${:number_format($score_price,2)}</span>
+					<input type="text" class="checkbox" name="coupon" data-scoreprice="{$score_price}" placeholder="請輸入優惠碼" style="width: 200px;padding: 5px;height: 30px;" value="543543"/>您當前有<span class="color_ro bold">{$user.score}</span>積分，可抵扣<span class="color_ro bold">${:number_format($score_price,2)}</span>
 				</p>
 			</div>
 		</div>
@@ -124,9 +124,9 @@
 			</div>
 			<div class="col-md-4" style="float: right;text-align: right;">
 				商品總計: <span>$ {:number_format($all_total,2)}</span>
-				<br/>運費: <span>$ 0</span>
+				<br/>運費: <span id="freight" data-price="{$freight}">$ {:number_format($freight,2)}</span>
 				<br/>積分抵扣: <span id="score_price_text">$ 0</span><br/>
-				<p>應付款：<span  style="font-size:22px " id="all_total" data-alltotal="{$all_total}">$ {:number_format($all_total,2)}</span></p>
+				<p>應付款：<span  style="font-size:22px " id="all_total" data-alltotal="{$all_total}">$ {:number_format($all_total+$freight,2)}</span></p>
 				<div class="row" style="padding:10px 0 ">
                    <div class="col-md-6" style="">
                         <button type="button" class="btn-default-edit" style="">繼續購物</button>
@@ -156,16 +156,18 @@
 
         $("input[type=checkbox]").click(function(){
             var scoreprice = $(this).data("scoreprice").toFixed(2);
+            var freight = $('#freight').data("price").toFixed(2);
+            var scoreprice = $(this).data("scoreprice").toFixed(2);
             var all_total = $('#all_total').data("alltotal").toFixed(2);
 
             if($(this).attr("checked")){
                 $(this).removeAttr("checked");
                 $('#score_price_text').text('$ 0') ;
-                $('#all_total').text('$ ' + all_total) ;
+                $('#all_total').text('$ ' + (Number(all_total)+Number(freight))) ;
             }else {
                 $(this).attr("checked","true");
                $('#score_price_text').text('$ ' + scoreprice) ;
-               $('#all_total').text('$ ' + (Number(all_total)-Number(scoreprice))) ;
+               $('#all_total').text('$ ' + (Number(all_total)-Number(scoreprice)+Number(freight))) ;
             }
         })
     });

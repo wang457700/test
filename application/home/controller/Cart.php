@@ -89,7 +89,15 @@ class Cart extends Frontend
                     $num+=$v['goods_num'];
                 }
                 $address_list=Db::name('user_address')->where('user_id',Session::get('user_id'))->select();
+
+                /*运费*/
+                $freight = 0 ;
+                $cofing_freight = config('site')['freight'];
+                if(strval($total) > $cofing_freight['no_freight']){
+                    $freight = $cofing_freight['freight'];
+                }
                 $this->assign('all_total',$total);
+                $this->assign('freight',$freight);
                 $this->assign('num',$num);
                 foreach ($address_list as $key =>$v){
                     $v['province'] = Db::name('region')->where(array('id'=>$v['province']))->value('name');
@@ -113,6 +121,8 @@ class Cart extends Frontend
         $goods_num= input('goods_num/a');
         $address_id= input('address_id');
         $integral= input('integral');
+        $coupon_sn= input('coupon');
+        $user = Db::name('user')->where('id',Session::get('user_id'))->find();
         if($address_id){
             $address = Db::name('user_address')->where('id',$address_id)->find();
             $address['province'] = Db::name('region')->where(array('id'=>$address['province']))->value('name');
@@ -129,23 +139,81 @@ class Cart extends Frontend
                 $data[$i]['goods_id'] = $goods_id[$i];
                 $data[$i]['goods_num'] = $goods_num[$i];
             }
+
+            $all_total = 0;
+            foreach ($data as $k => $v) {
+                $price=Db::name('goods')->where('product_id',$v['goods_id'])->find();
+                $fat['price'] =$price['price'];
+                $fat['money_total']=$v['goods_num']*$price['price'];
+                $all_total +=$v['goods_num']*$price['price'];
+            }
+
             $res='';
             $order_sn=date('Ymd').time();
-
             $score_price = 0;
+            if($integral){
+                $cofing_integral = config('site')['integral']['use'];
+                $user_integral = Db::name('user')->where('id',Session::get('user_id'))->value('score');
+                $score_price = sprintf("%.2f",$user_integral/$cofing_integral);
+            }
+
+            /*优惠*/
+            $coupon  = Db::name('coupon')->where(array('coupon_sn'=>$coupon_sn))->find();
+            $coupon_price =  0;
+            $coupon_id =  0;
+            if($coupon){
+                if($coupon['coupon_term']){ //1有限期
+                    if(strtotime(date('Y-m-d H:i:s',strtotime('+1 day',strtotime($coupon['coupon_end_time'])))) < time()){
+                        $data = array('code' => 0,'msg' => '優惠碼已失效！');
+                        $this->ajaxReturn($data);
+                    }
+                    if(strtotime($coupon['coupon_start_time']) > time()){
+                        $data = array('code' => 0,'msg' => '優惠時間還沒有開始！');
+                        $this->ajaxReturn($data);
+                    }
+                }
+                if($coupon['coupon_num'] <= 0){
+                    $data = array('code' => 0,'msg' => '優惠被抢光了！');
+                    $this->ajaxReturn($data);
+                }
+                if(strstr($coupon['user_level'],strval($user['level'])) ==false && $coupon['user_level']!=0){
+                    $data = array('code' => 0,'msg' => '當前會員等級不够！');
+                    $this->ajaxReturn($data);
+                }
+
+                if($coupon['min_money'] >= ($all_total-$score_price)){
+                    $data = array('code' => 0,'msg' => '最低消费不够！');
+                    $this->ajaxReturn($data);
+                }
+
+                if($coupon['coupon_type'] == 1){ //1现金券 2折扣
+                    $coupon_price = $coupon['coupon_cash'];
+                }else{
+                    $coupon_price = ($coupon['coupon_discount']/100)*($all_total-$score_price);
+                }
+                $coupon_id = $coupon['coupon_id'];
+            }
+
+            /*运费*/
+            $freight = 0 ;
+            $cofing_freight = config('site')['freight'];
+            if($all_total > $cofing_freight['no_freight']){
+                $freight = $cofing_freight['freight'];
+            }
+
+
             foreach ($data as $k => $v) {
                     $price=Db::name('goods')->where('product_id',$v['goods_id'])->find();
-                    if($integral){
-                        $cofing_integral = config('site')['integral']['use'];
-                        $user_integral = Db::name('user')->where('id',Session::get('user_id'))->value('score');
-                        $score_price = sprintf("%.2f",$user_integral/$cofing_integral);
-                    }
+
                     $fat['price'] =$price['price'];
                     $fat['money_total']=$v['goods_num']*$price['price'];
                     $fat['goods_sn'] =$price['freight_num'];
                     $fat['address_id'] =$address_id;
                     $fat['address'] =$address;
                     $fat['integral_price'] =$score_price;
+                    $fat['coupon_price'] =$coupon_price;
+                    $fat['coupon_id'] =$coupon_id;
+                    $fat['freight'] =$freight;
                     $fat['order_sn'] =$order_sn;
                     $fat['goods_id'] = $v['goods_id'];//这里都要加上下标
                     $fat['goods_num'] = $v['goods_num'];//这里都要加上下标

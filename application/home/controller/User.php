@@ -641,15 +641,20 @@ class User extends Frontend
             ->join('__GOODS__ c','a.goods_id=c.product_id','LEFT')
             ->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))
             ->select();
-dump($order_info);
         $all_total = 0;
         $all_goods_num =0;
+        $all_money_total =0;
         foreach ($goods_list as $k => $v){
                 $all_total += $v['money_total'];
+                $all_money_total += $v['money_total'];
                 $all_goods_num += $v['goods_num'];
         }
 
+        $all_total = $all_total -$order_info['coupon_price'] - $order_info['integral_price'] + $order_info['freight'];
+
+
         $this->assign('order_info',$order_info);
+        $this->assign('all_money_total',$all_money_total);
         $this->assign('all_total',$all_total);
         $this->assign('all_goods_num',$all_goods_num);
         $this->assign('goods_list',$goods_list);

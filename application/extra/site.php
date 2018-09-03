@@ -69,8 +69,8 @@ return array (
   ),
   'freight' => 
   array (
-    'freight' => '10000',
-    'no_freight' => '4001',
+    'freight' => '100',
+    'no_freight' => '1000',
     'remote_area' => '4000',
   ),
 );
