@@ -25,7 +25,33 @@
                     {include file="common/user_left" /}
                 </div>
                 <div class="col-md-10 right-list">
-                    <div class="top_connt">
+
+                {if condition="$style eq 'order'"}
+                    <div class="pr_name">近期購買</div>
+                    <div class="product">
+                        <ul class="row">
+                            {foreach name="goods_list" item="vv"}
+                                <li class="col-md-3 col-xs-3">
+                                    {if condition="$vv['cover']"}
+                                    <img src="__PUBLIC__/{$vv.cover}"/>
+                                    {else/}
+                                    <img src="__TMPL_PUBLIC__/img/default.jpg">
+                                    {/if}
+                                    <div class="d2">
+                                        <p>{$vv.product_name}</p>
+                                        <p class="color_ro">优惠全民享</p>
+                                        <div>
+                                            <span style="font-size: 20px;"><i>$</i>{$vv.price}</span>
+                                            <a class="adds" data-id="{$vv.product_id}">+</a>
+                                        </div>
+                                    </div>
+                                </li>
+                            {/foreach}
+                        </ul>
+                    </div>
+                {/if}
+                {if condition="$style eq 'center'"}
+                    <div class="top_connt" >
                        <p class="title">{$user.username} ,<span class="color_777777">歡迎回來!</span></p>
 
                         <div class="row">
@@ -49,6 +75,9 @@
                         </div>
 
                     </div>
+                {/if}
+
+
                     <div class="pr_name">近期訂單</div>
             {foreach name="order_list" item="vo"}
 				<!--订单列表-->
@@ -93,10 +122,10 @@
                           </tbody>
                         </table>
                           <div class="row row3">
-                              <div class="col-md-5 color_75" style="text-align:left">
-                                 下單時間: {$vo['addtime']}  支付方式：信用卡
+                              <div class="col-md-4 color_75" style="text-align:left">
+                                 下單時間:{:date('H:i:s',strtotime($vo['addtime']))}  支付方式：{$vo.payment}
                               </div>
-                              <div class="col-md-4 t2 color_75" style="">
+                              <div class="col-md-5 t2 color_75" style="">
                                     訂單總價: <span class="bold font16 color_ro">{:number_format($vo['all_total'],2)}</span> (HKD)
                                  (含運費:<span class="color_ro"> {$vo['freight']|default='0'} </span>HKD)
                               </div>

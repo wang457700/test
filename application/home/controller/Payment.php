@@ -30,7 +30,7 @@ class Payment extends  Frontend
             $res = Db::name('order')->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))->update($data);
             if($res){
                 $all_price = Db::name('order')->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))->sum('money_total');
-                $all_price = $all_price-$order_info['integral_price']-$order_info['coupon_price'];
+                $all_price = $all_price-$order_info['integral_price']-$order_info['coupon_price']-$order_info['freight'];
                 $cofing_integral = config('site')['integral'];
             //支付成功处理
 
@@ -68,8 +68,6 @@ class Payment extends  Frontend
                 $this->error('支付失败！');
             }
         }
-
-dump(input());
         $order_sn=base64_decode(input('order_sn'));
         $order_info= Db::name('order')
         ->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))
@@ -93,13 +91,12 @@ dump(input());
        return $this->fetch();
     }
 
+
     public function payment_done(){
         $order_sn=base64_decode(input('order_sn'));
-
         $integral= Db::name('integral_log')
-            ->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))
+            ->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn,'type'=>'add'))
             ->value('integral');
-        dump($integral);
         $this->assign('order_sn',$order_sn);
         $this->assign('integral',$integral);
         $this->assign('title','完成支付');

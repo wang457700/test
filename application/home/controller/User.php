@@ -262,8 +262,10 @@ class User extends Frontend
 
     public function center(){
         $user_id = Session::get('user_id');
+        $style = input('style','center');
+
         $user = Db::name('user')->where('id', $user_id)->find();
-        $this->assign('title','用户中心');
+
 
         $order_list = Db::name('order')->alias('a')
             ->field('a.*,e.name,e.phone')
@@ -281,23 +283,31 @@ class User extends Frontend
                 ->order('addtime desc')->select();
             $result[$key]['all_total'] = Db::name('order')->where('order_sn',$item['order_sn'])->sum('money_total');
         }
-
         $level = array('1'=>'普通会员','2'=>'白金会员','3'=>'金牌会员','4'=>'商业会员');
         $level_text  =$level[$user ['level']];
-
         $sum_contribution_price = array_sum(Db::name('order')->alias('a')
             ->where('user_id',$user_id)
             ->group('a.order_sn')
             ->column('contribution_price'));
 
+        $goods_list= Db::name('order')->alias('a')->join('__GOODS__ c','a.goods_id=c.product_id','LEFT')->where('user_id',Session::get('user_id'))->order('addtime desc')->paginate(4);
+
         $pay_status = array('0'=>'未支付','2'=>'已支付','6'=>'已取消');
         $page = $order_list->render();
         $this->assign('page',$page);
         $this->assign('order_list',$result);
+
         $this->assign('level_text',$level_text);
         $this->assign('pay_status',$pay_status);
         $this->assign('contribution_price',$sum_contribution_price);
         $this->assign('config_use',config('site')['integral']['use']);
+          $this->assign('goods_list',$goods_list);
+        $this->assign('style',$style);
+        if($style == 'order'){
+            $this->assign('title','我的訂單');
+        }else{
+            $this->assign('title','用戶中心');
+        }
         return $this->view->fetch();
     }
 
@@ -620,36 +630,6 @@ class User extends Frontend
     }
 
     /******************************       my_order 我的订单  ************************************/
-
-    public function order_list(){
-
-        $order_list= Db::name('order')
-            ->alias('a')
-            ->join('__GOODS__ c','a.goods_id=c.product_id','LEFT')
-            ->where('user_id',Session::get('user_id'))
-            ->group('a.order_sn')
-            ->order('addtime desc')->paginate(2);
-
-        $result= array();
-        foreach ($order_list as $key=>$item){
-            $sel= Db::name('order')->where('order_sn',$item['order_sn'])->find();
-            if($item['order_sn']==$sel['order_sn']){
-                $result[$item['order_sn']]['goods_list'][] = $item;
-            }
-            $result[$item['order_sn']]['info'] = $sel;
-        }
-        $goods_list= Db::name('order')->alias('a')->join('__GOODS__ c','a.goods_id=c.product_id','LEFT')->where('user_id',Session::get('user_id'))->order('addtime desc')->paginate(4);
-
-        $page = $order_list->render();
-        $this->assign('page',$page);
-        $this->assign('order_list',$result);
-        $this->assign('goods_list',$goods_list);
-
-        $this->assign('title','我的订单');
-        return $this->view->fetch();
-    }
-
-
 
     public function order_detail(){
         $user_id = Session::get('user_id');

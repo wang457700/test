@@ -28,7 +28,6 @@
                     <div class="imgdet wrap">
                       <div class="imglist">
                         <ul>
-
                         {foreach name="img_url" item="vo"}
                           <li class="{$key=="0"?'active':''}"><img src="__PUBLIC__/{$vo}" alt=""></li>
                         {/foreach}
@@ -55,7 +54,7 @@
                 </div>
                 <div class="row price">
                     <div class="col-md-6" style="">
-                        港幣：<span>$<i>{$goods.price}</i></span>
+                        港幣：<span>$<i>{:product_price($goods['product_id'])}</i></span>
                     </div>
 
                     <div class="col-md-6" style="">
@@ -109,19 +108,23 @@
                         {foreach name="goods_list" item="vo"}
                         {if condition="$key lt 5"}
                             <li class="col-md-2 col-xs-3">
+                                <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
                                 {if condition="$vo['cover']"}
                                     <img src="__PUBLIC__/{$vo.cover}">
                                 {else/}
                                  <img src="__TMPL_PUBLIC__/img/default.jpg">
                                 {/if}
-                                  <div class="d2">
-                                    <p>{$vo.product_name}</p>
-                                    <p class="color_ro">优惠全民享</p>
+                                </a>
+                                <div class="d2">
+                                    <p class="nowrap"><a href="{:url('product/detail',array('id'=>$vo['product_id']))}">{$vo.product_name}</a></p>
+                                      {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
+                                      {if condition="$vo['discount_type'] eq 2"}<p class="color_ro">特惠全民享</p>{/if}
+                                      {if condition="$vo['discount_type'] eq 3"}<p class="color_ro">优惠全民享</p>{/if}
                                     <div>
-                                        <span style="font-size: 20px;"><i>￥</i>{$vo.price}</span>
+                                        <span style="font-size: 20px;"><i>￥</i>{:product_price($vo['product_id'])}</span>
                                         <a class="adds" data-productid="{$vo.product_id}">+</a>
                                     </div>
-                                  </div>
+                                </div>
                             </li>
                         {/if}
                         {/foreach}

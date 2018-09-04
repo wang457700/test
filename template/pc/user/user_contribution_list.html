@@ -26,24 +26,24 @@
                 </div>
                 <div class="col-md-10 right-list">
                     <div class="row item-single">
-                        <div class="col-md-5" style="">訂單號</div>
-                        <div class="col-md-2" style="">捐款日期</div>
+                        <div class="col-md-3" style="">訂單號</div>
+                        <div class="col-md-3" style="">捐款日期</div>
                         <div class="col-md-2" style="">捐款金額</div>
                     </div>
                     {foreach name="contribution_list" item="vo"}
                       <div class="row cart-item-list">
-                          <div class="col-md-5" style="">
-                             {$vo.product_name}
+                          <div class="col-md-3" style="">
+                              <a href="{:url('user/order_detail',array('order_sn'=>base64_encode($vo['order_sn'])))}">{$vo.order_sn}</a>
                           </div>
-                          <div class="col-md-2 t2" style="">
-                                {$vo['add_date']}
+                          <div class="col-md-3 t2" style="">
+                                {$vo['pay_time']}
                           </div>
-                          <div class="col-md-2" style="">1111</div>
+                          <div class="col-md-2" style="">$ {$vo.contribution_price}</div>
                       </div>
                     {/foreach}
                 </div>
             </div>
-              {$share_list->render()}
+              {$contribution_list->render()}
         </div>
 
     </div>

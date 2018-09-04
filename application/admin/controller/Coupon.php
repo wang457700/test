@@ -156,15 +156,12 @@ class Coupon extends Backend
                 $coupon_num = $data['row']['coupon_num'];
                 $data['row']['user_level'] = implode(',',$data['row']['user_level']);
                 $data['row']['createtime'] = date('Y-m-d H:i:s',time());
-                for ($x=0; $x<=$coupon_num; $x++) {
-                    $data['row']['coupon_sn'] = uniqid();
+                for ($x=1; $x<=$coupon_num; $x++) {
+                    $data['row']['coupon_sn'] = $this->getRandomString(8);
                     $data['row']['coupon_num'] = 1;
                     $res=Db::name('coupon')->insertGetId($data['row']);
                 }
-
-
             }
-
 
             if ($res)
             {
@@ -177,6 +174,19 @@ class Coupon extends Backend
         return $this->view->fetch();
     }
 
+
+
+    function getRandomString($len, $chars=null)
+    {
+        if (is_null($chars)) {
+            $chars = "0123456789";
+        }
+        mt_srand(10000000*(double)microtime());
+        for ($i = 0, $str = '', $lc = strlen($chars)-1; $i < $len; $i++) {
+            $str .= $chars[mt_rand(0, $lc)];
+        }
+        return $str;
+    }
 
 
     /**

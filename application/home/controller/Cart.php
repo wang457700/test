@@ -63,6 +63,7 @@ class Cart extends Frontend
             $product_id = input('goods_id/a');
             $goods_num = input('goods_num/a');
 
+
             $count = count($product_id);
             if ($count> 0) {
                 $i = 0;
@@ -75,6 +76,7 @@ class Cart extends Frontend
                 $num=0;
                 foreach ($data as $k => $v) {
                      $goods= Db::name('goods')->where('product_id',$v['goods_id'])->find();
+                     $goods['price']= product_price($v['goods_id']);
                     $data[$k]['product_name'] = $goods['product_name'];
                     $data[$k]['brand'] = $goods['brand'];
                     $data[$k]['freight_num'] = $goods['freight_num'];
@@ -107,6 +109,10 @@ class Cart extends Frontend
                 }
                 $this->assign('address_list',$address_list);
                 $this->assign('order_list',$data);
+            }else{
+
+                $this->error('请选择商品！',url('cart/shopping_cart'));
+
             }
         }
 
@@ -143,6 +149,7 @@ class Cart extends Frontend
             $all_total = 0;
             foreach ($data as $k => $v) {
                 $price=Db::name('goods')->where('product_id',$v['goods_id'])->find();
+                $price['price']= product_price($v['goods_id']);
                 $fat['price'] =$price['price'];
                 $fat['money_total']=$v['goods_num']*$price['price'];
                 $all_total +=$v['goods_num']*$price['price'];
@@ -173,16 +180,18 @@ class Cart extends Frontend
                     }
                 }
                 if($coupon['coupon_num'] <= 0){
-                    $data = array('code' => 0,'msg' => '優惠被抢光了！');
-                    $this->ajaxReturn($data);
-                }
-                if(strstr($coupon['user_level'],strval($user['level'])) ==false && $coupon['user_level']!=0){
-                    $data = array('code' => 0,'msg' => '當前會員等級不够！');
+                    $data = array('code' => 0,'msg' => '優惠券被抢光了！');
                     $this->ajaxReturn($data);
                 }
 
-                if($coupon['min_money'] >= ($all_total-$score_price)){
-                    $data = array('code' => 0,'msg' => '最低消费不够！');
+                $level = array('1'=>'普通會員','2'=>'白金會員','3'=>'金牌會員','4'=>'商业會員');
+                if(strstr($coupon['user_level'],strval($user['level'])) == false && $coupon['user_level']!=0){
+                    $data = array('code' => 0,'msg' => '優惠碼不適合'.$level[$user['level']].'使用！');
+                    $this->ajaxReturn($data);
+                }
+
+                if($coupon['min_money'] > ($all_total-$score_price)){
+                    $data = array('code' => 0,'msg' => '最低消费'.$coupon['min_money'].'，才能使用優惠碼！');
                     $this->ajaxReturn($data);
                 }
 
@@ -190,6 +199,10 @@ class Cart extends Frontend
                     $coupon_price = $coupon['coupon_cash'];
                 }else{
                     $coupon_price = ($coupon['coupon_discount']/100)*($all_total-$score_price);
+                }
+
+                if(strval($coupon_price) >= strval($all_total-$score_price)){
+                    $coupon_price = ($all_total-$score_price);
                 }
                 $coupon_id = $coupon['coupon_id'];
             }
@@ -204,7 +217,7 @@ class Cart extends Frontend
 
             foreach ($data as $k => $v) {
                     $price=Db::name('goods')->where('product_id',$v['goods_id'])->find();
-
+                    $price['price']= product_price($v['goods_id']);
                     $fat['price'] =$price['price'];
                     $fat['money_total']=$v['goods_num']*$price['price'];
                     $fat['goods_sn'] =$price['freight_num'];
@@ -227,6 +240,11 @@ class Cart extends Frontend
 
             if ($res) {
                 Db::name('cart_order')->where(array('user_id'=>Session::get('user_id'),'product_id'=>array('in',implode(',',$goods_id))))->delete();
+
+                /* 成功下单处理 */
+                /* 优惠券减1 */
+                $res= Db::name("coupon")->where('coupon_id',$coupon_id)->setDec('coupon_num',1);
+
                 $data = array(
                     'code' => 1,
                     'msg' => '你已经生成订单！',
@@ -262,7 +280,8 @@ class Cart extends Frontend
         foreach ($list as $key=>$item){
                 $total=Db::name('cart_order')->where(array('product_id'=>$item['product_id']))->count();
                $list[$key]['total']=$total;
-               $list[$key]['total_price']=$total*$item['price'];
+               $list[$key]['total_price']=$total*product_price($item['product_id']);
+               $list[$key]['price']= product_price($item['product_id']);
                $sum+=$list[$key]['total_price'];
                $goods_sum+=$list[$key]['total_price'];
         }

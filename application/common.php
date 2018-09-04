@@ -1,5 +1,7 @@
 <?php
 
+use think\Db;
+
 // 公共助手函数
 
 if (!function_exists('__')) {
@@ -326,6 +328,25 @@ function format_phone($phone)
     return implode(' ', $match);
 }
 
+
+/*
+    查询金额并输出
+*/
+function product_price($product_id)
+{
+    $price = 0;
+    $product =  Db::name('goods')->where(array('product_id'=>$product_id))->find();
+    if($product['discount_type'] == 1){
+        $price = $product['price'];
+    }
+    if($product['discount_type'] == 2){
+        $price = $product['pricevip'];
+    }
+    if($product['discount_type'] == 3){
+        $price = $product['discount_price'];
+    }
+    return $price;
+}
 
 /**
  * 简单对称加密算法之加密

@@ -34,6 +34,7 @@
 <form action="{:URL('cart/order_ok')}" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return cartform()" id="cart-form">
 
 	{foreach name="car_list" item="vo"}
+
 		<!--第{$key}个产品-->
 		<div class="row cart-item-list"  id="list_{$key}" >
 			<input type="hidden" value="{$vo.price}" name="price[]" id="unit_price_{$key}"/>
