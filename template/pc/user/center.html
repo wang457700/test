@@ -37,7 +37,9 @@
                             <div class="col-md-4" style="">
                               <h5>我的捐款</h5>
                               <span class="color_ro font24">{:number_format($contribution_price,2)}</span><br>
-                                      <span class="font12">(查看消費記錄) </span>
+                                <a href="{:url('user/user_contribution_list')}">
+                                    <span class="font12">(查看消費記錄) </span>
+                                </a>
                             </div>
                             <div class="col-md-4" style="border: 0">
                               <h5>會員區別</h5>
@@ -60,19 +62,18 @@
                     <div class="cart-item-list">
                         <div class="row row1">
                               <div class="col-md-10 color_75" style="">
-                                 {:date('Y-m-d',strtotime($vo['addtime']))}  訂單編號: <span class="color_ro bold">{$vo['order_sn']}</span>
+                                 {:date('Y-m-d',strtotime($vo['addtime']))}
+                                  訂單編號: <a href="{:url('user/order_detail',array('order_sn'=>base64_encode($vo['order_sn'])))}"><span class="color_ro bold">{$vo['order_sn']}</span></a>
                               </div>
                               <div class="col-md-2 t2" style="">
-                                    訂單狀態: <span class="color_ro">待付款</span>
+                                    訂單狀態: <span class="color_ro">{$pay_status[$vo['pay_status']]}</span>
                               </div>
                         </div>
                         <table class="table table-bordered row2" style="width: 98%;margin: 0;">
                           <tbody>
                           {foreach name="vo.goods_list" item="vv"}
-
                             <tr>
                               <td class="col-md-3 "scope="row">
-
                                   {if condition="$vv['cover']"}
                                     <img src="__PUBLIC__/{$vv.cover}" class="img_left"  style="width: 70px;float: left"/>
                                   {else/}
@@ -100,8 +101,20 @@
                                  (含運費:<span class="color_ro"> {$vo['freight']|default='0'} </span>HKD)
                               </div>
                               <div class="col-md-3 t2" style="">
-                                  <a href="{:url('user/order_detail',array('order_sn'=>base64_encode($vo['order_sn'])))}"><button type="button" class="btn btn-warning">查看訂單</button></a>
-                                  <button type="button" class="btn btn-success">取消訂單</button>
+
+                                  {if condition="$vo['pay_status'] neq 0"}
+                                      <a href="{:url('user/order_detail',array('order_sn'=>base64_encode($vo['order_sn'])))}">
+                                            <button type="button" class="btn btn-warning">查看訂單</button>
+                                      </a>
+                                  {/if}
+                                  {if condition="$vo['pay_status'] eq 0"}
+                                  <a href="{:url('payment/go_pay',array('order_sn'=>base64_encode($vo['order_sn'])))}">
+                                      <button type="button" class="btn btn-warning">去支付</button>
+                                  </a>
+                                  <a href="{:url('user/order_cancel',array('order_sn'=>base64_encode($vo['order_sn'])))}" onclick="">
+                                      <button type="button" class="btn btn-success">取消訂單</button>
+                                  </a>
+                                  {/if}
                               </div>
                           </div>
                     </div>

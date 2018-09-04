@@ -290,10 +290,12 @@ class User extends Frontend
             ->group('a.order_sn')
             ->column('contribution_price'));
 
+        $pay_status = array('0'=>'未支付','2'=>'已支付','6'=>'已取消');
         $page = $order_list->render();
         $this->assign('page',$page);
         $this->assign('order_list',$result);
         $this->assign('level_text',$level_text);
+        $this->assign('pay_status',$pay_status);
         $this->assign('contribution_price',$sum_contribution_price);
         $this->assign('config_use',config('site')['integral']['use']);
         return $this->view->fetch();
@@ -301,8 +303,38 @@ class User extends Frontend
 
 
 
-/******************************       share_list  产品共享        ************************************/
+/******************************       user_contribution_list  用户捐款记录   ************************************/
 
+    public function user_contribution_list(){
+        $user_id = Session::get('user_id');
+        $where['user_id'] = $user_id;
+        $where['contribution_price'] = array('neq',0);
+        $where['pay_status'] = array('eq',2);
+        $contribution_list= Db::name('order')
+            ->alias('a')
+            ->where($where)
+            ->order('pay_time desc')
+            ->group('a.order_sn')
+            // ->select();
+           ->paginate(10);
+
+
+        dump($contribution_list);
+        $data = $contribution_list->all();
+        foreach ($data as $k =>  $v)
+        {
+           // $v['pay_time'] = date('Y-m-d',$v['pay_time']);
+            $contribution_list[$k] = $v;
+        }
+        unset($v);
+        $this->assign('contribution_list',$contribution_list);
+
+        $this->assign('title','我的共享');
+        return $this->view->fetch();
+
+    }
+
+/******************************       share_list  产品共享        ************************************/
 
     public function share_list(){
 		$user_id = Session::get('user_id');
@@ -662,6 +694,18 @@ class User extends Frontend
         return $this->view->fetch();
     }
 
+    //取消订单
+    public  function order_cancel(){
+            $order_sn=base64_decode(input('order_sn'));
+            $user_id = Session::get('user_id');
+            $where = array('order_sn'=>$order_sn,'user_id'=>$user_id);
+            $res = Db::name('order')->where($where)->update(array('pay_status'=>6));
+            if($res){
+                $this->success('取消成功');
+            }else{
+                $this->error('取消失败');
+            }
+    }
 
 
 
