@@ -44,34 +44,30 @@ class Product extends Frontend
         $getParents = $tree->getParents(input('categoryid',14),true);
         $where['is_on_sale'] = 1;
         $where['cat_id'] = array('in',$categoryid);
-
-        $sort =  input('sort');
+        $order = [];
+        $input['categoryid'] = input('categoryid',14);
+        $sort =  input('sort','add_time-desc');
         if($sort){
-            if($sort == 'new'){
-                $order  = 'add_time desc';
-            }else{
-                $sort =  explode('_',input('sort'));
-                $order  = array($sort[1]=>$sort[0]);
-            }
-        }else{
-            $order='price desc';
+            $order=implode(" ",explode("-",$sort));
         }
 
         $product_list =  Db::name('goods')
+            ->alias('a')
+            ->field('a.*,(select count(*) from fa_goods_comment where product_id=a.product_id) as comment_count,(select count(*) from fa_order where goods_id=a.product_id and pay_status=2) as order_count')
             ->where($where)
             ->order($order)
             ->paginate(10);
-        $this->view->assign("product_list", $product_list);
-        $page = $product_list->render();
 
-        $this->assign('page',$page);
-        $this->view->assign("title",'产品列表');
+        $sort_array = array('order_count'=>'銷量','price'=>'價格','comment_count'=>'評論','add_time'=>'新品');
+
+
+        $this->view->assign("product_list", $product_list);
         $this->view->assign("getparents",$getParents);
-        $this->view->assign("input",input());
-       // $input = array('categoryid'=>input('categoryid',14));
-       // $this->view->assign("input",$input);
-        $style = input('style');
-        if($style == 'grid'){
+        $this->view->assign("input",$input);
+        $this->view->assign("sort",$sort);
+        $this->view->assign("sort_array",$sort_array);
+        $this->view->assign("title",'产品列表');
+        if(input('style') == 'grid'){
             return $this->view->fetch('index_grid');
         }else{
             return $this->view->fetch();

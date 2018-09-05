@@ -155,13 +155,13 @@
             </div>
         </div>
     </div>
- <form class="form-horizontal form-commonsearch nice-validator n-default n-bootstrap" novalidate="" method="post" action="{:url('product/index')}">
+ <form class="form-horizontal form-commonsearch nice-validator n-default n-bootstrap" novalidate="" method="post" action="{:url('order/index')}">
      <fieldset>
          <div class="row">
              <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-3">
                  <label for="ip" class="control-label col-xs-4">关键词</label>
                  <div class="col-xs-8">
-                     <input type="hidden" class="form-control operate" name="ip-operate" data-name="ip" value="=" readonly=""><input type="text" class="form-control" name="keyword" value="{$request['keyword']|default=''}" placeholder="输入產品名稱|貨品ID" data-index="6">
+                     <input type="hidden" class="form-control operate" name="ip-operate" data-name="ip" value="=" readonly=""><input type="text" class="form-control" name="keyword" value="{$request['keyword']|default=''}" placeholder="输入訂單ID" data-index="6">
                  </div>
              </div>
              <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-3">
@@ -170,9 +170,13 @@
                      <div class="row">
                          <div class="col-xs-12">
                              <div class="form-inline" data-toggle="cxselect" data-selects="group,admin">
-                                 <select class="group form-control" name="cat_id" style="width: 100%;">
+                                 <select class="group form-control" name="payment" style="width: 100%;">
                                      <option value="">全部</option>
-
+                                     {foreach name="payment" item="vo" }
+                                     {if condition="$key neq 0"}
+                                     <option value="{$key}" {if condition="$key eq $request['payment']"}selected{/if}>{$vo}</option>
+                                     {/if}
+                                     {/foreach}
                                  </select>
                              </div>
                          </div>
@@ -185,10 +189,13 @@
                      <div class="row">
                          <div class="col-xs-12">
                              <div class="form-inline" data-toggle="cxselect" data-selects="group,admin">
-                                 <select class="group form-control" name="is_on_sale" style="width: 100%;">
-                                     <option value="all">全部</option>
-                                     <option value="0" {if condition="0 eq '0'"}selected{/if}>下架</option>
-                                     <option value="1" {if condition="1 eq 1"}selected{/if}>上架</option>
+                                 <select class="group form-control" name="pay_status" style="width: 100%;">
+                                     <option value="all" selected>全部</option>
+                                     {foreach name="pay_status" item="vo" }
+                                     {if condition="$key neq 0"}
+                                     <option value="{$key}" {if condition="$key eq $request['pay_status']"}selected{/if}>{$vo}</option>
+                                     {/if}
+                                     {/foreach}
                                  </select>
                              </div>
                          </div>
@@ -198,7 +205,7 @@
              <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-3">
                  <div class="col-sm-8 col-xs-offset-4">
                      <button type="submit" class="btn btn-success" formnovalidate="">搜索</button>
-                     <a href="{:url('product/index')}" type="reset" class="btn btn-default">重置</a>
+                     <a href="{:url('order/index')}" type="reset" class="btn btn-default">重置</a>
                  </div>
              </div>
          </div>
@@ -273,7 +280,7 @@
                             <td style="text-align: center; vertical-align: middle; ">{$vo.order_id}</td>
                             <td style="text-align: center; vertical-align: middle; ">{$vo.order_sn}</td>
                             <td style="text-align: center; vertical-align: middle; ">{$vo.addtime}</td>
-                            <td style="text-align: center; vertical-align: middle; ">{$vo.name}</td>
+                            <td style="text-align: center; vertical-align: middle; ">{$vo.username}</td>
                             <td style="text-align: center; vertical-align: middle; ">{$vo.money_total}</td>
                             <td style="text-align: center; vertical-align: middle; ">{$vo.address}</td>
                             <td style="text-align: center; vertical-align: middle; ">{$vo.freight}</td>

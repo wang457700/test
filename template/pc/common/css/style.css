@@ -187,7 +187,7 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 .product li .adds:hover{background: #6da93e;}
 
 .product-top-item{/* border: 1px solid #efefef; */display: inline-block;padding: 5px 0;}
-.product-top-item a{border: 1px solid #efefef;padding: 7px 20px; */margin:;margin-right: -5px;}
+.product-top-item a{border: 1px solid #efefef;padding: 7px 20px;margin-right: -5px;}
 .product-top-item a.active{background:#7ac141;color: #fff;}
 .product-top-right{text-align: right;}
 .product-top-right span{margin:0 10px;}

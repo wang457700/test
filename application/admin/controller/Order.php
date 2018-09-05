@@ -21,28 +21,39 @@ class Order extends Backend
         $where   = [];
         $keywordComplex = [];
         $request = input('request.');
+        $request['payment'] = input('payment','');
+        $request['pay_status'] = input('pay_status','all');
 
         if (!empty($request['keyword'])) {
             $keyword = $request['keyword'];
-            $keywordComplex['product_name|freight_num'] = ['like', "%$keyword%"];
+            $keywordComplex['order_sn'] = ['like', "%$keyword%"];
         }
-
+        if (!empty($request['payment'])) {
+            $where['payment'] = $request['payment'];
+        }
+        if ($request['pay_status'] !='all') {
+            $where['pay_status'] = $request['pay_status'];
+        }
         $order_list = Db::name('order')->alias('a')
 
             //->join('__GOODS__ c', 'a.goods_id=c.product_id', 'LEFT')
             ->whereOr($keywordComplex)
             ->where($where)
-            ->join('__USER_ADDRESS__ e', 'a.address_id=e.id', 'LEFT')
+            ->field('a.*,e.username,(select sum(money_total) from fa_order where order_sn=a.order_sn) as money_total')
+            ->alias('a')
+            ->join('__USER__ e', 'a.user_id=e.id', 'LEFT')
             ->group('a.order_sn')
             ->order('addtime desc')
-            ->paginate(10);
+            ->paginate(10,false,array('query'=>$request));
+
         $payment = array('0'=>'未知','1'=>'微信','2'=>'支付宝','3'=>'其他银行');
-        $pay_status = array('0'=>'未支付','1'=>'已下单','2'=>'已支付','3'=>'已发货','4'=>'失效','5'=>'已收货','6'=>'已取消',);
+        $pay_status = array('0'=>'未支付','2'=>'已支付','3'=>'已发货','6'=>'已取消',);
 
         $page = $order_list->render();
         $this->assign('page', $page);
         $this->assign('order_list', $order_list);
         $this->assign('payment', $payment);
+        $this->assign('request', $request);
         $this->assign('pay_status', $pay_status);
 
         return $this->view->fetch();
