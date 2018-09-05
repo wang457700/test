@@ -7,6 +7,7 @@ use think\Db;
 use app\common\library\Token;
 use app\common\model\Category as CategoryModel;
 use fast\Tree;
+use think\Session;
 
 
 class Product extends Frontend
@@ -75,7 +76,6 @@ class Product extends Frontend
         }else{
             return $this->view->fetch();
         }
-
     }
 
     public function search()
@@ -94,9 +94,19 @@ class Product extends Frontend
         $goods_id = input('id');
         $goods =  Db::name('goods')->where('product_id',$goods_id)->find();
         $goods_list =  Db::name('goods')->select();
+        $comment_list =  Db::name('goods_comment')
+            ->alias('a')->field('a.*,a.user_id as id,c.username,c.level')
+            ->join('__USER__ c','a.user_id=c.id','RIGHT')
+            ->where('product_id',$goods_id)
+            ->order('addtime desc')
+            ->paginate(5);
+
         $tree = Tree::instance();
+        $level = array('1'=>'普通会员','2'=>'白金会员','3'=>'金牌会员','4'=>'商业会员');
         $getparents = $tree->getParents($goods['cat_id'],true);
         $img_url=explode(',',$goods['img_url']);
+        $this->view->assign("comment_list",$comment_list);
+        $this->view->assign("level",$level);
         $this->view->assign("goods",$goods);
         $this->view->assign("goods_list",$goods_list);
         $this->view->assign("getparents",$getparents);
@@ -105,6 +115,30 @@ class Product extends Frontend
         return $this->view->fetch();
     }
 
+    public  function  comment(){
+        $data =  input();
+        $user_id = Session::get('user_id');
+        $data['addtime'] = date('Y-m-d H:i:s',time());
+        $data['user_id'] = $user_id;
+        $data['product_id'] =  $data['goods_id'];
+
+        if(empty($user_id)){
+            $this->error('请登录后再操作！');
+        }
+        if(empty($data['content'])){
+            $this->error('请填写您想发表的评论！');
+        }
+        if(empty($data['score'])){
+            $this->error('请选择星级评分！');
+        }
+        unset($data['goods_id']);
+        $res = Db::name('goods_comment')->insert($data);
+        if($res){
+            $this->success('评论成功',url('user/share_success'));
+        }else{
+            $this->error('请输入简介！');
+        }
+    }
 
 
 

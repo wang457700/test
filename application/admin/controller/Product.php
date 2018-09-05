@@ -130,7 +130,27 @@ class Product extends Backend
      */
     public function index()
     {
-        $list=Db::name('goods')->paginate(10);
+        $tree = Tree::instance();
+        $where   = [];
+        $request = input('request.');
+        $request['is_on_sale'] = input('is_on_sale','all');
+        $request['cat_id'] = input('cat_id',14);
+        if (!empty($request['cat_id'])) {
+            $where['cat_id'] = array('in',$tree->getChildrenIds(input('categoryid',$request['cat_id']),true));
+        }
+        if ($request['is_on_sale'] !='all') {
+            $where['is_on_sale'] = $request['is_on_sale'];
+        }
+        $keywordComplex = [];
+        if (!empty($request['keyword'])) {
+            $keyword = $request['keyword'];
+            $keywordComplex['product_name|freight_num'] = ['like', "%$keyword%"];
+        }
+        $list=Db::name('goods')
+        ->whereOr($keywordComplex)
+        ->where($where)
+
+        ->paginate(10,false,array('query'=>$request));
         $is_on_sale=array(
             '0'=>'下架',
             '1'=>'上架'
@@ -140,10 +160,13 @@ class Product extends Backend
             '0'=>'上架',
             '1'=>'下架'
         );
+
         $page = $list->render();
         $this->assign('list',$list);
         $this->assign('is_on',$is_on);
         $this->assign('page', $page);
+        $this->assign('request', $request);
+        $this->assign('categorylist', $this->categorylist);
         $this->assign('is_on_sale',$is_on_sale);
         return    $this->view->fetch();
     }

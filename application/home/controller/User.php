@@ -328,8 +328,6 @@ class User extends Frontend
             // ->select();
            ->paginate(10);
 
-
-        dump($contribution_list);
         $data = $contribution_list->all();
         foreach ($data as $k =>  $v)
         {

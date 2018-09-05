@@ -239,7 +239,7 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 .product_detail .comment .pllist li .d1{text-align:center;}
 .product_detail .comment .pllist li .d1 i{font-size: 20px;color: #ffa800;}
 .product_detail .comment .pllist li .d1 span{margin-left: 10px;}
-.product_detail .comment .pllist li .d2{font-size: 14px;}
+.product_detail .comment .pllist li .d2{font-size: 14px;padding: 10px 0;}
 .product_detail .comment .pllist li .d3 img{width: 30%;}
 .product_detail .comment .pllist li .d3 span{color:#666;}
 

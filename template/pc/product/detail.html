@@ -5,19 +5,7 @@
 {include file="common/nav"/}
   <style type="text/css">
       .product li {border-top:0;}
-      .rating{
-          width:240px;
-          height:48px;
-      }
-      .rating-item{
-          float: left;
-          width:20px;
-          height:20px;
-          background:url(__TMPL_PUBLIC__/img/icon.png) no-repeat ;
-          background-size:20px ;
-          cursor: pointer;
-          margin-right: 5px;
-      }
+
   </style>>
   <body style="background: url(__TMPL_PUBLIC__/img/index_bg.jpg) repeat-y;"> 
     <div class="container">
@@ -114,8 +102,7 @@
               <div  class="xg-title">
                   相關產品
               </div>
-              <div class="product"> 
-
+              <div class="product">
                     <ul class="row" style="border-top: 1px solid #e5e5e5;margin: 0;">
                         {foreach name="goods_list" item="vo"}
                         {if condition="$key lt 5"}
@@ -143,123 +130,82 @@
                     </ul>
                </div>
           </div>
-
           <div>
+              <?php
+                  $page =  input('page',0);
+                ?>
               <div class="investment_f">
                 <div class="investment_title">
-                  <div class="on">商品詳情</div>
-                  <div>用戶評論(13)</div> 
+                  <div class="{if condition="$page eq 0"}on{/if}">商品詳情</div>
+                  <div class="{if condition="$page"}on{/if}">用戶評論({$comment_list->total()})</div>
                 </div>
                 <div class="investment_con">
-                  <div class="investment_con_list" style="display: block;">
+                  <div class="investment_con_list" style="display: {if condition="$page eq 0"}block{/if};">
                     {$goods.content}
                   </div>
-                  <div class="investment_con_list comment">
+                  <div class="investment_con_list comment" style="display: {if condition="$page"}block{/if};">
                       <div class="xuan font16 color_ro">
                          发表评论
                       </div>
                       <div class="message" style="padding:  20px;">
+                      <form action="{:url('product/comment')}" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return commentform()" id="comment-form">
+                          <input type="hidden" name="goods_id" value="{$goods.product_id}">
                           <div class="row" style="">
-                              <textarea rows="3" cols="20" style="height:100px;margin: 0 auto;border:  1px solid #eee;padding: 10px;" class="col-md-12">                                在w3school，你可以找到你所需要的所有的网站建设教程。
-                            </textarea>
+                              <textarea rows="3" cols="20" style="height:100px;margin: 0 auto;border:  1px solid #eee;padding: 10px;" class="col-md-12" placeholder="请填写您想发表的评论" name="content"></textarea>
                           </div>
-                          <ul id="rating" class="rating">
-                              <li class="rating-item" title="很不好"></li>
-                              <li class="rating-item" title="不好"></li>
-                              <li class="rating-item" title="一般"></li>
-                              <li class="rating-item" title="好"></li>
-                              <li class="rating-item" title="很好"></li>
-                          </ul>
+                          <br>
+                          星级评分：
+                          <div id="star1" style="display: inline-block;"></div>
+                          <div id="result1"></div>
+                          <br>
                           <br>
                           <div class="row" style="">
-                            <button type="button" class="btn btn-warning btn-warning-edit col-md-1" style="width:120px">发布共享</button>
+                            <button type="submit" class="btn btn-warning btn-warning-edit col-md-1" style="width:120px">发表评论</button>
                           </div>
+                      </form>
                       </div>
                         <div class="xuan">
-                          <a href="" class="color_ro">全部評價(115)</a>
-                          <a href="">滿意 (13）</a>
-                          <a href="">一般 (89）</a>
+                          <a href="" class="color_ro">全部評價({$comment_list->total()})</a>
+                          <a href="">滿意 (0）</a>
+                          <a href="">一般 (0）</a>
                           <a href="">不滿意 (0）</a>
                         </div>
-
                         <ul class=" pllist">
-                          
-                          
+                        {foreach name="comment_list" item="vo"}
                           <li class="row">
                                 <div class="col-md-2 col-xs-3 d1">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <p>2018-07-10<span>21:00</span></p>
+                                    {for start="0" end="$vo['score']" name="i"}
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                    {/for}
+                                    <p>{:date('Y-m-d',strtotime($vo['addtime']))}<span>{:date('H:i',strtotime($vo['addtime']))}</span></p>
                                 </div>
                                 <div class="col-md-7 col-xs-6 d2">
-                                    鞋墊很好用，合寬扁/普通足弓，有助後足跟減壓﹑避震及防滑
+                                    {$vo.content}
                                 </div>
                                 <div class="col-md-3 col-xs-3 d3">
                                   <div class="row">
-                                      <img src="img/gg1.jpg" class="col-md-4 col-xs-4" />
                                       <p class="col-md-8 col-xs-8" style="padding: 0;">
-                                          531989872****<br>
-                                          <span>普通會員</span>
+                                          {:substr($vo['username'],0,-3)}****<br>
+                                          <span>{$level[$vo['level']]}</span>
                                       </p>
                                   </div>
                                 </div>
-                          </li> 
-                          
-                          <li class="row">
-                                <div class="col-md-2 col-xs-3 d1">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <p>2018-07-10<span>21:00</span></p>
-                                </div>
-                                <div class="col-md-7 col-xs-6 d2">
-                                    鞋墊很好用，合寬扁/普通足弓，有助後足跟減壓﹑避震及防滑
-                                </div>
-                                <div class="col-md-3 col-xs-3 d3">
-                                  <div class="row">
-                                      <img src="img/gg1.jpg" class="col-md-4 col-xs-4" />
-                                      <p class="col-md-8 col-xs-8" style="padding: 0;">
-                                          531989872****<br>
-                                          <span>普通會員</span>
-                                      </p>
-                                  </div>
-                                </div>
-                          </li> 
-
+                          </li>
+                        {/foreach}
+                        {if condition="$comment_list->total() eq 0"}
+                            <li class="row">
+                                暂时没有评论
+                            </li>
+                        {/if}
                         </ul>
-
-
                         <div class="pagination">
-
-                        	<ul> 
-                        		<li><a href="#">上一頁</a> </li>
-                        		<li class="active current"><span class="current">1</span> </li>
-                        		<li><a href="#"> 2</a> </li>
-                        		<li><a href="#"> 3</a> </li>
-                        		<li><a href="#"> 4</a> </li>
-                        		<li><a href="#"> 5</a> </li>
-                        		<li><a href="#"> 6</a> </li>
-                        		<li><a href="#"> ...</a> </li>
-                        		<li><a href="#"> 234</a> </li>
-                        		<li><a href="#">下一頁</a> </li>
-                        		<li><a href="#">尾页</a> </li> 
-                        	</ul>	
-
+                            {$comment_list->render()}
                         </div>
                         <div class="clear"></div>
-
                   </div> 
                 </div>
               </div>
           </div>
-
-
-
 
       </div>
     </div>
@@ -268,16 +214,32 @@
 <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
 <script src="__TMPL_PUBLIC__/js/star.js"></script>
 {include file="common/script" /}
-    <script>
-        //调用方法
-        //点击后可再选
-        $('#rating').star({
-            mode:'LightEntire', //整颗星
-            num:5,
-        });
-        $('#rating2').on('chosen',function(){
-            $('#rating').star('unbindEvent');
-        })
+    <script type="text/javascript">
+        rat('star1','result1',1);
+        ;
+        function rat(star,result,m){
+
+            star= '#' + star;
+            result= '#' + result;
+            $(result).hide();//将结果DIV隐藏
+
+            $(star).raty({
+                hints: ['1', '2', '3', '4', '5'],
+                number:5,
+                path: "__TMPL_PUBLIC__/img/",
+                starOff: 'star-off-big.png',
+                starOn: 'star-on-big.png',
+                size: 24,
+                start: 3,
+                showHalf: true,
+                //target: result,
+                //targetKeep : false,//targetKeep 属性设置为true，用户的选择值才会被保持在目标DIV中，否则只是鼠标悬停时有值，而鼠标离开后这个值就会消失
+                click: function (score, evt){
+                    //第一种方式：直接取值
+
+                }
+            });
+        }
     </script>
    <script>
       $(document).ready(function(){
@@ -306,10 +268,10 @@
       $(function() {
           function tabs(tabTit, on, tabCon) {
               $(tabCon).each(function() {
-                  $(this).children().eq(0).show();
+                 // $(this).children().eq(0).show();
               });
               $(tabTit).each(function() {
-                  $(this).children().eq(0).addClass(on);
+                  // $(this).children().eq(0).addClass(on);
               });
               $(tabTit).children().click(function() {
                   $(this).addClass(on).siblings().removeClass(on);
@@ -336,6 +298,27 @@
           });
           //  return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
       }
+
+      function commentform(){
+          //console.log($('#cart-form').serializeArray());
+          // jquery 表单提交
+          $("#comment-form").ajaxSubmit(function(data){
+              console.log(data);
+              if(data.code == 0){
+                  $.message({message:data.msg,type:'warning',time:'3000'});
+              }else{
+                  $.message(data.msg);
+                  setTimeout(function (){
+                      window.location.reload()
+                  },1000);
+              }
+          });
+           return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
+      }
+        var comment = {$page};
+        if(comment != 0){
+            $('html,body').animate({scrollTop:$('.investment_f').position().top},'slow');
+        }
 
     </script>
     {include file="common/footer"/}
