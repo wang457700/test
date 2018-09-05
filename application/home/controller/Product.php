@@ -59,14 +59,11 @@ class Product extends Frontend
         $product_list =  Db::name('goods')
             ->where($where)
             ->order($order)
-            ->paginate(2);
-        $count =  Db::name('goods')->where($where)->count();
+            ->paginate(10);
         $this->view->assign("product_list", $product_list);
         $page = $product_list->render();
 
-        dump($page);
         $this->assign('page',$page);
-        $this->view->assign("count", $count);
         $this->view->assign("title",'产品列表');
         $this->view->assign("getparents",$getParents);
         $this->view->assign("input",input());

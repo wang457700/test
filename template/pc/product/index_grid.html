@@ -22,12 +22,22 @@
                   <a href="">新品</a>
             </div>
             <div class="product-top-right col-md-6">
-                  <a href="{:url('product/index')}"><i class="fa fa-th-large" aria-hidden="true"></i></a>
-
-                  共 <span class="color_ro">68</span> 件商品      
-                  <span><i class="color_ro" style="font-style: inherit;">10</i>/68</span>
-                  <a href="javascript: void(0);"><i class="fa fa-angle-left angle" aria-hidden="true"></i></a>
-                  <a href="javascript: void(0);"><i class="fa fa-angle-right angle" aria-hidden="true"></i></a>
+                <?php
+                    $last = 'javascript:';
+                    $next = 'javascript:';
+                    $url =  url('product/index',array('categoryid'=>$input['categoryid']));
+                    if($product_list->currentPage() != 1 ){
+                        $last =$url.'?page='.($product_list->currentPage()-1);
+                    }
+                    if($product_list->currentPage() < $product_list->lastPage()){
+                        $next =$url.'?page='.($product_list->currentPage()+1);
+                    }
+                ?>
+                <a href="{:url('product/index',array('style'=>'grid','categoryid'=>$input['categoryid']))}"><i class="fa fa-th-large" aria-hidden="true"></i></a>
+                共 <span class="color_ro">{$product_list->total()}</span> 件商品
+                <span><i class="color_ro" style="font-style: inherit;">{$product_list->currentPage()}</i>/{$product_list->lastPage()}</span>
+                <a href="{$last}"  id="last"><i class="fa fa-angle-left angle" aria-hidden="true"></i></a>
+                <a href="{$next}" id="next"><i class="fa fa-angle-right angle disabled" aria-hidden="true" ></i></a>
             </div>
 
         </div>
