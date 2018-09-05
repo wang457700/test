@@ -48,7 +48,6 @@ class Order extends Backend
 
         $payment = array('0'=>'未知','1'=>'微信','2'=>'支付宝','3'=>'其他银行');
         $pay_status = array('0'=>'未支付','2'=>'已支付','3'=>'已发货','6'=>'已取消',);
-
         $page = $order_list->render();
         $this->assign('page', $page);
         $this->assign('order_list', $order_list);
@@ -71,7 +70,6 @@ class Order extends Backend
 
 
     public function detail(){
-
 
         $row = array(
             'order_id'=>201807001,
@@ -98,8 +96,23 @@ class Order extends Backend
         if ($this->request->isAjax()) {
             $this->success("Ajax请求成功", null, ['id' => $ids]);
         }
+        $order_sn = input('order_sn');
+        $order = Db::name('order')->alias('a')
+        ->field('a.*,(select sum(money_total) from fa_order where order_sn=a.order_sn) as all_total,(select sum(goods_num) from fa_order where order_sn=a.order_sn) as all_goods_num,(select username from fa_user where id=a.user_id) as username,(select coupon_name from fa_coupon where coupon_id=a.coupon_id) as coupon_name,(select name from fa_user_address where id=a.address_id) as address_username,(select phone from fa_user_address where id=a.address_id) as address_phone,(select coupon_name from fa_coupon where coupon_id=a.coupon_id) as coupon_name')
+        ->where('order_sn',$order_sn)->find();
 
+        $goods_list = Db::name('order')
+            ->alias('a')
+            ->field('a.*,(select place_origin from fa_goods where product_id=a.goods_id) as place_origin,(select product_name from fa_goods where product_id=a.goods_id) as product_name')
+
+            ->where('order_sn',$order_sn)->select();
+        $payment = array('0'=>'未知','1'=>'微信','2'=>'支付宝','3'=>'其他银行');
+        $pay_status = array('0'=>'未支付','2'=>'已支付','3'=>'已发货','6'=>'已取消',);
         $this->view->assign("row", $row);
+        $this->view->assign("order", $order);
+        $this->view->assign("goods_list", $goods_list);
+        $this->view->assign("payment", $payment);
+        $this->view->assign("pay_status", $pay_status);
         return $this->view->fetch();
 
     }

@@ -6,55 +6,61 @@
     <tbody  class="col-xs-6 col-sm-6">
         <tr class="col-xs-6 col-sm-6">
             <th>訂單ID：</th>
-            <td>{$row.order_id}</td>
+            <td>{$order.order_sn}</td>
         </tr>
         <tr class="col-xs-6 col-sm-6">
             <th>下單日期：</th>
-            <td>{$row.order_time}</td>
+            <td>{$order.addtime}</td>
         </tr>
         <tr class="col-xs-6 col-sm-6">
             <th>用戶ID：</th>
-            <td>{$row.user_id}</td>
+            <td>{$order.user_id}</td>
         </tr>
         <tr class="col-xs-6 col-sm-6">
             <th>用戶名：</th>
-            <td>{$row.user_name}</td>
+            <td>{$order.username}</td>
         </tr> 
         <tr class="col-xs-6 col-sm-6">
             <th>支付方式：</th>
-            <td>{$row.payment_type}</td>
+            <td>{$payment[$order['payment']]}</td>
         </tr> 
         <tr class="col-xs-6 col-sm-6">
             <th>應付金額：</th>
-            <td>{$row.amount_payable}</td>
+            <td>{$order['all_total'] + $order['freight'] - $order['integral_price'] - $order['coupon_price']}</td>
         </tr>
         <tr class="col-xs-6 col-sm-6">
             <th>服務費：</th>
-            <td>{$row.service_charge}</td>
+            <td>0</td>
         </tr>
         <tr class="col-xs-6 col-sm-6">
             <th>捐款金額：</th>
-            <td>{$row.donated_amount}</td>
+            <td>{$order.contribution_price}</td>
         </tr>
         <tr class="col-xs-6 col-sm-6">
             <th>運費：</th>
-            <td>{$row.freight}</td>
+            <td>{$order.freight}</td>
+        </tr>
+
+        <tr class="col-xs-6 col-sm-6">
+            <th>积分抵扣金額：</th>
+            <td>{$order.integral_price}</td>
         </tr>
         <tr class="col-xs-6 col-sm-6">
             <th>訂單總金額：</th>
-            <td>{$row.total_amount}</td>
+            <td>{$order.all_total}</td>
         </tr>
         <tr class="col-xs-6 col-sm-6">
             <th>商品數量：</th>
-            <td>{$row.goods_count}</td>
+            <td>{$order.all_goods_num}</td>
         </tr>
+
         <tr class="col-xs-6 col-sm-6">
             <th>優惠券：</th>
-            <td>{$row.coupon}</td>
+            <td>{$order.coupon_name}</td>
         </tr>
         <tr class="col-xs-6 col-sm-6">
             <th>優惠金額：</th>
-            <td>{$row.coupon_amount}</td>
+            <td>{$order.coupon_price}</td>
         </tr>
     </tbody>
 </table>
@@ -66,19 +72,19 @@
     <tbody class="col-xs-6 col-sm-6">
         <tr class="col-xs-6 col-sm-6">
             <th>收貨人：</th>
-            <td>{$row.take_name}</td>
+            <td>{$order.address_username}</td>
         </tr>
         <tr class="col-xs-6 col-sm-6">
             <th>聯繫電話：</th>
-            <td>{$row.take_phone}</td>
+            <td>{$order.address_phone}</td>
         </tr>
         <tr class="col-xs-12 col-sm-12">
             <th>收貨地址：</th>
-            <td>{$row.take_address}</td>
+            <td>{$order.address}</td>
         </tr>
         <tr class="col-xs-12 col-sm-12">
             <th>訂單狀態：</th>
-            <td>{$row.status}</td>
+            <td>{$pay_status[$order['pay_status']]}</td>
         </tr> 
     </tbody>
 </table>
@@ -89,21 +95,15 @@
       
     </thead>
     <tbody>
+    {foreach name="$goods_list" item="vo"}
         <tr>
-            <td>1</td>
-            <td>產品標題 產品標題 產品標題 產品標題</td>
-            <td>貨品ID:10008611</td>
-            <td>產品型號：4713286446454</td>
-            <td>×1</td>
+            <td>{$key+1}</td>
+            <td>{$vo.product_name}</td>
+            <td>貨品ID:{$vo.goods_sn}</td>
+            <td>產品型號：{$vo.place_origin}</td>
+            <td>×{$vo.goods_num}</td>
         </tr>
-        <tr>
-            <td>2</td>
-            <td>產品標題 產品標題 產品標題 產品標題</td>
-            <td>貨品ID:10008611</td>
-            <td>產品型號：4713286446454</td>
-            <td>×3</td>
-        </tr>
-        
+    {/foreach}
     </tbody>
 </table>
 
