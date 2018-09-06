@@ -236,7 +236,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 advancedSearch: false,
                 pagination: true,
                 extend: {
-                    "index_url": "Myadminjson/coupon_detail",
+                    "index_url": "coupon/detail",
                     "add_url": "",
                     "edit_url": "",
                     "del_url": "",

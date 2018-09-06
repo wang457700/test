@@ -149,7 +149,7 @@ class Product extends Backend
         $list=Db::name('goods')
         ->whereOr($keywordComplex)
         ->where($where)
-
+        ->order('product_id desc')
         ->paginate(10,false,array('query'=>$request));
         $is_on_sale=array(
             '0'=>'下架',

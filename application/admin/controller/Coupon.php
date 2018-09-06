@@ -63,9 +63,38 @@ class Coupon extends Backend
     /**
      * 详情
      */
-    public function detail($ids)
+    public function detail($ids = NULL)
     {
-       
+
+        if($this->request->isAjax()){
+            $data=input('post.');
+            dump($data);
+            $total = 1 ;
+            $list =array(
+                array(
+                    'data1'=>'536435',
+                    'data2'=>'10%折扣',
+                    'data3'=>'长期',
+                    'data4'=>'916050070',
+                    'data5'=>'满100元即可获得10%折扣',
+                    'data6'=>'8296',
+                    'data7'=>'不限',
+                ),
+                array(
+                    'data1'=>'431070',
+                    'data2'=>'20%折扣',
+                    'data3'=>'2018/12/31',
+                    'data4'=>'4613146641',
+                    'data5'=>'满100元即可获得20%折扣',
+                    'data6'=>'8296',
+                    'data7'=>'白金',
+                ),
+            );
+            $result = array("total" => $total, "rows" => $list);
+            return json($result);
+
+        }
+
         $row = array(
             'order_id'=>201807001,
             'order_time'=>'2018/06/30',
@@ -85,12 +114,6 @@ class Coupon extends Backend
             'coupon_amount'=>'$100.00',
             'status'=>'未發貨',
         );
-
-        if (!$row)
-            $this->error(__('No Results were found'));
-        if ($this->request->isAjax()){
-            $this->success("Ajax请求成功", null, ['id' => $ids]);
-        }
 
         $this->view->assign("row", $row);
         return $this->view->fetch();

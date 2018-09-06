@@ -139,9 +139,9 @@
                             <td style="text-align: center; vertical-align: middle; ">
                                 <a href="{:url('Product/edit',array('product_id'=>$vo['product_id']))}" class="btn btn-xs btn-detail btn-dialog" title="修改" data-table-id="table" data-field-index="11" data-row-index="0" data-button-index="0">
                                     <i class=""></i>修改</a>
-                                <a href="{:url('Product/del',array('product_id'=>$vo['product_id']))}" class="btn btn-xs btn-detail btn-magic btn-ajax-xs" title="发送Ajax" data-table-id="table" data-field-index="11" data-row-index="0" data-button-index="1">
+                                <a href="{:url('Product/del',array('product_id'=>$vo['product_id']))}" class="btn btn-xs btn-detail btn-magic btn-ajax-xs" title="点击删除" data-table-id="table" data-field-index="11" data-row-index="0" data-button-index="1">
                                     <i class=""></i>删除</a>
-                                <a href="{:url('Product/is_on_sale',array('product_id'=>$vo['product_id'],'is_on_sale'=>$vo['is_on_sale']))}" class="btn btn-xs btn-detail btn-magic btn-ajax-xs" title="发送Ajax" data-table-id="table" data-field-index="11" data-row-index="0" data-button-index="2">
+                                <a href="{:url('Product/is_on_sale',array('product_id'=>$vo['product_id'],'is_on_sale'=>$vo['is_on_sale']))}" class="btn btn-xs btn-detail btn-magic btn-ajax-xs" title="点击{$is_on[$vo['is_on_sale']]}" data-table-id="table" data-field-index="11" data-row-index="0" data-button-index="2">
                                     <i class=""></i>{$is_on[$vo['is_on_sale']]}</a>
 
                             </td>
