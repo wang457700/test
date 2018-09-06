@@ -47,9 +47,9 @@
                 for="inputPassword3" class="col-sm-1 col-xs-6 control-label"><span class="color_ro">* </span>圖片上傳:</label>
                 <div class="col-sm-6">
                   <div id="preview" style="padding: 20px;">
-                    <img id="imghead"  class="upload_image" src="{:fa_get_image_url($info['product_pic'])}"  style="max-width:  200px;">
+                    <img id="imghead"  class="upload_image" src="__PUBLIC__{$info['product_pic']}"  style="max-width:  200px;">
                   </div>
-                  <input name="pic" type="hidden"  id="pic"/>
+                  <input name="pic" type="hidden"  id="pic" value=""/>
                   <input type="file" onchange="previewImage(this)" style="display: none;" id="previewImg" accept=".gif,.jpg,.jpeg,.png">
                   <img src="__TMPL_PUBLIC__/control/images/add_img.png"  onclick="$('#previewImg').click();" id="add_img"  style="display: none">
                   <img src="__TMPL_PUBLIC__/control/images/edit_img.png"  onclick="$('#previewImg').click();" id="edit_img">
@@ -165,9 +165,9 @@
       }
 
       //选择分类
-      var cat_id_01 = {$info.product_category[0]};
-      var cat_id_02 = {$info.product_category[1]?$info.product_category[1]:0};
-      var cat_id_03 = {$info.product_category[2]?$info.product_category[2]:0};
+      var cat_id_01 = {$info.product_category[1]};
+      var cat_id_02 = {$info.product_category[2]?$info.product_category[2]:0};
+      var cat_id_03 = {$info.product_category[3]?$info.product_category[3]:0};
       get_category(14,'cat_id',cat_id_01);
       if(cat_id_02){
           get_category(cat_id_01,'cat_id_2',cat_id_02);

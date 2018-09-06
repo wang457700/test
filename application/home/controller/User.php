@@ -451,7 +451,7 @@ class User extends Frontend
 
         $id = $this->request->param('id', 0, 'intval');
         $info= Db::name('user_share')->where(array('id'=>$id,'user_id'=>$user_id))->find();
-        $info[''] =
+        $info['product_category'] = explode('-',$info['product_category']);
         $this->assign('info',$info);
         $this->assign('title','我的共享');
         return $this->view->fetch('user/share/edit');
