@@ -4,8 +4,6 @@
         <?php
             $user_id = Session('user_id');
             $user = model('user')->where('id',$user_id)->find();
-            //$count_cart = Db::name('cart_order')->where('user_id',$user_id)->count();
-            $total = Session('total');
         ?>
         {if condition="$user_id neq ''"}
             <a href="{:url('user/center')}" class="color_gr" --blue>{$user.username}</a>

@@ -1,0 +1,89 @@
+<script src="__TMPL_PUBLIC__/js/mui.min.js"></script>
+
+<script src='__PUBLIC__/assets/js/message/messageIE.js'></script>
+<script src='__PUBLIC__/assets/js/message/message.js'></script>
+<script src='__PUBLIC__/assets/js/message/messageIE.js'></script>
+<script src="__TMPL_PUBLIC__/js/scripts.js"></script>
+<script>
+    /* 加入购物车 */
+    $(".adds,#adds").click(function(){
+        var product_id = $(this).data('productid');
+        var name = $(this).data('name');
+        $.ajax({
+            type: "POST",
+            url: "{:url('cart/checkin_cart')}",
+            dataType: 'json',
+            data:{product_id:product_id},
+            success: function(data) {
+                if (data.code) {
+                    $.message(data.msg);
+                    $('#shopping_total').text(Number(data.total));
+                }else{
+                    $.message({message:data.msg,type:'warning',time:'3000'});
+                }
+            }
+        });
+    });
+
+    /*删除*/
+    $(".js-ajax-delete").click(function(){
+        var url = $(this).attr('href');
+        if(confirm("确定要刪除吗？")){
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType:"json",
+                success: function(data) {
+                    if(data.code == 0){
+                        $.message({message:data.msg,type:'warning',time:'3000'});
+                    }else{
+                        $.message(data.msg);
+                        setTimeout(function () {
+                            window.location.reload()
+                        },500);
+                    }
+                }
+            });
+        }
+    });
+
+
+
+    function MoveBox(obj) {
+        var divTop = $(obj).offset().top;
+        var divLeft = $(obj).offset().left;
+        $(obj).css({
+            "position": "absolute",
+            "z-index": "0",
+            "left": divLeft + "px",
+            "top": divTop + "px"
+        });
+        $(obj).parent().append($(obj).clone());
+        $(obj).animate({
+            "left": ($("#posBtnR").offset().left) + "px",
+            "top": $("#posBtnR").offset().top + "px",
+            "width": "100px",
+            "height": "70px"
+        }, 1000, function() {
+            $(obj).animate({
+                "left": $("#posBtnR").offset().left + "px",
+                "top": $("#posBtnR").offset().top + "px"
+            }, 1000);
+            num++;
+            $("#btn_num", parent.document).text(num).animate({
+                'opacity': 1,
+                'marginTop': '0'
+            }, 500, function() {
+                setTimeout(function() {
+                    $("#btn_num").hide()
+                }, 8000);
+            });
+        });
+    }
+
+    mui.init({
+    });
+   mui('.mui-bar').on('tap','a' ,function(){
+       location.href = this.getAttribute('href')
+   });
+</script>

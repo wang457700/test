@@ -1,0 +1,146 @@
+{include file="layout/public_head" /}
+	<style>
+		.mui-card{box-shadow: none;border-radius: 5px;}
+	</style>
+	<body>
+	<form action="{:URL('cart/order_ok')}" method="post" enctype="multipart/form-data" onsubmit="return cartform()" id="cart-form">
+
+	<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #7ac141;"></a>
+			<h1 class="mui-title">購物車</h1>
+		</header>
+		{if condition="count($car_list) neq 0"}
+		<nav class="mui-bar mui-bar-tab" style="box-shadow: none;padding-top: 5px;padding-right: 5px;">
+			<div class="mui-checkbox mui-col-sm-1 mui-col-xs-1" style="line-height: 40px;width: 80px;height:  40px;float: left;">
+				
+				<input name="checkbox" value="Item 2" type="checkbox" style="left: 8px;top: 5px;" id="checked">
+			<label style="line-height: 40px;padding-left: 40px;padding-right: 0;">全选</label></div>
+			
+			<button type="type" class="mui-btn mui-btn-success mui-pull-right" style="top: 5px;">結算(2)</button>
+			<p class="mui-pull-right" style="margin:  0;line-height: 40px;margin-right: 20px;">合計：<span class="color_ro">$</span><span class="color_ro font18">388</span></p>
+		</nav>
+		{/if}
+		<div class="mui-content">
+			<div class="shopping_cart">
+				{foreach name="car_list" item="vo"}
+				<div class="mui-card" id="list_1">
+					<div class="mui-card-content">
+						<div class="mui-card-content-inner">
+							<ul class="mui-row">
+								<li class="mui-checkbox mui-col-sm-1 mui-col-xs-1" style="line-height: 40px;">
+									<input name="goods_id[]" value="{$vo.product_id}" type="checkbox" style="right: 8px;top: 35px;">
+								</li>
+						        <li class="mui-col-sm-4 mui-col-xs-4" style="padding-right: 5px">
+						            <img src="__PUBLIC__/{$vo.cover}" class="img_left" />
+						        </li>
+						        <li class="mui-col-sm-7 mui-col-xs-7">
+						            <p class="title">{$vo.product_name}</p>
+									<a href="" class="xuan">{$vo.model}</a>
+									<div>
+										<p class="mui-pull-left" style="margin:  0;line-height: 40px;"><span class="color_ro">$</span><span class="color_ro font18">{$vo.price}</span></p>
+										<div class="col-md-12 mui-pull-right number" style="">
+											<input id="min_1" name="" type="button" value="-" class="reduce" disabled="disabled" onclick="on_number(1,'min')">  
+											<input id="number_1" name="goods_num[]" type="text" value="{$vo.total}" style="width:40px;text-align: center;border: 0;height: 20px;">
+											<input id="add_1" name="" type="button" value="+" class="add" onclick="on_number(1,'add')">
+										  </div>
+									</div>
+									<a href="{:url('cart/cart_del',array('product_id'=>$vo['product_id']))}" class="js-ajax-delete del" onclick="return false;">×</a>
+						        </li>
+						    </ul>
+
+						</div>
+					</div>
+				</div>
+				{/foreach}
+				{if condition="count($car_list) eq 0"}
+					<div style="text-align:  center;padding: 100px; font-size: 16px;color: #666;">
+						購物車空空，<a href="{:url('index/index')}" class="color_gr">去購物</a>！
+					</div>
+				{/if}
+			</div>
+		</div>
+	</form>
+		{include file="common/script" /}
+		<script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
+		<script>
+			mui('.mui-scroll-wrapper').scroll();
+
+			function on_number(id,type){
+				//初始化数量为1,并失效减
+				//$('#min' + id).attr('disabled',true);
+				//获得文本框对象
+				var t = $("#number_" + id); 
+				 
+				if(type=='add'){
+					// 给获取的val加上绝对值，避免出现负数
+					t.val(Math.abs(parseInt(t.val()))+1);
+					  if (parseInt(t.val())!=1){
+					  $('#min_' + id).attr('disabled',false);
+					}; 
+				}
+				if(type=='min'){
+					t.val(Math.abs(parseInt(t.val()))-1);
+					  if (parseInt(t.val())==1){
+					  $('#min_' + id).attr('disabled',true);
+					};
+					 
+				}
+				 
+				var unit_price = $('#unit_price_' + id).val();
+				var number = t.val();
+				var subtotal_price = Number(unit_price)*Number(number);
+				$('#subtotal_span_' + id).text(subtotal_price.toFixed(2));
+				$('#subtotal_' + id).val(subtotal_price.toFixed(2));
+
+				total();
+			}
+
+			//统计总价格	
+			function total(){
+				var sum=0;
+				$("input[name^='subtotal']").each(function(){ 
+						sum+= Number($(this).val()); 
+				});
+				$('#total').text('$ '+ sum.toFixed(2));
+
+			}
+
+			//全选或不选
+			$("#checked").on('click',function(){
+				if($(this).data('id') == 1){
+					$("input[name='goods_id[]']").each(function(){
+						$(this).prop('checked', false);
+					});
+					$(this).data('id',0);
+				}else{
+					$("input[name='goods_id[]']").each(function(){
+						$(this).prop('checked', true);
+					});
+					$(this).data('id',1);
+				}
+			});
+
+            function cartform(){
+                var data = $('#cart-form').serializeArray();
+                console.log(data);
+                // jquery 表单提交
+                $("#cart-form").ajaxSubmit(function(data){
+
+                    if(data.code == 0){
+                        $.message({message:data.msg,type:'warning',time:'3000'});
+                    }else{
+                        //$.message(data.msg);
+                        setTimeout(function (){
+                            window.location = data.url
+                        },1500);
+                    }
+                });
+               //return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
+            }
+
+
+		</script>
+
+	</body>
+
+</html>

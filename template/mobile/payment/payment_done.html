@@ -1,0 +1,60 @@
+{include file="layout/public_head" /}
+	<body style="background: #fff">
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">支付成功</h1>
+		</header>
+		<div class="mui-content" style="background: #fff">
+			<div style="
+    text-align:  center;
+    padding:  30px;
+">
+				<img src="__TMPL_PUBLIC__/img/payment_ok.png" />
+				<br>支付成功！
+				<p>您可以:
+					<a href="{:url('user/order_detail',array('order_sn'=>base64_encode($order_sn)))}">
+					<button type="button" class="mui-btn mui-btn-success" style="
+    width: 30%;
+    background: #7AC142;
+    border: 1px solid #7AC142;
+">查看訂單</button>
+					</a>
+					<a href="{:url('index/index')}"  class="mui-btn mui-btn-warning mui-btn-outlined">繼續購物</a>
+	         	</p>
+			</div>
+			<div style="border-bottom: 1px solid #efefef;padding: 10px;margin-bottom:  10px;">推薦產品</div>
+			<ul class="mui-table-view mui-table-view-chevron mui-row product_list" style="padding: 0 10px;display: none">
+
+				<li class="mui-col-sm-6 mui-col-xs-6 list">
+					<a class="news"></a><img src="__TMPL_PUBLIC__/img/f2_1.jpg" />
+					<p class="p2">ATex sports 肌肉運動貼</p>
+					<p><span class="color_ro">$</span><span class="color_ro font18">388</span>  <span class="price">$688</span></p>
+				</li>
+
+				<li class="mui-col-sm-6 mui-col-xs-6 list">
+					<a class="news"></a><img src="img/f2_1.jpg" />
+					<p class="p2">ATex sports 肌肉運動貼</p>
+					<p><span class="color_ro">$</span><span class="color_ro font18">388</span>  <span class="price">$688</span></p>
+				</li>
+
+				<li class="mui-col-sm-6 mui-col-xs-6 list">
+					<a class="news"></a><img src="img/f2_1.jpg" />
+					<p class="p2">ATex sports 肌肉運動貼</p>
+					<p><span class="color_ro">$</span><span class="color_ro font18">388</span>  <span class="price">$688</span></p>
+				</li>
+
+				<li class="mui-col-sm-6 mui-col-xs-6 list">
+					<a class="news"></a><img src="img/f2_1.jpg" />
+					<p class="p2">ATex sports 肌肉運動貼</p>
+					<p><span class="color_ro">$</span><span class="color_ro font18">388</span>  <span class="price">$688</span></p>
+				</li>
+
+			</ul>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script>
+			mui('.mui-scroll-wrapper').scroll();
+		</script>
+
+	</body>
+
+</html>

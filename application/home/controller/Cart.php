@@ -80,6 +80,7 @@ class Cart extends Frontend
                     $data[$k]['product_name'] = $goods['product_name'];
                     $data[$k]['brand'] = $goods['brand'];
                     $data[$k]['freight_num'] = $goods['freight_num'];
+                    $data[$k]['model'] = $goods['model'];
                     $data[$k]['price'] = $goods['price'];
                     $data[$k]['pricevip'] = $goods['pricevip'];
                     $data[$k]['discount_price'] = $goods['discount_price'];

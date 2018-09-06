@@ -1,0 +1,89 @@
+{include file="layout/public_head" /}
+	<style>
+		.mui-card .mui-control-content {
+			padding: 10px;
+		}
+		.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{border-bottom: 2px solid #FFAA00;color: #FFAA00;}
+		.my_order .mui-btn{ position: relative;transform: inherit;right: 0;}
+	</style>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a href="{:url('index/index')}" class="mui-icon mui-icon-home mui-pull-left" style="color: #7ac141;"></a>
+			<h1 class="mui-title">{$title}</h1>
+			<a href="{:url('cart/shopping_cart')}" class="mui-action-menu mui-pull-right index-hd-right2"></a>
+			<a href="{:url('user/logout')}" class="mui-action-menu mui-pull-right index-hd-right"></a>
+		</header>
+		<div class="mui-content">
+			<div>
+				<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary my_order_segmented" style="background:#fff">
+					<a class="mui-control-item mui-active" href="#item1">全部</a>
+					<a class="mui-control-item" href="#item2">待付款</a>
+					<a class="mui-control-item" href="#item3">待發貨</a>
+					<a class="mui-control-item" href="#item3">待收貨</a>
+					<a class="mui-control-item" href="#item3">待評價</a>
+				</div>
+			</div>
+			<div class="my_order">
+				<div id="item1" class="mui-control-content mui-active">
+					<div id="scroll" class="mui-scroll-wrapper">
+						<div class="mui-scroll">
+							<ul class="mui-table-view" >
+								 <li class="mui-table-view-cell"><i class="left_menu_ico i3"></i>健康及有機產品 <span class="color_ro mui-pull-right">商家已發貨</span></li>
+						         <li class="mui-table-view-cell l2">
+						         	<img src="img/f2_1.jpg" class=" mui-pull-left" />
+							          <p class="p1">ATex sports 肌肉運動貼</p>
+							          <p>細碼</p>
+							          <p><span class="color_ro">$</span><span class="color_ro font18">388</span><span class="mui-pull-right">x1</span></p>
+						         </li>
+						         <li class="mui-table-view-cell"><a class="mui-navigate-right">配送方式<span class="mui-pull-right" style="margin-right: 20px;">快遞 免郵</span></a></li>
+						         <li class="mui-table-view-cell" style="text-align:right">
+						         	共1件商品    合計 <span class="color_ro">$</span><span class="color_ro font18">388</span>(含運費$0.00) 
+						         </li>
+						         <li class="mui-table-view-cell" style="text-align:right">
+						         	
+						         	<button type="button" class="mui-btn mui-btn-outlined">查看物流</button>
+						         	<button type="button" class="mui-btn mui-btn-warning mui-btn-outlined">確認收貨</button>
+
+						         </li>
+							</ul>
+
+							<ul class="mui-table-view" >
+								 <li class="mui-table-view-cell"><i class="left_menu_ico i3"></i>健康及有機產品 <span class="color_ro mui-pull-right">商家已發貨</span></li>
+						         <li class="mui-table-view-cell l2">
+						         	<img src="img/f2_1.jpg" class=" mui-pull-left" />
+							          <p class="p1">ATex sports 肌肉運動貼</p>
+							          <p>細碼</p>
+							          <p><span class="color_ro">$</span><span class="color_ro font18">388</span><span class="mui-pull-right">x1</span></p>
+						         </li>
+						         <li class="mui-table-view-cell"><a class="mui-navigate-right">配送方式<span class="mui-pull-right" style="margin-right: 20px;">快遞 免郵</span></a></li>
+						         <li class="mui-table-view-cell" style="text-align:right">
+						         	共1件商品    合計 <span class="color_ro">$</span><span class="color_ro font18">388</span>(含運費$0.00) 
+						         </li>
+						         <li class="mui-table-view-cell" style="text-align:right">
+						         	
+						         	<button type="button" class="mui-btn mui-btn-outlined">查看物流</button>
+						         	<button type="button" class="mui-btn mui-btn-warning mui-btn-outlined">確認收貨</button>
+
+						         </li>
+							</ul>
+
+						</div>
+					</div>
+				</div>
+				<div id="item1" class="mui-control-content">
+					 
+				</div>
+				<div id="item1" class="mui-control-content">
+					
+				</div>
+			</div>
+			  	
+		</div>
+		{include file="common/script" /}
+		<script>
+			mui('.mui-scroll-wrapper').scroll();
+		</script>
+
+	</body>
+
+</html>

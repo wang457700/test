@@ -42,6 +42,7 @@ class Product extends Frontend
         $tree = Tree::instance();
         $categoryid = $tree->getChildrenIds(input('categoryid',14),true);
         $getParents = $tree->getParents(input('categoryid',14),true);
+
         $where['is_on_sale'] = 1;
         $where['cat_id'] = array('in',$categoryid);
         $order = [];
@@ -50,10 +51,9 @@ class Product extends Frontend
         if($sort){
             $order=implode(" ",explode("-",$sort));
         }
-
         $product_list =  Db::name('goods')
             ->alias('a')
-            ->field('a.*,(select count(*) from fa_goods_comment where product_id=a.product_id) as comment_count,(select count(*) from fa_order where goods_id=a.product_id and pay_status=2) as order_count')
+            ->field('a.product_id,a.product_name,a.cover,a.discount_type,a.price,(select count(*) from fa_goods_comment where product_id=a.product_id) as comment_count,(select count(*) from fa_order where goods_id=a.product_id and pay_status=2) as order_count')
             ->where($where)
             ->order($order)
             ->paginate(10);
@@ -61,12 +61,19 @@ class Product extends Frontend
         $sort_array = array('order_count'=>'銷量','price'=>'價格','comment_count'=>'評論','add_time'=>'新品');
 
 
+
+        //手机端ajax数据
+        if ($this->request->isPost() && input('search',false) ==false) {
+            $this->success('发布成功',url('user/share_success'),$product_list);
+        }
+
         $this->view->assign("product_list", $product_list);
         $this->view->assign("getparents",$getParents);
+        $this->view->assign("getchild",$tree->getChild(input('categoryid',14)));
         $this->view->assign("input",$input);
         $this->view->assign("sort",$sort);
         $this->view->assign("sort_array",$sort_array);
-        $this->view->assign("title",'产品列表');
+        $this->view->assign("title",$getParents[count($getParents)-1]['name']);
         if(input('style') == 'grid'){
             return $this->view->fetch('index_grid');
         }else{
@@ -89,7 +96,7 @@ class Product extends Frontend
     {
         $goods_id = input('id');
         $goods =  Db::name('goods')->where('product_id',$goods_id)->find();
-        $goods_list =  Db::name('goods')->select();
+        $goods_list =  Db::name('goods')->limit(6)->select();
         $comment_list =  Db::name('goods_comment')
             ->alias('a')->field('a.*,a.user_id as id,c.username,c.level')
             ->join('__USER__ c','a.user_id=c.id','RIGHT')

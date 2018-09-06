@@ -63,6 +63,7 @@ class Index extends Frontend
 
 
         $this->view->assign("slide", $slide);
+        $this->view->assign("title", '首页');
         return $this->view->fetch();
     }
 

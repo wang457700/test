@@ -350,7 +350,7 @@ function product_price($product_id)
 
 
 /*
-    查询金额并输出
+    查询用户购物车数量
 */
 function count_cart_num($user_id)
 {
@@ -358,3 +358,20 @@ function count_cart_num($user_id)
     return $num;
 }
 
+/*
+    用户是否已登录
+*/
+function is_login()
+{
+    $user_id = Session('user_id');
+    return $user_id;
+}
+/*
+    用户信息
+*/
+function cx_user_info()
+{
+    $user_id = Session('user_id');
+    $user =  Db::name('user')->where(array('id'=>$user_id))->find();
+    return $user;
+}

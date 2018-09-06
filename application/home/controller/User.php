@@ -391,14 +391,14 @@ class User extends Frontend
 
 			$data['product_content'] =htmlspecialchars_decode($post['customized-buttonpane']);
          	$data['product_name'] = $post['title'];
-         	$data['product_category'] = '0-'.implode('-',$post['cid']);
+         	$data['product_category'] = '0-'.implode('-',array_filter($post['cid']));
          	$data['product_pic'] = $pic_url;
          	$data['add_date'] = time();
          	$data['user_id'] = $user_id;
 
 			$info= Db::name('user_share')->insert($data);
 			if($info!==false){
-				$this->success('发布成功',url('user/share_success'));
+				$this->success('发布成功'.$data['product_category'],url('user/share_success'));
 			}else{
 				$this->error('发布失败');
 			}
@@ -451,6 +451,7 @@ class User extends Frontend
 
         $id = $this->request->param('id', 0, 'intval');
         $info= Db::name('user_share')->where(array('id'=>$id,'user_id'=>$user_id))->find();
+        $info[''] =
         $this->assign('info',$info);
         $this->assign('title','我的共享');
         return $this->view->fetch('user/share/edit');
