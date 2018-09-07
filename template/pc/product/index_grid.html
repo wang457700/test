@@ -17,7 +17,7 @@
 
 
         <div class="row" style="padding: 20px 0;">
-            <form method="post" action="{:url('product/index')}" id="search">
+            <form method="get" action="{:url('product/index')}" id="search">
                 <?php
                     $last = 'javascript:';
                     $next = 'javascript:';
@@ -31,6 +31,7 @@
                 ?>
                 <input type="hidden" name="categoryid" value="{$input['categoryid']}">
                 <input type="hidden" name="sort" value="add_time-desc">
+                <input type="hidden" name="search" value="true">
                 <div class="product-top-item col-md-6">
                     {foreach name="$sort_array" item="vo"}
                     <a href="javascript:;"  data-sort="{$key}-desc" class="{if condition="strpos($sort,$key) !== false"}active{/if}">{$vo}</a>
