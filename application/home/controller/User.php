@@ -334,6 +334,7 @@ class User extends Frontend
         $page = $order_list->render();
         $this->assign('page',$page);
         $this->assign('order_list',$result);
+        $this->assign('lastPage',6);
 
         $this->assign('level_text',$level_text);
         $this->assign('pay_status',$pay_status);

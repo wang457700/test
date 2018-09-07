@@ -13,7 +13,8 @@
 			<a href="{:url('cart/shopping_cart')}" class="mui-action-menu mui-pull-right index-hd-right2"></a>
 			<a href="{:url('user/logout')}" class="mui-action-menu mui-pull-right index-hd-right"></a>
 		</header>
-		<div class="mui-content">
+		<!--下拉刷新容器-->
+		<div id="pullrefresh" class="mui-scroll-wrapper my_order">
 			<div>
 				<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary my_order_segmented" style="background:#fff">
 					<a class="mui-control-item mui-active" href="#item1">全部</a>
@@ -23,65 +24,63 @@
 					<a class="mui-control-item" href="#item3">待評價</a>
 				</div>
 			</div>
-			<div class="my_order">
-				<div id="item1" class="mui-control-content mui-active">
-					<div id="scroll" class="mui-scroll-wrapper">
-						<div class="mui-scroll">
-							<ul class="mui-table-view" >
-								 <li class="mui-table-view-cell"><i class="left_menu_ico i3"></i>健康及有機產品 <span class="color_ro mui-pull-right">商家已發貨</span></li>
-						         <li class="mui-table-view-cell l2">
-						         	<img src="img/f2_1.jpg" class=" mui-pull-left" />
-							          <p class="p1">ATex sports 肌肉運動貼</p>
-							          <p>細碼</p>
-							          <p><span class="color_ro">$</span><span class="color_ro font18">388</span><span class="mui-pull-right">x1</span></p>
-						         </li>
-						         <li class="mui-table-view-cell"><a class="mui-navigate-right">配送方式<span class="mui-pull-right" style="margin-right: 20px;">快遞 免郵</span></a></li>
-						         <li class="mui-table-view-cell" style="text-align:right">
-						         	共1件商品    合計 <span class="color_ro">$</span><span class="color_ro font18">388</span>(含運費$0.00) 
-						         </li>
-						         <li class="mui-table-view-cell" style="text-align:right">
-						         	
-						         	<button type="button" class="mui-btn mui-btn-outlined">查看物流</button>
-						         	<button type="button" class="mui-btn mui-btn-warning mui-btn-outlined">確認收貨</button>
+			<div class="mui-scroll">
+				<!--数据列表-->
+				<ul class="mui-table-view mui-table-view-chevron mui-row" data-page_count="1" data-last_page="0">
 
-						         </li>
-							</ul>
-
-							<ul class="mui-table-view" >
-								 <li class="mui-table-view-cell"><i class="left_menu_ico i3"></i>健康及有機產品 <span class="color_ro mui-pull-right">商家已發貨</span></li>
-						         <li class="mui-table-view-cell l2">
-						         	<img src="img/f2_1.jpg" class=" mui-pull-left" />
-							          <p class="p1">ATex sports 肌肉運動貼</p>
-							          <p>細碼</p>
-							          <p><span class="color_ro">$</span><span class="color_ro font18">388</span><span class="mui-pull-right">x1</span></p>
-						         </li>
-						         <li class="mui-table-view-cell"><a class="mui-navigate-right">配送方式<span class="mui-pull-right" style="margin-right: 20px;">快遞 免郵</span></a></li>
-						         <li class="mui-table-view-cell" style="text-align:right">
-						         	共1件商品    合計 <span class="color_ro">$</span><span class="color_ro font18">388</span>(含運費$0.00) 
-						         </li>
-						         <li class="mui-table-view-cell" style="text-align:right">
-						         	
-						         	<button type="button" class="mui-btn mui-btn-outlined">查看物流</button>
-						         	<button type="button" class="mui-btn mui-btn-warning mui-btn-outlined">確認收貨</button>
-
-						         </li>
-							</ul>
-
-						</div>
-					</div>
-				</div>
-				<div id="item1" class="mui-control-content">
-					 
-				</div>
-				<div id="item1" class="mui-control-content">
-					
-				</div>
+				</ul>
 			</div>
-			  	
 		</div>
 		{include file="common/script" /}
 		<script>
 			mui('.mui-scroll-wrapper').scroll();
+
+            mui.init({
+                pullRefresh: {
+                    container: '#pullrefresh',
+                    up: {
+                        contentrefresh: '正在加载...',
+                        callback: pullupRefresh
+                    }
+                }
+            });
+
+            var count =  1;
+            /**
+             * 上拉加载具体业务实现
+             */
+            function pullupRefresh(){
+                setTimeout(function() {
+                    mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > {$lastPage})); //参数为true代表没有更多数据了。
+                    var table = document.body.querySelector('.mui-table-view');
+                    var cells = document.body.querySelectorAll('.mui-table-view-cell');
+                    var page_count = $(".mui-table-view-chevron").data('page_count');
+                   	order_list(page_count);
+                }, 1500);
+            }
+            if (mui.os.plus) {
+                mui.plusReady(function() {
+                    setTimeout(function() {
+                        mui('#pullrefresh').pullRefresh().pullupLoading();
+                    }, 1000);
+                });
+            } else {
+                mui.ready(function() {
+                    mui('#pullrefresh').pullRefresh().pullupLoading();
+                });
+            }
+            
+            
+            function order_list() {
+
+                var li ='';
+				li += '<ul class="mui-table-view"><li class="mui-table-view-cell"><i class="left_menu_ico i3"></i>健康及有機產品 <span class="color_ro mui-pull-right">商家已發貨</span></li><li class="mui-table-view-cell l2"><img src="img/f2_1.jpg" class="mui-pull-left"><p class="p1">ATex sports 肌肉運動貼</p><p>細碼</p><p><span class="color_ro">$</span><span class="color_ro font18">388</span><span class="mui-pull-right">x1</span></p></li><li class="mui-table-view-cell"><a class="mui-navigate-right">配送方式<span class="mui-pull-right" style="margin-right:20px">快遞 免郵</span></a></li><li class="mui-table-view-cell" style="text-align:right">共1件商品 合計 <span class="color_ro">$</span><span class="color_ro font18">388</span>(含運費$0.00)</li><li class="mui-table-view-cell" style="text-align:right"><button type="button" class="mui-btn mui-btn-outlined">查看物流</button> <button type="button" class="mui-btn mui-btn-warning mui-btn-outlined">確認收貨</button></li></ul>';
+                for(var i=1; i<4; i++){
+                    $(".mui-table-view-chevron").append(li);
+
+                }
+
+            }
 		</script>
 
 	</body>

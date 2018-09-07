@@ -20,39 +20,18 @@
 						<div class="mui-scroll">
 							
 							<ul class="mui-table-view" >
+
+								{foreach name="list" item="vo"}
 								 <li class="mui-table-view-cell">
-									<img src="img/info_list_img1.jpg" class="img_left">
+									 <a href="{:url('home/news/article',array('id'=>$vo['id']))}">
+									<img src="{:fa_get_image_url($vo['smeta'])}" class="img_left">
 					                <div class="d1">
-					                  <h5>母親節KTO展銷...</h5>
-					                  <p>活動日期：7月11日-7月21日<br>
-										活動時間：11:00 —— 20:00<br>
-										活動地址：新界將軍澳長寧路2號TKO Gateway 東翼地下堂
-										</p> 
-					                </div> 
+					                  <h5>{$vo.post_title}</h5>
+										<p class="mui-ellipsis" style="white-space: normal;"> {$vo.post_excerpt|msubstr=0,25}</p>
+					                </div>
+									 </a>
 								 </li>
-						         	 <li class="mui-table-view-cell">
-									<img src="img/info_list_img1.jpg" class="img_left">
-					                <div class="d1">
-					                  <h5>母親節KTO展銷...</h5>
-					                  <p>活動日期：7月11日-7月21日<br>
-										活動時間：11:00 —— 20:00<br>
-										活動地址：新界將軍澳長寧路2號TKO Gateway 東翼地下堂
-										</p> 
-					                </div> 
-								 </li>
-						         	 <li class="mui-table-view-cell">
-									<img src="img/info_list_img1.jpg" class="img_left">
-					                <div class="d1">
-					                  <h5>母親節KTO展銷...</h5>
-					                  <p>活動日期：7月11日-7月21日<br>
-										活動時間：11:00 —— 20:00<br>
-										活動地址：新界將軍澳長寧路2號TKO Gateway 東翼地下堂
-										</p> 
-					                </div> 
-								 </li>
-						         
-								 
-						         
+								{/foreach}
 							</ul>
 
 						</div>
