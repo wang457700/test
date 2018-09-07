@@ -49,6 +49,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template'], function
             // 相关文档：http://bootstrap-table.wenzhixin.net.cn/zh-cn/documentation/
             table.bootstrapTable({
                 url: $.fn.bootstrapTable.defaults.extend.index_url,
+                sortName: 'id',
                 columns: [
                     [
                         //更多配置参数可参考http://bootstrap-table.wenzhixin.net.cn/zh-cn/documentation/#c
@@ -88,10 +89,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template'], function
                     var filter = JSON.parse(params.filter);
                     var op = JSON.parse(params.op);
                     //这里可以动态赋值，比如从URL中获取admin_id的值，filter.admin_id=Fast.api.query('admin_id');
-                    filter.admin_id = 1;
-                    op.admin_id = "=";
-                    params.filter = JSON.stringify(filter);
-                    params.op = JSON.stringify(op);
                     return params;
                 },
             });

@@ -27,7 +27,7 @@ class News extends Frontend
         );
         $list = $this->article_model
         ->where($where)
-        ->select();
+        ->paginate(10);
         $this->view->assign("list", $list);
         $this->assign('title','社區服務資訊');
         return $this->view->fetch();

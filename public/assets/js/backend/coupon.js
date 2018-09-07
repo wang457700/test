@@ -236,26 +236,26 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 advancedSearch: false,
                 pagination: true,
                 extend: {
-                    "index_url": "coupon/detail",
+                    "index_url": "coupon/detail/coupon_id/"+ Config.coupon_id,
                     "add_url": "",
                     "edit_url": "",
                     "del_url": "",
                     "multi_url": "",
                 }
             });
-
             var table = $("#table");
 
             // 初始化表格
             table.bootstrapTable({
+                sortName: 'coupon_id',
                 url: $.fn.bootstrapTable.defaults.extend.index_url,
                 columns: [
                     [
-                        {field: 'data1', title: '訂單ID'},
-                        {field: 'data2', title: '用戶ID',operate: false},
-                        {field: 'data3', title: '用戶名', operate: false},
-                        {field: 'data4', title: '使用日期', operate: false},
-                        {field: 'data5', title: '訂單金額', operate: false},
+                        {field: 'order_sn', title: '訂單ID'},
+                        {field: 'user_id', title: '用戶ID',operate: false},
+                        {field: 'username', title: '用戶名', operate: false},
+                        {field: 'addtime', title: '使用日期', operate: false},
+                        {field: 'all_price', title: '訂單金額', operate: false},
                     ]
                 ],
                 commonSearch: false
@@ -264,13 +264,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             // 为表格绑定事件
             Table.api.bindevent(table);//当内容渲染完成后
 
-            // 给上传按钮添加上传成功事件
-            $("#plupload-avatar").data("upload-success", function (data) {
-                var url = Backend.api.cdnurl(data.url);
-                $(".profile-user-img").prop("src", url);
-                Toastr.success("上传成功！");
-            });
-            
+
             // 给表单绑定事件
             Form.api.bindevent($("#update-form"), function () {
                 $("input[name='row[password]']").val('');

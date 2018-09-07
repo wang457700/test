@@ -289,6 +289,7 @@
                             <td style="text-align: center; vertical-align: middle; ">{$payment[$vo['payment']]}</td>
                             <td style="text-align: center; vertical-align: middle; ">{$pay_status[$vo['pay_status']]}</td>
                             <td style="text-align: center; vertical-align: middle; ">
+
                                  <a href="{:url('order/detail',array('order_sn'=>$vo['order_sn']))}" class="btn btn-xs btn-detail btn-dialog" title="修改" data-table-id="table" data-field-index="11" data-row-index="0" data-button-index="0">
                                   <i class=""></i>详情</a>
                                 <a href="{:url('order/del',array('order_sn'=>$vo['order_sn']))}" class="btn btn-xs btn-detail btn-magic btn-ajax-xs" title="发送Ajax" data-table-id="table" data-field-index="11" data-row-index="0" data-button-index="1">

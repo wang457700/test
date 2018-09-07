@@ -12,9 +12,11 @@
     <div class="container bgcolor_white">
       <div class="alzx-crumbs alzx-crumbs-f1">
           <div class="alzx-con">
-          <a class="crumbs-01" href="#">主頁</a>
+                <a class="crumbs-01" href="{:url('index/index')}">主頁</a>
               <em>&gt;</em>
-              <span class="crumbs-02">用戶中心</span>
+              <a href="{:url('user/center')}" class="crumbs-02">用戶中心</a>
+              <em>&gt;</em>
+              <span class="crumbs-02">{$title}</span>
           </div>
 
         </div>

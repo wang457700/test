@@ -40,7 +40,7 @@ return array (
   'integral' => 
   array (
     'obtain' => '10',
-    'use' => '100',
+    'use' => '1000',
   ),
   'user_upgrade' => 
   array (

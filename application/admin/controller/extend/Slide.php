@@ -26,9 +26,13 @@ class Slide extends Backend
     public function index()
     {
         if ($this->request->isAjax()) {
+            list($where, $sort, $order, $offset, $limit) = $this->buildparams(NULL);
 
-            
-           $list = Db::name('Slide')->select();
+           $list = Db::name('Slide')
+               ->where($where)
+               ->order($sort, $order)
+               ->limit($offset, $limit)
+               ->select();
 
             $total = 1;
            /* $list =array(

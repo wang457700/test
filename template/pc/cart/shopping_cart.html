@@ -7,7 +7,11 @@
 	{include file="common/nav"/}
 	<!--导航 end-->
 	 <div class="container shopping_cart">
-	
+		<style>
+			.number input::-webkit-outer-spin-button,
+			.number input::-webkit-inner-spin-button {-webkit-appearance: none;}
+			.number input[type="number"]{-moz-appearance: textfield;}
+		</style>
 		<div class="row topstate">
 			<ul class="row">
 				<div class="alzx-crumbs alzx-crumbs-f1"> 
@@ -58,7 +62,7 @@
 					<div class="row number">
 					  <div class="col-md-12" style="">
 						<input id="min_{$key}" name="" type="button" value="-" class="reduce" onclick="on_number({$key},'min')">
-						<input id="number_{$key}" name="goods_num[]" type="text" value="{$vo.total}" style="width:40px;text-align: center"  class="color_75">
+						<input id="number_{$key}" name="goods_num[]" type="number" value="{$vo.total}" style="width:50px;text-align: center"  class="color_75" data-key="{$key}">
 						<input id="add_{$key}" name="" type="button" value="+" class="add" onclick="on_number({$key},'add')">
 					  </div>
 					</div>
@@ -66,7 +70,6 @@
 			<div class="col-md-2 col-xs-2 color_ro font18" style="">$ <span id="subtotal_span_{$key}">{:number_format($vo['price']*$vo['total'],2)}</span></div>
 			<div class="col-md-1 col-xs-1 t6" style=""><a href="{:url('cart/cart_del',array('product_id'=>$vo['product_id']))}" class="js-ajax-delete" onclick="return false;"><i class="fa fa-trash-o" aria-hidden="true" style="color:#666;line-height: 110px;"></i></a></div>
 		</div>
-
 	 {/foreach}
 	{if condition="count($car_list) eq 0"}
 		<div class="search_page_empty"></div>
@@ -145,15 +148,31 @@
 					  $('#min_' + id).attr('disabled',true);
 					};
 				}
-
-				var unit_price = $('#unit_price_' + id).val();
-				var number = t.val();
-				var subtotal_price = Number(unit_price)*Number(number);
-				$('#subtotal_span_' + id).text(subtotal_price.toFixed(2));
-				$('#subtotal_' + id).val(subtotal_price.toFixed(2));
+                total_price(id);
 				total();
 			}
 
+             $("input[name='goods_num[]']").focusout(function() {
+                 var key = $(this).data('key');
+                 total_price(key);
+                 total();
+			 });
+
+             $("input[name='goods_num[]']").focusout(function() {
+                 var key = $(this).data('key');
+                 total_price(key);
+                 total();
+			 });
+
+             //计算单条总价格
+			 function  total_price(id) {
+                 var t = $("#number_" + id);
+                 var unit_price = $('#unit_price_' + id).val();
+                 var number = t.val();
+                 var subtotal_price = Number(unit_price)*Number(number);
+                 $('#subtotal_span_' + id).text(subtotal_price.toFixed(2));
+                 $('#subtotal_' + id).val(subtotal_price.toFixed(2));
+             }
 			//统计总价格	
 			function total(){
 				var sum=0;

@@ -46,7 +46,7 @@ class Order extends Backend
             ->order('addtime desc')
             ->paginate(10,false,array('query'=>$request));
 
-        $payment = array('0'=>'未知','1'=>'微信','2'=>'支付宝','3'=>'其他银行');
+        $payment = array('0'=>'','1'=>'微信','2'=>'支付宝','3'=>'其他银行');
         $pay_status = array('0'=>'未支付','2'=>'已支付','3'=>'已发货','6'=>'已取消',);
         $page = $order_list->render();
         $this->assign('page', $page);

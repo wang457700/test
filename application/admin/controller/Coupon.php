@@ -63,59 +63,46 @@ class Coupon extends Backend
     /**
      * 详情
      */
-    public function detail($ids = NULL)
+    public function detail()
     {
 
         if($this->request->isAjax()){
-            $data=input('post.');
-            dump($data);
-            $total = 1 ;
-            $list =array(
-                array(
-                    'data1'=>'536435',
-                    'data2'=>'10%折扣',
-                    'data3'=>'长期',
-                    'data4'=>'916050070',
-                    'data5'=>'满100元即可获得10%折扣',
-                    'data6'=>'8296',
-                    'data7'=>'不限',
-                ),
-                array(
-                    'data1'=>'431070',
-                    'data2'=>'20%折扣',
-                    'data3'=>'2018/12/31',
-                    'data4'=>'4613146641',
-                    'data5'=>'满100元即可获得20%折扣',
-                    'data6'=>'8296',
-                    'data7'=>'白金',
-                ),
-            );
+
+            list($where, $sort, $order, $offset, $limit) = $this->buildparams(NULL);
+            $coupon_id=$this->request->param("coupon_id");
+            $list = Db::name('order')
+                ->alias('a')
+                ->field('a.*,e.username,(select sum(money_total) from fa_order where order_sn=a.order_sn) as money_total')
+                ->join('__USER__ e', 'a.user_id=e.id', 'LEFT')
+                ->where('coupon_id',$coupon_id)
+                ->group('a.order_sn')
+                ->order($sort, $order)
+                ->limit($offset, $limit)
+                ->select();
+
+            foreach ($list as $key=>$item){
+                $list[$key]['all_price'] = ($item['money_total'] - $item['coupon_price'] - $item['integral_price']+$item['freight'] + $item['contribution_price']) ;
+            }
+
+            $total = Db::name('order')
+                ->alias('a')
+                ->where('coupon_id',$coupon_id)
+                ->group('a.order_sn')
+                ->count();
+
             $result = array("total" => $total, "rows" => $list);
             return json($result);
-
         }
 
-        $row = array(
-            'order_id'=>201807001,
-            'order_time'=>'2018/06/30',
-            'user_id'=>'152',
-            'user_name'=>'Alan Fox',
-            'service_charge'=>'$10.00',
-            'total_amount'=>'$1,210.40',
-            'amount_payable'=>'$1,210.40',
-            'take_name'=>'Alan Fox',
-            'take_phone'=>'13111111111',
-            'take_address'=>'廣東省深圳市龍翔大道志聯佳大厦',
-            'freight'=>'$45.00',
-            'donated_amount'=>'$180.00',
-            'payment_type'=>'信用卡',
-            'goods_count'=>'2',
-            'coupon'=>'XXXXX XXXX',
-            'coupon_amount'=>'$100.00',
-            'status'=>'未發貨',
-        );
-
-        $this->view->assign("row", $row);
+        $today_str_time = date('Y-m-d').' 00:00:00';
+        $today_end_time = date('Y-m-d').' 23:59:59';
+        $coupon = Db::name('order')
+            ->where('coupon_id',input('ids'))
+            ->alias('a')
+            ->field('a.*,(select count(*) from fa_order where coupon_id=a.coupon_id) as coupon_count,(select count(*) from fa_order where coupon_id=a.coupon_id and addtime >= "'.$today_str_time.'" and addtime <= "'.$today_end_time.'" ) as today_count')
+            ->find();
+        $this->view->assign("coupon", $coupon);
+        $this->assignconfig('coupon_id', input('ids'));
         return $this->view->fetch();
     }
      /**
