@@ -52,6 +52,11 @@ class User extends Frontend
 	    	if(md5($password) !== $user['password']){
 	    		$this->error('密码不正确，请重新输入！');
 	    	}
+
+            if($user['status'] == 'hidden'){
+                $this->error('账号已冻结，请联系管理员！');
+            }
+
 	    	Session::set("user_id", $user['id']);
 	    	Session::set("user", $user);
             $total=Db::name('cart_order')->where('user_id',$user['id'])->count();
@@ -218,38 +223,67 @@ class User extends Frontend
         if ($this->request->isPost()){
             $data = input('post.');
             $user_id = Session::get('user_id');
-             $birthday_year= input('birthday_year');
-
-             $birthday_month= input('birthday_month');
-             $birthday_day= input('birthday_day');
-              $data['birthday']=$birthday_year.'-'.$birthday_month.'-'.$birthday_day;
-                unset($data['birthday_year']);
-                unset($data['birthday_month']);
-                unset($data['birthday_day']);
-
+            $birthday_year= input('birthday_year');
+            $birthday_month= input('birthday_month');
+            $birthday_day= input('birthday_day');
+            $data['birthday']=$birthday_year.'-'.$birthday_month.'-'.$birthday_day;
+            $user = Db::name('user')->where('id', $user_id)->find();
+            if($data['password']){
+                if(md5($data['password']) != $user['password']){
+                    $this->error('原密碼错误！');
+                }
+                if(empty($data['newpassword'])){
+                    $this->error('請輸入新密碼！');
+                }
+                if(empty($data['confirmpassword'])){
+                    $this->error('請輸入確認新密碼！');
+                }
+                if($data['newpassword'] != $data['confirmpassword']){
+                    $this->error('二次輸入的密碼不一致！');
+                }
+                $data['password'] = md5($data['newpassword']);
+            }else{
+                $data['password'] = $user['password'];
+            }
+            unset($data['birthday_year']);
+            unset($data['birthday_month']);
+            unset($data['birthday_day']);
+            unset($data['newpassword']);
+            unset($data['confirmpassword']);
            $info = Db::name('user')->where(array('id'=>$user_id))->update($data);
             if($info!==false){
-                $this->success('修改成功！'.json_encode($data,true));
+              $this->success('保存成功！');
             }else{
-                $this->error('修改失败！');
+              $this->error('保存失败！');
             }
         }
-        $edit_category = db('user_address')->where(array('user_id'=>8))->find();
-        $province = db('region')->where(array('parent_id'=>0,'level'=>1))->select();
-        $region_province = db('region')->where(array('id'=>$edit_category['province']))->find();
-        $region_city = db('region')->where(array('id'=>$edit_category['city']))->find();
-        $region_district = db('region')->where(array('id'=>$edit_category['district']))->find();
-        $this->assign('edit_category',$edit_category);
-        $this->assign('province',$province);
-        $this->assign('region_province',$region_province);
-
-        $this->assign('region_city',$region_city);
-        $this->assign('region_district',$region_district);
-
 
         $user_id = Session::get('user_id');
         $info = Db::name('user')->where('id', $user_id)->find();
+        $info['birthday'] = explode('-',$info['birthday']);
+        $city = 0;
+        $district = 0;
+        $province = db('region')->where(array('parent_id'=>0,'level'=>1))->select();
+        if($info['province']){
+            $city = db('region')->where(array('parent_id'=>$info['province'],'level'=>2))->select();
+        }
+        if($info['city']){
+            $district = db('region')->where(array('parent_id'=>$info['city'],'level'=>3))->select();
+        }
+
+        $y = [] ;
+        $m = [] ;
+        $d = [] ;
+        for ($x=1949; $x<=date('Y',time()); $x++){$y[] = $x;}
+        for ($x=1; $x<=12; $x++){$m[] = $x;}
+        for ($x=1; $x<=31; $x++){$d[] = $x;}
+        $this->assign('province',$province);
+        $this->assign('city',$city);
+        $this->assign('district',$district);
         $this->assign('info', $info);
+        $this->assign('y', $y);
+        $this->assign('m', $m);
+        $this->assign('d', $d);
         $this->assign('title', '修改资料');
         return $this->view->fetch();
     }
@@ -267,11 +301,14 @@ class User extends Frontend
         $user = Db::name('user')->where('id', $user_id)->find();
 
 
-        $order_list = Db::name('order')->alias('a')
+        $order_list = Db::name('order')
+            ->alias('a')
+            ->where('a.user_id',$user_id)
             ->field('a.*,e.name,e.phone')
             ->join('__USER_ADDRESS__ e', 'a.address_id=e.id', 'LEFT')
             ->group('a.order_sn')
-            ->order('addtime desc')->paginate(2);
+            ->order('addtime desc')
+            ->paginate(2);
 
         $result = $order_list->all();
         foreach ($result as $key=>$item){
@@ -281,7 +318,8 @@ class User extends Frontend
                 ->join('__GOODS__ c','a.goods_id=c.product_id','LEFT')
                 ->where('order_sn',$item['order_sn'])
                 ->order('addtime desc')->select();
-            $result[$key]['all_total'] = Db::name('order')->where('order_sn',$item['order_sn'])->sum('money_total');
+            $all_total =  Db::name('order')->where('order_sn',$item['order_sn'])->sum('money_total');
+            $result[$key]['all_total'] =$all_total -$item['coupon_price'] - $item['integral_price'] + $item['freight'];;
         }
         $level = array('1'=>'普通会员','2'=>'白金会员','3'=>'金牌会员','4'=>'商业会员');
         $level_text  =$level[$user ['level']];
@@ -396,9 +434,9 @@ class User extends Frontend
          	$data['add_date'] = time();
          	$data['user_id'] = $user_id;
 
-			$info= Db::name('user_share')->insert($data);
+			$info= Db::name('user_share')->insertGetId($data);
 			if($info!==false){
-				$this->success('发布成功'.$data['product_category'],url('user/share_success'));
+				$this->success('发布成功',url('user/share_success',array('id'=>$info)));
 			}else{
 				$this->error('发布失败');
 			}
@@ -459,7 +497,7 @@ class User extends Frontend
 
 
     public function share_success(){
- 		$id = input('get.id');
+ 		$id = input('id');
  		$info = Db::name('user_share')->where('id',$id)->find();
         $this->assign('title','完成發佈');
         $this->assign('info',$info);
@@ -541,25 +579,29 @@ class User extends Frontend
             $address_list[$k] = $v;
         }
 
-        $region_province = 0;
-        $region_city = 0;
-        $region_district = 0;
+        $city = 0;
+        $district = 0;
+        $province = db('region')->where(array('parent_id'=>0,'level'=>1))->select();
         $id = input('id');
         if($id){
         	$row= Db::name('user_address')->where(array('id'=>$id,'user_id'=>$user_id))->find();
 
-            $region_province = Db::name('region')->where(array('id'=>$row['province']))->find();
-            $region_city = Db::name('region')->where(array('id'=>$row['city']))->find();
-            $region_district = Db::name('region')->where(array('id'=>$row['district']))->find();
+            if($row['province']){
+                $city = db('region')->where(array('parent_id'=>$row['province'],'level'=>2))->select();
+            }
+            if($row['city']){
+                $district = db('region')->where(array('parent_id'=>$row['city'],'level'=>3))->select();
+            }
         }else{
-        	$row = array('address'=>null,'name'=>null,'phone'=>null);
+        	$row = array('province'=>null,'city'=>null,'district'=>null,'address'=>null,'name'=>null,'phone'=>null);
         }
+
 		$this->assign('address_list',$address_list);
 		$this->assign('row',$row);
+        $this->assign('province',$province);
+        $this->assign('city',$city);
+        $this->assign('district',$district);
         $this->assign('title','我的地址');
-        $this->assign('region_province',$region_province);
-        $this->assign('region_city',$region_city);
-        $this->assign('region_district',$region_district);
         return $this->view->fetch();
     }
 
@@ -662,7 +704,6 @@ class User extends Frontend
         }
 
         $all_total = $all_total -$order_info['coupon_price'] - $order_info['integral_price'] + $order_info['freight'];
-
 
         $this->assign('order_info',$order_info);
         $this->assign('all_money_total',$all_money_total);

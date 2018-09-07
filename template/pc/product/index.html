@@ -75,6 +75,10 @@
                     </div>
                   </li>
               {/foreach}
+
+              {if condition="count($product_list) eq 0"}
+              <div style="text-align:  center;padding:  20px;">没有商品信息</div>
+              {/if}
           </ul>
         </div>
 

@@ -15,7 +15,6 @@
     <div class="container bgcolor_white">
       <div class="pr_name">發佈共享</div>
 
-      <?php dump($site['configgroup'])?>
       <div class="share_product_add">
             <form action="{:url('user/share_edit')}" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return share()" id="share-form"  style="padding: 0 20px;">
               <input type="hidden"  name="id" value="{$info.id}" >

@@ -43,12 +43,15 @@
                                         <p>{$vv.product_name}</p>
                                         <p class="color_ro">优惠全民享</p>
                                         <div>
-                                            <span style="font-size: 20px;"><i>$</i>{$vv.price}</span>
-                                            <a class="adds" data-id="{$vv.product_id}">+</a>
+                                            <span style="font-size: 20px;"><i>$</i>{:product_price($vv['product_id'])}</span>
+                                            <a class="adds" data-productid="{$vv.product_id}">+</a>
                                         </div>
                                     </div>
                                 </li>
                             {/foreach}
+                            {if condition="count($goods_list) eq 0"}
+                            <div style="text-align:  center;padding:  20px;">近期没有購買信息</div>
+                            {/if}
                         </ul>
                     </div>
                 {/if}
@@ -72,7 +75,7 @@
                             <div class="col-md-4" style="border: 0">
                               <h5>會員區別</h5>
                               <span class="color_ro font24">{$level_text}</span><br>
-                             <span class="font12">(升级成高級會員)</span>
+                             <span class="font12">(升级成高級會員)开发中~</span>
                             </div>
                         </div>
 
@@ -150,6 +153,10 @@
                           </div>
                     </div>
                 {/foreach}
+
+                {if condition="count($goods_list) eq 0"}
+                 <div style="text-align:  center;padding:  20px;">近期没有訂單信息</div>
+                {/if}
                 </div>
             </div>
             <div class="pagination">

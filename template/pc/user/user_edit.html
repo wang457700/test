@@ -39,28 +39,28 @@
                           <div class="form-group">
                             <label for="inputEmail3" class="col-sm-3 control-label"><span class="color_ro">*</span>手機號：</label>
                             <div class="col-sm-6">
-                              <input type="text" class="form-control input_e" id="mobile" placeholder="" name="mobile" value="{$info.mobile}">
+                              <input type="text" class="form-control input_e" id="mobile" placeholder="" name="mobile" value="{$info.mobile}" oninvalid="setCustomValidity('请输入手機號碼！')" oninput="setCustomValidity('') "onkeyup="value=value.replace(/[^\d]/g,'') " ng-pattern="/[^a-zA-Z]/" maxlength="11">
                             </div>
                           </div>
 
                           <div class="form-group">
                             <label for="inputEmail3" class="col-sm-3 control-label"><span class="color_ro">*</span>原密碼：</label>
                             <div class="col-sm-6">
-                              <input type="text" class="form-control input_e" id="inputEmail3" placeholder="" >
+                              <input type="password" class="form-control input_e" id="password" name="password" placeholder="" >
                             </div>
                           </div>
 
                           <div class="form-group">
                             <label for="inputEmail3" class="col-sm-3 control-label"><span class="color_ro">*</span>新密碼：</label>
                             <div class="col-sm-6">
-                              <input type="text" class="form-control input_e" id="inputEmail3" placeholder="">
+                              <input type="password" class="form-control input_e" id="newpassword" name="newpassword" placeholder="">
                             </div>
                           </div>
 
                           <div class="form-group">
                             <label for="inputEmail3" class="col-sm-3 control-label"><span class="color_ro">*</span>確認新密碼：</label>
                             <div class="col-sm-6">
-                              <input type="text" class="form-control input_e" id="inputEmail3" placeholder="">
+                              <input type="password" class="form-control input_e" id="confirm" name="confirmpassword" placeholder="">
                             </div>
                           </div>
                         </div>
@@ -81,7 +81,15 @@
                         <div class="form-group">
                           <label for="inputEmail3" class="col-sm-3 control-label"><span class="color_ro">*</span>性別：</label>
                           <div class="col-sm-6">
-                            <input type="text" class="form-control input_e" id="gender" placeholder="" name="gender" value="{$info.gender}">
+                            <label class="radio-inline">
+                              <i class="input_style radio_bg radio_bg_check"><input type="radio" {$info['gender']==1?'checked':''} name="gender" value="1"></i>男
+                            </label>
+                            <label class="radio-inline">
+                              <i class="input_style radio_bg radio_bg_check"><input type="radio" {$info['gender']==2?'checked':''} name="gender" value="2"></i>女
+                            </label>
+                            <label class="radio-inline">
+                              <i class="input_style radio_bg radio_bg_check"><input type="radio" {$info['gender']==0?'checked':''} name="gender" value="0"></i>保密
+                            </label>
                           </div>
                         </div>
 
@@ -89,55 +97,61 @@
                           <label for="inputEmail3" class="col-sm-3 control-label"><span class="color_ro">*</span>出生日期：</label>
                           <div class="col-sm-2">
                             <select class="form-control select_e" name="birthday_year">
-                              <option value="1989">1989</option>
-                              <option value="1990">1990</option>
-                              <option value="1991">1991</option>
+
+                              {volist name="y" id="vo"}
+                                <option value="{$vo}" {if condition="$vo eq $info['birthday'][0]"} selected="selected"{/if}>{$vo}</option>
+                              {/volist}
                             </select>
                           </div>
                           <div class="col-sm-2">
                             <select class="form-control select_e" name="birthday_month">
-                              <option value="10">10</option>
-                              <option value="11">11</option>
-                              <option value="12">12</option>
+                              {volist name="m" id="vo"}
+                              <option value="{$vo}" {if condition="$vo eq $info['birthday'][1]"} selected="selected"{/if}>{$vo}</option>
+                              {/volist}
                             </select>
                           </div>
                           <div class="col-sm-2">
                             <select class="form-control select_e" name="birthday_day">
-                              <option value="23">23</option>
-                              <option value="24">24</option>
-                              <option value="25">25</option>
+                              {volist name="d" id="vo"}
+                              <option value="{$vo}" {if condition="$vo eq $info['birthday'][2]"} selected="selected"{/if}>{$vo}</option>
+                              {/volist}
                             </select>
                           </div>
                         </div>
 
                         <div class="form-group">
                           <label for="inputEmail3" class="col-sm-3 control-label"><span class="color_ro">*</span>地址：</label>
-                          <div class="col-sm-2">
+                          <div class="col-sm-3">
                             <select onchange="get_city(this)" class="form-control select_e" id="province" name="province"  title="请选择所在省份">
                               <option value="">选择省份</option>
                               {volist name="province" id="vo"}
-                                <option value="{$vo.id}" {if condition="$vo['id'] eq $region_province['id']"} selected="selected"{/if} >{$vo.name}</option>
+                                <option value="{$vo.id}" {if condition="$vo['id'] eq $info['province']"} selected="selected"{/if} >{$vo.name}</option>
                               {/volist}
                             </select>
                           </div>
-                          <div class="col-sm-2">
-                            <select onchange="get_area(this)" id="city" class="form-control select_e" name="city" title="请选择所在城市">
+                          <div class="col-sm-3">
+                            <select onchange="get_area(this)" id="city" class="form-control select_e" name="city" title="请选择所在城市" style="{$city?'':'display: none'}">
                               <option value="">选择城市</option>
-                              <option value="{$region_city['id']}" selected="selected" >{$region_city['name']}</option>
+
+                              {volist name="city" id="vo"}
+                                <option value="{$vo['id']}" {if condition="$vo['id'] eq $info['city']"} selected="selected"{/if}  >{$vo['name']}</option>
+                              {/volist}
                             </select>
                           </div>
-                          <div class="col-sm-2">
-                            <select id="district" class="form-control select_e" name="district">
+                          <div class="col-sm-3" >
+                            <select id="district" class="form-control select_e" name="district" style="{$district?'':'display: none'}">
                               <option value="0">选择区域</option>
-                              <option value="{$region_district['id']}" class="form-control select_e" selected="selected" >{$region_district['name']}</option>
 
+                              {volist name="district" id="vo"}
+                              <option value="{$vo['id']}" {if condition="$vo['id'] eq $info['district']"} selected="selected"{/if}  >{$vo['name']}</option>
+                              {/volist}
                             </select>
                           </div>
                         </div>
                         <div class="form-group">
                           <label for="inputEmail3" class="col-sm-3 control-label"><span class="color_ro">*</span>詳細地址：</label>
                           <div class="col-sm-6">
-                            <input type="text" class="form-control input_e" value="{$edit_category.address}" id="address_details" placeholder="" name="address_detail">
+                            <input type="text" class="form-control input_e" value="{$info.address_detail}" id="address_details" placeholder="" name="address_detail">
                           </div>
                         </div>
                       </div>
@@ -216,8 +230,7 @@
                 if(!parent_id > 0){
                     return;
                 }
-                $('#district').empty().css('display','none');
-                $('#twon').empty().css('display','none');
+
                // var url = '/index.php?m=Admin&c=Api&a=getRegion&level=2&parent_id='+ parent_id;
                  var url ="{:url('api/index/getRegion')}";
                 $.ajax({
@@ -230,7 +243,7 @@
                     },
                     success: function(v) {
                         v = '<option value="0">选择城市</option>'+ v;
-                        $('#city').empty().html(v);
+                        $('#city').empty().html(v).show();
                     }
                 });
             }
@@ -244,8 +257,6 @@
                 if(!parent_id > 0){
                     return;
                 }
-                $('#district').empty().css('display','inline');
-                $('#twon').empty().css('display','none');
                 //var url = '/index.php?m=Admin&c=Api&a=getRegion&level=3&parent_id='+ parent_id;
                 var url ="{:url('api/index/getRegion')}";
                 $.ajax({
@@ -258,7 +269,7 @@
                     },
                     success: function(v) {
                         v = '<option>选择区域</option>'+ v;
-                        $('#district').empty().html(v);
+                        $('#district').empty().html(v).show();
                     }
                 });
             }

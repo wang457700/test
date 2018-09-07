@@ -25,9 +25,6 @@
             <th>用戶ID</th>
             <td>{$row.user_id}</td>
         </tr>
-        <?php
-            $status = array('0'=>'未审核','1'=>'已审核','2'=>'下架',);
-        ?>
         <tr>
             <th>狀態</th>
             <td>{$status[$row['status']]}</td>

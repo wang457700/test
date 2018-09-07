@@ -51,10 +51,12 @@ class User extends Backend
                     ->order($sort, $order)
                     ->limit($offset, $limit)
                     ->select();
+
+            $level = array('1'=>'普通会员','2'=>'白金会员','3'=>'金牌会员','4'=>'商业会员');
             foreach ($list as $k => $v)
             {
                 $v['join_source'] = '普通注册';
-                $v['level'] = '普通';
+                $v['level'] = $level[$v['level']];
                 $v->hidden(['password', 'salt']);
             }
             $result = array("total" => $total, "rows" => $list);
@@ -76,6 +78,24 @@ class User extends Backend
         return parent::edit($ids);
     }
 
+    /**
+     * 冻结解冻
+     */
+    public function status($ids = NULL){
+        if ($this->request->isPost())
+        {
+            $is = input('is');
+            $res =  Db::name('user')->where('id',$ids)->update(array('status'=>$is));
+            if ($res)
+            {
+                $this->success('成功！');
+            }
+            $this->error();
+        }
+
+
+    }
+
       /**
      * 用户详细
      */
@@ -91,7 +111,9 @@ class User extends Backend
           $order_list[$k]['all_goods_num'] = Db::name('order')->where(array('order_sn'=>$k))->sum('goods_num');
           $order_list[$k]['all_money_total'] =  Db::name('order')->where(array('order_sn'=>$k))->sum('money_total');
        }
+        $level = array('1'=>'普通会员','2'=>'白金会员','3'=>'金牌会员','4'=>'商业会员');
        $this->view->assign('row',$row);
+       $this->view->assign('level',$level);
        $this->view->assign('address_list',$address_list);
        $this->view->assign('order_list',$order_list);
       return $this->view->fetch();

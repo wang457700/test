@@ -61,6 +61,9 @@
                         </div>
                     </li>
                 {/foreach}
+                {if condition="count($new_list) eq 0"}
+                <div style="text-align:  center;padding:  20px;">没有相關新聞</div>
+                {/if}
 
                 </ul>
           </div>

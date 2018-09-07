@@ -75,16 +75,16 @@
 
     <div class="position_ads" style="">
       <div class="ads_left" style="width: 12%;z-index: 9999;">
-          <a class="close" href="javascript:$('.ads_left').hide()">×</a>
+          <a class="close" href="javascript:$('.ads_left').hide()" style="color: #fff;opacity:1">×</a>
           {foreach name="slide" item="vo"}
             {eq name="vo['slide_type']" value="float_left_banner"}
-                <img src="{:fa_get_image_url($vo['slide_pic'])}">
+                 <a href="{$vo.slide_url}" target="_blank"><img src="{:fa_get_image_url($vo['slide_pic'])}"></a>
             {/eq}
           {/foreach}
       </div>
 
       <div class="ads_right" style="width: 16%;z-index: 9999;right: 0;">
-    	 	<a class="close" href="javascript:$('.ads_right').hide()">×</a>
+    	 	<a class="close" href="javascript:$('.ads_right').hide()" style="opacity:1">×</a>
       	<div class="index_news" style="">
       			<div class="title" style=""></div>
       			<ul style="">
@@ -204,7 +204,9 @@
                             {foreach name="product_list" key="k" item="vo"}
                             {if condition="$k eq  0"}
                                 <div class="col-md-6 col-xs-6 n2">
+                                    <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
                                     <div style="text-;text-align:  center;"><img src="__PUBLIC__{$vo['cover']}" class="first" style="width:189px;height:189px;"></div>
+                                    </a>
                                     <div class="d2">
                                         <p class="nowrap">{$vo['product_name']}</p>
                                         {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
@@ -221,7 +223,9 @@
                             {/if}
                             {if condition="$k egt 1 && $k  elt 2"}
                             <div class="col-md-3 col-xs-3 n2">
+                                <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
                                 <img src="__PUBLIC__{$vo['cover']}">
+                                </a>
                                 <div class="d2">
                                   <p class="nowrap">{$vo['product_name']}</p>
                                     {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
@@ -245,7 +249,9 @@
                       {foreach name="product_list" key="k" item="vo"}
                           {if condition="$k egt 3 && $k elt 7"}
                           <div class="col-md-3 col-xs-3 n2">
-                              <img src="__PUBLIC__{$vo['cover']}">
+                              <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
+
+                              <img src="__PUBLIC__{$vo['cover']}"> </a>
                               <div class="d2">
                                   <p class="nowrap">{$vo['product_name']}</p>
                                  {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
@@ -291,7 +297,9 @@
                          {foreach name="health_food" key="k" item="vo"}
                          {if condition="$k eq  0"}
                          <div class="col-md-6 col-xs-6 n2">
+                             <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
                              <div style="text-;text-align:  center;"><img src="__PUBLIC__{$vo['cover']}" class="first" style="width:189px;height:189px;"></div>
+                             </a>
                              <div class="d2">
                                  <p class="nowrap">{$vo['product_name']}</p>
                                  {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
@@ -308,7 +316,9 @@
                          {/if}
                          {if condition="$k egt 1 && $k  elt 2"}
                          <div class="col-md-3 col-xs-3 n2">
+                             <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
                              <img src="__PUBLIC__{$vo['cover']}">
+                             </a>
                              <div class="d2">
                                  <p class="nowrap">{$vo['product_name']}</p>
                                  {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
@@ -332,7 +342,9 @@
                           {foreach name="health_food" key="k" item="vo"}
                           {if condition="$k egt 3 && $k  elt 6"}
                           <div class="col-md-3 col-xs-3 n2">
+                              <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
                               <img src="__PUBLIC__{$vo['cover']}">
+                              </a>
                               <div class="d2">
                                   <p class="nowrap">{$vo['product_name']}</p>
                                   {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
@@ -378,7 +390,9 @@
                             {foreach name="science_food" key="k" item="vo"}
                             {if condition="$k eq  0"}
                             <div class="col-md-6 col-xs-6 n2">
+                                <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
                                 <div style="text-;text-align:  center;"><img src="__PUBLIC__{$vo['cover']}" class="first" style="width:189px;height:189px;"></div>
+                                </a>
                                 <div class="d2">
                                     <p class="nowrap">{$vo['product_name']}</p>
                                     {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
@@ -395,7 +409,9 @@
                             {/if}
                             {if condition="$k egt 1 && $k  elt 2"}
                             <div class="col-md-3 col-xs-3 n2">
+                                <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
                                 <img src="__PUBLIC__{$vo['cover']}">
+                                </a>
                                 <div class="d2">
                                     <p class="nowrap">{$vo['product_name']}</p>
                                     <p class="color_ro">优惠全民享</p>
@@ -414,7 +430,9 @@
                             {foreach name="science_food" key="k" item="vo"}
                             {if condition="$k egt 3 && $k  elt 6"}
                             <div class="col-md-3 col-xs-3 n2">
+                                <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
                                 <img src="__PUBLIC__{$vo['cover']}">
+                                </a>
                                 <div class="d2">
                                     <p class="nowrap">{$vo['product_name']}</p>
                                     {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}

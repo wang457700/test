@@ -135,8 +135,17 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                             title: __('Operate'),
                             table: table,
                             events: Table.api.events.operate,
-
-                            formatter: Table.api.formatter.operate
+                            formatter: Table.api.formatter.operate,formatter: function (value, row, index) {
+                                 console.log(row.status);
+                                 var that = $.extend({}, this);
+                                 var table = $(that.table).clone(true);
+                                 if (row.id == 15 || row.id == 16|| row.id == 17|| row.id == 63){
+                                     $(table).data("operate-del", null);
+                                 }
+                                 that.table = table;
+                                 //console.log($(table).data("operate-dongjie"));
+                                 return Table.api.formatter.operate.call(that, value, row, index);
+                             }
                         },
                     ]
                 ],

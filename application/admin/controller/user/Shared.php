@@ -24,10 +24,18 @@ class Shared extends Backend
     public function index()
     {
         if ($this->request->isAjax()) {
+            list($where, $sort, $order, $offset, $limit) = $this->buildparams(NULL);
+
             $total = 1;
-            $where['status'] = array('neq',3);
-            $list =  Db::name('user_share')->where($where)->select();
-            $status =array('0'=>'未审核','1'=>'已审核','2'=>'下架');
+           // $where['status'] = array('neq',3);
+
+            $list =  Db::name('user_share')
+                ->where($where)
+                ->order($sort, $order)
+                ->limit($offset, $limit)
+                ->select();
+
+            $status =array('0'=>'未审核','1'=>'已审核','2'=>'下架','3'=>'删除');
             foreach ($list as $k => &$v)
             {
                 $v['product_category']  = explode('-',$v['product_category']);
@@ -67,7 +75,8 @@ class Shared extends Backend
             $this->success("Ajax请求成功", null, ['id' => $ids]);
         }
 
-
+        $status =array('0'=>'未审核','1'=>'已审核','2'=>'下架','3'=>'删除');
+        $this->view->assign("status", $status);
         $this->view->assign("row", $row);
         return $this->view->fetch();
     }

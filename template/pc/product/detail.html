@@ -192,10 +192,9 @@
                                 </div>
                           </li>
                         {/foreach}
-                        {if condition="$comment_list->total() eq 0"}
-                            <li class="row">
-                                暂时没有评论
-                            </li>
+
+                        {if condition="count($comment_list) eq 0"}
+                        <div style="text-align:  center;padding:  20px;">暂时没有评论</div>
                         {/if}
                         </ul>
                         <div class="pagination">

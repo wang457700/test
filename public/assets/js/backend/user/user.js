@@ -26,7 +26,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'email', title:'用戶電郵', operate: 'LIKE'},
                         {field: 'mobile', title: '手機號碼', operate: 'LIKE'},
                         {field: 'level', title:'用户类型', visible: true, searchList: {1: __('Male'), 0: __('Female')}, operate:false},
-                        {field: 'score', title: '積分', operate: 'BETWEEN', sortable: true},
+                        {field: 'score', title: '積分', operate: false,},
                         {field: 'join_source', title:'注册類型', operate:false},
                         {field: 'jointime', title:'注册日期', formatter: Table.api.formatter.datetime, operate:false},
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate,
@@ -40,12 +40,13 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                     url: 'user/user/detail'
                                 },
                                 {
-                                    name: 'ajax',
-                                    title: __('发送Ajax'),
+                                    name: 'dongjie',
+                                    title: __('冻结'),
                                     text:'凍結',
                                     classname: 'btn btn-xs btn-detail btn-magic btn-ajax',
-                                    url: 'order/index/detail',
+                                    url: 'user/user/status/is/hidden',
                                     success: function (data, ret) {
+                                        $(".btn-refresh").trigger("click");
                                         //Layer.alert(ret.msg + ",返回数据：" + JSON.stringify(data));
                                         //如果需要阻止成功提示，则必须使用return false;
                                         //return false;
@@ -55,14 +56,41 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                         //Layer.alert(ret.msg);
                                         return false;
                                     }
+                                },{
+                                    name: 'jiedong',
+                                    title: __('解冻'),
+                                    text:'解冻',
+                                    classname: 'btn btn-xs btn-detail btn-magic btn-ajax',
+                                    url: 'user/user/status/is/normal',
+                                    success: function (data, ret) {
+                                        $(".btn-refresh").trigger("click");
+                                    },
+                                    error: function (data, ret) {
+                                        console.log(data, ret);
+                                        //Layer.alert(ret.msg);
+                                        return false;
+                                    }
                                 },
                             ], 
-                        formatter: Table.api.formatter.operate},
-
-
-
+                        formatter: Table.api.formatter.operate,formatter: function (value, row, index) {
+                            console.log(row.status);
+                            var that = $.extend({}, this);
+                            var table = $(that.table).clone(true);
+                            if (row.status != 'normal'){
+                                $(table).data("operate-dongjie", null);
+                            }
+                            if (row.status != 'hidden'){
+                                $(table).data("operate-jiedong", null);
+                            }
+                            that.table = table;
+                            //console.log($(table).data("operate-dongjie"));
+                            return Table.api.formatter.operate.call(that, value, row, index);
+                        }},
                     ]
-                ]
+                ],
+                //禁用默认搜索
+                search: false,
+                searchFormVisible: true,
             });
 
             // 为表格绑定事件
