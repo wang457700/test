@@ -86,7 +86,10 @@ class Config extends Backend
             $item['value'] = json_decode($item['value'],true);
             $config_data[$item['name']] =  $item['value'];
         }
+        $region= Db::name('region')->where(array('level'=>2,'is_remote_area'=>0))->column('name');
+dump($region);
         $this->view->assign('config_data', $config_data);
+        $this->view->assign('region', $region); //显示免服务费地区 - 市
         return $this->view->fetch();
     }
 
@@ -106,6 +109,36 @@ class Config extends Backend
                 $this->success('保存成功');
             }
         }
+    }
+
+    /**
+     * 设置偏远地区
+     */
+    public function remotearea()
+    {
+        if ($this->request->isAjax()) {
+            //数据输出ajax
+            $total = 1;
+            $where = array();
+            $cid = $this->request->get('type');
+            if($cid == 'all' || empty($cid)){
+                foreach ($this->categorylist as $k => $v){
+                    if($v['type'] == 'product') {
+                        $list[] = $v;
+                    }
+                }
+            }else{
+                $where['pid'] = $cid;
+                $list = Db::name('Category')->where($where)->select();
+            }
+
+            $result = array("total" => $total, "rows" => $list);
+            return json($result);
+        }
+
+        $category_list = Db::name('Category')->where('pid',14)->select();
+        $this->view->assign("category_list", $category_list);
+        return $this->view->fetch();
     }
     /**
      * 添加

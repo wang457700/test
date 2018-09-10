@@ -1,0 +1,55 @@
+<style type="text/css">
+#table tr:hover{}
+.on{background: #18bc9b !important;color:#fff;}
+
+</style>
+<div class="panel panel-default panel-intro row">
+    <div class="panel-heading">
+        {:build_heading(null,FALSE)}
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#all" data-toggle="tab">{:__('All')}</a></li>
+               
+                 {foreach name="category_list" item="vo"}
+                    <li><a href="#{$vo.id}" data-toggle="tab">{$vo.name}</a></li>
+                {/foreach}
+            
+        </ul>
+    </div>
+    <div class="panel-body col-sm-6">
+        <div>二级分类</div>
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade active in" id="one">
+                <div class="widget-body no-padding">
+                    <div id="toolbar" class="toolbar">
+                        {:build_toolbar('refresh')}
+                        <a href="javascript:;" class="btn btn-success btn-add" title="添加"><i class="fa fa-plus"></i> 新增分类</a>
+                    </div>
+                    <table id="table" class="table table-striped table-bordered table-hover" 
+                           data-operate-edit="{:$auth->check('category/edit')}" 
+                           data-operate-del="{:$auth->check('category/del')}" 
+                           width="100%">
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="panel-body col-sm-4">
+         <div  style="padding: 10px  5px;">三级分类</div>
+        <form id="edit-form" class="form-horizontal form-ajax" role="form" data-toggle="validator" method="POST" action="product/category_sub_edit" style="min-height: 450px;">
+            <input type="hidden" name="row[pid]" value="" id="sub_pid">
+            <input type="hidden" name="row[data]" value="" id="sub_pid">
+            <input type="hidden" name="row[new]" value="" id="sub_pid">
+            <div id="form-group">
+                
+            </div>
+            <div class="form-group">
+                <div class="col-xs-12 col-sm-4">
+                    <button type="text" class="btn btn-success">保存</button>
+                </div> 
+                <a href="javascript:;" class=" btn-add pull-right" title="添加" id="add_sub"><i class="fa fa-plus"></i> 新增分类</a>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
