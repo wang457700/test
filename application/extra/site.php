@@ -51,21 +51,21 @@ return array (
   ),
   'index_seo' => 
   array (
-    'title' => '杀杀杀',
-    'keywords' => '水水',
-    'description' => '水水',
+    'title' => '主页标题',
+    'keywords' => '主页关键字',
+    'description' => '主页描述',
   ),
   'product_seo' => 
   array (
-    'title' => '水水',
-    'keywords' => '水水',
-    'description' => '水水',
+    'title' => '产品列表标题',
+    'keywords' => '产品列表关键字',
+    'description' => '产品列表描述',
   ),
   'info_seo' => 
   array (
-    'title' => '事实上',
-    'keywords' => '水水',
-    'description' => '事实上水水',
+    'title' => '社区服务资讯标题',
+    'keywords' => '社区服务资讯关键字',
+    'description' => '社区服务资讯描述',
   ),
   'freight' => 
   array (

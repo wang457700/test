@@ -241,9 +241,8 @@ define(['jquery', 'bootstrap', 'plupload', 'template'], function ($, undefined, 
                         onUploadComplete: onUploadComplete,
                         button: that
                     });
-
                     //拖动排序
-                    if (preview_id && multiple) {
+                    if (preview_id && multiple && false) {
                         require(['dragsort'], function () {
                             $("#" + preview_id).dragsort({
                                 dragSelector: "li",
@@ -254,6 +253,7 @@ define(['jquery', 'bootstrap', 'plupload', 'template'], function ($, undefined, 
                             });
                         });
                     }
+
                     if (preview_id && input_id) {
                         $(document.body).on("keyup change", "#" + input_id, function () {
                             var inputStr = $("#" + input_id).val();

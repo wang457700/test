@@ -27,11 +27,11 @@
         </tr> 
         <tr class="col-xs-6 col-sm-6">
             <th>應付金額：</th>
-            <td>{$order['all_total'] + $order['freight'] - $order['integral_price'] - $order['coupon_price']}</td>
+            <td>{$order['all_total'] + $order['freight'] + $order['service_price'] - $order['integral_price'] - $order['coupon_price']}</td>
         </tr>
         <tr class="col-xs-6 col-sm-6">
             <th>服務費：</th>
-            <td>0</td>
+            <td>{$order.service_price}</td>
         </tr>
         <tr class="col-xs-6 col-sm-6">
             <th>捐款金額：</th>

@@ -47,23 +47,21 @@ class Cart extends Frontend
 
         $action=input('now_pay');
         if($action=='now_pay'){
-            $goods_id=input('goods_id');
-            $goods_num= input('goods_num');
-            $list= Db::name('goods')->where('product_id',$goods_id)->find();
-            $list['money_total']=$goods_num*$list['price'];
-            $address_list=Db::name('user_address')->where('user_id',Session::get('user_id'))->select();
-            foreach ($address_list as $key =>$v){
-                $v['province'] = Db::name('region')->where(array('id'=>$v['province']))->value('name');
-                $v['city'] =Db::name('region')->where(array('id'=>$v['city']))->value('name');
-                $v['district'] =Db::name('region')->where(array('id'=>$v['district']))->value('name');
-                $address_list[$key] = $v;
-            }
-            $this->assign('order_list',$list);
+//            $goods_id=input('goods_id');
+//            $goods_num= input('goods_num');
+//            $list= Db::name('goods')->where('product_id',$goods_id)->find();
+//            $list['money_total']=$goods_num*$list['price'];
+//            $address_list=Db::name('user_address')->where('user_id',Session::get('user_id'))->select();
+//            foreach ($address_list as $key =>$v){
+//                $v['province'] = Db::name('region')->where(array('id'=>$v['province']))->value('name');
+//                $v['city'] =Db::name('region')->where(array('id'=>$v['city']))->value('name');
+//                $v['district'] =Db::name('region')->where(array('id'=>$v['district']))->value('name');
+//                $address_list[$key] = $v;
+//            }
+//            $this->assign('order_list',$list);
         }else{
             $product_id = input('goods_id/a');
             $goods_num = input('goods_num/a');
-
-
             $count = count($product_id);
             if ($count> 0) {
                 $i = 0;
@@ -99,6 +97,12 @@ class Cart extends Frontend
                 if(strval($total) > $cofing_freight['no_freight']){
                     $freight = $cofing_freight['freight'];
                 }
+                /*服务费*/
+                $service_price = 0;
+                $is_remote_area = 1;
+                if($is_remote_area){
+                    $service_price = $cofing_freight['remote_area'];
+                }
                 $this->assign('all_total',$total);
                 $this->assign('freight',$freight);
                 $this->assign('num',$num);
@@ -132,6 +136,7 @@ class Cart extends Frontend
         $user = Db::name('user')->where('id',Session::get('user_id'))->find();
         if($address_id){
             $address = Db::name('user_address')->where('id',$address_id)->find();
+            $isaddress = $address;
             $address['province'] = Db::name('region')->where(array('id'=>$address['province']))->value('name');
             $address['city'] =Db::name('region')->where(array('id'=>$address['city']))->value('name');
             $address['district'] =Db::name('region')->where(array('id'=>$address['district']))->value('name');
@@ -215,6 +220,13 @@ class Cart extends Frontend
                 $freight = $cofing_freight['freight'];
             }
 
+            /*服务费*/
+            $service_price = 0;
+            $is_remote_area = 1;
+            if($is_remote_area){
+                $service_price = $cofing_freight['remote_area'];
+            }
+
 
             foreach ($data as $k => $v) {
                     $price=Db::name('goods')->where('product_id',$v['goods_id'])->find();
@@ -223,11 +235,12 @@ class Cart extends Frontend
                     $fat['money_total']=$v['goods_num']*$price['price'];
                     $fat['goods_sn'] =$price['freight_num'];
                     $fat['address_id'] =$address_id;
-                    $fat['address'] =$address;
+                    $fat['address'] =$address['text'];
                     $fat['integral_price'] =$score_price;
                     $fat['coupon_price'] =$coupon_price;
                     $fat['coupon_id'] =$coupon_id;
                     $fat['freight'] =$freight;
+                    $fat['service_price'] =$service_price;
                     $fat['order_sn'] =$order_sn;
                     $fat['goods_id'] = $v['goods_id'];//这里都要加上下标
                     $fat['goods_num'] = $v['goods_num'];//这里都要加上下标

@@ -250,15 +250,20 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
 
             //选择分类
             $(function(){
+
                 get_category(14,'cat_id','0');  // 14：产品分类
+                //一级选择
                 $(document).on("change",'#cat_id',function(){
-                    get_category($(this).val(),'cat_id_2','0');
-                    $('#cat_id_2').empty().html("<option value='0'>请选择商品分类</option>");
+                    var idname = 'cat_id_2';
+                    get_category($(this).val(),idname,'0');
+                    $('#' + idname).empty().html("<option value='0'>请选择商品分类</option>");
                 });
 
+                //二级选择
                 $(document).on("change",'#cat_id_2',function(){
-                    get_category($(this).val(),'cat_id_3','0');
-                    $('#cat_id_3').empty().html("<option value='0'>请选择商品分类</option>");
+                    var idname = 'cat_id_3';
+                    get_category($(this).val(),idname,'0');
+                    $('#' + idname).empty().html("<option value='0'>请选择商品分类</option>");
                 })
             });
         },
@@ -284,10 +289,10 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 var cat_id_02 = $('#cat_id_02').val();
                 var cat_id_03 = $('#cat_id_03').val();
                 if(cat_id_02){
-                    get_category(cat_id_01,'cat_id_2',cat_id_02);
+                    get_category(cat_id_01,'cat_id_2',cat_id_02,0);
                 }
                 if(cat_id_03){
-                    get_category(cat_id_02,'cat_id_3',cat_id_03);
+                    get_category(cat_id_02,'cat_id_3',cat_id_03,0);
                 }
 
                 $(document).on("change",'#cat_id',function(){
@@ -313,7 +318,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
     $(function(){
         $('.discount input').each(function(){
             $(this).click(function(){
-                console.log($(this).val());
                 var type = $(this).val();
                 if(type == 3){
                     $('#discount_time').show();
@@ -354,6 +358,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
  */
 
 function get_category(id,next,select_id){
+
     if(id == 0){
         return false;
     }
@@ -374,9 +379,7 @@ function get_category(id,next,select_id){
                     }
                    // html+= "<option value='"+value.id+"' selected>"+value.name+"</option>";
                 });
-                $('#'+next).empty().append(html).show().attr('name','cat_id');
-            }else{
-                $('#'+next).hide().attr('name','');
+                $('#'+next).empty().append(html).show();
             }
         }
     });

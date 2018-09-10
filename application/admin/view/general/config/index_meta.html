@@ -12,8 +12,10 @@
     .form-group2 .col-sm-12{margin-top: 10px;}
     .meta_title{line-height: 143px;text-align:  center;border: 1px solid #eee;border-top: 0;border-left: 0;}
 </style>
-<div class="panel panel-default panel-intro col-sm-6" >
+<a href="javascript:window.location.reload();" class="btn btn-primary btn-refresh" title="刷新"><i class="fa fa-refresh"></i> </a>
 
+<div style="clear: both"></div><br>
+<div class="panel panel-default panel-intro col-sm-6" >
     <div class="panel-body">
         <div class="tab-pane active">
             <form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="{:url('general.config/meta_edit')}" >
@@ -40,10 +42,27 @@
                 <div class="form-group">
                     <div class="col-sm-12">
                         <label for="rule" class="control-label col-xs-12 col-sm-2">免服务费地区：</label>
-                        <div class="col-xs-12 col-sm-6">
+                        <div class="col-xs-12 col-sm-6" style="padding-top: 7px;">
                             {:implode(' ',$region)}   <a href="javascript:;" id="fastadmin">修改</a>
                         </div>
                     </div>
+                </div>
+                <div  class="form-group" style="opacity: 0;margin: 0;">
+                    <div class="col-sm-12" style="margin-bottom: 10px;">
+                        <label for="rule" class="control-label col-xs-0 col-sm-4">sdasdas</label>
+                        <div class="col-xs-12 col-sm-6">
+                            <input type="text" class="form-control NumText" id="rule" />
+                        </div>
+                        <div class="col-xs-12 col-sm-2">=分</div>
+                    </div>
+                    <div class="col-sm-12" style="margin-bottom: 10px;">
+                        <label for="rule" class="control-label col-xs-0 col-sm-4">sdasdas</label>
+                        <div class="col-xs-12 col-sm-6">
+                            <input type="text" class="form-control NumText" id="rule" />
+                        </div>
+                        <div class="col-xs-12 col-sm-2">=分</div>
+                    </div>
+
                 </div>
                 <div class="form-group">
                     <label class="control-label col-xs-12 col-sm-2"></label>

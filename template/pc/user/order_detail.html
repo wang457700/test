@@ -93,6 +93,7 @@
 						<div class="col-md-12 border_1" style="text-align: right;padding:20px">
 							<span class="color_ro">{$all_goods_num}</span>件商品,  總計(不含運費): <span class="color_ro">$ {:number_format($all_money_total,2)}</span><br/>
 							運費: $ {$order_info['freight']}<br/>
+							服務費: $ {$order_info['service_price']}<br/>
 							优惠: <span class="color_ro">$ {$order_info['coupon_price']|default='0'}</span><br/>
 						</div>
 						<div class="col-md-12 border_1" style="padding:20px">

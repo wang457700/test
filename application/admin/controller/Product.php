@@ -3,6 +3,7 @@
 namespace app\admin\controller;
 use think\config\driver\Json;
 use think\Db;
+use think\validate;
 use app\common\controller\Backend;
 use app\common\model\Category as CategoryModel;
 use fast\Tree;
@@ -45,28 +46,50 @@ class Product extends Backend
         $cat_list = Db::name('category')->where("pid = 14")->select();
         if($this->request->isAjax()){
             $data=input('post.');
-            if($data['discount_type'] == 2 && $data['pricevip'] =='0'){
-                $this->error('特價不能為零！');
-            }
 
             $product_name=Db::name('goods')->where('product_name',$data['product_name'])->find();
             if($product_name){
-                $this->error('该商品名称已经添加');
+               // $this->error('该商品名称已经添加');
+            }
+
+            $data['cat_id'] = array_filter($data['cat_id']);
+            $cat_count = count($data['cat_id']);
+            if($cat_count){
+                $data['cat_id'] = $data['cat_id'][$cat_count-1];
             }
             if(empty($data['cat_id'])){
                 $this->error('请选择分类');
             }
+
+            if(empty($data['cover'])){
+                $this->error('至少上传一张封面图！');
+            }
+
+            if($data['discount_type'] == 2 ){
+                if($data['pricevip'] =='0' || empty($data['pricevip'])){
+                    $this->error('特價不能為零！');
+                }
+            }
+
+            if($data['discount_type'] == 3){
+                if($data['discount_price'] =='0' || empty($data['discount_price'])){
+                    $this->error('优惠不能為零！');
+                }
+                if(empty($data['discount_start_time'])){
+                    $this->error('优惠开始时间不能為空！');
+                }
+                if(empty($data['discount_end_time'])){
+                    $this->error('优惠结束时间不能為空！');
+                }
+            }
+
             $data['add_time']=date('Y-m-d H:i:s',time());
-            //$img_url=array_filter(input('img_url/a'));
-            //$data['img_url']=implode(',',$img_url);
             $res=Db::name('goods')->insertGetId($data);
             if($res){
-                $this->success('添加成功！',url('product/index'));
+                $this->success('添加成功！'.$data['pricevip'],url('product/index'));
             }else{
                 $this->error('添加失败');
             }
-
-
         }
 
         $this->assign('cat_list',$cat_list);
@@ -91,13 +114,23 @@ class Product extends Backend
         $cat_list = Db::name('category')->where("pid = 14")->select();
         if($this->request->isAjax()){
             $data=input('post.');
+
             if($data['discount_type'] == 2 && $data['pricevip'] =='0'){
                 $this->error('特價不能為零！');
             }
 
+            $data['cat_id'] = array_filter($data['cat_id']);
+            $cat_count = count($data['cat_id']);
+            if($cat_count){
+                $data['cat_id'] = $data['cat_id'][$cat_count-1];
+            }
             if(empty($data['cat_id'])){
                 $this->error('请选择分类');
             }
+            if(empty($data['cover'])){
+                $this->error('至少上传一张封面图！');
+            }
+
             $img_url=array_filter(input('img_url/a'));
             $data['img_url']=implode(',',$img_url);
             $res=Db::name('goods')->where('product_id',$data['product_id'])->update($data);

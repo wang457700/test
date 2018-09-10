@@ -87,7 +87,6 @@ class Config extends Backend
             $config_data[$item['name']] =  $item['value'];
         }
         $region= Db::name('region')->where(array('level'=>2,'is_remote_area'=>0))->column('name');
-dump($region);
         $this->view->assign('config_data', $config_data);
         $this->view->assign('region', $region); //显示免服务费地区 - 市
         return $this->view->fetch();
@@ -120,26 +119,36 @@ dump($region);
             //数据输出ajax
             $total = 1;
             $where = array();
-            $cid = $this->request->get('type');
-            if($cid == 'all' || empty($cid)){
-                foreach ($this->categorylist as $k => $v){
-                    if($v['type'] == 'product') {
-                        $list[] = $v;
-                    }
-                }
-            }else{
-                $where['pid'] = $cid;
-                $list = Db::name('Category')->where($where)->select();
-            }
+            $pid = $this->request->get('type',47494);
+
+            $where['parent_id'] = $pid;
+            $list = Db::name('region')->where($where)->select();
 
             $result = array("total" => $total, "rows" => $list);
             return json($result);
         }
 
-        $category_list = Db::name('Category')->where('pid',14)->select();
-        $this->view->assign("category_list", $category_list);
+        $region_list = Db::name('region')->where('level',1)->select();
+        $this->view->assign("region_list", $region_list);
         return $this->view->fetch();
     }
+
+    public function isremotearea($ids = '')
+    {
+        $is = input('is');
+        $res = Db::name('region')->where('id',$ids)->update(array('is_remote_area'=>$is));
+        $region = Db::name('region')->where('parent_id',$ids)->find();
+        if ($region){
+           Db::name('region')->where('parent_id',$ids)->update(array('is_remote_area'=>$is));
+        }
+        if($res){
+            $this->success("成功");
+        }else{
+            $this->error('失败');
+        }
+    }
+
+
     /**
      * 添加
      */

@@ -343,7 +343,11 @@ function product_price($product_id)
         $price = $product['pricevip'];
     }
     if($product['discount_type'] == 3){
-        $price = $product['discount_price'];
+        if(strtotime($product['discount_end_time']) > time() && strtotime($product['discount_start_time']) < time()){
+            $price = $product['discount_price'];
+        }else{
+            $price = $product['price'];
+        }
     }
     return $price;
 }
