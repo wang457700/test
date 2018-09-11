@@ -35,72 +35,71 @@
 			<div class="col-md-2 col-xs-2" style="">小計</div>
 			<div class="col-md-1 col-xs-1" style="">操作</div>
 		</div>
-<form action="{:URL('cart/order_ok')}" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return cartform()" id="cart-form">
-
-	{foreach name="car_list" item="vo"}
-
-		<!--第{$key}个产品-->
-		<div class="row cart-item-list"  id="list_{$key}" >
-			<input type="hidden" value="{$vo.price}" name="price[]" id="unit_price_{$key}"/>
-			<input type="hidden" value="{$vo['total']*$vo['price']}" id="subtotal_{$key}" class="subtotal"/>
-			<!-- <input type="hidden" value="2" id="number_1"/> -->
-			<div class="col-md-1 col-xs-1" style="">
-				<input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="goods_id[]" value="{$vo.product_id}" title="ID:106" data-key="{$key}">
-				<label for='checkbox1'></label>
-			</div>
-			<div class="col-md-4 col-xs-4 t2" style="">
-				<div class="row">
-					<img src="__PUBLIC__/{$vo.cover}" class="col-md-5  col-xs-12">
-					<p class="col-md-6 col-xs-12">
-						<span class="bold">{$vo.product_name} {$vo.model}</span>
-						產品型號：{$vo.model}
-					</p>
+		<form action="{:URL('cart/order_ok')}" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return cartform()" id="cart-form">
+			{foreach name="car_list" item="vo"}
+				<!--第{$key}个产品-->
+				<div class="row cart-item-list"  id="list_{$key}" >
+					<input type="hidden" value="{$vo.price}" name="price[]" id="unit_price_{$key}"/>
+					<input type="hidden" value="{$vo['total']*$vo['price']}" id="subtotal_{$key}" class="subtotal"/>
+					<!-- <input type="hidden" value="2" id="number_1"/> -->
+					<div class="col-md-1 col-xs-1" style="">
+						<input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="goods_id[]" value="{$vo.product_id}" title="ID:106" data-key="{$key}">
+						<label for='checkbox1'></label>
+					</div>
+					<div class="col-md-4 col-xs-4 t2" style="">
+						<div class="row">
+							<img src="__PUBLIC__/{$vo.cover}" class="col-md-5  col-xs-12">
+							<p class="col-md-6 col-xs-12">
+								<span class="bold">{$vo.product_name} {$vo.model}</span>
+								產品型號：{$vo.model}
+							</p>
+						</div>
+					</div>
+					<div class="col-md-2 col-xs-2 color_ro font18" id="unit_price_span_{$key}">$ {$vo.price}</div>
+					<div class="col-md-2 col-xs-2" style="">
+							<div class="row number">
+							  <div class="col-md-12" style="">
+								<input id="min_{$key}" name="" type="button" value="-" class="reduce" onclick="on_number({$key},'min')">
+								<input id="number_{$key}" name="goods_num[]" type="number" value="{$vo.total}" style="width:50px;text-align: center"  class="color_75" data-key="{$key}">
+								<input id="add_{$key}" name="" type="button" value="+" class="add" onclick="on_number({$key},'add')">
+							  </div>
+							</div>
+					</div>
+					<div class="col-md-2 col-xs-2 color_ro font18" style="">$ <span id="subtotal_span_{$key}">{:number_format($vo['price']*$vo['total'],2)}</span></div>
+					<div class="col-md-1 col-xs-1 t6" style=""><a href="{:url('cart/cart_del',array('product_id'=>$vo['product_id']))}" class="js-ajax-delete" onclick="return false;"><i class="fa fa-trash-o" aria-hidden="true" style="color:#666;line-height: 110px;"></i></a></div>
+				</div>
+		 	{/foreach}
+			{if condition="count($car_list) eq 0"}
+				<div class="search_page_empty"></div>
+			{/if}
+			<div class="row" style="padding: 20px;display: {if condition="count($car_list) eq 0"}none{/if}">
+				<div class="col-md-8" style="display: none">
+					<h4>積分抵扣現金</h4>
+					<input type="checkbox" class="checkbox"/>您當前有<span class="color_ro">120</span>積分，可抵扣<span class="color_ro">$12.0</span>
+				</div>
+				<div class="col-md-4" style="float: right;text-align: right;">
+					<span class="color_ro" id="total_sum">{$goods_sum}</span>件商品, 總計: <span class="color_ro" id="total">$ {:number_format($all_price,2)}</span>
+					<br/>運費: $ 0<br/>
+					<p style="font-size:22px ">合計 (不含運費)：<span class="color_ro" id="total_no_yunxfei">$ {:number_format($all_price,2)}</span></p>
+					<div class="row" style="padding:10px 0 ">
+					   <div class="col-md-6" style=""><a href="{:url('index/index')}">
+						   <button type="button" class="btn btn-default btn-default-edit" style="margin-bottom: 1em">繼續購物</button></a>
+						</div>
+						 <div class="col-md-6" style="">
+							<button type="submit" class="btn btn-warning btn-warning-edit" id="submit">提交訂單</button>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="col-md-2 col-xs-2 color_ro font18" id="unit_price_span_{$key}">$ {$vo.price}</div>
-			<div class="col-md-2 col-xs-2" style="">
-					<div class="row number">
-					  <div class="col-md-12" style="">
-						<input id="min_{$key}" name="" type="button" value="-" class="reduce" onclick="on_number({$key},'min')">
-						<input id="number_{$key}" name="goods_num[]" type="number" value="{$vo.total}" style="width:50px;text-align: center"  class="color_75" data-key="{$key}">
-						<input id="add_{$key}" name="" type="button" value="+" class="add" onclick="on_number({$key},'add')">
-					  </div>
-					</div>
-			</div>
-			<div class="col-md-2 col-xs-2 color_ro font18" style="">$ <span id="subtotal_span_{$key}">{:number_format($vo['price']*$vo['total'],2)}</span></div>
-			<div class="col-md-1 col-xs-1 t6" style=""><a href="{:url('cart/cart_del',array('product_id'=>$vo['product_id']))}" class="js-ajax-delete" onclick="return false;"><i class="fa fa-trash-o" aria-hidden="true" style="color:#666;line-height: 110px;"></i></a></div>
-		</div>
-	 {/foreach}
-	{if condition="count($car_list) eq 0"}
-		<div class="search_page_empty"></div>
-	{/if}
-		<div class="row" style="padding: 20px;display: {if condition="count($car_list) eq 0"}none{/if}">
-			<div class="col-md-8" style="display: none">
-				<h4>積分抵扣現金</h4>
-				<input type="checkbox" class="checkbox"/>您當前有<span class="color_ro">120</span>積分，可抵扣<span class="color_ro">$12.0</span>
-			</div>
-			<div class="col-md-4" style="float: right;text-align: right;">
-				<span class="color_ro" id="total_sum">{$goods_sum}</span>件商品, 總計: <span class="color_ro" id="total">$ {:number_format($all_price,2)}</span>
-				<br/>運費: $ 0<br/>
-				<p style="font-size:22px ">合計 (不含運費)：<span class="color_ro" id="total_no_yunxfei">$ {:number_format($all_price,2)}</span></p>
-				<div class="row" style="padding:10px 0 ">
-                   <div class="col-md-6" style=""><a href="{:url('index/index')}">
-					   <button type="button" class="btn btn-default btn-default-edit" style="margin-bottom: 1em">繼續購物</button></a>
-                    </div>
-                     <div class="col-md-6" style="">
-                        <button type="submit" class="btn btn-warning btn-warning-edit" id="submit">提交訂單</button>
-                    </div> 
-                </div>
-			</div>
-		</div>
-		<input id="jump" value="0" type="hidden">
-</form>
+			<input id="jump" value="0" type="hidden">
+		</form>
 	 </div>
  {include file="common/footer" /}
  <script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
  <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
  {include file="common/script" /}
 	<script type="text/javascript">
+
        		 //单选
 			$(".js-check").on('click',function(){
 				var key =  $(this).data('key');
@@ -119,13 +118,11 @@
                         $(this).prop('checked', false);
                     });
                     $(this).data('id',0);
-
                 }else{
                     $("input[name^='goods_id[]']").each(function(){
                         $(this).prop('checked', true);
                     });
                     $(this).data('id',1);
-
                 }
             });
 
@@ -165,7 +162,7 @@
 			 });
 
              //计算单条总价格
-			 function  total_price(id) {
+			 function  total_price(id){
                  var t = $("#number_" + id);
                  var unit_price = $('#unit_price_' + id).val();
                  var number = t.val();

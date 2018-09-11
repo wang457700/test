@@ -384,6 +384,14 @@ function is_login()
     $user_id = Session('user_id');
     return $user_id;
 }
+
+/*  查询用户信息 */
+function sp_user_info()
+{
+    $user_id = Session('user_id');
+    $user = Db::name('user')->where('id',$user_id)->find();
+    return $user;
+}
 /*  创建游客信息  */
 function create_tourist()
 {

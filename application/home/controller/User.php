@@ -342,6 +342,7 @@ class User extends Frontend
         $this->assign('order_list',$result);
         $this->assign('level_text',$level_text);
         $this->assign('pay_status',$pay_status);
+        $this->assign('lastPage',$lastPage=6);
         $this->assign('payment',$payment);
         $this->assign('contribution_price',$sum_contribution_price);
         $this->assign('config_use',config('site')['integral']['use']);
