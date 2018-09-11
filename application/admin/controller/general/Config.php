@@ -128,7 +128,12 @@ class Config extends Backend
             return json($result);
         }
 
-        $region_list = Db::name('region')->where('level',1)->select();
+        $region_list = Db::name('region')
+            ->alias('a')
+            ->field('a.*,(select count(id) from fa_region where parent_id=a.id and is_remote_area=0 and level=2) as count')
+            ->where('level',1)
+            ->select();
+
         $this->view->assign("region_list", $region_list);
         return $this->view->fetch();
     }

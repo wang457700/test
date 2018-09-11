@@ -328,10 +328,7 @@ function format_phone($phone)
     return implode(' ', $match);
 }
 
-
-/*
-    查询金额并输出
-*/
+/*  查询产品金额并输出   */
 function product_price($product_id)
 {
     $price = 0;
@@ -352,32 +349,82 @@ function product_price($product_id)
     return $price;
 }
 
-
-/*
-    查询用户购物车数量
-*/
+/*  查询用户购物车数量   */
 function count_cart_num($user_id)
 {
     $num =  Db::name('cart_order')->where(array('user_id'=>$user_id))->count();
     return $num;
 }
 
-/*
-    用户是否已登录
-*/
+
+/*  查询支付方式   */
+function sp_payment($payment)
+{
+    $payment_text = array('0'=>'未知','1'=>'微信','2'=>'支付宝','3'=>'其他银行');
+    return $payment_text[$payment];
+}
+
+/*  统计订单应付金额    */
+function sum_order_payableprice($order_sn)
+{
+    $order =  Db::name('order')->where('order_sn',$order_sn)->find();
+    $goods_money_total =  Db::name('order')->where('order_sn',$order_sn)->sum('money_total');
+    /* 应付金额 = 商品总金额 + 运费 + 服务费 + 捐款金额 - 积分抵扣金额 - 优惠金额 */
+    $payableprice = $goods_money_total + $order['freight'] + $order['service_price'] + $order['contribution_price'] - $order['integral_price'] - $order['coupon_price'];
+
+    if($payableprice < 0){
+        $payableprice = 0;
+    }
+    return $payableprice;
+}
+
+/*  用户是否已登录 */
 function is_login()
 {
     $user_id = Session('user_id');
     return $user_id;
 }
-/*
-    用户信息
-*/
-function cx_user_info()
+/*  创建游客信息  */
+function create_tourist()
 {
-    $user_id = Session('user_id');
-    $user =  Db::name('user')->where(array('id'=>$user_id))->find();
+    $tourist_id = getRandomString(3);
+    $data = array(
+        'username'=>'youke'.$tourist_id,
+        'user_type'=>'3',
+        'joinip'=>get_client_ip(0,true),
+        'jointime'=>time(),
+    );
+    $user =  Db::name('user')->insertGetId($data);
+    if ($user!==false){
+        Session('user_id',$user);
+    }
     return $user;
+}
+/*  查询地区信息
+ *  $regionid 地区id
+ *  $value  输出的字段
+*/
+
+function sp_region_value($regionid,$value){
+    $region =  Db::name('region')->where('id',$regionid)->value($value);
+    return $region;
+}
+
+/*
+ * 生成随机数字，
+ * $len 位数
+ * $chars 自定义字符
+ */
+function getRandomString($len, $chars=null)
+{
+    if (is_null($chars)) {
+        $chars = "0123456789";
+    }
+    mt_srand(10000000*(double)microtime());
+    for ($i = 0, $str = '', $lc = strlen($chars)-1; $i < $len; $i++) {
+        $str .= $chars[mt_rand(0, $lc)];
+    }
+    return $str;
 }
 
 
@@ -416,5 +463,28 @@ function msubstr($str, $start = 0, $length, $charset = "utf-8", $suffix = true)
     } else {
         return $slice;
     }
-
+}
+/*获取IP */
+function get_client_ip($type = 0,$adv=false) {
+    $type       =  $type ? 1 : 0;
+    static $ip  =   NULL;
+    if ($ip !== NULL) return $ip[$type];
+    if($adv){
+        if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $arr    =   explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+            $pos    =   array_search('unknown',$arr);
+            if(false !== $pos) unset($arr[$pos]);
+            $ip     =   trim($arr[0]);
+        }elseif (isset($_SERVER['HTTP_CLIENT_IP'])) {
+            $ip     =   $_SERVER['HTTP_CLIENT_IP'];
+        }elseif (isset($_SERVER['REMOTE_ADDR'])) {
+            $ip     =   $_SERVER['REMOTE_ADDR'];
+        }
+    }elseif (isset($_SERVER['REMOTE_ADDR'])) {
+        $ip     =   $_SERVER['REMOTE_ADDR'];
+    }
+    // IP地址合法验证
+    $long = sprintf("%u",ip2long($ip));
+    $ip   = $long ? array($ip, $long) : array('0.0.0.0', 0);
+    return $ip[$type];
 }

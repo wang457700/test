@@ -128,14 +128,16 @@
                         </table>
                           <div class="row row3">
                               <div class="col-md-4 color_75" style="text-align:left">
-                                 下單時間:{:date('H:i:s',strtotime($vo['addtime']))}  支付方式：{$vo.payment}
+                                 下單時間:{:date('H:i:s',strtotime($vo['addtime']))}
+                                  {if condition="$vo['pay_status'] neq 0"}
+                                    支付方式：{:sp_payment($vo['payment'])}
+                                  {/if}
                               </div>
                               <div class="col-md-5 t2 color_75" style="">
-                                    訂單總價: <span class="bold font16 color_ro">{:number_format($vo['all_total'],2)}</span> (HKD)
+                                    訂單總價: <span class="bold font16 color_ro">{:number_format(sum_order_payableprice($vo['order_sn']),2)}</span> (HKD)
                                  (含運費:<span class="color_ro"> {$vo['freight']|default='0'} </span>HKD)
                               </div>
                               <div class="col-md-3 t2" style="">
-
                                   {if condition="$vo['pay_status'] neq 0"}
                                       <a href="{:url('user/order_detail',array('order_sn'=>base64_encode($vo['order_sn'])))}">
                                             <button type="button" class="btn btn-warning">查看訂單</button>

@@ -31,10 +31,8 @@
 					{include file="common/user_left" /}
                 </div>
                 <div class="col-md-10 right-list" style="padding-right: 30px;">
-                    
 	          		<div class="pr_name">訂單詳情</div>
     				<div class="order_address">
-
     					<div class="row">
 							<div class="col-md-2 col-sm-4 col-xs-4 bold" style="">訂單ID：</div>	
 							<div class="col-md-10 col-sm-8 col-xs-8" style="">{$order_info.order_sn}</div>
@@ -53,7 +51,7 @@
                			</div>	
     					<div class="row">
 							<div class="col-md-2 col-sm-4 col-xs-4 bold" style="">支付方式：</div>	
-							<div class="col-md-10 col-sm-8 col-xs-8" style="">信用卡</div>	
+							<div class="col-md-10 col-sm-8 col-xs-8" style="">{:sp_payment($order_info['payment'])}</div>
                			</div>	
     					<div class="row">
 							<div class="col-md-2 col-sm-4 col-xs-4 bold" style="">收貨地址：</div>	
@@ -103,7 +101,7 @@
 								捐款<span class="color_ro">${$order_info['contribution_price']|default='0'}</span>
 
 							</p>
-							<p style="font-size:22px;text-align: right;display: inline-block;float:right;">合計 ：<span class="color_ro">$ {:number_format($all_total,2)}</span></p>
+							<p style="font-size:22px;text-align: right;display: inline-block;float:right;">合計 ：<span class="color_ro">$ {:number_format(sum_order_payableprice($order_info['order_sn']),2)}</span></p>
 						</div>
 					</div>
 					<!--<div class="row">-->

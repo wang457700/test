@@ -14,7 +14,7 @@
         <ul class="nav nav-tabs">
 
                  {foreach name="region_list" item="vo"}
-                    <li class="{$vo['id'] =='47494'?'active':''}"><a href="#{$vo.id}" data-toggle="tab">{$vo.name}</a></li>
+                    <li class="{$vo['id'] =='47494'?'active':''}"><a href="#{$vo.id}" data-toggle="tab">{$vo.name}({$vo.count})</a></li>
                 {/foreach}
         </ul>
     </div>

@@ -14,9 +14,15 @@ class Cart extends Frontend
 {
 
 
+    protected $noNeedLogin = ['checkin_cart'];
+
 
     public function checkin_cart()
     {
+
+        if(empty(is_login())){
+            $tourist = create_tourist();
+        }
 
         $data['product_id'] = input('product_id');
         $data['user_id'] = Session::get('user_id');
@@ -44,22 +50,10 @@ class Cart extends Frontend
 
 
     public function order_ok(){
-
-        $action=input('now_pay');
-        if($action=='now_pay'){
-//            $goods_id=input('goods_id');
-//            $goods_num= input('goods_num');
-//            $list= Db::name('goods')->where('product_id',$goods_id)->find();
-//            $list['money_total']=$goods_num*$list['price'];
-//            $address_list=Db::name('user_address')->where('user_id',Session::get('user_id'))->select();
-//            foreach ($address_list as $key =>$v){
-//                $v['province'] = Db::name('region')->where(array('id'=>$v['province']))->value('name');
-//                $v['city'] =Db::name('region')->where(array('id'=>$v['city']))->value('name');
-//                $v['district'] =Db::name('region')->where(array('id'=>$v['district']))->value('name');
-//                $address_list[$key] = $v;
-//            }
-//            $this->assign('order_list',$list);
-        }else{
+            if(empty(is_login())){
+                $tourist = create_tourist();
+            }
+            $user_id = Session::get('user_id');
             $product_id = input('goods_id/a');
             $goods_num = input('goods_num/a');
             $count = count($product_id);
@@ -89,8 +83,8 @@ class Cart extends Frontend
                     $total+=($goods['price']*$v['goods_num']);
                     $num+=$v['goods_num'];
                 }
-                $address_list=Db::name('user_address')->where('user_id',Session::get('user_id'))->select();
 
+                $address_list=Db::name('user_address')->where(array('user_id'=>$user_id,'status'=>1))->select();
                 /*运费*/
                 $freight = 0 ;
                 $cofing_freight = config('site')['freight'];
@@ -106,12 +100,6 @@ class Cart extends Frontend
                 $this->assign('all_total',$total);
                 $this->assign('freight',$freight);
                 $this->assign('num',$num);
-                foreach ($address_list as $key =>$v){
-                    $v['province'] = Db::name('region')->where(array('id'=>$v['province']))->value('name');
-                    $v['city'] =Db::name('region')->where(array('id'=>$v['city']))->value('name');
-                    $v['district'] =Db::name('region')->where(array('id'=>$v['district']))->value('name');
-                    $address_list[$key] = $v;
-                }
                 $this->assign('address_list',$address_list);
                 $this->assign('order_list',$data);
             }else{
@@ -119,7 +107,6 @@ class Cart extends Frontend
                 $this->error('请选择商品！',url('cart/shopping_cart'));
 
             }
-        }
 
         $this->assign('title','确认订单');
         return  $this->fetch();
@@ -136,11 +123,10 @@ class Cart extends Frontend
         $user = Db::name('user')->where('id',Session::get('user_id'))->find();
         if($address_id){
             $address = Db::name('user_address')->where('id',$address_id)->find();
-            $isaddress = $address;
-            $address['province'] = Db::name('region')->where(array('id'=>$address['province']))->value('name');
-            $address['city'] =Db::name('region')->where(array('id'=>$address['city']))->value('name');
-            $address['district'] =Db::name('region')->where(array('id'=>$address['district']))->value('name');
-            $address = $address['province'].$address['city'].$address['district'].$address['address'];
+            $address['province_text'] = sp_region_value($address['province'],'name');
+            $address['city_text'] = sp_region_value($address['city'],'name');
+            $address['district_text'] = sp_region_value($address['district'],'name');
+            $address['text'] = $address['province_text'].$address['city_text'].$address['district_text'].$address['address'];
         }
 
         if (count($goods_id) > 0) {
@@ -163,6 +149,8 @@ class Cart extends Frontend
 
             $res='';
             $order_sn=date('Ymd').time();
+
+            /*积分*/
             $score_price = 0;
             if($integral){
                 $cofing_integral = config('site')['integral']['use'];
@@ -170,7 +158,7 @@ class Cart extends Frontend
                 $score_price = sprintf("%.2f",$user_integral/$cofing_integral);
             }
 
-            /*优惠*/
+            /*优惠券*/
             $coupon  = Db::name('coupon')->where(array('coupon_sn'=>$coupon_sn))->find();
             $coupon_price =  0;
             $coupon_id =  0;
@@ -222,7 +210,9 @@ class Cart extends Frontend
 
             /*服务费*/
             $service_price = 0;
-            $is_remote_area = 1;
+            $is_remote_area = Db::name('region')->where(array('id'=>array('in',array($address['city'],$address['district']))))->column('is_remote_area');
+            $is_remote_area = array_filter($is_remote_area);
+
             if($is_remote_area){
                 $service_price = $cofing_freight['remote_area'];
             }

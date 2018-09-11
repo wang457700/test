@@ -39,7 +39,7 @@
 				<li class="row li {$vo['default']==1?'on':'1'}" style="" data-id="{$vo.id}">
 					<div class="col-md-10 col-sm-9" style="">
 						<span class="bold" id="name">{$vo.name}	{:format_phone($vo['phone'])}</span>
-						<p id="address">{$vo.province}{$vo.city}{$vo.district}{$vo.address}</p>
+						<p id="address">{:sp_region_value($vo['province'],'name')}{:sp_region_value($vo['city'],'name')}{:sp_region_value($vo['district'],'name')}{$vo.address}</p>
 					</div>
 					<div class="col-md-2 col-sm-3 asright" style="">
 						<a href="{:url('user/address_list',array('id'=>$vo['id']))}" target="_blank"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>修改</a>
@@ -103,7 +103,6 @@
 				<p style="display: inline-block;">
 					<input type="checkbox" class="checkbox" name="integral" data-scoreprice="{$score_price}"/>您當前有<span class="color_ro bold">{$user.score}</span>積分，可抵扣<span class="color_ro bold">${:number_format($score_price,2)}</span>
 				</p>
-
 				<p style="font-size:22px;text-align: right;display: inline-block;float:right;">合計 (不含運費)：<span class="color_ro">$ {:number_format($all_total,2)}</span></p>
 				<p style="">
 					<input type="text" class="checkbox" name="coupon" placeholder="請輸入優惠碼" style="width: 200px;padding: 5px;height: 30px;" value=""/>
@@ -116,7 +115,7 @@
 				{foreach name="address_list" item="vo"}
 				{if condition="$vo['default']"}
 					收件人：{$vo.name} {$vo.phone}<br>
-					收件地址：{$vo.province}{$vo.city}{$vo.district}{$vo.address}
+					收件地址：{:sp_region_value($vo['province'],'name')}{:sp_region_value($vo['city'],'name')}{:sp_region_value($vo['district'],'name')}{$vo.address}
 				{/if}
 				{/foreach}
 			</div>
@@ -163,9 +162,14 @@
                 $('#score_price_text').text('$ 0') ;
                 $('#all_total').text('$ ' + (Number(all_total)+Number(freight))) ;
             }else {
-                $(this).attr("checked","true");
+                var  payable = (Number(all_total)-Number(scoreprice)+Number(freight));
+                if (Number(scoreprice) > (Number(all_total))){
+                    payable = 0;
+                }
+
+				$(this).attr("checked","true");
                $('#score_price_text').text('$ ' + scoreprice) ;
-               $('#all_total').text('$ ' + (Number(all_total)-Number(scoreprice)+Number(freight))) ;
+               $('#all_total').text('$ ' + payable) ;
             }
         })
     });

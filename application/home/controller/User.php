@@ -20,6 +20,9 @@ class User extends Frontend
 {
 	protected $noNeedLogin = ['login', 'register', 'forgetpwd', 'is_forgetpwd_email', 'third'];
 
+	//允许游客访问
+	protected $noTouristAuthority = ['share_list','user_edit'];
+
     const APPKEY='4119214287';
     const URL ="www.baidu.com";
 
@@ -89,7 +92,11 @@ class User extends Frontend
           if($data['password2'] != $data['password']){
               $this->error('二次輸入的密碼不一致',url('user/register'),2);
           };
-          $data['password']=md5(input('password'));
+          $data['password']= md5(input('password'));
+          $data['joinip']= $_SERVER['HTTP_X_FORWARDED_FOR'];
+          $data['jointime']= time();
+          $data['user_type']= 2;
+
           unset($data['password2']);
           $res=Db::name('user')->insertGetId($data);
           if($res){
@@ -133,7 +140,6 @@ class User extends Frontend
         }
         $this->assign('title','找回密码');
         return $this->view->fetch();
-
     }
 
     function  is_forgetpwd_email(){
@@ -318,9 +324,8 @@ class User extends Frontend
                 ->join('__GOODS__ c','a.goods_id=c.product_id','LEFT')
                 ->where('order_sn',$item['order_sn'])
                 ->order('addtime desc')->select();
-            $all_total =  Db::name('order')->where('order_sn',$item['order_sn'])->sum('money_total');
-            $result[$key]['all_total'] =$all_total -$item['coupon_price'] - $item['integral_price'] + $item['freight'];;
         }
+
         $level = array('1'=>'普通会员','2'=>'白金会员','3'=>'金牌会员','4'=>'商业会员');
         $level_text  =$level[$user ['level']];
         $sum_contribution_price = array_sum(Db::name('order')->alias('a')
@@ -331,13 +336,13 @@ class User extends Frontend
         $goods_list= Db::name('order')->alias('a')->join('__GOODS__ c','a.goods_id=c.product_id','LEFT')->where('user_id',Session::get('user_id'))->order('addtime desc')->paginate(4);
 
         $pay_status = array('0'=>'未支付','2'=>'已支付','6'=>'已取消');
+        $payment = array('0'=>'未支付','2'=>'已支付','6'=>'已取消');
         $page = $order_list->render();
         $this->assign('page',$page);
         $this->assign('order_list',$result);
-        $this->assign('lastPage',6);
-
         $this->assign('level_text',$level_text);
         $this->assign('pay_status',$pay_status);
+        $this->assign('payment',$payment);
         $this->assign('contribution_price',$sum_contribution_price);
         $this->assign('config_use',config('site')['integral']['use']);
           $this->assign('goods_list',$goods_list);
@@ -562,6 +567,7 @@ class User extends Frontend
 	public function address_list(){
 		$user_id = Session::get('user_id');
 		$where['user_id'] = $user_id;
+		$where['status'] = 1;
 		$address_list= Db::name('user_address')
 		->where($where)
 		->order('createtime desc')
@@ -583,10 +589,10 @@ class User extends Frontend
         $city = 0;
         $district = 0;
         $province = db('region')->where(array('parent_id'=>0,'level'=>1))->select();
+
         $id = input('id');
         if($id){
         	$row= Db::name('user_address')->where(array('id'=>$id,'user_id'=>$user_id))->find();
-
             if($row['province']){
                 $city = db('region')->where(array('parent_id'=>$row['province'],'level'=>2))->select();
             }
@@ -611,11 +617,11 @@ class User extends Frontend
     	if ($this->request->isPost()){
     		$user_id = Session::get('user_id');
     		$post = input('post.');
+
     		$data = $post;
     		$data['default'] = $post['default']?'1':'0';
     		$data['createtime'] = time();
     		$data['user_id'] = $user_id;
-
     		if($data['default']){
     			Db::name('user_address')->where(array('user_id'=>$user_id))->update(array('default'=>0));
     		}
@@ -633,10 +639,8 @@ class User extends Frontend
 
         $user_id = Session::get('user_id');
     	if ($this->request->isPost()){
-
     		$user_id = Session::get('user_id');
     		$data = input('post.');
-
     		if($data['default'] == 'on'){
 				$data['default'] = 1;
     		}
@@ -660,9 +664,11 @@ class User extends Frontend
 	 		if(empty($id)){
 	 			$this->error('非法操作！');
 	 		}
+
+
 	 		$user_id = Session::get('user_id');
 	 		$where = array('id'=>$id,'user_id'=>$user_id);
-	 		$info = Db::name('user_address')->where($where)->delete();
+	 		$info = Db::name('user_address')->where($where)->update(array('status'=>0));
  			if($info){
 				$this->success('删除成功');
 			}else{

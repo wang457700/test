@@ -34,6 +34,9 @@ class Frontend extends Controller
      */
     protected $noNeedRight = [];
 
+
+    protected $noTouristAuthority = [];
+
     /**
      * 权限Auth
      * @var Auth
@@ -66,6 +69,7 @@ class Frontend extends Controller
         // 设置当前请求的URI
         $this->auth->setRequestUri($path);
 
+        $user = Db::name('user')->where(array('id'=>Session::get('user_id')))->find();
 
         // 检测是否需要验证登录
         if (!$this->auth->match($this->noNeedLogin)) {
@@ -75,6 +79,12 @@ class Frontend extends Controller
             if (!Session::get('user_id')) {
                 $this->error(__('Please login first'), 'user/login');
             }
+
+            // 检测游客权限
+            if ($this->auth->match($this->noTouristAuthority) && $user['user_type'] == 3) {
+                $this->error(__('游客没有权限访问'), 'user/center');
+            }
+
         } else {
             // 如果有传递token才验证是否登录状态
             if ($token){
