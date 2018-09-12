@@ -635,7 +635,7 @@ class User extends Frontend
                 $district = db('region')->where(array('parent_id'=>$row['city'],'level'=>3))->select();
             }
         }else{
-        	$row = array('province'=>null,'city'=>null,'district'=>null,'address'=>null,'name'=>null,'phone'=>null);
+        	$row = array('id'=>null,'province'=>null,'city'=>null,'district'=>null,'address'=>null,'name'=>null,'phone'=>null);
         }
 
 		$this->assign('address_list',$address_list);
@@ -665,7 +665,7 @@ class User extends Frontend
 
 			$res = Db::name('user_address')->insertGetId($data);
 			if($res!==false){
-				$this->success('保存成功','',array('address_info'=>sp_address_info($user_id,$res,'name,address,phone')));
+				$this->success('保存成功',url('user/address_list'),array('address_info'=>sp_address_info($user_id,$res,'name,address,phone')));
 			}else{
 				$this->error('保存失败');
 			}
@@ -674,7 +674,6 @@ class User extends Frontend
 
 
     public function address_edit(){
-
         $user_id = Session::get('user_id');
     	if ($this->request->isPost()){
     		$user_id = Session::get('user_id');
@@ -687,7 +686,7 @@ class User extends Frontend
     		}
 			$info = Db::name('user_address')->where(array('id'=>$data['id'] ,'user_id'=>$user_id))->update($data);
 			if($info!==false){
-				$this->success('保存成功');
+				$this->success('保存成功',url('user/address_list'));
 			}else{
 				$this->error('保存失败');
 			}

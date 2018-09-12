@@ -14,19 +14,17 @@
 		{include file="common/header" /}
 		<div class="mui-content">                     
 			<div>
-				<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary my_order_segmented" style="background:#fff">
-					<a class="mui-control-item" href="#item1">活動資訊</a>
-					<a class="mui-control-item mui-active" href="#item2">專訪</a>
+				<div class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary my_order_segmented" style="background:#fff">
+					<a class="mui-control-item mui-active" href="{:url('news/index')}">活動資訊</a>
+					<a class="mui-control-item" href="#item2">專訪</a>
 				</div>                                  
 			</div>
 			<div class="Info_list">
 				<div id="item1" class="mui-control-content mui-active">
 					<div id="scroll" class="mui-scroll-wrapper" style="padding: 10px;background: #fff;">
-						<h4>專訪副主席游寶榮先生  以服務人的心傳承知識</h4>
+						<h4>{$data.post_title}</h4>
 						<div class="content">
-							<img src="img/info_detail_content.jpg" style="width: 100%">
-
-
+							{$data.post_content}
 						</div>
 					</div>
 				</div>
@@ -41,7 +39,9 @@
 		</div>
 		{include file="common/script" /}
 		<script>
-			
+            mui('body').on('tap','a' ,function(){
+                location.href = this.getAttribute('href')
+            });
 		</script>
 
 	</body>

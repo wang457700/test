@@ -50,7 +50,7 @@
 
 			{if condition="empty($address_list)"}
 				<ul class="mui-table-view">
-					<li class="mui-table-view-cell" style="text-align: center" onclick="$('#address-form').animate({top:'100%'}).show()">
+					<li class="mui-table-view-cell" style="text-align: center" onclick="$('#address-form').animate({top:'0%'}).show()">
 						添加收货地址
 					</li>
 				</ul>
@@ -96,12 +96,8 @@
 			<li class="mui-table-view" style="text-align: center;padding: 10px;" onclick="$('#address-form').animate({top:'0'}).show()">
 				添加收货地址
 			</li>
-			<li class="mui-table-view" style="text-align: center;padding: 10px;">
-				<a href="{:url('user/address_list')}">管理收货地址</a>
-			</li>
 		</ul>
 	</div>
-
 <!--添加收货地址-->
 	<form action="{:url('user/address_add')}" class="mui-input-group adddz" method="post" enctype="multipart/form-data" onsubmit="return addressform()" id="address-form" style="display: none;top: 100%;">
 		<a class="close mui-pull-right" onclick="$('#address-form').animate({top:'100%'}).show()" >×</a><br>
@@ -147,15 +143,18 @@
 			mui('.mui-scroll-wrapper').scroll();
 			$('#address_list li').click(function () {
 			    var id = $(this).data('id');
-			    var phone = $(this).data('phone');
-			    var name = $(this).data('name');
-			    var address = $(this).data('address');
+			    if(id){
+                    var phone = $(this).data('phone');
+                    var name = $(this).data('name');
+                    var address = $(this).data('address');
 
-			    $('#name').text('收貨人：' + name);
-			    $('#address_id').text(id);
-			    $('#phone').text(phone);
-			    $('#address').text(address);
-				$('#address_list').animate({top:'100%'}).hide();
+                    $('#name').text('收貨人：' + name);
+                    $('#address_id').text(id);
+                    $('#phone').text(phone);
+                    $('#address').text(address);
+                    $('#address_list').animate({top:'100%'}).hide();
+				}
+
 			});
 
             function addressform(){

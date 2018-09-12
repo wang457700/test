@@ -16,8 +16,8 @@
 				<input name="checkbox" value="Item 2" type="checkbox" style="left: 8px;top: 5px;" id="checked">
 			<label style="line-height: 40px;padding-left: 40px;padding-right: 0;">全选</label></div>
 			
-			<button type="type" class="mui-btn mui-btn-success mui-pull-right" style="top: 5px;">結算(2)</button>
-			<p class="mui-pull-right" style="margin: 0;line-height: 40px;margin-right: 20px;">合計：<span class="color_ro">$</span><span class="color_ro font18" id="total">388</span></p>
+			<button type="type" class="mui-btn mui-btn-success mui-pull-right" style="top: 5px;">結算(<span id="total_sum">0</span>)</button>
+			<p class="mui-pull-right" style="margin: 0;line-height: 40px;margin-right: 20px;">合計：<span class="color_ro">$</span><span class="color_ro font18" id="total">0.00</span></p>
 		</nav>
 		{/if}
 		<div class="mui-content">
@@ -150,7 +150,7 @@
                 });
 
 
-               // $('#total_sum').text(Number(total_sum));
+                $('#total_sum').text(Number(total_sum));
                 $('#total').text(goods_price.toFixed(2));
                // $('#total_no_yunxfei').text('$ '+ sum.toFixed(2));
             }
@@ -163,9 +163,10 @@
 
                     if(data.code == 0){
                         $.message({message:data.msg,type:'warning',time:'3000'});
+                        return false;
                     }else{
                         //$.message(data.msg);
-                        setTimeout(function (){
+                        setTimeout(function(){
                             window.location = data.url
                         },1500);
                     }

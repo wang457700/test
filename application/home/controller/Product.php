@@ -69,7 +69,7 @@ class Product extends Frontend
 
         $this->view->assign("product_list", $product_list);
         $this->view->assign("getparents",$getParents);
-        $this->view->assign("getchild",$tree->getChild(input('categoryid',14)));
+        $this->view->assign("getchild",$tree->getChild(14));//mobile
         $this->view->assign("input",$input);
         $this->view->assign("sort",$sort);
         $this->view->assign("sort_array",$sort_array);

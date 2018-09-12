@@ -4,56 +4,201 @@
 		.mui-input-group:after{height: 0}
 		.mui-button-row{padding:20px}
 		.mui-table-view{margin-top: 10px;}
-
+		.select_e{width:21%!important;font-size:12px!important}
 	</style>
 	<body>
-		<header class="mui-bar mui-bar-nav">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #7ac141;"></a>
-			<h1 class="mui-title">管理地址</h1>
-		</header>
-		<div class="mui-content address_list">
+		{if condition="$row['id'] || input('add') == 'add'"}
+			<header class="mui-bar mui-bar-nav">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #7ac141;"></a>
+				<h1 class="mui-title">{$row['id']?'编辑地址':'添加地址'}</h1>
+			</header>
+			<div class="mui-content">
+				<form action="{$row['id']?url('user/address_edit'):url('user/address_add')}" class="mui-input-group adddz" method="post" enctype="multipart/form-data" onsubmit="return addressform()" id="address-form">
 
-
-
-			<ul class="mui-table-view">
-				 <li class="mui-table-view-cell">
-				 	陳大文<span class="mui-pull-right">13138164022</span>
-				 	<br>
-				 	九龍油塘高超道38號大本型商場2樓228號舖
-				 </li>
-		         <li class="mui-table-view-cell">
-		         	<div class="mui-checkbox" style="float: left;">
-						<input name="checkbox" value="Item 2" type="checkbox" style="left: 8px;top: -5px;" id="checked">
-						<label style="padding-left: 40px;padding-right: 0;color: #666666;">默認地址</label>
+					{present name="row['id']"}
+					<input name="id" type="hidden" value="{$row['id']}" />
+					{/present}
+					<div class="mui-input-row">
+						<label>收件人姓名</label>
+						<input type="text" placeholder="收件人姓名" name="name" value="{$row.name}" required oninvalid="setCustomValidity('请输入收件人姓名！')" oninput="setCustomValidity('')">
 					</div>
-					<span class="mui-pull-right">
-						<a href="" class="edit">编辑</a>
-						<a href="" class="del">删除</a> 
-					</span>
-		         </li>
-			</ul>
-
-
-			<ul class="mui-table-view">
-				 <li class="mui-table-view-cell">
-				 	陳大文<span class="mui-pull-right">13138164022</span>
-				 	<br>
-				 	九龍油塘高超道38號大本型商場2樓228號舖
-				 </li>
-		         <li class="mui-table-view-cell">
-		         	<div class="mui-checkbox" style="float: left;">
-						<input name="checkbox" value="Item 2" type="checkbox" style="left: 8px;top: -5px;" id="checked">
-						<label style="padding-left: 40px;padding-right: 0;color: #666666;">默認地址</label>
+					<div class="mui-input-row">
+						<label>手機號碼</label>
+						<input type="text" placeholder="手機號碼" name="phone" value="{$row.phone}"  required oninvalid="setCustomValidity('请输入手機號碼！')" oninput="setCustomValidity('') "onkeyup="value=value.replace(/[^\d]/g,'') " ng-pattern="/[^a-zA-Z]/" maxlength="11">
 					</div>
-					<span class="mui-pull-right">
-						<a href="" class="edit">编辑</a>
-						<a href="" class="del">删除</a> 
-					</span>
-		         </li>
-			</ul>
-		</div>
+					<div class="mui-input-row">
+						<label>所在地區</label>
+						<select onchange="" class="select_e" id="district" name="district"  title="请选择所在区域" >
+							<option value="">选择区域</option>
+							{volist name="district" id="vo"}
+							<option value="{$vo['id']}" {if condition="$vo['id'] eq $row['district']"} selected="selected"{/if}  >{$vo['name']}</option>
+							{/volist}
+						</select>
+						<select onchange="get_area(this)" class="select_e" id="city" name="city"  title="请选择所在城市" required oninvalid="setCustomValidity('请选择城市！')" oninput="setCustomValidity('')">
+							<option value="">选择城市</option>
+							{volist name="city" id="vo"}
+							<option value="{$vo['id']}" {if condition="$vo['id'] eq $row['city']"} selected="selected"{/if}  >{$vo['name']}</option>
+							{/volist}
+						</select>
+						<select onchange="get_city(this)" class="select_e" id="province" name="province"  title="请选择所在省份" required oninvalid="setCustomValidity('请选择省份！')" oninput="setCustomValidity('')">
+							<option value="">选择省份</option>
+							{volist name="province" id="vo"}
+							<option value="{$vo['id']}" {if condition="$vo['id'] eq $row['province']"} selected="selected"{/if}  >{$vo['name']}</option>
+							{/volist}
+						</select>
+					</div>
+					<div class="mui-input-row" style="height: 75px;">
+						<label>詳細地址</label>
+						<textarea type="text" style="font-size: 14px;" placeholder="请請輸入詳細地址信息，如道路、門牌號、小區、樓棟號、單元室等" name="address" required oninvalid="setCustomValidity('请输入詳細地址！')" oninput="setCustomValidity('')">{$row.address}</textarea>
+					</div>
+					<div class="mui-input-row mui-checkbox mui-left">
+						<label>設置為默認收貨地址</label>
+						<input name="default" value="0" type="hidden">
+						<input name="default" value="1" type="checkbox" {$row['default']?'checked':''}>
+					</div>
+					<div class="mui-button-row">
+						<button class="mui-btn mui-btn-success btn-success-edit">
+							保  存
+						</button>
+					</div>
+				</form>
+			</div>
+		{else/}
+			<header class="mui-bar mui-bar-nav">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #7ac141;"></a>
+				<h1 class="mui-title">管理地址</h1>
+				<a href="{:url('index/index')}" class="mui-icon mui-icon-home mui-pull-right" style="color: #7ac141;"></a>
+			</header>
+			<div class="mui-content address_list">
+				{foreach name="address_list" item="vo"}
+					<ul class="mui-table-view">
+						 <li class="mui-table-view-cell">
+							 {$vo.name}<span class="mui-pull-right">{$vo.phone}</span>
+							<br>
+							 {$vo.province} {$vo.city}{$vo.district}{$vo.address}
+						 </li>
+						 <li class="mui-table-view-cell">
+							<div class="mui-checkbox" style="float: left;">
+								<input name="checkbox" value="" type="checkbox" style="left: 8px;top: -5px;" id="checked" {$vo['default']?'checked':'disabled'}>
+								<label style="padding-left: 40px;padding-right: 0;color: #666666;" >默認地址</label>
+							</div>
+							<span class="mui-pull-right">
+								<a href="{:url('user/address_list',array('id'=>$vo['id']))}" class="edit">编辑</a>
+							<a href="{:url('user/address_delete',array('id'=>$vo['id']))}" class="js-ajax-delete del" onclick="return false;" >删除</a>
+							</span>
+						 </li>
+					</ul>
+				{/foreach}
+				<ul class="mui-table-view">
+					<li class="mui-table-view" style="text-align: center;padding: 10px;">
+						<a href="{:url('user/address_list',array('add'=>'add'))}" class="color_gr">
+							添加收货地址
+						</a>
+					</li>
+				</ul>
+
+
+			</div>
+		{/if}
+
 		{include file="common/script" /}
+		<script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
+		<script>
 
+			function addressform(){
+				// jquery 表单提交
+				$("#address-form").ajaxSubmit(function(data) {
+					console.log(data);
+					if(data.code == 0){
+						$.message({message:data.msg,type:'warning',time:'3000'});
+					}else{
+						$.message(data.msg);
+						setTimeout(function () {
+							window.location = data.url;
+						},1000);
+					}
+				});
+				return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
+			}
+
+			/**
+			 * 获取省份
+			 */
+			function get_province(){
+				//  var url = '/index.php?m=Admin&c=Api&a=getRegion&level=1&parent_id=0';
+				var url ="{:url('api/index/getRegion')}";
+				$.ajax({
+					type : "GET",
+					url  : url,
+					data :{level:1,parent_id:0},
+					error: function(request) {
+						alert("服务器繁忙, 请联系管理员!");
+						return;
+					},
+					success: function(v) {
+						v = '<option value="0">选择省份</option>'+ v;
+						$('#province').empty().html(v);
+					}
+				});
+			}
+
+
+			/**
+			 * 获取城市
+			 * @param t  省份select对象
+			 */
+			function get_city(t){
+				var parent_id = $(t).val();
+				if(!parent_id > 0){
+					return;
+				}
+				$('#district').empty()
+				$('#city').empty()
+				// var url = '/index.php?m=Admin&c=Api&a=getRegion&level=2&parent_id='+ parent_id;
+				var url ="{:url('api/index/getRegion')}";
+				$.ajax({
+					type : "GET",
+					url  : url,
+					data :{level:2,parent_id:parent_id},
+					error: function(request) {
+						alert("服务器繁忙, 请联系管理员!");
+						return;
+					},
+					success: function(v) {
+						v = '<option value="0">选择城市</option>'+ v;
+						$('#city').empty().html(v);
+					}
+				});
+			}
+
+			/**
+			 * 获取地区
+			 * @param t  城市select对象
+			 */
+			function get_area(t){
+				var parent_id = $(t).val();
+				if(!parent_id > 0){
+					return;
+				}
+				$('#district').empty().css('display','inline');
+				$('#twon').empty().css('display','none');
+				//var url = '/index.php?m=Admin&c=Api&a=getRegion&level=3&parent_id='+ parent_id;
+				var url ="{:url('api/index/getRegion')}";
+				$.ajax({
+					type : "GET",
+					url  : url,
+					data :{level:3,parent_id:parent_id},
+					error: function(request) {
+						alert("服务器繁忙, 请联系管理员!");
+						return;
+					},
+					success: function(v) {
+						v = '<option>选择区域</option>'+ v;
+						$('#district').empty().html(v);
+					}
+				});
+			}
+		</script>
 	</body>
 
 </html>

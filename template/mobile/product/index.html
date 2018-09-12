@@ -11,9 +11,9 @@
 		<div class="mui-content" style="background: #fff;">
 			<div>
 				<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary my_order_segmented" style="background:#fff">
-					<a class="mui-control-item mui-active" href="#item1">全部</a>
+					<a class="mui-control-item {$input['categoryid']=='14'?'mui-active':''}" href="{:url('product/index',array('categoryid'=>14))}">全部</a>
 					{foreach name="getchild" item="vo"}
-						<a class="mui-control-item" data-catid="{}" href="{:url('product/index',array('categoryid'=>$vo['id']))}">{$vo.name}</a>
+						<a class="mui-control-item {$input['categoryid']==$vo['id']?'mui-active':''}" data-catid="{}" href="{:url('product/index',array('categoryid'=>$vo['id']))}">{$vo.name}</a>
 					{/foreach}
 				</div>
 			</div>
