@@ -3,16 +3,9 @@
 
 	</style>
 	<body>
-		<header class="mui-bar mui-bar-nav">
-			<a href="{:url('index/index')}" class="mui-icon mui-icon-home mui-pull-left" style="color: #7ac141;"></a>
-			<h1 class="mui-title">{$title}</h1>
-			<a href="{:url('cart/shopping_cart')}" class="mui-action-menu mui-pull-right index-hd-right2"></a>
-			<a href="{:url('user/logout')}" class="mui-action-menu mui-pull-right index-hd-right"></a>
-		</header>
+		{include file="common/header" /}
 		<div class="mui-content">
-
 			<ul class="mui-table-view my_order" >
-				<li class="mui-table-view-cell"><span class="color_ro mui-pull-right">商家已發貨</span></li>
 				<li class="mui-table-view-cell">
 					<div class="mui-row">
 						<div class="mui-col-sm-3 mui-col-xs-3">訂單ID：</div>
@@ -24,7 +17,7 @@
 						<div class="mui-col-sm-3 mui-col-xs-3">聯繫電話：</div>
 						<div class="mui-col-sm-9 mui-col-xs-9">{$order_info.address_info.phone}</div>
 						<div class="mui-col-sm-3 mui-col-xs-3">支付方式：</div>
-						<div class="mui-col-sm-9 mui-col-xs-9">信用卡</div>
+						<div class="mui-col-sm-9 mui-col-xs-9">{:sp_payment($order_info['payment'])}</div>
 						<div class="mui-col-sm-3 mui-col-xs-3">收貨地址：</div>
 						<div class="mui-col-sm-9 mui-col-xs-9">{$order_info.address}</div>
 					</div>
@@ -41,11 +34,12 @@
 					<span class="mui-pull-right">
 							積分抵扣：$ {$order_info['integral_price']|default='0'}<br>
 							捐款：$ {$order_info['contribution_price']|default='0'}<br>
+							服務費: $ {$order_info['service_price']}<br/>
 							优惠：$ {$order_info['coupon_price']|default='0'}<br/>
 					</span>
 				</li>
 				<li class="mui-table-view-cell" style="text-align:right">
-					共{$all_goods_num}件商品    合計 <span class="color_ro">$</span><span class="color_ro font18">{:number_format($all_total,2)}</span>(含運費${$order_info['freight']})
+					共{$all_goods_num}件商品    合計 <span class="color_ro">$</span><span class="color_ro font18">{:number_format(sum_order_payableprice($order_info['order_sn']),2)}</span>(含運費${$order_info['freight']})
 				</li>
 
 			</ul>

@@ -13,28 +13,31 @@
 			<a href="{:url('cart/shopping_cart')}" class="mui-action-menu mui-pull-right index-hd-right2"></a>
 			<a href="{:url('user/logout')}" class="mui-action-menu mui-pull-right index-hd-right"></a>
 		</header>
-		<!--下拉刷新容器-->
-		<div id="pullrefresh" class="mui-scroll-wrapper my_order">
-			<div>
-				<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary my_order_segmented" style="background:#fff">
-					<a class="mui-control-item mui-active" href="#item1">全部</a>
-					<a class="mui-control-item" href="#item2">待付款</a>
-					<a class="mui-control-item" href="#item3">待發貨</a>
-					<a class="mui-control-item" href="#item3">待收貨</a>
-					<a class="mui-control-item" href="#item3">待評價</a>
+
+		<div class="mui-content">
+			<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary my_order_segmented" style="background:#fff;z-index: 9999;">
+				<a class="mui-control-item {$status =='all' ?'mui-active':''}{$status =='' ?'mui-active':''}" href="{:url('user/center')}">全部</a>
+				<a class="mui-control-item {$status =='0' ?'mui-active':''}" href="{:url('user/center',array('status'=>0))}">待付款</a>
+				<a class="mui-control-item {$status ==2 ?'mui-active':''}" href="{:url('user/center',array('status'=>2))}">待發貨</a>
+				<a class="mui-control-item {$status ==6 ?'mui-active':''}" href="{:url('user/center',array('status'=>6))}">已取消</a>
+			</div>
+			<!--下拉刷新容器-->
+			<div id="pullrefresh" class="mui-scroll-wrapper my_order" style="padding-top: 85px;">
+				<div class="mui-scroll">
+					<!--数据列表-->
+					<div class="mui-table-view mui-row" data-page_count="1" data-last_page="0" id="order_list">
+
+					</div>
 				</div>
 			</div>
-			<div class="mui-scroll">
-				<!--数据列表-->
-				<ul class="mui-table-view mui-table-view-chevron mui-row" data-page_count="1" data-last_page="0">
-
-				</ul>
-			</div>
 		</div>
+
 		{include file="common/script" /}
 		<script>
 			mui('.mui-scroll-wrapper').scroll();
-
+            mui('body').on('tap','a' ,function(){
+                location.href = this.getAttribute('href')
+            });
             mui.init({
                 pullRefresh: {
                     container: '#pullrefresh',
@@ -69,16 +72,40 @@
                     mui('#pullrefresh').pullRefresh().pullupLoading();
                 });
             }
-            
-            
-            function order_list() {
 
-                var li ='';
-				li += '<ul class="mui-table-view"><li class="mui-table-view-cell"><i class="left_menu_ico i3"></i>健康及有機產品 <span class="color_ro mui-pull-right">商家已發貨</span></li><li class="mui-table-view-cell l2"><img src="img/f2_1.jpg" class="mui-pull-left"><p class="p1">ATex sports 肌肉運動貼</p><p>細碼</p><p><span class="color_ro">$</span><span class="color_ro font18">388</span><span class="mui-pull-right">x1</span></p></li><li class="mui-table-view-cell"><a class="mui-navigate-right">配送方式<span class="mui-pull-right" style="margin-right:20px">快遞 免郵</span></a></li><li class="mui-table-view-cell" style="text-align:right">共1件商品 合計 <span class="color_ro">$</span><span class="color_ro font18">388</span>(含運費$0.00)</li><li class="mui-table-view-cell" style="text-align:right"><button type="button" class="mui-btn mui-btn-outlined">查看物流</button> <button type="button" class="mui-btn mui-btn-warning mui-btn-outlined">確認收貨</button></li></ul>';
-                for(var i=1; i<4; i++){
-                    $(".mui-table-view-chevron").append(li);
+            function order_list(page) {
+				var src = '__PUBLIC__';
+                $.ajax({
+                    type: "POST",
+                    url: "{:url('user/center')}",
+                    data: {
+                        page: page,
+                        status: '{$status}',
+                    },
+                    success: function(data) {
+                        if (data.code == 1) {
+                            $.each(data.data,function(index, value) { //遍历json数据列
+                                var li ='<ul class="mui-table-view">';
+                                li += '<li class="mui-table-view-cell"><i class="left_menu_ico i3"></i>健康及有機產品 <span class="color_ro mui-pull-right">'+ value.statustext+'</span></li>';
+                                $.each(value.goods_list,function(index, vv) {
+                                    li += '<li class="mui-table-view-cell l2"><img src="'+src+ vv.cover+'" class="mui-pull-left"><p class="p1">'+ vv.product_name+'</p><p>'+ vv.place_origin+'</p><p><span class="color_ro">$</span><span class="color_ro font18">388</span><span class="mui-pull-right">x1</span></p></li>';
 
-                }
+                                });
+
+                                li += '<li class="mui-table-view-cell"><a class="mui-navigate-right">支付方式<span class="mui-pull-right" style="margin-right:20px">'+ value.payment+'</span></a></li>';
+                                li += '<li class="mui-table-view-cell" style="text-align:right">共1件商品 合計 <span class="color_ro">$</span><span class="color_ro font18">'+ value.price+'</span>(含運費$'+ value.freight+')</li><li class="mui-table-view-cell" style="text-align:right">'+ value.button +'</li>';
+                                li += '</ul>';
+
+                                $("#order_list").append(li);
+                            });
+                            $("#order_list").data('page_count',Number(data.data.current_page)+1);
+                            $("#order_list").data('last_page',Number(data.data.last_page));
+                        }else{
+
+
+						}
+                    }
+                });
 
             }
 		</script>

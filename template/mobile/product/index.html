@@ -13,11 +13,11 @@
 				<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary my_order_segmented" style="background:#fff">
 					<a class="mui-control-item mui-active" href="#item1">全部</a>
 					{foreach name="getchild" item="vo"}
-						<a class="mui-control-item" data-catid="{$vo.id}">{$vo.name}</a>
+						<a class="mui-control-item" data-catid="{}" href="{:url('product/index',array('categoryid'=>$vo['id']))}">{$vo.name}</a>
 					{/foreach}
 				</div>
 			</div>
-			<form method="post" action="{:url('product/index',array('categoryid'=>$input['categoryid']))}" id="search">
+			<form method="get" action="{:url('product/index',array('categoryid'=>$input['categoryid']))}" id="search">
 				<div class="row" style="padding: 20px;padding-bottom: 2px;border-bottom: 1px solid #eee;">
 					<div class="product-top-item col-md-6">
 						<input type="hidden" name="categoryid" value="{$input['categoryid']}">

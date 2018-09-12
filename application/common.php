@@ -413,9 +413,28 @@ function create_tourist()
  *  $value  输出的字段
 */
 
-function sp_region_value($regionid,$value){
+function sp_region_value($regionid,$value = 'name'){
     $region =  Db::name('region')->where('id',$regionid)->value($value);
     return $region;
+}
+
+/*  查询用户地址信息
+ *  $addressid 地区id
+ *  $field  输出的字段
+*/
+
+function sp_address_info($userid = '0',$addressid = '0',$field = 'id'){
+    $address['province'] = 0;
+    $address['city'] = 0;
+    $address['district'] = 0;
+    $address =  Db::name('user_address')
+        ->field('province,city,district,'.$field)
+        ->where(array('id'=>$addressid,'user_id'=>$userid))
+        ->find();
+    $address['province'] = sp_region_value($address['province']);
+    $address['city'] = sp_region_value($address['city']);
+    $address['district'] = sp_region_value($address['district']);
+    return $address;
 }
 
 /*

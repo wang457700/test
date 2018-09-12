@@ -303,13 +303,18 @@ class User extends Frontend
     public function center(){
         $user_id = Session::get('user_id');
         $style = input('style','center');
-
+        $status = input('status','all');
+        $where = [];
         $user = Db::name('user')->where('id', $user_id)->find();
 
+        if($status != 'all'){
+            $where['pay_status'] = $status;
+        }
+        $where['a.user_id'] = $user_id;
 
         $order_list = Db::name('order')
             ->alias('a')
-            ->where('a.user_id',$user_id)
+            ->where($where)
             ->field('a.*,e.name,e.phone')
             ->join('__USER_ADDRESS__ e', 'a.address_id=e.id', 'LEFT')
             ->group('a.order_sn')
@@ -337,6 +342,33 @@ class User extends Frontend
 
         $pay_status = array('0'=>'未支付','2'=>'已支付','6'=>'已取消');
         $payment = array('0'=>'未支付','2'=>'已支付','6'=>'已取消');
+
+        //手机端ajax列表
+        if($this->request->isPost()){
+            $ajax = [];
+            foreach ($result as $k => $item){
+                $html = null;
+                if($item['pay_status']  != 0){
+                    $html = '<a href="'.url('user/order_detail',array('order_sn'=>base64_encode($item['order_sn']))).'"  class="mui-btn mui-btn-warning mui-btn-outlined">查看訂單</a>';
+                }
+                if($item['pay_status']  == 0){
+                    $html = '<a href="'.url('payment/go_pay',array('order_sn'=>base64_encode($item['order_sn']))).'"  class="mui-btn mui-btn-success mui-btn-outlined">去支付</a> <a  href="'.url('user/order_cancel',array('order_sn'=>base64_encode($item['order_sn']))).'" class="mui-btn mui-btn-warning mui-btn-outlined">取消訂單</a>';
+                }
+                $ajax[$k]['freight'] = $item['freight'];
+                $ajax[$k]['price'] = sum_order_payableprice($item['order_sn']);
+                $ajax[$k]['statustext']  = $pay_status[$item['pay_status']];
+                $ajax[$k]['payment']  = sp_payment($item['payment']);
+                $ajax[$k]['button'] = $html;
+                foreach ($item['goods_list'] as $kk => $vv){
+                    $ajax[$k]['goods_list'][$kk]['product_name'] = $vv['product_name'];
+                    $ajax[$k]['goods_list'][$kk]['goods_num'] = $vv['goods_num'];
+                    $ajax[$k]['goods_list'][$kk]['money_total'] = $vv['money_total'];
+                    $ajax[$k]['goods_list'][$kk]['cover'] = $vv['cover'];
+                }
+            }
+            $this->success('获取成功',url('user/share_success'),$ajax);
+        }
+
         $page = $order_list->render();
         $this->assign('page',$page);
         $this->assign('order_list',$result);
@@ -348,6 +380,8 @@ class User extends Frontend
         $this->assign('config_use',config('site')['integral']['use']);
           $this->assign('goods_list',$goods_list);
         $this->assign('style',$style);
+
+        $this->assign('status',$status);//手机筛选状态
         if($style == 'order'){
             $this->assign('title','我的訂單');
         }else{
@@ -617,18 +651,21 @@ class User extends Frontend
     public function address_add(){
     	if ($this->request->isPost()){
     		$user_id = Session::get('user_id');
-    		$post = input('post.');
-
-    		$data = $post;
-    		$data['default'] = $post['default']?'1':'0';
+            $data['default'] = 0;
+            $data = input('post.');
+            $info = Db::name('user_address')->where(array('user_id'=>$user_id,'default'=>1))->find();
+            if(empty($info)){
+                $data['default'] = 1;
+            }
     		$data['createtime'] = time();
     		$data['user_id'] = $user_id;
     		if($data['default']){
     			Db::name('user_address')->where(array('user_id'=>$user_id))->update(array('default'=>0));
     		}
-			$info = Db::name('user_address')->insert($data);
-			if($info!==false){
-				$this->success('保存成功');
+
+			$res = Db::name('user_address')->insertGetId($data);
+			if($res!==false){
+				$this->success('保存成功','',array('address_info'=>sp_address_info($user_id,$res,'name,address,phone')));
 			}else{
 				$this->error('保存失败');
 			}
@@ -683,7 +720,9 @@ class User extends Frontend
     public function order_detail(){
         $user_id = Session::get('user_id');
         $order_sn=base64_decode(input('order_sn'));
-
+        if(empty($order_sn)){
+            $this->error('非法操作！');
+        }
         $order_info= Db::name('order')
             ->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))
             ->find();
@@ -692,9 +731,7 @@ class User extends Frontend
             ->where(array('user_id'=>Session::get('user_id'),'id'=>$order_info['address_id']))
             ->find();
         $order_info['integral'] =  Db::name('integral_log')->where(array('order_sn'=>$order_sn,'type'=>'reduce'))->value('integral');
-        if(empty($order_info)){
-            $this->error('非法操作！');
-        }
+
 
         $goods_list= Db::name('order')
             ->alias('a')
@@ -702,20 +739,15 @@ class User extends Frontend
             ->join('__GOODS__ c','a.goods_id=c.product_id','LEFT')
             ->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))
             ->select();
-        $all_total = 0;
         $all_goods_num =0;
         $all_money_total =0;
         foreach ($goods_list as $k => $v){
-                $all_total += $v['money_total'];
                 $all_money_total += $v['money_total'];
                 $all_goods_num += $v['goods_num'];
         }
 
-        $all_total = $all_total -$order_info['coupon_price'] - $order_info['integral_price'] + $order_info['freight'];
-
         $this->assign('order_info',$order_info);
         $this->assign('all_money_total',$all_money_total);
-        $this->assign('all_total',$all_total);
         $this->assign('all_goods_num',$all_goods_num);
         $this->assign('goods_list',$goods_list);
         $this->assign('title','訂單詳情');

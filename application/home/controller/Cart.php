@@ -115,6 +115,10 @@ class Cart extends Frontend
 
     public function action_cart(){
 
+        if(empty(is_login())){
+            $tourist = create_tourist();
+        }
+
         $goods_id= input('goods_id/a');
         $goods_num= input('goods_num/a');
         $address_id= input('address_id');
