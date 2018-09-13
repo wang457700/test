@@ -6,7 +6,11 @@
 <!-- 导航 str-->  
   {include file="common/nav"/} 
 <!--导航 end-->
+    <style>
+     .upload_image{display: inline-block}
 
+
+    </style>
     <div class="container bgcolor_white">
         <div class="alzx-crumbs alzx-crumbs-f1">
             <div class="alzx-con">
@@ -95,6 +99,83 @@
                         </div>
 
                         <div class="form-group">
+                          <label for="" class="col-sm-2 control-label"><span class="color_ro">*</span>上传身份证</label>
+                          <div class="col-sm-10" >
+
+
+
+                              <div id="preview_z" style="">
+                                  <img id="imghead_z"  class="upload_image col-sm-6" src="__PUBLIC__/{$row['cards'][0]}" onclick="$('#previewImg_z').click();">
+                              </div>
+                              <input name="card[]" type="hidden" value="{$row['cards'][0]}" id="pic_z">
+                              <input type="file" onchange="previewImage(this,'z')" style="display: none;" id="previewImg_z" accept=".gif,.jpg,.jpeg,.png">
+
+                              <div id="preview_f" style="">
+                                  <img id="imghead_f"  class="upload_image col-sm-6" src="__PUBLIC__/{$row['cards'][1]}" onclick="$('#previewImg_f').click();">
+                              </div>
+                              <input name="card[]" type="hidden" value="{$row['cards'][1]}" id="pic_f">
+                              <input type="file" onchange="previewImage(this,'f')" style="display: none;" id="previewImg_f" accept=".gif,.jpg,.jpeg,.png">
+
+
+                              <script>
+                                  //图片上传预览    IE是用了滤镜。
+                                  function previewImage(file,pic)
+                                  {
+
+                                      var MAXWIDTH  = 90;
+                                      var MAXHEIGHT = 90;
+                                      var div = document.getElementById('preview_' + pic);
+                                      if (file.files && file.files[0])
+                                      {
+                                          //$('#preview_' + pic).html('<img id="imghead_'+ pic + '" onclick=$("#previewImg_'+pic+'").click()>');
+                                          var img = $('#imghead_' + pic);
+                                          img.onload = function(){
+                                              var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+                                              img.width  =  rect.width*2;
+                                              img.height =  rect.height*2;
+                                          }
+                                          var reader = new FileReader();
+                                          reader.onload = function(evt){img.attr('src',evt.target.result);$('#pic_' + pic).val(evt.target.result)}
+                                          reader.readAsDataURL(file.files[0]);
+                                      }
+                                      else //兼容IE
+                                      {
+                                          var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+                                          file.select();
+                                          var src = document.selection.createRange().text;
+                                          div.innerHTML = '<img id=imghead src="__TMPL_PUBLIC__/img/card_ie.jpg"> ';
+                                          var img = document.getElementById('imghead');
+                                          img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
+                                          var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+                                          status =('rect:'+rect.top+','+rect.left+','+rect.width+','+rect.height);
+                                          div.innerHTML = "<div id=divhead style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;"+sFilter+src+"\"'></div>";
+                                      }
+                                  }
+
+                                  function clacImgZoomParam( maxWidth, maxHeight, width, height ){
+                                      var param = {top:0, left:0, width:width, height:height};
+                                      if( width>maxWidth || height>maxHeight ){
+                                          rateWidth = width / maxWidth;
+                                          rateHeight = height / maxHeight;
+
+                                          if( rateWidth > rateHeight ){
+                                              param.width =  maxWidth;
+                                              param.height = Math.round(height / rateWidth);
+                                          }else{
+                                              param.width = Math.round(width / rateHeight);
+                                              param.height = maxHeight;
+                                          }
+                                      }
+                                      param.left = Math.round((maxWidth - param.width) / 2);
+                                      param.top = Math.round((maxHeight - param.height) / 2);
+                                      return param;
+                                  }
+                              </script>
+
+                           </div>
+                        </div>
+
+                        <div class="form-group">
                           <label for="inputEmail3" class="col-sm-2 control-label"></label>
                           <div class="col-sm-8">
                             <input type="hidden" style="width: 20%;" name="default" value="0">
@@ -168,8 +249,7 @@
           }else{ 
             $.message(data.msg);
             setTimeout(function () {
-                window.location = data.url
-
+               window.location = data.url
             },1000);
           }
         });

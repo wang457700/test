@@ -462,6 +462,11 @@ class User extends Frontend
 			if(empty($post['customized-buttonpane'])){
 				$this->error('请输入简介！');
 			}
+
+			if(empty($post['pic'])){
+				$this->error('请上传封面图！');
+			}
+
 			$imgstr = $post['pic'];
 			$imgdata = substr($imgstr,strpos($imgstr,",") + 1);
 			$decodedData = base64_decode($imgdata);
@@ -614,6 +619,7 @@ class User extends Frontend
 		foreach ($data as $k =>  $v)
         {
             $v['default_text'] = $default[$v['default']];
+          //  $v['cards'] = explode(',',$v['cards']);
             $v['createtime'] = date('Y-m-d',$v['createtime']);
             $v['province'] = Db::name('region')->where(array('id'=>$v['province']))->value('name');
             $v['city'] =Db::name('region')->where(array('id'=>$v['city']))->value('name');
@@ -634,11 +640,15 @@ class User extends Frontend
             if($row['city']){
                 $district = db('region')->where(array('parent_id'=>$row['city'],'level'=>3))->select();
             }
+            $row['cards'] = explode(',',$row['cards']);
+
         }else{
         	$row = array('id'=>null,'province'=>null,'city'=>null,'district'=>null,'address'=>null,'name'=>null,'phone'=>null);
         }
 
 		$this->assign('address_list',$address_list);
+
+        dump($row);
 		$this->assign('row',$row);
         $this->assign('province',$province);
         $this->assign('city',$city);
@@ -652,11 +662,32 @@ class User extends Frontend
     	if ($this->request->isPost()){
     		$user_id = Session::get('user_id');
             $data['default'] = 0;
+            $data['card'] =[];
             $data = input('post.');
             $info = Db::name('user_address')->where(array('user_id'=>$user_id,'default'=>1))->find();
             if(empty($info)){
                 $data['default'] = 1;
             }
+
+            if(empty(count(array_filter($data['card'])))){
+                $this->error('请上传身份证！');
+            }
+
+            if(count(array_filter($data['card'])) == 2 && !empty($data['card'])){
+                foreach ($data['card'] as $key => $item){
+                    $imgstr = $item;
+                    $imgdata = substr($imgstr,strpos($imgstr,",") + 1);
+                    $decodedData = base64_decode($imgdata);
+                    $pic_url = 'uploads/cards/img_'.time().$key.'.jpg';
+                    file_put_contents($pic_url,$decodedData);
+                    unset($data['card']);
+                    $data['cards'][] = $pic_url;
+                }
+            }else{
+                $this->error('请上传正反面！');
+            }
+            $data['cards'] = implode(',',$data['cards']);
+
     		$data['createtime'] = time();
     		$data['user_id'] = $user_id;
     		if($data['default']){
@@ -681,9 +712,31 @@ class User extends Frontend
     		if($data['default'] == 'on'){
 				$data['default'] = 1;
     		}
+
+            if(empty(count(array_filter($data['card'])))){
+                $this->error('请上传身份证！');
+            }
+
+            if(count(array_filter($data['card'])) == 2 && !empty($data['card'])){
+                foreach ($data['card'] as $key => $item){
+                    $imgstr = $item;
+                    $imgdata = substr($imgstr,strpos($imgstr,",") + 1);
+                    $decodedData = base64_decode($imgdata);
+                    $pic_url = 'uploads/cards/img_'.time().$key.'.jpg';
+                    file_put_contents($pic_url,$decodedData);
+                    unset($data['card']);
+                    $data['cards'][] = $pic_url;
+                }
+            }else{
+                $this->error('请上传正反面！');
+            }
+            $data['cards'] = implode(',',$data['cards']);
+
+
     		if($data['default']){
     			Db::name('user_address')->where(array('user_id'=>$user_id))->update(array('default'=>0));
     		}
+
 			$info = Db::name('user_address')->where(array('id'=>$data['id'] ,'user_id'=>$user_id))->update($data);
 			if($info!==false){
 				$this->success('保存成功',url('user/address_list'));

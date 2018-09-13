@@ -4,7 +4,7 @@ a:hover {text-decoration:none}
 ul {margin:0;list-style:none;}
 i{ font-style:normal}
 body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !important;overflow:-Scroll;overflow-x:hidden}
-img{padding-left: 1px;padding-top: 1px;}
+/*img{padding-left: 1px;padding-top: 1px;}*/
 /**************** commons ***************/
 
 .h_left {float:left;}

@@ -14,7 +14,7 @@ class Cart extends Frontend
 {
 
 
-    protected $noNeedLogin = ['checkin_cart'];
+    protected $noNeedLogin = ['checkin_cart','order_ok'];
 
 
     public function checkin_cart()
@@ -50,10 +50,12 @@ class Cart extends Frontend
 
 
     public function order_ok(){
-            if(empty(is_login())){
+
+            $user_id = Session::get('user_id');
+            if(empty($user_id)){
                 $tourist = create_tourist();
             }
-            $user_id = Session::get('user_id');
+
             $product_id = input('goods_id/a');
             $goods_num = input('goods_num/a');
             $count = count($product_id);
