@@ -18,7 +18,6 @@ class Product extends Frontend
     protected $layout = '';
     public function _initialize()
     {
-
         parent::_initialize();
         $this->request->filter(['strip_tags']);
         $this->model = model('app\common\model\Category');
@@ -59,8 +58,6 @@ class Product extends Frontend
             ->paginate(10);
 
         $sort_array = array('order_count'=>'銷量','price'=>'價格','comment_count'=>'評論','add_time'=>'新品');
-
-
 
         //手机端ajax数据
         if ($this->request->isPost() && input('search',false) ==false) {

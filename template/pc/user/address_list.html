@@ -200,7 +200,6 @@
             							<div class="col-md-2" style="">電話</div>
             							<div class="col-md-1" style="">操作</div>
             						</div>
-
                       {foreach name="address_list" item="vo"}
             						<div class="row cart-item-list">
             						  <div class="col-md-1 nowrap">
@@ -218,9 +217,9 @@
             							   <a href="{:url('user/address_delete',array('id'=>$vo['id']))}" class="js-ajax-delete" onclick="return false;">刪除</a>
             						  </div>
             						  <div class="col-md-1" style="">
-                          {eq name="vo['default']" value="1"}
+                                        {eq name="vo['default']" value="1"}
             							   <span class="btn btn-warning btn-disabled" disabled="disabled">{$vo.default_text}</span>
-                          {/eq}
+                                        {/eq}
             						  </div>
             						</div>
                       {/foreach}

@@ -416,7 +416,7 @@ class User extends Frontend
         unset($v);
         $this->assign('contribution_list',$contribution_list);
 
-        $this->assign('title','我的共享');
+        $this->assign('title','我的捐款');
         return $this->view->fetch();
 
     }
@@ -463,9 +463,19 @@ class User extends Frontend
 				$this->error('请输入简介！');
 			}
 
-			if(empty($post['pic'])){
-				$this->error('请上传封面图！');
-			}
+            $data['cat_id'] = array_filter($post['cid']);
+
+            $cat_count = count($data['cat_id']);
+            if($cat_count){
+                $data['cat_id'] = $data['cat_id'][$cat_count-1];
+            }
+            if(empty($data['cat_id'])){
+                $this->error('请选择分类');
+            }
+
+            if(empty($post['pic'])){
+                $this->error('请上传封面图！');
+            }
 
 			$imgstr = $post['pic'];
 			$imgdata = substr($imgstr,strpos($imgstr,",") + 1);
@@ -508,6 +518,16 @@ class User extends Frontend
             $post = input('post.');
             if(empty($post['customized-buttonpane'])){
                 $this->error('请输入简介！');
+            }
+
+            $data['cat_id'] = array_filter($post['cid']);
+
+            $cat_count = count($data['cat_id']);
+            if($cat_count){
+                $data['cat_id'] = $data['cat_id'][$cat_count-1];
+            }
+            if(empty($data['cat_id'])){
+                $this->error('请选择分类');
             }
 
             if(!empty($post['pic'])){
