@@ -81,12 +81,48 @@ class Product extends Frontend
     public function search()
     {
         $keyword = input('keyword');
+        $tree = Tree::instance();
         $new_list =  Db::name('article')->where(array('post_type'=>2,'post_title'=>array('like',"%$keyword%")))->select();
         $goods_list =  Db::name('goods')->where(array('is_on_sale'=>1,'product_name'=>array('like',"%$keyword%")))->select();
+
+        $keyword_list = Session::get('keyword');
+        $this->keyword($keyword);
         $this->view->assign("new_list",$new_list);
         $this->view->assign("product_list",$goods_list);
+        $this->view->assign("input",input('categoryid',14));
+        $this->view->assign("getchild",$tree->getChild(14));//mobile
         $this->view->assign("title",$keyword.' - 搜索結果');
+        $this->view->assign("keyword",$keyword);
+        $this->view->assign("keyword_list",$keyword_list);
         return $this->view->fetch();
+    }
+
+    public function delkeyword(){
+
+        Session::set('keyword','');
+        $this->success('成功',url('user/share_success'));
+
+    }
+    public function keyword($keyword){
+//判断session里有没有history
+        $history=Session::get('keyword');//此处用了tp框架
+        if(empty($history)){
+            $history=array();
+        }
+//取出重复浏览的商品只保留最新的
+        if( isset($history[$keyword])){
+            unset($history[$keyword]);
+        }
+        $row=array();
+        $row['keyword']=$keyword;
+        $history[$keyword]=$row;
+//保证只有6条历史记录
+        if(count($history)>6){
+            $key=key($history);
+            unset($history[$key]);
+        }
+//储存在session里
+        Session::set('keyword',$history);
     }
 
     public function detail()
