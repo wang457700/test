@@ -6,6 +6,11 @@
 		.my_order .mui-btn{position:relative;transform:inherit;right:0}
 		.mui-segmented-control.mui-segmented-control-inverted{display:-webkit-box;overflow-x:scroll}
 		.mui-segmented-control .mui-control-item{padding:0 10px}
+		ul.pagination {display: inline-block;padding: 0;margin: 0;text-align: center;background: #fff;width: 100%;}
+		ul.pagination li {display: inline;}
+		ul.pagination li a,ul.pagination li span{color: black;display: inline-block;;padding: 8px 16px;text-decoration: none;}
+		ul.pagination li.active span{color: #FA0;}
+		ul.pagination li.disabled span{color: #ccc;}
 	</style>
 	<body>
 		{include file="common/header" /}
@@ -36,22 +41,16 @@
 								<li class="mui-table-view-cell"><div style="text-align:center;padding:  20px;">没有共享信息</div></li>
 								{/if}
 							</ul>
+
+							{$list->render()}
+
 						</div>
 					</div>
 				</div>
 
 
-
-
-
 			</div>
 		</div>
 		{include file="common/script" /}
-        <script>
-            mui('body').on('tap','a' ,function(){
-                location.href = this.getAttribute('href')
-            });
-        </script>
 	</body>
-
 </html>

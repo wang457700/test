@@ -102,21 +102,20 @@
                           <label for="" class="col-sm-2 control-label"><span class="color_ro">*</span>上传身份证</label>
                           <div class="col-sm-10" >
 
-
-
                               <div id="preview_z" style="">
+
                                   <img id="imghead_z"  class="upload_image col-sm-6" src="__PUBLIC__/{$row['cards'][0]}" onclick="$('#previewImg_z').click();">
-                              </div>
-                              <input name="card[]" type="hidden" value="{$row['cards'][0]}" id="pic_z">
-                              <input type="file" onchange="previewImage(this,'z')" style="display: none;" id="previewImg_z" accept=".gif,.jpg,.jpeg,.png">
+                                  <input name="card[]" type="hidden" value="{$row['cards'][0]}" id="pic_z">
+                                  <input type="file" onchange="previewImage(this,'z')" style="display: none;" id="previewImg_z" accept=".gif,.jpg,.jpeg,.png">
 
+                              </div>
                               <div id="preview_f" style="">
-                                  <img id="imghead_f"  class="upload_image col-sm-6" src="__PUBLIC__/{$row['cards'][1]}" onclick="$('#previewImg_f').click();">
+
+                                    <img id="imghead_f"  class="upload_image col-sm-6" src="__PUBLIC__/{$row['cards'][1]}" onclick="$('#previewImg_f').click();">
+                                    <input name="card[]" type="hidden" value="{$row['cards'][1]}" id="pic_f">
+                                    <input type="file" onchange="previewImage(this,'f')" style="display: none;" id="previewImg_f" accept=".gif,.jpg,.jpeg,.png">
+
                               </div>
-                              <input name="card[]" type="hidden" value="{$row['cards'][1]}" id="pic_f">
-                              <input type="file" onchange="previewImage(this,'f')" style="display: none;" id="previewImg_f" accept=".gif,.jpg,.jpeg,.png">
-
-
                               <script>
                                   //图片上传预览    IE是用了滤镜。
                                   function previewImage(file,pic)

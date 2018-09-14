@@ -1,10 +1,19 @@
 <script src="__TMPL_PUBLIC__/js/mui.min.js"></script>
-
 <script src='__PUBLIC__/assets/js/message/messageIE.js'></script>
 <script src='__PUBLIC__/assets/js/message/message.js'></script>
 <script src='__PUBLIC__/assets/js/message/messageIE.js'></script>
 <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
 <script>
+
+    mui.init({
+    });
+
+    mui('body').on('tap','a' ,function(){
+        if(this.getAttribute('href')){
+            location.href = this.getAttribute('href');
+        }
+    });
+
     /* 加入购物车 */
     $(".adds,#adds").click(function(){
         var product_id = $(this).data('productid');
@@ -47,7 +56,7 @@
         }
     });
 
-
+22
 
     function MoveBox(obj) {
         var divTop = $(obj).offset().top;
@@ -80,10 +89,4 @@
             });
         });
     }
-
-    mui.init({
-    });
-   mui('.mui-bar').on('tap','a' ,function(){
-       location.href = this.getAttribute('href')
-   });
 </script>

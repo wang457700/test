@@ -20,10 +20,11 @@ body{font-size: 14px;max-width: 600px;margin: 0 auto;}
 .brcolor_gr {border:1px solid #7ac141;}
 
 .clear{clear: both;}
-.btn-success-edit{width: 100%;background:#7AC142;border: 1px solid #7AC142;padding: 10px 0;margin: 10px 0;}
+.none{display:none;}
+.btn-success-edit{width: 100%;background:#7AC142;border: 1px solid #7AC142;padding: 10px 0;margin: 10px 0;background-color: #fff !important;}
 .btn-outlined-edit{width: 100%;padding: 10px 0;margin: 10px 0;}
 
-
+.search-fixed{position:fixed;right:20px;bottom:60px;width:40px;height:40px;z-index:9999;box-shadow:0 1px 2px #ccc;border-radius:50%}
 .mui-table-view:before,.mui-table-view-cell:after{background-color: #efefef;}
 .mui-bar{background-color: #fff;}
 .mui-table-view-cell.mui-active,.mui-table-view-cell>a:not(.mui-btn).mui-active{background:none;}

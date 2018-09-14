@@ -6,7 +6,7 @@
             $user = model('user')->where('id',$user_id)->find();
         ?>
         {if condition="$user_id neq ''"}
-            <a href="{:url('user/center')}" class="color_gr" --blue>{$user.username}</a>
+            <a href="{:url('user/center')}" class="color_gr">{$user.nickname}</a>
             <a href="{:url('user/logout')}">退出</a>
         {else/}
              <a href="{:url('user/login')}">登录</a>
@@ -25,7 +25,6 @@
 	
 	</style>
         <div class="header-d">
-	  
             <a class="phone">訂購熱線：2534-3534  /  51096509</a>
             <div class="header-search">
               <form action="{:url('product/search')}" method="get">

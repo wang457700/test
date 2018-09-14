@@ -22,7 +22,9 @@
                   <p class="color_66">{:date('Y-m-d',$vo['add_date'])}</p>
                 </li>
             {/foreach}
-
+            {if condition="count($list) eq 0"}
+             <div style="text-align:  center;padding:  20px;">没有共享信息</div>
+            {/if}
                 <!---<li class="col-md-6">
                   <div class="d1"><img src="img/shared_platform_img.jpg" /></div>
                   <h4>Bremed Tens電療機 2 Channels</h4>

@@ -398,6 +398,7 @@ function create_tourist()
     $tourist_id = getRandomString(3);
     $data = array(
         'username'=>'youke'.$tourist_id,
+        'nickname'=>'游客'.$tourist_id,
         'user_type'=>'3',
         'joinip'=>get_client_ip(0,true),
         'jointime'=>time(),
@@ -435,6 +436,26 @@ function sp_address_info($userid = '0',$addressid = '0',$field = 'id'){
     $address['city'] = sp_region_value($address['city']);
     $address['district'] = sp_region_value($address['district']);
     return $address;
+}
+
+
+
+/*  查询用户最近购买记录
+
+*/
+
+function sp_user_buygoods($userid = '0',$num = 5){
+
+    $goods =  Db::name('order')
+        ->alias('a')
+        ->field('a.*,c.product_name,c.product_name,c.cover')
+        ->join('__GOODS__ c','a.goods_id=c.product_id','LEFT')
+        ->where(array('user_id'=>$userid))
+        ->limit(1,$num)
+        ->select();
+
+
+    return $goods;
 }
 
 /*

@@ -87,6 +87,7 @@ class Cart extends Frontend
                 }
 
                 $address_list=Db::name('user_address')->where(array('user_id'=>$user_id,'status'=>1))->select();
+                $address_default=Db::name('user_address')->where(array('user_id'=>$user_id,'status'=>1,'default'=>1))->find();
                 /*运费*/
                 $freight = 0 ;
                 $cofing_freight = config('site')['freight'];
@@ -103,6 +104,7 @@ class Cart extends Frontend
                 $this->assign('freight',$freight);
                 $this->assign('num',$num);
                 $this->assign('address_list',$address_list);
+                $this->assign('address_default',$address_default);
                 $this->assign('order_list',$data);
             }else{
 

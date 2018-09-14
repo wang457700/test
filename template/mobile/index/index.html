@@ -105,27 +105,26 @@
 							        //pagination : '#swiper-pagination1',
 							        })
 						      </script>
-						</div> 
+						</div>
 
 
-						<ul class="mui-table-view">
+						<?php $goods = sp_user_buygoods($user['id'],3);?>
+						<ul class="mui-table-view {$goods?'':'none'}">
 							<li class="mui-table-view-cell">
-								<a class="mui-navigate-right" href="product_list.html">
+								<span class="mui-navigate-right" href="product_list.html">
 									我的記錄
-								</a>
+								</span>
 							</li>
 							<li class="mui-table-view-cell">
 								<div class="swiper-container2" style="overflow: hidden;position: relative;">
 								  <div class="swiper-wrapper my_lj">
-								      <div class="swiper-slide col-md-3 list">
-								          <img src="img/f2_1.jpg" />
-								          <p>ATex sports 肌肉運動貼</p>
-								      </div>
-								      <div class="swiper-slide col-md-3 list">
-								          <img src="img/f2_1.jpg" />
-								          <p>ATex sports 肌肉運動貼</p>
-								      </div>
 
+									  {foreach  name="goods" item='vo'}
+										  <div class="swiper-slide col-md-3 list">
+											  <img src="__PUBLIC__/{$vo.cover}" />
+											  <p>{$vo.product_name}</p>
+										  </div>
+									  {/foreach}
 								    </div>
 							 	</div>
 							    <script>
@@ -313,26 +312,25 @@
 						 <ul class="mui-table-view" style="margin-top: 15px;">
 							<li class="mui-table-view-cell">
 									其他信息
-								
 							</li>
 							<li class="mui-table-view-cell index-other">
 								<div class="mui-row">
-									<a class="mui-col-sm-4 mui-col-xs-4">
+									<a class="mui-col-sm-4 mui-col-xs-4" href="{:url('index/index')}">
 										 關於營康薈
 									</a>
-									<a class="mui-col-sm-4 mui-col-xs-4">
+									<a class="mui-col-sm-4 mui-col-xs-4" href="{:url('index/index')}">
 										營康薈門市
 									</a>
-									<a class="mui-col-sm-4 mui-col-xs-4">
+									<a class="mui-col-sm-4 mui-col-xs-4" href="{:url('index/page',array('id'=>109))}">
 										職位空缺
 									</a>
-									<a class="mui-col-sm-4 mui-col-xs-4">
+									<a class="mui-col-sm-4 mui-col-xs-4" href="{:url('index/page',array('id'=>110))}">
 										會員優惠
 									</a>
-									<a class="mui-col-sm-4 mui-col-xs-4">
+									<a class="mui-col-sm-4 mui-col-xs-4" href="{:url('index/page',array('id'=>108))}">
 										聯絡我們
 									</a>
-									<a class="mui-col-sm-4 mui-col-xs-4">
+									<a class="mui-col-sm-4 mui-col-xs-4" href="{:url('index/index')}">
 										商務合作
 									</a>
 								</div>
@@ -351,6 +349,10 @@
 			mui.init({
 				swipeBack: false,
 			});
+
+            mui('.mui-bar').on('tap','a' ,function(){
+                location.href = this.getAttribute('href')
+            });
 			 //侧滑容器父节点
 			var offCanvasWrapper = mui('#offCanvasWrapper');
 			 //主界面容器

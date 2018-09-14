@@ -633,20 +633,18 @@ class User extends Frontend
 		->order('createtime desc')
 		->paginate(10);
 
-
 		$default = array('0'=>'','1'=>'默認地址');
 		$data = $address_list->all();
 		foreach ($data as $k =>  $v)
         {
             $v['default_text'] = $default[$v['default']];
-          //  $v['cards'] = explode(',',$v['cards']);
+            $v['cards'] = explode(',',$v['cards']);
             $v['createtime'] = date('Y-m-d',$v['createtime']);
             $v['province'] = Db::name('region')->where(array('id'=>$v['province']))->value('name');
             $v['city'] =Db::name('region')->where(array('id'=>$v['city']))->value('name');
             $v['district'] =Db::name('region')->where(array('id'=>$v['district']))->value('name');
             $address_list[$k] = $v;
         }
-
         $city = 0;
         $district = 0;
         $province = db('region')->where(array('parent_id'=>0,'level'=>1))->select();
@@ -663,12 +661,10 @@ class User extends Frontend
             $row['cards'] = explode(',',$row['cards']);
 
         }else{
-        	$row = array('id'=>null,'province'=>null,'city'=>null,'district'=>null,'address'=>null,'name'=>null,'phone'=>null);
+        	$row = array('id'=>null,'province'=>null,'city'=>null,'district'=>null,'address'=>null,'name'=>null,'phone'=>null,'cards'=>array('uploads/cards/img_15368995160.jpg','uploads/cards/img_15368995161.jpg'));
         }
 
 		$this->assign('address_list',$address_list);
-
-        dump($row);
 		$this->assign('row',$row);
         $this->assign('province',$province);
         $this->assign('city',$city);
@@ -695,17 +691,24 @@ class User extends Frontend
 
             if(count(array_filter($data['card'])) == 2 && !empty($data['card'])){
                 foreach ($data['card'] as $key => $item){
-                    $imgstr = $item;
-                    $imgdata = substr($imgstr,strpos($imgstr,",") + 1);
-                    $decodedData = base64_decode($imgdata);
-                    $pic_url = 'uploads/cards/img_'.time().$key.'.jpg';
-                    file_put_contents($pic_url,$decodedData);
-                    unset($data['card']);
-                    $data['cards'][] = $pic_url;
+                    if(strpos($item,'cards')){
+                        unset($data['card']);
+                        $data['cards'][] = $item;
+                    }else{
+                        $imgstr = $item;
+                        $imgdata = substr($imgstr,strpos($imgstr,",") + 1);
+                        $decodedData = base64_decode($imgdata);
+                        $pic_url = 'uploads/cards/img_'.time().$key.'.jpg';
+                        file_put_contents($pic_url,$decodedData);
+                        unset($data['card']);
+                        $data['cards'][] = $pic_url;
+                    }
+
                 }
             }else{
                 $this->error('请上传正反面！');
             }
+
             $data['cards'] = implode(',',$data['cards']);
 
     		$data['createtime'] = time();
@@ -739,13 +742,19 @@ class User extends Frontend
 
             if(count(array_filter($data['card'])) == 2 && !empty($data['card'])){
                 foreach ($data['card'] as $key => $item){
-                    $imgstr = $item;
-                    $imgdata = substr($imgstr,strpos($imgstr,",") + 1);
-                    $decodedData = base64_decode($imgdata);
-                    $pic_url = 'uploads/cards/img_'.time().$key.'.jpg';
-                    file_put_contents($pic_url,$decodedData);
-                    unset($data['card']);
-                    $data['cards'][] = $pic_url;
+
+                    if(strpos($item,'cards')){
+                        unset($data['card']);
+                        $data['cards'][] = $item;
+                    }else{
+                        $imgstr = $item;
+                        $imgdata = substr($imgstr,strpos($imgstr,",") + 1);
+                        $decodedData = base64_decode($imgdata);
+                        $pic_url = 'uploads/cards/img_'.time().$key.'.jpg';
+                        file_put_contents($pic_url,$decodedData);
+                        unset($data['card']);
+                        $data['cards'][] = $pic_url;
+                    }
                 }
             }else{
                 $this->error('请上传正反面！');

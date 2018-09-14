@@ -56,6 +56,9 @@
 						<input name="default" value="0" type="hidden">
 						<input name="default" value="1" type="checkbox" {$row['default']?'checked':''}>
 					</div>
+
+					<input name="card[]" value="{$row['cards'][0]}" type="hidden">
+					<input name="card[]" value="{$row['cards'][1]}" type="hidden">
 					<div class="mui-button-row">
 						<button class="mui-btn mui-btn-success btn-success-edit">
 							保  存

@@ -36,7 +36,7 @@
 						        </li>
 						        <li class="mui-col-sm-7 mui-col-xs-7">
 						            <p class="title">{$vo.product_name}</p>
-									<a href="" class="xuan">{$vo.model}</a>
+									<a href="" class="xuan">{$vo.place_origin}</a>
 									<div>
 										<p class="mui-pull-left" style="margin:  0;line-height: 40px;"><span class="color_ro">$</span><span class="color_ro font18" data-price='{$vo.price}' id="price_{$key}">{$vo.price}</span></p>
 										<div class="col-md-12 mui-pull-right number" style="">
@@ -54,7 +54,7 @@
 				{/foreach}
 				{if condition="count($car_list) eq 0"}
 					<div style="text-align:  center;padding: 100px; font-size: 16px;color: #666;">
-						購物車空空，<a href="{:url('index/index')}" class="color_gr">去購物</a>！
+						購物車空空，<br><a href="{:url('index/index')}" class="color_gr">去購物</a>！
 					</div>
 				{/if}
 			</div>
