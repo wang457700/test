@@ -87,5 +87,5 @@ PaymentSession.configure({
 
 function pay() {
     // UPDATE THE SESSION WITH THE INPUT FROM HOSTED FIELDS
-    PaymentSession.updateSessionFromForm('card');
+    PaymentSession.updateSessionFrom('card');
 }

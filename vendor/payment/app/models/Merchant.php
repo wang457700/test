@@ -19,7 +19,7 @@ class Merchant
     private $merchantId = "";
     private $password = "";
     private $apiUsername = "";
-    private $sessionJsUrl = "";
+    private $sessionJsUrl = "../public/scripts/session.js";
     private $checkoutJsUrl = "";
     private $checkoutSessionUrl = "";
     private $pkiBaseUrl = "";
@@ -65,7 +65,7 @@ class Merchant
         if (array_key_exists("apiUsername", $configArray))
             $this->apiUsername = $configArray["apiUsername"];
 
-        $this->sessionJsUrl = $this->hostedSessionUrl . '/version/' . $this->version . '/merchant/' . $this->merchantId . '/session.js';
+       // $this->sessionJsUrl = $this->hostedSessionUrl . '/version/' . $this->version . '/merchant/' . $this->merchantId . '/session.js';
         $this->checkoutSessionUrl = $this->gatewayUrl . '/version/' . $this->version . '/merchant/' . $this->merchantId . '/session';
         $this->checkoutJsUrl = $this->gatewayBaseUrl . '/checkout/version/' . $this->version . '/checkout.js';
 
