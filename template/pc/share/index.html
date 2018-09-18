@@ -19,7 +19,7 @@
                   <div class="d1"><img src="{:fa_get_image_url($vo['product_pic'])}" /></div>
                   <h4>{$vo.product_name}</h4>
                   <p class="color_66">{$vo.product_content}</p>
-                  <p class="color_66">{:date('Y-m-d',$vo['add_date'])}</p>
+                  <p class="color_66 ellipsis3">{:date('Y-m-d',$vo['add_date'])}</p>
                 </li>
             {/foreach}
             {if condition="count($list) eq 0"}

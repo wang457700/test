@@ -44,14 +44,15 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 .btn-default-edit{width: 100%;margin-bottom: 1em;border-radius: 0;padding: 10px 20px;font-size: 15px;color:#a5a5a5;border-color:  #e5e5e5;}
 .btn-warning-edit{width: 100%;margin-bottom: 1em;border-radius: 0;padding: 10px 20px;font-size: 15px;color:#fff;border-color: #ffa800;}
 
+.btn-warning {color: #fff;background-color: #ffa800;border-color: #ffa800;}
 /*border*/
 .border_1{border: 1px solid #e5e5e5;border-top: 0;}
 /**************** commons ***************/
 .nowrap{overflow: hidden; text-overflow:ellipsis;white-space:nowrap;}
 .no_after:after{height:0;}
 .no_border{border:0 !important}
-.btn-warning {color: #fff;background-color: #ffa800;border-color: #ffa800;}
 
+.ellipsis3{overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;}
 
 .header {background:#f7f7f7;/* padding:10px;*/}
 .header .phone {padding: 15px 30px;color:#fff;font-size: 21px;padding-left: 60px;background:#7ac141 url(../img/hd_phone.png) no-repeat left;background-position: 30px;float:left;border-radius: 10px;text-align:  center;font-weight:  bold;}
@@ -120,7 +121,7 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 
 
 
-.f6 .img_left{float: left;margin-right: 10px;border: 1px solid #eee;border-radius: 5px;margin-left: 1px;}
+.f6 .img_left{float: left;margin-right: 10px;border: 1px solid #eee;border-radius: 5px;margin-left: 1px;width: 210px;}
 .f6 .d1{font-size: 1.2em;line-height: 2em;}
 .f6 .list{padding: 1em;}
 .f6 .d1 p{color: #888;}
