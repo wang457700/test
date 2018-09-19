@@ -93,7 +93,7 @@ class User extends Frontend
               $this->error('二次輸入的密碼不一致',url('user/register'),2);
           };
           $data['password']= md5(input('password'));
-          $data['joinip']= $_SERVER['HTTP_X_FORWARDED_FOR'];
+          $data['joinip']= '';
           $data['jointime']= time();
           $data['user_type']= 2;
 

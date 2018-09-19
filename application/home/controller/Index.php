@@ -67,6 +67,9 @@ class Index extends Frontend
         return $this->view->fetch();
     }
 
+
+
+    //单页面
     public function page()
     {
         $id = $this->request->param('id', 0, 'intval');
@@ -75,6 +78,32 @@ class Index extends Frontend
         $this->view->assign("title", $page['post_title']);
         return $this->view->fetch();
     }
+
+    //手机端 - contact_us
+    public function contact_us()
+    {
+        $id = $this->request->param('id', 0, 'intval');
+        $page =  Db::name('article')->where(array('id'=>$id,))->find();
+        $this->view->assign("page", $page);
+        $this->view->assign("title", $page['post_title']);
+        return $this->view->fetch();
+    }
+
+
+    //商务合作 - 留言板
+    public function message()
+    {
+        $id = $this->request->param('id', 0, 'intval');
+
+
+
+
+        $page =  Db::name('article')->where(array('id'=>$id,))->find();
+        $this->view->assign("page", $page);
+        $this->view->assign("title", $page['post_title']);
+        return $this->view->fetch();
+    }
+
 
 
 }

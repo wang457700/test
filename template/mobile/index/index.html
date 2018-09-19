@@ -15,7 +15,7 @@
 
 							{if condition="is_login()"}
 								<a href="{:url('user/center')}">
-									<img src="__TMPL_PUBLIC__/img/logo1.png"/>{$user['username']}
+									<img src="__TMPL_PUBLIC__/img/logo1.png"/>{$user['nickname']}
 								</a>
 							{else/}
 								<a href="{:url('user/login')}">

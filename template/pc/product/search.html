@@ -28,10 +28,7 @@
                             {if condition="$vo['discount_type'] eq 2"}<p class="color_ro">特惠全民享</p>{/if}
                             {if condition="$vo['discount_type'] eq 3"}<p class="color_ro">优惠全民享</p>{/if}
                           <div>
-                              <span style="font-size: 20px;"><i>$</i>
-                                  {if condition="$vo['discount_type'] eq 1"}{$vo.price}{/if}
-                                  {if condition="$vo['discount_type'] eq 2"}{$vo.pricevip}{/if}
-                                  {if condition="$vo['discount_type'] eq 3"}{$vo.discount_price}{/if}</span>
+                              <span style="font-size: 20px;"><i>$</i>{:product_price($vo['product_id'])}</span>
                               <a class="adds" data-productid="{$vo.product_id}">+</a>
                           </div>
                         </div>

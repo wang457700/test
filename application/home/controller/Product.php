@@ -85,23 +85,21 @@ class Product extends Frontend
         $new_list =  Db::name('article')->where(array('post_type'=>2,'post_title'=>array('like',"%$keyword%")))->select();
         $goods_list =  Db::name('goods')->where(array('is_on_sale'=>1,'product_name'=>array('like',"%$keyword%")))->select();
 
-        $keyword_list = Session::get('keyword');
         $this->keyword($keyword);
+        $keyword_list = Session::get('keyword');
         $this->view->assign("new_list",$new_list);
         $this->view->assign("product_list",$goods_list);
         $this->view->assign("input",input('categoryid',14));
         $this->view->assign("getchild",$tree->getChild(14));//mobile
-        $this->view->assign("title",$keyword.' - 搜索結果');
+        $this->view->assign("title",$keyword.' 搜索結果');
         $this->view->assign("keyword",$keyword);
         $this->view->assign("keyword_list",$keyword_list);
         return $this->view->fetch();
     }
 
     public function delkeyword(){
-
         Session::set('keyword','');
-        $this->success('成功',url('user/share_success'));
-
+        $this->success('清除歷史成功',url('product/search'));
     }
     public function keyword($keyword){
 //判断session里有没有history

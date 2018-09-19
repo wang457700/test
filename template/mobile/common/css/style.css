@@ -10,7 +10,7 @@ body{font-size: 14px;max-width: 600px;margin: 0 auto;}
 .color_777777 {color:#777777;}
 .color_gr {color:#7ac141;}
 .color_ro {color:#ffa800;}
-.color_3f{color:#3f3f3f};
+.color_3f{color:#3f3f3f}
 /*bg*/
 .bgcolor_gr {background:#7ac141;}
 .bgcolor_ro {background:#ffa800;}
@@ -21,7 +21,7 @@ body{font-size: 14px;max-width: 600px;margin: 0 auto;}
 
 .clear{clear: both;}
 .none{display:none;}
-.btn-success-edit{width: 100%;background:#7AC142;border: 1px solid #7AC142;padding: 10px 0;margin: 10px 0;background-color: #fff !important;}
+.btn-success-edit{width: 100%;border: 1px solid #7AC142;padding: 10px 0;margin: 10px 0;background-color:#7AC142 !important;}
 .btn-outlined-edit{width: 100%;padding: 10px 0;margin: 10px 0;}
 
 .search-fixed{position:fixed;right:20px;bottom:60px;width:40px;height:40px;z-index:9999;box-shadow:0 1px 2px #ccc;border-radius:50%}
@@ -91,7 +91,7 @@ body{font-size: 14px;max-width: 600px;margin: 0 auto;}
 .login_ico{background: url(../img/login.png) no-repeat left;width: 40px !important;padding: 0 !important;height: 40px;}
 
 .product-top-item{/* border: 1px solid #efefef; */display: inline-block;padding: 5px 0;}
-.product-top-item a{border: 1px solid #efefef;padding:10px; */margin:;margin-right: -5px;color: #000;}
+.product-top-item a{border: 1px solid #efefef;padding:10px;margin-right: -5px;color: #000;}
 .product-top-item a.active{background:#7ac141;color: #fff;}
 .product-top-right{float: right;padding: 5px;}
 .product-top-right a{background: url(../img/liebiao.png) no-repeat 100%;width: 20px;height: 20px;display:  inline-block;background-size: 100%;}
@@ -127,7 +127,6 @@ body{font-size: 14px;max-width: 600px;margin: 0 auto;}
 
 .shopping_cart .number{padding:10px 0 ;height: 20px} 
 .shopping_cart .number input{padding: 1px 10px;} 
-
 
 .address_list a.edit{background: url(../img/edit_ico.png) no-repeat left;background-size: 15px;padding-left:  20px;color: #666666;}
 .address_list a.del{background: url(../img/del_ico.png) no-repeat left;background-size: 15px;padding-left:  20px;color: #666666;}

@@ -1,6 +1,7 @@
 <?php
 
 use think\Db;
+use think\Session;
 
 // 公共助手函数
 
@@ -453,8 +454,6 @@ function sp_user_buygoods($userid = '0',$num = 5){
         ->where(array('user_id'=>$userid))
         ->limit(1,$num)
         ->select();
-
-
     return $goods;
 }
 
@@ -473,6 +472,18 @@ function getRandomString($len, $chars=null)
         $str .= $chars[mt_rand(0, $lc)];
     }
     return $str;
+}
+
+/*
+ * 生成随机数字，
+ * $len 位数
+ * $chars 自定义字符
+ */
+function sp_user_default_address()
+{
+    $user_id = Session::get('user_id');
+    $address= Db::name('user_address')->where(array('user_id'=>$user_id,'default'=>1))->find();
+    return $address;
 }
 
 
