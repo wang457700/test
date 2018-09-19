@@ -45,6 +45,7 @@ class Product extends Frontend
         $where['is_on_sale'] = 1;
         $where['cat_id'] = array('in',$categoryid);
         $order = [];
+        $input['style'] = input('style','list');
         $input['categoryid'] = input('categoryid',14);
         $sort =  input('sort','add_time-desc');
         if($sort){
@@ -71,10 +72,11 @@ class Product extends Frontend
         $this->view->assign("sort",$sort);
         $this->view->assign("sort_array",$sort_array);
         $this->view->assign("title",$getParents[count($getParents)-1]['name']);
+        return $this->view->fetch();
         if(input('style') == 'grid'){
-            return $this->view->fetch('index_grid');
+
         }else{
-            return $this->view->fetch();
+
         }
     }
 
@@ -145,7 +147,9 @@ class Product extends Frontend
         $this->view->assign("goods_list",$goods_list);
         $this->view->assign("getparents",$getparents);
         $this->view->assign("img_url",$img_url);
-        $this->view->assign("title",'商品详情');
+        $this->view->assign("title",$goods['seo_title']);
+        $this->view->assign("seo_keywords",$goods['seo_keywords']);
+        $this->view->assign("seo_description",$goods['seo_desc']);
         return $this->view->fetch();
     }
 

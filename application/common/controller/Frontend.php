@@ -45,13 +45,28 @@ class Frontend extends Controller
 
     public function _initialize()
     {
-
         //移除HTML标签
         $this->request->filter('strip_tags');
         $modulename = $this->request->module();
         $controllername = strtolower($this->request->controller());
         $actionname = strtolower($this->request->action());
+        $site = config('site');
 
+        $array = array('index','product','news');
+        foreach ($array as $item){
+            if($controllername == $item){
+                $seo_title = $site[$item.'_seo']['title'];
+                $seo_keywords = $site[$item.'_seo']['keywords'];
+                $seo_description = $site[$item.'_seo']['description'];
+            }else{
+                $seo_title = $site['index_seo']['title'];
+                $seo_keywords = $site['index_seo']['keywords'];
+                $seo_description = $site['index_seo']['description'];
+            }
+        }
+        $this->view->assign('seo_title', $seo_title);
+        $this->view->assign('seo_keywords', $seo_keywords);
+        $this->view->assign('seo_description', $seo_description);
 
         // 如果有使用模板布局
         if ($this->layout) {

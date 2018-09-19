@@ -61,7 +61,7 @@ return array (
     'keywords' => '产品列表关键字',
     'description' => '产品列表描述',
   ),
-  'info_seo' => 
+  'news_seo' => 
   array (
     'title' => '社区服务资讯标题',
     'keywords' => '社区服务资讯关键字',

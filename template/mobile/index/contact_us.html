@@ -1,36 +1,15 @@
-<!DOCTYPE html>
-<html>
 
-	<head>
-		<meta charset="utf-8">
-		<title>聯繫我們</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
-		<meta name="apple-mobile-web-app-capable" content="yes">
-		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-		<!--标准mui.css-->
-		<link href="https://cdn.bootcss.com/mui/3.7.1/css/mui.min.css" rel="stylesheet">
-		<link href="css/style.css" rel="stylesheet">
-		<style>
-			.mui-card .mui-control-content {
-				padding: 10px;
-			}
-			
-			.mui-control-content {
-				height: 600px;
-			}
-			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{border-bottom: 2px solid #FFAA00;color: #FFAA00;}
-			.my_order .mui-btn{ position: relative;transform: inherit;right: 0;}
-		</style>
-	</head>
 
+{include file="layout/public_head" /}
+	<style>
+		.mui-card .mui-control-content {padding: 10px;}
+		.mui-control-content {height: 600px;}
+		.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{border-bottom: 2px solid #FFAA00;color: #FFAA00;}
+		.my_order .mui-btn{ position: relative;transform: inherit;right: 0;}
+	</style>
 	<body>
-		<header class="mui-bar mui-bar-nav">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #7ac141;"></a>
-			<h1 class="mui-title">聯繫我們</h1>
-			<a href="#" class="mui-action-menu mui-pull-right index-hd-right2"></a>
-			<a href="#" class="mui-action-menu mui-pull-right index-hd-right"></a>
-		</header>
+		{include file="common/header" /}
 		<div class="mui-content">                     
 			<div>                            
 				<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary my_order_segmented" style="background:#fff">
@@ -47,8 +26,8 @@
 						<div class="mui-scroll">
 							<ul class="mui-table-view">
 								 <li class="mui-table-view-cell">
-								 	<img src="img/co_us1.png" /style="width: 100%;margin-bottom: 10px;">
-								 	<img src="img/linian.png" class="left_ico"> 營康薈理念
+								 	<img src="__TMPL_PUBLIC__/img/co_us1.png" /style="width: 100%;margin-bottom: 10px;">
+								 	<img src="__TMPL_PUBLIC__/img/linian.png" class="left_ico"> 營康薈理念
 								 </li>
 						         <li class="mui-table-view-cell">
 						         	 我們會以這家分店作為起點，踏出社區為市民大眾提供健康產品及服務，未來將會引入更多不同類型的健康產品提供予市民大眾，目標能為更多人提供健康的生活。
@@ -62,7 +41,7 @@
 					 <div class="mui-scroll">
 						<ul class="mui-table-view">
 							 <li class="mui-table-view-cell">
-							 	<img src="img/menshi.png" class="left_ico">門市
+							 	<img src="__TMPL_PUBLIC__/img/menshi.png" class="left_ico">門市
 							 </li>
 					         <li class="mui-table-view-cell">
 				         	    <h4>油塘大本型商場分店</h4>
@@ -76,7 +55,7 @@
 					<ul class="mui-table-view">
 						 <li class="mui-table-view-cell">
 						 	
-						 	<img src="img/dianhua.png" class="left_ico">聯絡我們
+						 	<img src="__TMPL_PUBLIC__/img/dianhua.png" class="left_ico">聯絡我們
 						 </li>
 				         <li class="mui-table-view-cell">
 							—   地址：<span class="color_3f">九龍油塘高超道38號大本型商場2樓228號舖</span><br>
@@ -91,7 +70,7 @@
 				<div id="item4" class="mui-control-content">
 					<ul class="mui-table-view">
 						 <li class="mui-table-view-cell"> 
-						 	<img src="img/zhiwei.png" class="left_ico">職位空缺
+						 	<img src="__TMPL_PUBLIC__/img/zhiwei.png" class="left_ico">職位空缺
 						 </li>
 				         <li class="mui-table-view-cell">
 				         	<h4>店務助理 Shop Assistant (全職/兼職)</h4>
@@ -121,32 +100,50 @@
 				<div id="item5" class="mui-control-content">
 					<ul class="mui-table-view">
 						 <li class="mui-table-view-cell"> 
-						 	<img src="img/hezuo.png" class="left_ico">商務合作
+						 	<img src="__TMPL_PUBLIC__/img/hezuo.png" class="left_ico">商務合作
 						 </li>
 				         <li class="mui-table-view-cell">
 
-				         	<form >
+				         	<form action="{:url('index/message')}" method="post" enctype="multipart/form-data" onsubmit="return messageform()" id="message-form">
 								<div class="mui-input-row"> 
-									<input type="text" placeholder="聯絡電話：">
+									<input type="text" placeholder="聯絡電話：" name="phone" required oninvalid="setCustomValidity('請輸入聯絡電話！')" oninput="setCustomValidity('')">
 								</div>
 								<div class="mui-input-row"> 
-									<input type="text" placeholder="聯絡人：">
+									<input type="text" placeholder="聯絡人：" name="name" required oninvalid="setCustomValidity('請輸入聯絡人！')" oninput="setCustomValidity('')">
 								</div>
 								<div class="mui-input-row"> 
-									<textarea rows="10" cols="30" placeholder="咨詢內容："></textarea>
+									<textarea rows="10" cols="30" placeholder="咨詢內容：" name="content" required oninvalid="setCustomValidity('請輸入咨詢內容！')" oninput="setCustomValidity('')"></textarea>
 								</div>
-								 
+								<div class="mui-button-row">
+									<button class="mui-btn mui-btn-success btn-success-edit">
+										发  送
+									</button>
+								</div>
 							</form>
-
-
-
 				         </li>
 					</ul>
 				</div>
 			</div>
-			  	
 		</div>
-		<script src="js/mui.min.js"></script>
+		<script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
+		{include file="common/script" /}
+		<script type="text/javascript">
+            function messageform(){
+                // jquery 表单提交
+                $("#message-form").ajaxSubmit(function(data) {
+                    console.log(data);
+                    if(data.code == 0){
+                        $.message({message:data.msg,type:'warning',time:'3000'});
+                    }else{
+                        $.message(data.msg);
+                        setTimeout(function () {
+                            window.location = data.url
+                        },1500);
+                    }
+                });
+                return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
+            }
+		</script>
 		<script>
 			mui('.mui-scroll-wrapper').scroll();
 		</script>

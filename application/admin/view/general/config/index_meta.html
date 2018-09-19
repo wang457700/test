@@ -161,11 +161,11 @@
                     </div>
                     <div  class="form-group form-group2 col-sm-11" style="border-bottom:  1px solid #eee;padding-bottom:  20px;margin: 0;">
 
-                        {foreach $config_data.info_seo as $index=>$item}
+                        {foreach $config_data.news_seo as $index=>$item}
                         <div class="col-sm-12">
                             <label for="rule" class="control-label col-xs-12 col-sm-1">{$ch[$index]}</label>
                             <div class="col-xs-12 col-sm-6">
-                                <input type="text" class="form-control" id="rule" name="row[info_seo][{$index}]" value="{$item}" />
+                                <input type="text" class="form-control" id="rule" name="row[news_seo][{$index}]" value="{$item}" />
                             </div>
                         </div>
                         {/foreach}

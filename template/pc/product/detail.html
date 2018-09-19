@@ -28,8 +28,11 @@
                     <div class="imgdet wrap">
                       <div class="imglist">
                         <ul>
+                            <li class="active"><img src="__PUBLIC__/{$goods.cover}" alt=""></li>
                         {foreach name="img_url" item="vo"}
-                          <li class="{$key=="0"?'active':''}"><img src="__PUBLIC__/{$vo}" alt=""></li>
+                            {if condition="$vo"}
+                                  <li class=""><img src="__PUBLIC__/{$vo}" alt=""></li>
+                            {/if}
                         {/foreach}
                         </ul>
                       </div>

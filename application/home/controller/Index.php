@@ -39,9 +39,7 @@ class Index extends Frontend
     {
 
         $tree = Tree::instance();
-
         $slide =  Db::name('slide')->where(array('slide_status'=>1))->select();
-
         $where['is_on_sale'] = 1;
         $top_ten= Db::name('goods')->where('is_best_status',0)->limit(10)->select();
         $product_list= Db::name('goods')
@@ -63,7 +61,7 @@ class Index extends Frontend
 
 
         $this->view->assign("slide", $slide);
-        $this->view->assign("title", '首页');
+        $this->view->assign("title", '首頁');
         return $this->view->fetch();
     }
 
@@ -85,23 +83,21 @@ class Index extends Frontend
         $id = $this->request->param('id', 0, 'intval');
         $page =  Db::name('article')->where(array('id'=>$id,))->find();
         $this->view->assign("page", $page);
-        $this->view->assign("title", $page['post_title']);
+        $this->view->assign("title", '聯繫我們');
         return $this->view->fetch();
     }
-
 
     //商务合作 - 留言板
     public function message()
     {
-        $id = $this->request->param('id', 0, 'intval');
-
-
-
-
-        $page =  Db::name('article')->where(array('id'=>$id,))->find();
-        $this->view->assign("page", $page);
-        $this->view->assign("title", $page['post_title']);
-        return $this->view->fetch();
+       $data = input('post.');
+       $data['datetime'] = date('Y-m-d H:i:s',time());
+       $res = Db::name('message')->insert($data);
+       if($res){
+           $this->success('發送成功！');
+       }else{
+           $this->error('發送失敗！');
+       }
     }
 
 
