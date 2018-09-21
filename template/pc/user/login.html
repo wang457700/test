@@ -22,6 +22,7 @@
 					<div class="form-group" style="border: 0;">
 				  		<button type="submit" class="btn btn-success btn-success-edit" style="margin-bottom: 1em"  id="login">登    錄</button>
 						<button type="button" class="btn btn-default btn-default-edit" style="margin-bottom: 1em">Facebook 客戶登錄</button>
+						<button type="button" class="btn btn-default btn-default-edit" style="margin-bottom: 1em" id="customBtn" >Google 客戶登錄</button>
 					 	<button type="button" class="btn btn-default btn-default-edit"><img src="__TMPL_PUBLIC__/img/logo-weixin.png" style="width:  30px;margin-right:  10px;">Wechat 登錄</button>
 
 					</div>
@@ -32,9 +33,69 @@
 			</div> 
 		</div>
 
-		<script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
+		 <button type="button" onclick="signOut();">Sign out</button>
+
+		 <script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
 		<script src="__TMPL_PUBLIC__/js/scripts.js"></script>
-	 	{include file="common/script" /}
+		 <script src="https://apis.google.com/js/api:client.js"></script>
+		 <script>
+             var googleUser = {};
+             var startApp = function() {
+                 gapi.load('auth2', function(){
+                     // Retrieve the singleton for the GoogleAuth library and set up the client.
+                     auth2 = gapi.auth2.init({
+                         client_id: '974658843640-ban0u40f04qahk5lkl9kl1sj06cfmvi4.apps.googleusercontent.com', //客户端ID
+                         cookiepolicy: 'single_host_origin',
+                         scope: 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email' //可以请求除了默认的'profile' and 'email'之外的数据
+                     });
+                     attachSignin(document.getElementById('customBtn'));
+                 });
+             };
+             function attachSignin(element) {
+                 auth2.attachClickHandler(element, {},
+                     function(googleUser) {
+                        // document.getElementById('name').innerText = "Signed in: " + googleUser.getBasicProfile().getName();
+                         var profile = auth2.currentUser.get().getBasicProfile();
+                         console.log('ID: ' + profile.getId());
+                         console.log('Full Name: ' + profile.getName());
+                         console.log('Given Name: ' + profile.getGivenName());
+                         console.log('Family Name: ' + profile.getFamilyName());
+                         console.log('Image URL: ' + profile.getImageUrl());
+                         console.log('Email: ' + profile.getEmail());
+
+                         console.log(profile);
+                         $.ajax({
+                             type: "POST",
+                             url: "{:url('api/user/third')}?platform=google",
+                             dataType: 'json',
+                             data: profile,
+                             success: function(data) {
+                                 if(data.code == 0){
+                                     $.message({message:data.msg,type:'warning',time:'3000'});
+                                 }else{
+                                     $.message(data.msg);
+                                     setTimeout(function () {
+                                         window.location = "{:url('user/center')}";
+                                     },1500);
+                                 }
+                             }
+                         });
+
+                     }, function(error) {
+                         console.log(JSON.stringify(error, undefined, 2));
+                     });
+             }
+             startApp();
+
+             //注销
+             function signOut() {
+                 var auth2 = gapi.auth2.getAuthInstance();
+                 auth2.signOut().then(function () {
+                     alert('用户注销成功');
+                 });
+             }
+		 </script>
+		 {include file="common/script" /}
 		<script type="text/javascript">
 			function loginform(){
 				var email = $('#email');

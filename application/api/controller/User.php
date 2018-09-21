@@ -7,6 +7,7 @@ use app\common\library\Ems;
 use app\common\library\Sms;
 use fast\Random;
 use think\Validate;
+use think\Session;
 
 /**
  * 会员接口
@@ -261,7 +262,13 @@ class User extends Api
     {
         $url = url('user/index');
         $platform = $this->request->request("platform");
+
         $code = $this->request->request("code");
+
+        //如果是谷歌登录，接收json数据保存到数据库
+        if($platform == 'google'){
+            $code = input('post.');
+        }
         $config = get_addon_config('third');
         if (!$config || !isset($config[$platform]))
         {
@@ -270,6 +277,8 @@ class User extends Api
         $app = new \addons\third\library\Application($config);
         //通过code换access_token和绑定会员
         $result = $app->{$platform}->getUserInfo(['code' => $code]);
+
+
         if ($result)
         {
             $loginret = \addons\third\library\Service::connect($platform, $result);
@@ -279,7 +288,10 @@ class User extends Api
                     'userinfo'  => $this->auth->getUserinfo(),
                     'thirdinfo' => $result
                 ];
+                Session::set("user_id", $data['userinfo']['id']);
+                Session::set("user", $data['userinfo']);
                 $this->success(__('Logged in successful'), $data);
+
             }
         }
         $this->error(__('Operation failed'), $url);

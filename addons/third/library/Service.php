@@ -52,20 +52,21 @@ class Service
             // 先随机一个用户名,随后再变更为u+数字id
             $username = Random::alnum(20);
             $password = Random::alnum(6);
-
             Db::startTrans();
             try {
                 // 默认注册一个会员
-                $result = $auth->register($username, $password, $username . '@fastadmin.net', '', $extend, $keeptime);
+                $result = $auth->register($username, $password, isset($params['userinfo']['email'])?$params['userinfo']['email']:'', '', $extend, $keeptime);
                 if (!$result) {
                     return FALSE;
                 }
                 $user = $auth->getUser();
-                $fields = ['username' => 'u' . $user->id, 'email' => 'u' . $user->id . '@fastadmin.net'];
+                $fields = ['username' => 'u' . $user->id ];
                 if (isset($params['userinfo']['nickname']))
                     $fields['nickname'] = $params['userinfo']['nickname'];
                 if (isset($params['userinfo']['avatar']))
                     $fields['avatar'] = $params['userinfo']['avatar'];
+                if (isset($params['userinfo']['email']))
+                    $fields['email'] = $params['userinfo']['email'];
 
                 // 更新会员资料
                 $user = User::get($user->id);

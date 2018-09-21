@@ -170,7 +170,9 @@ class Auth
             'logintime' => $time,
             'loginip'   => $ip,
             'prevtime'  => $time,
-            'status'    => 'normal'
+            'status'    => 'normal',
+            'is_eamil_status'    => 1,
+            'user_type'    => 2,
         ]);
         $params['password'] = $this->getEncryptPassword($password, $params['salt']);
         $params = array_merge($params, $extend);
