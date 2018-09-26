@@ -33,7 +33,6 @@
 			</div> 
 		</div>
 
-		 <button type="button" onclick="signOut();">Sign out</button>
 		 <button type="button" onclick="disconnectUser();">Sign out</button>
 		 <button type="button" onclick="fbLogoutUser()">fbLogoutUser out</button>
 
@@ -67,7 +66,6 @@
 			}
 		</script>
 		 <script>
-
              // facebook登录
              $('#facebook').click(function () {
                  FB.login(function(response) {
@@ -141,7 +139,7 @@
                      auth2 = gapi.auth2.init({
                          client_id: '974658843640-ban0u40f04qahk5lkl9kl1sj06cfmvi4.apps.googleusercontent.com', //客户端ID
                          cookiepolicy: 'single_host_origin',
-                         scope: 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email' //可以请求除了默认的'profile' and 'email'之外的数据
+                         scope: 'profile' //可以请求除了默认的'profile' and 'email'之外的数据
                      });
                      attachSignin(document.getElementById('customBtn'));
                  });
@@ -159,6 +157,7 @@
                          console.log('Email: ' + profile.getEmail());
 
                          console.log(profile);
+                         console.log(gapi.auth.getToken().access_token);
                          $.ajax({
                              type: "POST",
                              url: "{:url('api/user/third')}?platform=google",
@@ -170,7 +169,7 @@
                                  }else{
                                      $.message(data.msg);
                                      setTimeout(function () {
-                                         window.location = "{:url('user/center')}";
+                                        // window.location = "{:url('user/center')}";
                                      },1500);
                                  }
                              }
@@ -182,11 +181,23 @@
              }
              startApp();
 
-             //注销
-             function signOut() {
-                 var auth2 = gapi.auth2.getAuthInstance();
-                 auth2.signOut().then(function () {
-                     alert('用户注销成功');
+             // 取消与应用关联的代码
+             function disconnectUser(){
+                 var revokeUrl = 'https://accounts.google.com/o/oauth2/revoke?token=' + gapi.auth.getToken().access_token;
+                 $.ajax({
+                     type: 'GET',
+                     url: revokeUrl,
+                     async: false,
+                     contentType: "application/json",
+                     dataType: 'json',
+                     success: function(nullResponse) {
+                         // 成功以后隐藏登录信息
+                         alert("退出成功！");
+                     },
+                     error: function(e) {
+                         alert("取消關聯失敗！請到 https://plus.google.com/apps 手动解除！");
+                         window.open("https://plus.google.com/apps");
+                     }
                  });
              }
 		 </script>
