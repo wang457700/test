@@ -94,6 +94,29 @@ return array(
             'ok'      => '',
             'extend'  => '',
         ),
+    5 =>
+        array(
+            'name'    => 'facebook',
+            'title'   => 'facebook',
+            'type'    => 'array',
+            'content' =>
+                array(
+                    'app_id'     => '',
+                    'app_secret' => '',
+                    'scope'      => 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email',
+                ),
+            'value'   =>
+                array(
+                    'app_id'     => '974658843640-ban0u40f04qahk5lkl9kl1sj06cfmvi4.apps.googleusercontent.com',
+                    'app_secret' => 'M0qG1HkI5p89uMn24DNOCkc_',
+                    'scope'      => 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email',
+                ),
+            'rule'    => 'required',
+            'msg'     => '',
+            'tip'     => '',
+            'ok'      => '',
+            'extend'  => '',
+        ),
     3 =>
         array(
             'name'    => 'rewrite',

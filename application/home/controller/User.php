@@ -18,7 +18,7 @@ use app\home\common\common;
  */
 class User extends Frontend
 {
-	protected $noNeedLogin = ['login', 'register', 'forgetpwd', 'is_forgetpwd_email', 'third'];
+	protected $noNeedLogin = ['login', 'register', 'forgetpwd', 'is_forgetpwd_email', 'third', 'is_email'];
 
 	//允许游客访问
 	protected $noTouristAuthority = ['share_list','user_edit'];
@@ -46,25 +46,25 @@ class User extends Frontend
 	    	$email = input('post.email');
 	    	$user=Db::name('user')->where(array('email'=>$email))->find();
 	    	if(empty($user)){
-				$this->error('账号不存在！');
+				$this->error('帳號不存在！');
 	    	}
 	    	if($user['is_eamil_status'] == 0){
-	    		$this->error('账号还没有激活，请到电邮激活');
+	    		$this->error('帳號還沒有激活，请到电邮激活');
 	    	}
 
 	    	if(md5($password) !== $user['password']){
-	    		$this->error('密码不正确，请重新输入！');
+	    		$this->error('密碼不正確，請重新輸入！');
 	    	}
 
             if($user['status'] == 'hidden'){
-                $this->error('账号已冻结，请联系管理员！');
+                $this->error('帳號已凍結，請聯系管理員！');
             }
 
 	    	Session::set("user_id", $user['id']);
 	    	Session::set("user", $user);
             $total=Db::name('cart_order')->where('user_id',$user['id'])->count();
             Session::set("total", $total);
-	    	$this->success('登录成功！',url('user/center'));
+	    	$this->success('登入成功！',url('user/center'));
 	    	//dump($user);
 		}
 
@@ -103,10 +103,10 @@ class User extends Frontend
               Session::set('user_id',$res);
               $this->success('注册成功！',url('user/user_email_activation'));
           }else{
-              $this->error('注册失败！',url('user/register'));
+              $this->error('注册失敗！',url('user/register'));
           }
       }
-        $this->assign('title','会员注册');
+        $this->assign('title','會員注册');
         return $this->view->fetch();
     }
 
@@ -129,16 +129,16 @@ class User extends Frontend
             $url=self::getShort($message);
             $result = $email
                 ->to($res['email'])
-                ->subject(__("重置您的密码"))
-                ->message('<div style="padding:30px"><div><p>您好，<b>'.$res['username'].'</b> ：</p></div><div style="margin:6px 0 60px 0"><p>请点击下面的链接来重置您的密码。</p><p><a href="'.$url.'" rel="noopener" target="_blank">'.$url.'</a></p><p>如果您的邮箱不支持链接点击，请将以上链接地址拷贝到你的浏览器地址栏中。</p></div><div style="color:#999"><p>发件时间：<span style="border-bottom:1px dashed #ccc;position:relative" t="5" times=" 14:30">'.date('Y-m-d H:i:s',time()).'</span></p><p>此邮件为系统自动发出的，请勿直接回复。</p></div></div>')
+                ->subject(__("重置您的密碼"))
+                ->message('<div style="padding:30px"><div><p>您好，<b>'.$res['username'].'</b> ：</p></div><div style="margin:6px 0 60px 0"><p>請點擊下麵的連結來重置您的密碼。</p><p><a href="'.$url.'" rel="noopener" target="_blank">'.$url.'</a></p><p>如果您的邮箱不支持链接点击，请将以上链接地址拷贝到你的浏览器地址栏中。</p></div><div style="color:#999"><p>发件时间：<span style="border-bottom:1px dashed #ccc;position:relative" t="5" times=" 14:30">'.date('Y-m-d H:i:s',time()).'</span></p><p>此邮件为系统自动发出的，请勿直接回复。</p></div></div>')
                 ->send();
             if($result){
                 $this->success('重置密碼郵件已經發送到<span class="color_ro">'.$res['email'].'，</span>請登入郵箱重置！');
             }else{
-                $this->error('发送失败！');
+                $this->error('發送失敗！');
             }
         }
-        $this->assign('title','找回密码');
+        $this->assign('title','找回密碼');
         return $this->view->fetch();
     }
 
@@ -188,13 +188,13 @@ class User extends Frontend
             $url=self::getShort($message);
             $result = $email
                 ->to($list['email'])
-                ->subject(__("请激活您的邮箱"))
+                ->subject(__("請激活你的帳號"))
                 ->message(''.$url.'')
                 ->send();
             if($result){
-                $this->success('发送成功！');
+                $this->success('發送成功！');
             }else{
-                $this->error('发送失败！');
+                $this->error('發送失敗！');
             }
         }
        $this->assign('list',$list);
@@ -208,13 +208,13 @@ class User extends Frontend
     	$user_id=base64_decode(input('token'));
         $res= Db::name('user')->where(array('id'=>$user_id))->value('is_eamil_status');
         if($res){
-        	 $this->success('账号已经激活，去登陆！',url('user/login'));
+        	 $this->success('帳號已經激活，去登入！',url('user/login'));
         }
  	 	$res= Db::name('user')->where(array('id'=>$user_id))->update(array('is_eamil_status'=>1));
  		if($res){
           $this->success('激活成功！',url('user/login'));
 	  	}else{
-          $this->error('激活失败！');
+          $this->error('激活失敗！');
  		}
     }
 
@@ -290,7 +290,7 @@ class User extends Frontend
         $this->assign('y', $y);
         $this->assign('m', $m);
         $this->assign('d', $d);
-        $this->assign('title', '修改资料');
+        $this->assign('title', '修改資料');
         return $this->view->fetch();
     }
 
@@ -331,7 +331,7 @@ class User extends Frontend
                 ->order('addtime desc')->select();
         }
 
-        $level = array('1'=>'普通会员','2'=>'白金会员','3'=>'金牌会员','4'=>'商业会员');
+        $level = array('1'=>'普通會員','2'=>'白金會員','3'=>'金牌會員','4'=>'商业會員');
         $level_text  =$level[$user ['level']];
         $sum_contribution_price = array_sum(Db::name('order')->alias('a')
             ->where('user_id',$user_id)
@@ -391,7 +391,6 @@ class User extends Frontend
     }
 
 
-
 /******************************       user_contribution_list  用户捐款记录   ************************************/
 
     public function user_contribution_list(){
@@ -422,7 +421,6 @@ class User extends Frontend
     }
 
 /******************************       share_list  产品共享        ************************************/
-
     public function share_list(){
 		$user_id = Session::get('user_id');
 		$where['user_id'] = $user_id;
@@ -460,7 +458,7 @@ class User extends Frontend
 
 			$post = input('post.');
 			if(empty($post['customized-buttonpane'])){
-				$this->error('请输入简介！');
+				$this->error('請輸入簡介！');
 			}
 
             $data['cat_id'] = array_filter($post['cid']);
@@ -470,17 +468,17 @@ class User extends Frontend
                 $data['cat_id'] = $data['cat_id'][$cat_count-1];
             }
             if(empty($data['cat_id'])){
-                $this->error('请选择分类');
+                $this->error('請選擇分類');
             }
 
             if(empty($post['pic'])){
-                $this->error('请上传封面图！');
+                $this->error('請上傳封面圖！');
             }
 
 			$imgstr = $post['pic'];
 			$imgdata = substr($imgstr,strpos($imgstr,",") + 1);
 			$decodedData = base64_decode($imgdata);
-			$pic_url = 'uploads/usershare/img_'.time().'.jpg';
+			$pic_url = 'uploads/file_put_contents/img_'.time().'.jpg';
 			file_put_contents($pic_url,$decodedData);
 
 			$data['product_content'] =htmlspecialchars_decode($post['customized-buttonpane']);
@@ -492,9 +490,9 @@ class User extends Frontend
 
 			$info= Db::name('user_share')->insertGetId($data);
 			if($info!==false){
-				$this->success('发布成功',url('user/share_success',array('id'=>$info)));
+				$this->success('發佈成功',url('user/share_success',array('id'=>$info)));
 			}else{
-				$this->error('发布失败');
+				$this->error('發佈失敗');
 			}
 
     	}
@@ -517,7 +515,7 @@ class User extends Frontend
 
             $post = input('post.');
             if(empty($post['customized-buttonpane'])){
-                $this->error('请输入简介！');
+                $this->error('請輸入簡介！');
             }
 
             $data['cat_id'] = array_filter($post['cid']);
@@ -527,7 +525,7 @@ class User extends Frontend
                 $data['cat_id'] = $data['cat_id'][$cat_count-1];
             }
             if(empty($data['cat_id'])){
-                $this->error('请选择分类');
+                $this->error('請選擇分類');
             }
 
             if(!empty($post['pic'])){
@@ -547,9 +545,9 @@ class User extends Frontend
 
             $info= Db::name('user_share')->where(array('id'=>$post['id'],'user_id'=>$user_id))->update($data);
             if($info!==false){
-                $this->success('编辑成功',url('user/share_list'));
+                $this->success('編輯成功',url('user/share_list'));
             }else{
-                $this->error('编辑失败');
+                $this->error('編輯失敗');
             }
         }
 
@@ -582,7 +580,7 @@ class User extends Frontend
  			if($info!==false){
 				$this->success('删除成功'.$info.$user_id.$id);
 			}else{
-				$this->error('删除失败');
+				$this->error('删除失敗');
 			}
     	}else{
 			$this->error('非法操作！');
@@ -661,7 +659,7 @@ class User extends Frontend
             $row['cards'] = explode(',',$row['cards']);
 
         }else{
-        	$row = array('id'=>null,'province'=>null,'city'=>null,'district'=>null,'address'=>null,'name'=>null,'phone'=>null,'cards'=>array('uploads/cards/img_15368995160.jpg','uploads/cards/img_15368995161.jpg'));
+        	$row = array('id'=>null,'province'=>null,'city'=>null,'district'=>null,'address'=>null,'name'=>null,'phone'=>null,'cards'=>array('uploads/cards/card1.jpg','uploads/cards/card2.jpg'));
         }
 
 		$this->assign('address_list',$address_list);
@@ -678,39 +676,17 @@ class User extends Frontend
     	if ($this->request->isPost()){
     		$user_id = Session::get('user_id');
             $data['default'] = 0;
-            $data['card'] =[];
+            $data['cards'] =[];
             $data = input('post.');
             $info = Db::name('user_address')->where(array('user_id'=>$user_id,'default'=>1))->find();
             if(empty($info)){
                 $data['default'] = 1;
             }
 
-            if(empty(count(array_filter($data['card'])))){
-                $this->error('请上传身份证！');
+            if(empty(count(array_filter($data['cards'])))){
+                $this->error('請上傳身份證！');
             }
-
-            if(count(array_filter($data['card'])) == 2 && !empty($data['card'])){
-                foreach ($data['card'] as $key => $item){
-                    if(strpos($item,'cards')){
-                        unset($data['card']);
-                        $data['cards'][] = $item;
-                    }else{
-                        $imgstr = $item;
-                        $imgdata = substr($imgstr,strpos($imgstr,",") + 1);
-                        $decodedData = base64_decode($imgdata);
-                        $pic_url = 'uploads/cards/img_'.time().$key.'.jpg';
-                        file_put_contents($pic_url,$decodedData);
-                        unset($data['card']);
-                        $data['cards'][] = $pic_url;
-                    }
-
-                }
-            }else{
-                $this->error('请上传正反面！');
-            }
-
             $data['cards'] = implode(',',$data['cards']);
-
     		$data['createtime'] = time();
     		$data['user_id'] = $user_id;
     		if($data['default']){
@@ -735,33 +711,10 @@ class User extends Frontend
     		if($data['default'] == 'on'){
 				$data['default'] = 1;
     		}
-
-            if(empty(count(array_filter($data['card'])))){
-                $this->error('请上传身份证！');
-            }
-
-            if(count(array_filter($data['card'])) == 2 && !empty($data['card'])){
-                foreach ($data['card'] as $key => $item){
-
-                    if(strpos($item,'cards')){
-                        unset($data['card']);
-                        $data['cards'][] = $item;
-                    }else{
-                        $imgstr = $item;
-                        $imgdata = substr($imgstr,strpos($imgstr,",") + 1);
-                        $decodedData = base64_decode($imgdata);
-                        $pic_url = 'uploads/cards/img_'.time().$key.'.jpg';
-                        file_put_contents($pic_url,$decodedData);
-                        unset($data['card']);
-                        $data['cards'][] = $pic_url;
-                    }
-                }
-            }else{
-                $this->error('请上传正反面！');
+            if(empty(count(array_filter($data['cards'])))){
+                $this->error('請上傳身份證！');
             }
             $data['cards'] = implode(',',$data['cards']);
-
-
     		if($data['default']){
     			Db::name('user_address')->where(array('user_id'=>$user_id))->update(array('default'=>0));
     		}

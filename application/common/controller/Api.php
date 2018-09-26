@@ -11,6 +11,7 @@ use think\Lang;
 use think\Loader;
 use think\Request;
 use think\Response;
+use think\Session;
 
 /**
  * API控制器基类
@@ -113,8 +114,7 @@ class Api
             //初始化
             $this->auth->init($token);
             //检测是否登录
-            if (!$this->auth->isLogin())
-            {
+            if (!Session::get('user_id')) {
                 $this->error(__('Please login first'), null, 401);
             }
             // 判断是否需要验证权限

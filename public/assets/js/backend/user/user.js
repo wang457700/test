@@ -22,7 +22,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                     [
                         {checkbox: true},
                         {field: 'id', title: __('Id'), sortable: true},
-                        {field: 'username', title: '用戶名稱', operate: 'LIKE'},
+                        {field: 'nickname', title: '用戶名稱', operate: 'LIKE'},
                         {field: 'email', title:'用戶電郵', operate: 'LIKE'},
                         {field: 'mobile', title: '手機號碼', operate: 'LIKE'},
                         {field: 'level', title:'用户类型', visible: true, searchList: {1: __('Male'), 0: __('Female')}, operate:false},

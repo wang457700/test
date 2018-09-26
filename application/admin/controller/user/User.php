@@ -39,15 +39,19 @@ class User extends Backend
             {
                 return $this->selectpage();
             }
+
+
             list($where, $sort, $order, $offset, $limit) = $this->buildparams();
             $total = $this->model
                     ->with('group')
                     ->where($where)
+                    ->where('user_type', 2)
                     ->order($sort, $order)
                     ->count();
             $list = $this->model
                     ->with('group')
                     ->where($where)
+                    ->where('user_type', 2)
                     ->order($sort, $order)
                     ->limit($offset, $limit)
                     ->select();
@@ -55,7 +59,8 @@ class User extends Backend
             $level = array('1'=>'普通会员','2'=>'白金会员','3'=>'金牌会员','4'=>'商业会员');
             foreach ($list as $k => $v)
             {
-                $v['join_source'] = '普通注册';
+                $third = Db::name('third')->where('user_id',$v['id'])->value('platform'); //获取用户注册来源
+                $v['join_source'] = $third?$third:'普通注册';
                 $v['level'] = $level[$v['level']];
                 $v->hidden(['password', 'salt']);
             }

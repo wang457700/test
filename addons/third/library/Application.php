@@ -20,6 +20,7 @@ class Application
         'weibo'  => 'Weibo',
         'wechat' => 'Wechat',
         'google' => 'Google',
+        'facebook' => 'Facebook',
     ];
 
     /**

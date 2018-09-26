@@ -8,8 +8,6 @@
 <!--导航 end-->
     <style>
      .upload_image{display: inline-block}
-
-
     </style>
     <div class="container bgcolor_white">
         <div class="alzx-crumbs alzx-crumbs-f1">
@@ -32,15 +30,15 @@
                 <div class="col-md-10 right-list">
                     <div class="pr_name">收貨地址</div> 
                     <div class="row" style="margin-right: 20px;padding: 0 20px;margin-bottom: 10px;">
-                      <h5 class="color_ro bold">新增收貨地址</h5> 
-                     
-                      <form action="{$row['id']?url('user/address_edit'):url('user/address_add')}" class="form-horizontal col-sm-9" method="post" enctype="multipart/form-data" onsubmit="return addressform()" id="address-form">
+                      <h5 class="color_ro bold">新增收貨地址</h5>
+
+                        <form action="{$row['id']?url('user/address_edit'):url('user/address_add')}" class="form-horizontal col-sm-9" method="post" enctype="multipart/form-data" onsubmit="return addressform()" id="address-form">
 
                         {present name="row['id']"}
                             <input name="id" type="hidden" value="{$row['id']}" />
                         {/present}
                         <div class="form-group">
-                          <label for="inputEmail3" class="col-sm-2 control-label"><span class="color_ro">＊</span>所在地區</label>
+                          <label class="col-sm-2 control-label"><span class="color_ro">＊</span>所在地區</label>
                             <div class="col-sm-3">
                                 <select onchange="get_city(this)" class="form-control select_e" id="province" name="province"  title="请选择所在省份">
                                     <option value="">选择省份</option>
@@ -70,21 +68,21 @@
                         </div>
 
                         <div class="form-group">
-                          <label for="inputEmail3" class="col-sm-2 control-label"><span class="color_ro">*</span>詳細地址</label>
+                          <label class="col-sm-2 control-label"><span class="color_ro">*</span>詳細地址</label>
                           <div class="col-sm-9">
                             <textarea class="form-control textarea_e" rows="3" name="address" required oninvalid="setCustomValidity('请输入詳細地址！')" oninput="setCustomValidity('')">{$row.address}</textarea>
                           </div>
                         </div>
 
                         <div class="form-group">
-                          <label for="inputEmail3" class="col-sm-2 control-label"><span class="color_ro">*</span>收件人姓名</label>
+                          <label class="col-sm-2 control-label"><span class="color_ro">*</span>收件人姓名</label>
                           <div class="col-sm-9">
                             <input type="text" class="form-control input_e" id="name" placeholder="" name="name" value="{$row.name}" required oninvalid="setCustomValidity('请输入收件人姓名！')" oninput="setCustomValidity('')">
                           </div>
                         </div>
 
                         <div class="form-group">
-                          <label for="inputEmail3" class="col-sm-2 control-label"><span class="color_ro">*</span>手機號碼</label>
+                          <label class="col-sm-2 control-label"><span class="color_ro">*</span>手機號碼</label>
                           <div class="col-sm-3">
                             <select class="form-control select_e" name="phone_type">
                               <option value="中國香港+852">中國香港+852</option>
@@ -101,81 +99,19 @@
                         <div class="form-group">
                           <label for="" class="col-sm-2 control-label"><span class="color_ro">*</span>上传身份证</label>
                           <div class="col-sm-10" >
-
                               <div id="preview_z" style="">
-
-                                  <img id="imghead_z"  class="upload_image col-sm-6" src="__PUBLIC__/{$row['cards'][0]}" onclick="$('#previewImg_z').click();">
-                                  <input name="card[]" type="hidden" value="{$row['cards'][0]}" id="pic_z">
-                                  <input type="file" onchange="previewImage(this,'z')" style="display: none;" id="previewImg_z" accept=".gif,.jpg,.jpeg,.png">
-
+                                     <img id="card1"  class="upload_image col-sm-6" src="__PUBLIC__{$row['cards'][0]}" onclick="$('#image').click();$('#imagetype').val('card1')" >
+                                     <input type="hidden" name="cards[]" value="{$row['cards'][0]}" id="card1_input">
                               </div>
                               <div id="preview_f" style="">
-
-                                    <img id="imghead_f"  class="upload_image col-sm-6" src="__PUBLIC__/{$row['cards'][1]}" onclick="$('#previewImg_f').click();">
-                                    <input name="card[]" type="hidden" value="{$row['cards'][1]}" id="pic_f">
-                                    <input type="file" onchange="previewImage(this,'f')" style="display: none;" id="previewImg_f" accept=".gif,.jpg,.jpeg,.png">
-
+                                    <img id="card2"  class="upload_image col-sm-6" src="__PUBLIC__{$row['cards'][1]}" onclick="$('#image').click();$('#imagetype').val('card2')">
+                                    <input type="hidden" name="cards[]" value="{$row['cards'][1]}" id="card2_input">
                               </div>
-                              <script>
-                                  //图片上传预览    IE是用了滤镜。
-                                  function previewImage(file,pic)
-                                  {
-
-                                      var MAXWIDTH  = 90;
-                                      var MAXHEIGHT = 90;
-                                      var div = document.getElementById('preview_' + pic);
-                                      if (file.files && file.files[0])
-                                      {
-                                          //$('#preview_' + pic).html('<img id="imghead_'+ pic + '" onclick=$("#previewImg_'+pic+'").click()>');
-                                          var img = $('#imghead_' + pic);
-                                          img.onload = function(){
-                                              var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
-                                              img.width  =  rect.width*2;
-                                              img.height =  rect.height*2;
-                                          }
-                                          var reader = new FileReader();
-                                          reader.onload = function(evt){img.attr('src',evt.target.result);$('#pic_' + pic).val(evt.target.result)}
-                                          reader.readAsDataURL(file.files[0]);
-                                      }
-                                      else //兼容IE
-                                      {
-                                          var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
-                                          file.select();
-                                          var src = document.selection.createRange().text;
-                                          div.innerHTML = '<img id=imghead src="__TMPL_PUBLIC__/img/card_ie.jpg"> ';
-                                          var img = document.getElementById('imghead');
-                                          img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
-                                          var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
-                                          status =('rect:'+rect.top+','+rect.left+','+rect.width+','+rect.height);
-                                          div.innerHTML = "<div id=divhead style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;"+sFilter+src+"\"'></div>";
-                                      }
-                                  }
-
-                                  function clacImgZoomParam( maxWidth, maxHeight, width, height ){
-                                      var param = {top:0, left:0, width:width, height:height};
-                                      if( width>maxWidth || height>maxHeight ){
-                                          rateWidth = width / maxWidth;
-                                          rateHeight = height / maxHeight;
-
-                                          if( rateWidth > rateHeight ){
-                                              param.width =  maxWidth;
-                                              param.height = Math.round(height / rateWidth);
-                                          }else{
-                                              param.width = Math.round(width / rateHeight);
-                                              param.height = maxHeight;
-                                          }
-                                      }
-                                      param.left = Math.round((maxWidth - param.width) / 2);
-                                      param.top = Math.round((maxHeight - param.height) / 2);
-                                      return param;
-                                  }
-                              </script>
-
                            </div>
                         </div>
 
                         <div class="form-group">
-                          <label for="inputEmail3" class="col-sm-2 control-label"></label>
+                          <label class="col-sm-2 control-label"></label>
                           <div class="col-sm-8">
                             <input type="hidden" style="width: 20%;" name="default" value="0">
                             <label style="width: 40%;"><input type="checkbox" style="width: 20%;" name="default" {$row['default']?'checked':''}>設置為默認收貨地址</label>
@@ -228,8 +164,11 @@
             					</div>
  
                 </div>
-            </div> 
-
+            </div>
+            <form action="{:url('api/user/upload')}" class="form-horizontal col-sm-9" method="post" enctype="multipart/form-data" onsubmit="return upload()" id="upload" style="display: none">
+                <input type="text" id="imagetype" value=""/>
+                <input type="file" name="image" id="image" onchange="$('#upload').submit();" accept=".gif,.jpg,.jpeg,.png"/>
+            </form>
         </div>
     </div>
 {include file="common/footer"/}
@@ -238,21 +177,40 @@
   <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
 {include file="common/script" /}
     <script type="text/javascript">
-      function addressform(){
-        // jquery 表单提交
-        $("#address-form").ajaxSubmit(function(data) {
-          console.log(data);
-          if(data.code == 0){
-            $.message({message:data.msg,type:'warning',time:'3000'});
-          }else{ 
-            $.message(data.msg);
-            setTimeout(function () {
-               window.location = data.url
-            },1000);
+        function upload(){
+            var imagetype = $('#imagetype').val();
+            var url = '__PUBLIC__';
+
+            // jquery 表单提交
+            $("#upload").ajaxSubmit(function(data) {
+                console.log(data);
+                console.log(imagetype);
+                if(data.code == 0){
+                    $.message({message:data.msg,type:'warning',time:'3000'});
+                }else{
+                    $.message(data.msg);
+                    $('#' + imagetype).attr('src',url + data.data);
+                    $('#' + imagetype + '_input').val(data.data);
+                }
+            });
+            return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
+        }
+
+        function addressform(){
+            // jquery 表单提交
+            $("#address-form").ajaxSubmit(function(data) {
+              console.log(data);
+              if(data.code == 0){
+                $.message({message:data.msg,type:'warning',time:'3000'});
+              }else{
+                $.message(data.msg);
+                setTimeout(function () {
+                   window.location = data.url
+                },1000);
+              }
+            });
+            return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
           }
-        });
-        return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
-      }
 
       /**
        * 获取省份
