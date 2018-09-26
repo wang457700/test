@@ -54,11 +54,11 @@
 					<div class="mui-input-row mui-checkbox mui-left">
 						<label>設置為默認收貨地址</label>
 						<input name="default" value="0" type="hidden">
-						<input name="default" value="1" type="checkbox" {$row['default']?'checked':''}>
+						<input name="default" value="1" type="checkbox" {$row['default']?'checked':''}{$row['id']?'':'checked'}>
 					</div>
 
-					<input name="card[]" value="{$row['cards'][0]}" type="hidden">
-					<input name="card[]" value="{$row['cards'][1]}" type="hidden">
+					<input name="cards[]" value="{$row['cards'][0]}" type="hidden">
+					<input name="cards[]" value="{$row['cards'][1]}" type="hidden">
 					<div class="mui-button-row">
 						<button class="mui-btn mui-btn-success btn-success-edit">
 							保  存

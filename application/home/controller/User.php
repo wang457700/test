@@ -81,26 +81,32 @@ class User extends Frontend
 
 	/*
 		注册
-
  	*/
     public function register(){
       if ($this->request->isPost()) {
          $data= input('post.');
+          $res=Db::name('user')->where('email',$data['email'])->find();
+          if(!empty($res['email'])){
+              $this->error('郵箱已被注册！');
+          };
           if(empty($data['username'])){
+              $this->error('請填寫用戶名',url('user/register'));
+          };
+          if(empty($data['email'])){
               $this->error('請填寫用戶名',url('user/register'));
           };
           if($data['password2'] != $data['password']){
               $this->error('二次輸入的密碼不一致',url('user/register'),2);
           };
           $data['password']= md5(input('password'));
-          $data['joinip']= '';
+          $data['nickname']= $data['username'];
+          $data['joinip']= request()->ip();
           $data['jointime']= time();
           $data['user_type']= 2;
-
           unset($data['password2']);
           $res=Db::name('user')->insertGetId($data);
           if($res){
-              Session::set('user_id',$res);
+              //Session::set('user_id',$res);
               $this->success('注册成功！',url('user/user_email_activation'));
           }else{
               $this->error('注册失敗！',url('user/register'));
@@ -124,7 +130,7 @@ class User extends Frontend
             };
 
             $email = new Email;
-            $encodeurl=url('User/is_forgetpwd_email',array('token'=>urlencode(base64_encode($res['id']))));
+            $encodeurl=url('User/is_forgetpwd_email',array('token'=>base64_encode($res['salt'])));
             $message= 'http://'.$_SERVER['SERVER_NAME'].urlencode($encodeurl);
             $url=self::getShort($message);
             $result = $email
@@ -145,8 +151,8 @@ class User extends Frontend
     function  is_forgetpwd_email(){
 
         if ($this->request->isPost()){
-            $user_id=base64_decode(input('token'));
-            $user=Db::name('user')->where('id',$user_id)->find();
+            $user_salt=base64_decode(input('token'));
+            $user=Db::name('user')->where('salt',$user_salt)->find();
             $post= input('post.');
             if($post['password2'] != $post['password']){
                 $this->error('二次輸入的密碼不一致');
@@ -156,7 +162,7 @@ class User extends Frontend
                 $this->error('新密码与旧密码相同！');
             };
             $data['password']=md5($post['password']);
-            $res=Db::name('user')->where('id',$user_id)->update($data);
+            $res=Db::name('user')->where('salt',$user_salt)->update($data);
             if($res){
                 Session::set('user_id',$res);
                 $this->success('修改成功！',url('user/login'));
@@ -165,8 +171,8 @@ class User extends Frontend
             }
         }
 
-        $user_id=base64_decode(input('token'));
-        $user=Db::name('user')->where('id',$user_id)->find();
+        $user_salt=base64_decode(input('token'));
+        $user=Db::name('user')->where('salt',$user_salt)->find();
         $this->assign('title','填写重置密码');
         $this->assign('user',$user);
         $this->assign('token',input('token'));
@@ -216,6 +222,29 @@ class User extends Frontend
 	  	}else{
           $this->error('激活失敗！');
  		}
+    }
+
+
+    /***
+     * 绑定账号
+     */
+    public function user_bindsns(){
+
+
+        if ($this->request->isPost()){
+
+            $res = 1;
+            if($res){
+                $this->success('激活成功！',url('user/login'));
+            }else{
+                $this->error('激活失敗！');
+            }
+
+        }
+
+
+        $this->assign('title', '綁定帳號');
+        return $this->view->fetch();
     }
 
     /***

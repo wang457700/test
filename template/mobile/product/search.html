@@ -80,8 +80,8 @@
 						</div>
 						<div class="search-list">
 							{foreach name="keyword_list" item="vo"}
-							{if condition="$vo['keyword']"}
-							<a href="{:url('product/search',array('keyword'=>$vo['keyword']))}">{$vo.keyword}</a>
+							{if condition="!empty($vo['keyword'])"}
+								<a href="{:url('product/search',array('keyword'=>$vo['keyword']))}">{$vo.keyword}</a>
 							{/if}
 							{/foreach}
 						</div>

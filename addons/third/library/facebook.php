@@ -72,7 +72,7 @@ class Facebook
                 $userinfo['headimgurl'] = '';
                 $userinfo['avatar'] = isset($userinfo['headimgurl']) ? $userinfo['headimgurl'] : '';
                 $userinfo['nickname'] = $params['name'];
-                $userinfo['email'] = $params['email'] ? $params['email'] : '';
+                $userinfo['email'] = $params['email'] ? '' : '';
                 $data = [
                     'access_token'  => '',
                     'refresh_token' => '',
