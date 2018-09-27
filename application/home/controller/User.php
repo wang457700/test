@@ -356,11 +356,7 @@ class User extends Frontend
 
     public function center(){
 
-
         $user_id = Session::get('user_id');
-
-
-        dump(sp_user_vipupgrade($user_id));
         $style = input('style','center');
         $status = input('status','all');
         $where = [];
