@@ -62,12 +62,17 @@ class Payment extends  Frontend
                 if($res!==false){
                     $res= Db::name("user")->where(array('id'=>Session::get('user_id')))->setInc('score',$int['integral']);
                 }
+                /*会员升级*/
+
+                sp_user_vipupgrade(Session::get('user_id'));
 
                 $this->success('支付成功！'.$all_price,url('payment/payment_done',array('order_sn'=>base64_encode($order_sn))));
             }else{
                 $this->error('支付失败！');
             }
         }
+
+
         $order_sn=base64_decode(input('order_sn'));
         $order_info= Db::name('order')
         ->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))

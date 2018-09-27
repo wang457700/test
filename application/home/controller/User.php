@@ -157,8 +157,6 @@ class User extends Frontend
         }
     }
 
-
-
     /**
      * 重置密码
      */
@@ -233,27 +231,30 @@ class User extends Frontend
             $email = input('post.email');
             $third_user_id = Session::get('third_user_id');
             $user=Db::name('user')->where(array('email'=>$email))->find();
-            if(empty($user)){
-                $this->error('帳號不存在！');
-            }
-            if($user['is_eamil_status'] == 0){
-                $this->error('帳號還沒有激活，请到电邮激活');
-            }
-
-            if(md5($password) !== $user['password']){
-                $this->error('密碼不正確，請重新輸入！');
-            }
 
             if($user['status'] == 'hidden'){
                 $this->error('帳號已凍結，請聯系管理員！');
             }
-            $res = Db::name('third')->where(array('user_id'=>$third_user_id))->update(array('uid'=>$user['id']));
+            if($user){
+                if(md5($password) !== $user['password']){
+                    $this->error('密碼不正確，請重新輸入！');
+                }
+                $res = Db::name('third')->where(array('user_id'=>$third_user_id))->update(array('uid'=>$user['id']));
+                $url = url('user/center');
+            }else{
+                $user['id'] = $third_user_id;
+                $res = Db::name('user')->where(array('id'=>$third_user_id))->update(array('password'=>md5($password),'email'=>$email,'is_eamil_status'=>0));
+                $res = Db::name('third')->where(array('user_id'=>$third_user_id))->update(array('uid'=>$third_user_id));
+                $url = url('user/user_email_activation');
+            }
+
             if($res){
                 Session::set("user_id", $user['id']);
-                $this->success('绑定成功！',url('user/center'));
+                $this->success('绑定成功！',$url);
             }else{
                 $this->error('绑定失敗！');
             }
+
         }
 
         $third_user_id = Session::get('third_user_id');
@@ -354,7 +355,12 @@ class User extends Frontend
 
 
     public function center(){
+
+
         $user_id = Session::get('user_id');
+
+
+        dump(sp_user_vipupgrade($user_id));
         $style = input('style','center');
         $status = input('status','all');
         $where = [];

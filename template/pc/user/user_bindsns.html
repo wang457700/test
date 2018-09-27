@@ -7,27 +7,6 @@
     vertical-align:middle;
     opacity:0
   }
-  .input_style {
-    background:url(__TMPL_PUBLIC__/img/green.png) no-repeat;
-    width:20px;
-    height:20px;
-    display:inline-block;
-    float: left;
-    margin-top: 10px;
-    margin-right: 10px;
-  }
-  .radio_bg {
-    background-position:-118px 0
-  }
-  .checkbox_bg {
-    background-position:0 0
-  }
-  .radio_bg_check {
-    background-position:-166px 0
-  }
-  .checkbox_bg_check {
-    background-position:-48px 0
-  }
 
 </style>
 
@@ -85,12 +64,7 @@
 
           });
           return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
-      }
-
-      ;(function($){$.extend({inputStyle:function(){function check(el,cl){$(el).each(function(){$(this).parent('i').removeClass(cl);var checked=$(this).prop('checked');if(checked){$(this).parent('i').addClass(cl);}})}
-              $('input[type="radio"]').on('click',function(){check('input[type="radio"]','radio_bg_check');})
-              $('input[type="checkbox"]').on('click',function(){check('input[type="checkbox"]','checkbox_bg_check');})}})})(jQuery)
-      $(function(){$.inputStyle();})
+      };
   </script>
   {include file="common/script" /}
 

@@ -464,14 +464,11 @@ function sp_address_info($userid = '0',$addressid = '0',$field = 'id'){
     return $address;
 }
 
-
-
 /**
  * 查询用户最近购买记录
  * $userid 用户id
  * $num 数量
 */
-
 function sp_user_buygoods($userid = '0',$num = 5){
 
     $goods =  Db::name('order')
@@ -482,6 +479,29 @@ function sp_user_buygoods($userid = '0',$num = 5){
         ->limit(1,$num)
         ->select();
     return $goods;
+}
+
+
+/**
+ * 用户会员升级
+ * $userid 用户id
+ */
+function sp_user_vipupgrade($userid){
+    $integral =  Db::name('integral_log')
+        ->where(array('user_id'=>$userid,'type'=>'add'))
+        ->sum('integral');
+    $level = 'level1';
+    $levels = array('level0'=>0,'level1'=>1,'level2'=>2,'level3'=>3,'level4'=>4,);
+    $user_upgrade = config('site')['user_upgrade'];
+    foreach ($user_upgrade as $key =>$item){
+        if($integral >= $item){
+            $level = $key;
+        }
+    }
+    $res = Db::name('user')
+        ->where(array('id'=>$userid))
+        ->update(array('level'=>$levels[$level]));
+    return true;
 }
 
 /**
