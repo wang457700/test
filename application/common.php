@@ -391,6 +391,7 @@ function sp_user_info()
 {
     $user_id = Session('user_id');
     $user = Db::name('user')->where('id',$user_id)->find();
+    $user['platform'] = Session('platform');
     return $user;
 }
 /*  创建游客信息  */

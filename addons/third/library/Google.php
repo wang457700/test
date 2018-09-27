@@ -65,13 +65,13 @@ class Google
      */
     public function getUserInfo($params = [])
     {
-        $params = $params['code'] ? $params['code'] : $_GET;
+        $params = $params['code'] ? $params['code'] :input();
         if ($params)
         {
                 $userinfo['headimgurl'] = $params['Paa'];
                 $userinfo['avatar'] = isset($userinfo['headimgurl']) ? $userinfo['headimgurl'] : '';
                 $userinfo['nickname'] = $params['ig'];
-                $userinfo['email'] = $params['U3'];
+                $userinfo['email'] = '';
                 $data = [
                     'access_token'  => '',
                     'refresh_token' => '',

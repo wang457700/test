@@ -18,7 +18,7 @@ use app\home\common\common;
  */
 class User extends Frontend
 {
-	protected $noNeedLogin = ['login', 'register', 'forgetpwd', 'is_forgetpwd_email', 'third', 'is_email'];
+	protected $noNeedLogin = ['login', 'register', 'forgetpwd', 'is_forgetpwd_email', 'third', 'is_email', 'user_bindsns'];
 
 	//允许游客访问
 	protected $noTouristAuthority = ['share_list','user_edit'];
@@ -62,8 +62,6 @@ class User extends Frontend
 
 	    	Session::set("user_id", $user['id']);
 	    	Session::set("user", $user);
-            $total=Db::name('cart_order')->where('user_id',$user['id'])->count();
-            Session::set("total", $total);
 	    	$this->success('登入成功！',url('user/center'));
 	    	//dump($user);
 		}
@@ -148,6 +146,7 @@ class User extends Frontend
         return $this->view->fetch();
     }
 
+
     function  is_forgetpwd_email(){
 
         if ($this->request->isPost()){
@@ -181,7 +180,7 @@ class User extends Frontend
 
 
 	/**
-     * 邮箱激活
+     * 邮箱发送激活链接
      */
     public function user_email_activation(){
         $user_id= Session::get('user_id');
@@ -229,21 +228,46 @@ class User extends Frontend
      * 绑定账号
      */
     public function user_bindsns(){
-
-
         if ($this->request->isPost()){
-
-            $res = 1;
-            if($res){
-                $this->success('激活成功！',url('user/login'));
-            }else{
-                $this->error('激活失敗！');
+            $password = input('post.password');
+            $email = input('post.email');
+            $third_user_id = Session::get('third_user_id');
+            $user=Db::name('user')->where(array('email'=>$email))->find();
+            if(empty($user)){
+                $this->error('帳號不存在！');
+            }
+            if($user['is_eamil_status'] == 0){
+                $this->error('帳號還沒有激活，请到电邮激活');
             }
 
+            if(md5($password) !== $user['password']){
+                $this->error('密碼不正確，請重新輸入！');
+            }
+
+            if($user['status'] == 'hidden'){
+                $this->error('帳號已凍結，請聯系管理員！');
+            }
+            $res = Db::name('third')->where(array('user_id'=>$third_user_id))->update(array('uid'=>$user['id']));
+            if($res){
+                Session::set("user_id", $user['id']);
+                $this->success('绑定成功！',url('user/center'));
+            }else{
+                $this->error('绑定失敗！');
+            }
         }
 
+        $third_user_id = Session::get('third_user_id');
+        $user = Db::name('user')->where(array('id'=>$third_user_id))->find();
+        $token = input('token');
+        //直接登入
+        if($token == $user['salt']){
+            Session::set("user_id", $user['id']);
+            Db::name('third')->where(array('user_id'=>$third_user_id))->update(array('uid'=>$user['id']));
+            $this->success('登入成功！',url('user/center'));
+        }
 
         $this->assign('title', '綁定帳號');
+        $this->assign('token', $user['salt']);
         return $this->view->fetch();
     }
 

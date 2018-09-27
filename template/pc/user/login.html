@@ -32,11 +32,7 @@
 				</form> 
 			</div> 
 		</div>
-
-		 <button type="button" onclick="disconnectUser();">Sign out</button>
-		 <button type="button" onclick="fbLogoutUser()">fbLogoutUser out</button>
-
-		 <script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
+	 	<script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
 		<script src="__TMPL_PUBLIC__/js/scripts.js"></script>
 		 {include file="common/script" /}
 		<script type="text/javascript">
@@ -82,10 +78,9 @@
                                      if(data.code == 0){
                                          $.message({message:data.msg,type:'warning',time:'3000'});
                                      }else{
-                                         $.message(data.msg);
-                                         setTimeout(function () {
-                                             window.location = "{:url('user/center')}";
-                                         },1500);
+                                        // $.message(data.msg);
+										 window.location = data.data;
+
                                      }
                                  }
                              });
@@ -167,10 +162,8 @@
                                  if(data.code == 0){
                                      $.message({message:data.msg,type:'warning',time:'3000'});
                                  }else{
-                                     $.message(data.msg);
-                                     setTimeout(function () {
-                                        // window.location = "{:url('user/center')}";
-                                     },1500);
+                                     // $.message(data.msg);
+                                     window.location = data.data;
                                  }
                              }
                          });
@@ -180,7 +173,6 @@
                      });
              }
              startApp();
-
              // 取消与应用关联的代码
              function disconnectUser(){
                  var revokeUrl = 'https://accounts.google.com/o/oauth2/revoke?token=' + gapi.auth.getToken().access_token;

@@ -61,24 +61,104 @@
                   <h4>商務合作</h4>
                   <ul class="list-unstyled">
                     <li>
+                        <form action="{:url('index/message')}" method="post" enctype="multipart/form-data" onsubmit="return messageform()" id="message-form">
                         <div class="form-group">
-                          <label for="exampleInputEmail1">聯絡電話：</label>
-                          <input type="text" class="form-control" id="exampleInputEmail1" placeholder="">
+                          <label>聯絡電話：</label>
+                          <input type="text" class="form-control"  placeholder="" name="phone" required oninvalid="setCustomValidity('請輸入聯絡電話！')" oninput="setCustomValidity('')">
                         </div>
                         <div class="form-group">
-                          <label for="exampleInputPassword1">聯絡人：</label>
-                          <input type="text" class="form-control" id="exampleInputPassword1" placeholder="">
+                          <label>聯絡人：</label>
+                          <input type="text" class="form-control"placeholder="" name="name" required oninvalid="setCustomValidity('請輸入聯絡人！')" oninput="setCustomValidity('')">
                         </div>
                         <div class="form-group">
-                          <label for="exampleInputPassword1">諮詢內容：</label>
-                          <textarea class="form-control" rows="3"></textarea>
+                          <label>諮詢內容：</label>
+                          <textarea class="form-control" rows="3" cols="30" placeholder="" name="content" required oninvalid="setCustomValidity('請輸入咨詢內容！')" oninput="setCustomValidity('')"></textarea>
+                            <button class="btn btn-default">
+                                发  送
+                            </button>
                         </div>
+                        </form>
                       </li>
-                    
                   </ul>
                 </div>
           </div> 
         </div>
- 
 	</div>
 
+
+    <script src="https://apis.google.com/js/api:client.js"></script>
+    <script>
+
+        $('#logout').click(function(){
+            {if condition="$user['platform'] eq 'google'"}
+                disconnectUser();
+            {/if}
+            {if condition="$user['platform'] eq 'facebook'"}
+                fbLogoutUser();
+            {/if}
+        });
+        // 谷歌登录
+        var googleUser = {};
+        var startApp = function() {
+            gapi.load('auth2', function(){
+                // Retrieve the singleton for the GoogleAuth library and set up the client.
+                auth2 = gapi.auth2.init({
+                    client_id: '974658843640-ban0u40f04qahk5lkl9kl1sj06cfmvi4.apps.googleusercontent.com', //客户端ID
+                    cookiepolicy: 'single_host_origin',
+                    scope: 'profile' //可以请求除了默认的'profile' and 'email'之外的数据
+                });
+               // attachSignin(document.getElementById('customBtn'));
+            });
+        };
+
+        startApp();
+        // 取消与应用关联的代码
+        function disconnectUser(){
+            var revokeUrl = 'https://accounts.google.com/o/oauth2/revoke?token=' + gapi.auth.getToken().access_token;
+            $.ajax({
+                type: 'GET',
+                url: revokeUrl,
+                async: false,
+                contentType: "application/json",
+                dataType: 'json',
+                success: function(nullResponse) {
+                    // 成功以后隐藏登录信息
+                    //alert("退出成功！");
+                },
+                error: function(e) {
+                    //alert("取消關聯失敗！請到 https://plus.google.com/apps 手动解除！");
+                    //window.open("https://plus.google.com/apps");
+                }
+            });
+        }
+
+        function fbLogoutUser() {
+            FB.login(function(response){
+                if (response && response.status === 'connected') {
+                    FB.logout(function(response) {
+                        document.location.reload();
+                    });
+                }
+            });
+        }
+
+        window.fbAsyncInit = function(){
+            FB.init({
+                appId      : '1026828720830894',
+                cookie     : true,
+                xfbml      : true,
+                version    : 'v3.1'
+            });
+
+            FB.AppEvents.logPageView();
+        };
+
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+    </script>

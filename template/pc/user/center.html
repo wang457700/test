@@ -147,7 +147,7 @@
                                   <a href="{:url('payment/go_pay',array('order_sn'=>base64_encode($vo['order_sn'])))}">
                                       <button type="button" class="btn btn-warning">去支付</button>
                                   </a>
-                                  <a href="{:url('user/order_cancel',array('order_sn'=>base64_encode($vo['order_sn'])))}" onclick="">
+                                  <a href="{:url('user/order_cancel',array('order_sn'=>base64_encode($vo['order_sn'])))}" class="js-ajax-operation" onclick="return false;">
                                       <button type="button" class="btn btn-success">取消訂單</button>
                                   </a>
                                   {/if}

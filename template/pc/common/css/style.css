@@ -180,6 +180,7 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 .product ul{padding: 0;}
 .product li{padding: 20px;border-top: 1px solid #eee;}
 .product li.col-md-2{margin: 0 15px;}
+.product li .product_price{font-size: 20px;}
 .product li img{width:190px;height:190px;}
 .product li .n2{border-right:1px solid #eee;border-bottom: 1px solid #eee;}
 .product li i{font-style: inherit;font-size: 14px;}
@@ -226,7 +227,7 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 
 .investment_f {margin:20px auto;border-top: 15px solid #efefef;}
 .investment_f .investment_title {height:44px;width:960px;overflow:hidden}
-.investment_title div {width:131px;height:44px;background:url(../img/invest_detail_22.png);float:left;margin-left: 0;display:inline;font-size:14px;font-weight:700;text-align:center;line-height:46px;color:#555;cursor:pointer;border-right: 1px solid #eee;border-top: 1px solid #eee;}
+.investment_title div {width:131px;height:44px;float:left;margin-left: 0;display:inline;font-size:14px;font-weight:700;text-align:center;line-height:46px;color:#555;cursor:pointer;border-right: 1px solid #eee;border-top: 1px solid #eee;}
 .investment_title a,.investment_title a:link,.investment_title a:visited,.investment_title a:hover {color:#555;width:131px;height:44px;display:inline-block}
 .investment_title div.on a,.investment_title div.on a:link,.investment_title div.on a:visited,.investment_title div.on a:hover {color:#f70}
 .investment_title div.on {background: url(../img/invest_detail_18.png) no-repeat;color: #ffa800;}
@@ -247,9 +248,9 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 .imgdet {position:relative;height: 100%;width: 500px;background:#fff;}
 .imgdet .imglist {position:relative;display:inline-block;*display:inline;*zoom:1;width:84px;height:100%;overflow:hidden;min-height:  400px;}
 .imgdet .imglist ul {position:absolute;top:0;left:0;width:100%;font-size:0;padding: 0;}
-.imgdet .imglist ul li {display:inline-block;*display:inline;*zoom:1;width:80px;height:80px;border:2px solid #fff;margin-bottom:10px}
+.imgdet .imglist ul li {display:inline-block;*display:inline;*zoom:1;width:70px;height:70px;border:1px solid #e5e5e5;margin-bottom:10px}
 .imgdet .imglist ul li:last-of-type {margin-bottom:0}
-.imgdet .imglist ul .active {border: 2px solid #ffa800;}
+.imgdet .imglist ul .active {border: 1px solid #ffa800;}
 .imgdet .imglist ul li img {width:100%;height:100%}
 .imgdet .imgpart {vertical-align:top;position:relative;display:inline-block;*display:inline;*zoom:1;width: 400px;height: 400px;border: 1px solid #e5e5e5;}
 .imgdet .imgpart .pic {position:relative;width:100%;height:100%}
@@ -398,11 +399,15 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 	.nav {width:100%}
 	.f3 .n2 img {width: 100%;}
 	.f3 .n2 img.first{width:46%}
-	.product li img{width:100%}
-	.imgdet .imgpart{width:300px;height:300px;}
-	.imgdet .imglist ul li {width: 60px;height: 60px;}
+	.product li img{width:100%;height: 116px;}
+	.product li .product_price {font-size: 15px;padding-top: 5px;display: inline-block;}
+
+	.imgdet{width: 410px;}
+	.imgdet .imgpart{width:300px;height:300px;min-height: 350px;}
+	.imgdet .imglist ul li {width:60px;height:60px;}
 	.imgdet .imgpart .bigpic{width: 350px;height: 350px;right: -350px;}
 	.imgdet .imgpart .bigpic>img{width: 600px;height: 600px;}
+
 	.shopping_cart .cart-item-list .t2 p {padding:30px 0;}
 	.shopping_cart .cart-item-list .number input{padding: 5px 5px;}
 	/*.shopping_cart .cart-item-list .t2 img {width: 50%;}*/

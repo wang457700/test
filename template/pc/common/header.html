@@ -2,12 +2,12 @@
    <div class="container" style="padding: 5px 0;"> 
         <div class="h_left">
         <?php
+            $user = sp_user_info();
             $user_id = Session('user_id');
-            $user = model('user')->where('id',$user_id)->find();
         ?>
         {if condition="$user_id neq ''"}
             <a href="{:url('user/center')}" class="color_gr">{$user.nickname}</a>
-            <a href="{:url('user/logout')}">退出</a>
+            <a href="{:url('user/logout')}" id="logout" class="js-ajax-operation" onclick="return false;">退出</a>
         {else/}
              <a href="{:url('user/login')}">登录</a>
         {/if}
@@ -18,6 +18,8 @@
            <a href="{:url('share/index')}">共亯平臺</a>
         </div>
         <div class="clear"></div>
+
+
     </div>
     <div style="background: #fff;padding: 20px 0;"> 
       <div class="container p_all_0" > 

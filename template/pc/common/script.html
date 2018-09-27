@@ -1,27 +1,48 @@
 <script src='__PUBLIC__/assets/js/message/messageIE.js'></script>
 <script src='__PUBLIC__/assets/js/message/message.js'></script>
-<script src='__PUBLIC__/assets/js/message/messageIE.js'></script>
+<script src='__PUBLIC__/assets/js/message/messageIE.js'></script> 
 <script>
-/* 加入购物车 */
-$(".adds,#adds").click(function(){
-        var product_id = $(this).data('productid');
-        var name = $(this).data('name');
-        $.ajax({
-                type: "POST",
-                url: "{:url('cart/checkin_cart')}",
-                 dataType: 'json',
-                data:{product_id:product_id},
-              success: function(data) {
-                if (data.code) {
-                    $.message(data.msg);
-                    $('.shopping span').text(Number(data.total));
-                }else{
-                    $.message({message:data.msg,type:'warning',time:'3000'});
-                }
+    /* 加入购物车 */
+    $(".adds,#adds").click(function(){
+            var product_id = $(this).data('productid');
+            var name = $(this).data('name');
+            var img = $('#img_' + product_id);
+            if(img){
+                var flyElm = img.clone().css('opacity','0.7');
+                flyElm.css({
+                    'z-index': 9000,
+                    'display': 'block',
+                    'position': 'absolute',
+                    'b': 'absolute',
+                    'top': img.offset().top +'px',
+                    'left': img.offset().left +'px',
+                    'width':img.width() +'px',
+                    'height':img.height() +'px'
+                });
+                $('body').append(flyElm);
+                flyElm.animate({
+                    top:$('.shopping').offset().top,
+                    left:$('.shopping').offset().left,
+                    width:0,
+                    height:0,
+                    opacity:0,
+                },'slow');
             }
-        });
-});
-
+        $.ajax({
+                    type: "POST",
+                    url: "{:url('cart/checkin_cart')}",
+                    dataType: 'json',
+                    data:{product_id:product_id},
+                  success: function(data) {
+                    if (data.code) {
+                        $.message(data.msg);
+                        $('.shopping span').text(Number(data.total));
+                    }else{
+                        $.message({message:data.msg,type:'warning',time:'3000'});
+                    }
+                }
+            });
+    });
     function getBasePath(){
         var obj=window.location;
         var contextPath=obj.pathname.split("/")[1];
@@ -42,7 +63,11 @@ $(".adds,#adds").click(function(){
                 }else{
                     $.message(data.msg);
                     setTimeout(function () {
-                        window.location.reload()
+                        if(data.url){
+                            window.location = data.url;
+                        }else {
+                            window.location.reload()
+                        }
                     },500);
                 }
             }
@@ -71,6 +96,4 @@ $(".adds,#adds").click(function(){
         }
 
     });
-
-
 </script>

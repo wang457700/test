@@ -5,8 +5,7 @@
 {include file="common/nav"/}
   <style type="text/css">
       .product li {border-top:0;}
-
-  </style>>
+  </style>
   <body style="background: url(__TMPL_PUBLIC__/img/index_bg.jpg) repeat-y;"> 
     <div class="container">
   		<div class="alzx-crumbs alzx-crumbs-f1"> 
@@ -47,7 +46,6 @@
 
                       </div>
                     </div>
-                    <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
                     <script src="__TMPL_PUBLIC__/js/imgdet.js"></script>
             </div>
             <div class="col-md-6">
@@ -123,7 +121,7 @@
                                       {if condition="$vo['discount_type'] eq 2"}<p class="color_ro">特惠全民享</p>{/if}
                                       {if condition="$vo['discount_type'] eq 3"}<p class="color_ro">优惠全民享</p>{/if}
                                     <div>
-                                        <span style="font-size: 20px;"><i>￥</i>{:product_price($vo['product_id'])}</span>
+                                        <span class="product_price"><i>￥</i>{:product_price($vo['product_id'])}</span>
                                         <a class="adds" data-productid="{$vo.product_id}">+</a>
                                     </div>
                                 </div>
@@ -324,7 +322,6 @@
 
     </script>
     {include file="common/footer"/}
-
 
   </body>
 

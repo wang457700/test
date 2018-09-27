@@ -9,6 +9,7 @@ use fast\Random;
 use think\Validate;
 use think\Session;
 use think\Image;
+use think\Db;
 /**
  * 会员接口
  */
@@ -265,10 +266,6 @@ class User extends Api
 
         $code = $this->request->request("code");
 
-        //如果是谷歌登录，接收json数据保存到数据库
-        if($platform == 'google'){
-            $code = input('post.');
-        }
         $config = get_addon_config('third');
         if (!$config || !isset($config[$platform]))
         {
@@ -277,8 +274,6 @@ class User extends Api
         $app = new \addons\third\library\Application($config);
         //通过code换access_token和绑定会员
         $result = $app->{$platform}->getUserInfo(['code' => $code]);
-
-
         if ($result)
         {
             $loginret = \addons\third\library\Service::connect($platform, $result);
@@ -288,10 +283,21 @@ class User extends Api
                     'userinfo'  => $this->auth->getUserinfo(),
                     'thirdinfo' => $result
                 ];
-                Session::set("user_id", $data['userinfo']['id']);
-                Session::set("user", $data['userinfo']);
-                $this->success(__('Logged in successful'), $data);
 
+                //检查第三方是否绑定账号
+                $uid = Db::name('third')->where('user_id',$data['userinfo']['id'])->value('uid');
+                if(empty($uid)){
+                    //没有，去绑定
+                    //$third_user_id 传到 home/user/user_bindsns
+                    Session::set("third_user_id", $data['userinfo']['id']);
+                    $this->success(__('Logged in successful'),url('home/user/user_bindsns'));
+                }
+
+                $u_user = Db::name('user')->where('id',$uid)->find();
+                Session::set("user_id",$uid);
+                Session::set("user", $u_user);
+                Session::set("platform", $platform); //记录登入第三方
+                $this->success(__('Logged in successful'), url('home/user/center'));
             }
         }
         $this->error(__('Operation failed'), $url);
