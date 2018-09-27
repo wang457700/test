@@ -4,7 +4,10 @@
         <div class="col-xs-12 col-sm-8">
 
             <select id="c-type" data-rule="required" class="form-control selectpicker" name="row[post_term_id]">
-                <option value="1" >新闻资讯</option>
+                <option >选择类型</option>
+                {foreach name="newscategory" item="vo"}
+                <option value="{$vo.id}" {$vo['id'] == $row['post_term_id']?'selected':''}>{$vo.name}</option>
+                {/foreach}
             </select>
 
         </div>

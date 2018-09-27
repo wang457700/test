@@ -15,20 +15,22 @@ class News extends Frontend
 
     public function _initialize()
     {
-
         parent::_initialize();
         $this->article_model = Db::name('article');
     }
 
     public function index()
     {   
-        $where = array(
-            'post_type'=>2, 
-        );
+        $where['post_type'] = 2;
+        $where['post_term_id'] = input('cid',64);
         $list = $this->article_model
         ->where($where)
         ->paginate(10);
+        $name = Db::name('category')->where('id',input('cid',64))->value('name');
+        $newscategory = sp_getTreeList(1);
+        $this->view->assign("newscategory",$newscategory);
         $this->view->assign("list", $list);
+        $this->view->assign("name",$name);
         $this->assign('title','社區服務資訊');
         return $this->view->fetch();
     }
@@ -36,29 +38,30 @@ class News extends Frontend
 
     public function article()
     {
+
         $articleId = $this->request->param('id', 0, 'intval');
         $data = $this->article_model
         ->where('id',$articleId)
         ->find();
 
-        $prevArticle = $this->publishedPrevArticle($articleId);
-        $nextArticle = $this->publishedNextArticle($articleId);
+        $name = Db::name('category')->where('id',input('cid',64))->value('name');
+        $prevArticle = $this->publishedPrevArticle($articleId,$data['post_term_id']);
+        $nextArticle = $this->publishedNextArticle($articleId,$data['post_term_id']);
         $this->view->assign("data",$data);
-
         $this->assign('title',$data['post_title']);
         $this->view->assign("prev",$prevArticle);
         $this->view->assign("next",$nextArticle);
+        $this->view->assign("name",$name);
         return $this->view->fetch();
     }
-
 
   //上一篇文章
     public function publishedPrevArticle($postId, $categoryId = 0)
     {
              $where = array(
-                'id' => array('lt',$postId)
+                'id' => array('lt',$postId),
+                 'post_term_id' => $categoryId,
             );
-
             $article = $this->article_model
                 ->where($where)
                 ->order('id', 'DESC')
@@ -70,17 +73,15 @@ class News extends Frontend
     public function publishedNextArticle($postId, $categoryId = 0)
     {
              $where = array(
-                'id' => array('gt',$postId)
+                'id' => array('gt',$postId),
+                'post_term_id' => $categoryId,
             );
 
             $article = $this->article_model
                 ->where($where)
                 ->order('id', 'DESC')
                 ->find();
-
-
         return $article;
-
     }
     
 

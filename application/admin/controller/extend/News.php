@@ -41,11 +41,10 @@ class News extends Backend
             
 
              $status =array('0'=>'隐藏','1'=>'顯示');
-             $terms =array('1'=>'资讯');
             foreach ($list as $k => &$v)
             {
                 $v['post_status'] = $status[$v['post_status']];
-                $v['post_terms'] = $terms[$v['post_term_id']];
+                $v['post_terms'] = Db::name('category')->where('id',$v['post_term_id'])->value('name');
                 $v['post_date'] = date('Y/m/d',strtotime($v['post_date']));
             }
             unset($v);
@@ -76,9 +75,10 @@ class News extends Backend
                $this->success('修改成功');
             }
         }
-
+        $newscategory = sp_getTreeList(1);
         $row = Db::name('Article')->where('id',$ids)->find();
         $this->view->assign("row", $row);
+        $this->view->assign("newscategory", $newscategory);
         return $this->view->fetch();
     }
 
@@ -87,7 +87,6 @@ class News extends Backend
      */
     public function add()
     {
-         
         if ($this->request->isPost())
         {
             $params = $this->request->post("row/a");
@@ -103,6 +102,9 @@ class News extends Backend
                $this->success('添加成功');
             }
         }
+
+        $newscategory = sp_getTreeList(1);
+        $this->view->assign("newscategory", $newscategory);
         return $this->view->fetch();
     }
 

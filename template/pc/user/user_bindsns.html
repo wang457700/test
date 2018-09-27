@@ -37,7 +37,7 @@
   <div class="row">
     <div class="col-md-5 col-xs-11 login" style="">
       <img src="__TMPL_PUBLIC__/img/logo-3.png" class="logo3">
-      绑定我已有的帐号：
+      填写邮箱：
       <form action="{:url('user/user_bindsns')}" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return register()" id="register-form">
 
         <div class="form-group label1">
@@ -49,7 +49,7 @@
         </div>
 
         <div class="form-group" style="border: 0;">
-          <button type="submit" class="btn btn-success btn-success-edit" style="margin: 1em 0" id="button">綁    定</button>
+          <button type="submit" class="btn btn-success btn-success-edit" style="margin: 1em 0" id="button">确    定</button>
         </div>
         <div class="form-group" style="border: 0;text-align: center;">
           還沒有帳號？<a href="{:url('user/user_bindsns',array('token'=>$token))}" class="color_ro" style="margin: 20px;">直接登入</a>

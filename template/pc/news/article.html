@@ -11,7 +11,7 @@
     <div class="container bgcolor_white">
         <ol class="breadcrumb" style="padding:  20px;background-color: #fff;border-bottom: 1px solid #eee;">
             <li><a href="{:url('index/index')}">主頁</a></li>
-            <li><a href="{:url('home/news/index')}">社區服務資訊</a></li>
+            <li><a href="{:url('home/news/index',array('cid'=>$data['post_term_id']))}">{$name}</a></li>
             <li class="active">{$data.post_title}</li>
         </ol>
         <div class="info_detail"> 
@@ -22,16 +22,13 @@
                     {$data.post_content}
                   </div>
 
-                  <div class="nextfa"> 
-                  
-                    <if condition="!empty($prev)">
+                  <div class="nextfa">
+                      {if condition="!empty($prev)"}
                         <a href="{:url('home/news/article',array('id'=>$prev['id']))}" class="">上一篇：{$prev.post_title}</a>
-                    </if> 
-                    <if condition="!empty($next)"> 
+                      {/if}
+                      {if condition="!empty($next)"}
                         <a href="{:url('home/news/article',array('id'=>$next['id']))}" class="">下一篇：{$next.post_title}</a>
-                    </if> 
-
-
+                      {/if}
                     <div class="clearfix"></div> 
                   </div>
               </div>

@@ -1,6 +1,6 @@
 @import "message.css";
 a {color:#000000;}
-a:hover {text-decoration:none}
+a:hover {text-decoration:none;color:#7ac141}
 ul {margin:0;list-style:none;}
 i{ font-style:normal}
 body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !important;overflow:-Scroll;overflow-x:hidden}
@@ -51,7 +51,7 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 .nowrap{overflow: hidden; text-overflow:ellipsis;white-space:nowrap;}
 .no_after:after{height:0;}
 .no_border{border:0 !important}
-
+.container{position: relative;}
 .ellipsis3{overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;}
 
 .header {background:#f7f7f7;/* padding:10px;*/}
@@ -389,12 +389,19 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 
 .user_data p{line-height:25px;color:#666666;}
 .user_data h4{font-weight: bold;}
-
+@media (min-width: 1300px){
+	.container{width: 1170px}
+}
 @media (max-width: 1200px){
 	.f1 .list img {margin: 3.8em 0 0em 0;}
 	.header-d{padding-left: 22%;background-size: 90%;margin-bottom: 20px;}
 	.header-search {width: 29%;}
+	.header-search input[type=search]{}
 	.header .phone {padding: 10px 15px;font-size: 18px;padding-left: 60px;}
+	.footer .messagecss .form-group label{width: 40%;}
+	.footer .messagecss .form-group input, .footer .messagecss .form-group textarea{width: 60%;}
+
+
 	.logo-2 img{width: 60px;}
 	.nav {width:100%}
 	.f3 .n2 img {width: 100%;}
@@ -413,6 +420,7 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 	/*.shopping_cart .cart-item-list .t2 img {width: 50%;}*/
 	.f3 .n1 .miaosu{height: 172px;}
 	.info_list .right-list ul li .d2 h4 {margin:5px 0;}
+
 }
 @media (max-width: 992px){
 	.header-d{height: 105px;}
@@ -439,3 +447,4 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 	.shopping_cart .cart-item-list{line-height: 60px;}
 	.font18{font-size:16px;}
 }
+

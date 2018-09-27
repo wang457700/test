@@ -9,28 +9,24 @@
              
         <div class="row">
             <div class="col-sm-2 left-list" style="padding:0">
-                    <div class="left-title">
-                        <h3>社區</h3>
-                        <span>Community</span>
-                    </div>
-                    <div class="left-ist">
-                        <a href="" class="on">活動資訊</a> 
-                        <a href="">專  訪</a> 
-                    </div>
-        
+                <div class="left-title">
+                    <h3>社區</h3>
+                    <span>Community</span>
+                </div>
+                <div class="left-ist">
+                    {foreach name="newscategory" item="vo"}
+                        <a href="{:url('news/index',array('cid'=>$vo['id']))}" class="{:input('cid',64) == $vo['id']?'on':''}">{$vo['name']}</a>
+                    {/foreach}
+                </div>
             </div>
-
             <div class="col-sm-10 right-list">
          
                 <ol class="breadcrumb" style="padding:  20px;background-color: #fff;border-bottom: 1px solid #eee;">
-                    <li><a href="#">首頁</a></li>
-                    <li class="active"><a href="#">社區服務資訊</a></li>
+                    <li><a href="{:url('index/index')}">首頁</a></li>
+                    <li class="active">{$name}</li>
                 </ol>
                 <ul>
-                   
                    {foreach name="list" item="vo"}
-                    <?php 
-                    ?>
                         <li class="row">
                             <div class="col-sm-3 d1">
                                 <img src="{:fa_get_image_url($vo['smeta'])}" />

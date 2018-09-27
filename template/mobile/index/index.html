@@ -27,7 +27,7 @@
 						    <li class="mui-table-view-cell">
 						    	<a class="" href="{:url('cart/shopping_cart')}">
 					    			<i class="left_menu_ico i1"></i>我的購物車
-					        		<span class="mui-badge mui-badge-success">{:count_cart_num($user['id'])}</span>
+					        		<span class="mui-badge mui-badge-success">{:count_cart_num($user_id)}</span>
 					        	</a>
 						    </li>
 						    <li class="mui-table-view-cell"><a class="" href="{:url('product/index')}"><i class="left_menu_ico i2"></i>康復產品</a></li>
@@ -110,6 +110,8 @@
 						</div>
 
 
+
+						{if condition="is_login()"}
 						<?php $goods = sp_user_buygoods($user['id'],3);?>
 						<ul class="mui-table-view {$goods?'':'none'}">
 							<li class="mui-table-view-cell">
@@ -120,7 +122,6 @@
 							<li class="mui-table-view-cell">
 								<div class="swiper-container2" style="overflow: hidden;position: relative;">
 								  <div class="swiper-wrapper my_lj">
-
 									  {foreach  name="goods" item='vo'}
 										  <div class="swiper-slide col-md-3 list">
 											  <img src="__PUBLIC__/{$vo.cover}" />
@@ -140,6 +141,7 @@
 						      	</script>
 							</li>
 						</ul>
+						{/if}
 <!--  Top Ten -->
 						<ul class="mui-table-view" style="margin-top: 15px;">
 							<li class="mui-table-view-cell" >

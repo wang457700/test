@@ -2,6 +2,8 @@
 
 use think\Db;
 use think\Session;
+use fast\Tree;
+use app\common\model\Category as CategoryModel;
 
 // 公共助手函数
 
@@ -303,8 +305,18 @@ if (!function_exists('var_export_short')) {
     }
 
 }
+/********************************               home 公共模块新增                    *************************************/
 
-/* home 公共模块 */
+/**
+ * 查询系统分类子分类
+ * $cid 父分类id
+ * */
+function sp_getTreeList($cid){
+    $tree = Tree::instance();
+    $tree->init(collection(model('app\common\model\Category')->order('weigh desc,id desc')->select())->toArray(), 'pid');
+    $newscategory = $tree->getTreeList($tree->getTreeArray($cid), 'name');
+    return $newscategory;
+}
 
 /**
  * 转化数据库保存图片的文件路径，为可以访问的url
@@ -317,19 +329,21 @@ function fa_get_image_url($file)
     return $url;
 }
 
-/*
+/**
 * 手机号码 正则表达式格式化 每4位隔空格显示
 * 格式后：138 1000 2000
 */
 function format_phone($phone)
 {
     preg_match('/([\d]{3})([\d]{4})([\d]{4})/', $phone,$match);
-     
     unset($match[0]);
     return implode(' ', $match);
 }
 
-/*  查询产品金额并输出   */
+/**
+ * 查询产品金额并输出
+ * $product_id 商品id
+*/
 function product_price($product_id)
 {
     $price = 0;
@@ -350,7 +364,10 @@ function product_price($product_id)
     return $price;
 }
 
-/*  查询用户购物车数量   */
+/**
+ * 查询用户购物车数量
+ * $user_id 用户id
+ */
 function count_cart_num($user_id)
 {
     $num =  Db::name('cart_order')->where(array('user_id'=>$user_id))->count();
@@ -358,14 +375,20 @@ function count_cart_num($user_id)
 }
 
 
-/*  查询支付方式   */
+/**
+ * 查询支付方式
+ * $payment 支付方式id
+*/
 function sp_payment($payment)
 {
-    $payment_text = array('0'=>'未知','1'=>'微信','2'=>'支付宝','3'=>'其他银行');
+    $payment_text = array('0'=>'未知','1'=>'微信','2'=>'支付宝','3'=>'Mastercard','4'=>'Visa');
     return $payment_text[$payment];
 }
 
-/*  统计订单应付金额    */
+/**
+ * 统计订单应付金额
+ * $order_sn 订单号
+*/
 function sum_order_payableprice($order_sn)
 {
     $order =  Db::name('order')->where('order_sn',$order_sn)->find();
@@ -379,14 +402,14 @@ function sum_order_payableprice($order_sn)
     return $payableprice;
 }
 
-/*  用户是否已登录 */
+/**  用户是否已登录 */
 function is_login()
 {
     $user_id = Session('user_id');
     return $user_id;
 }
 
-/*  查询用户信息 */
+/**  查询用户信息 */
 function sp_user_info()
 {
     $user_id = Session('user_id');
@@ -394,7 +417,7 @@ function sp_user_info()
     $user['platform'] = Session('platform');
     return $user;
 }
-/*  创建游客信息  */
+/**  创建游客信息  */
 function create_tourist()
 {
     $tourist_id = getRandomString(3);
@@ -402,6 +425,7 @@ function create_tourist()
         'username'=>'youke'.$tourist_id,
         'nickname'=>'游客'.$tourist_id,
         'user_type'=>'3',
+        'is_eamil_status'=>'1',
         'joinip'=>get_client_ip(0,true),
         'jointime'=>time(),
     );
@@ -411,7 +435,7 @@ function create_tourist()
     }
     return $user;
 }
-/*  查询地区信息
+/**  查询地区信息
  *  $regionid 地区id
  *  $value  输出的字段
 */
@@ -421,7 +445,7 @@ function sp_region_value($regionid,$value = 'name'){
     return $region;
 }
 
-/*  查询用户地址信息
+/**  查询用户地址信息
  *  $addressid 地区id
  *  $field  输出的字段
 */
@@ -442,8 +466,10 @@ function sp_address_info($userid = '0',$addressid = '0',$field = 'id'){
 
 
 
-/*  查询用户最近购买记录
-
+/**
+ * 查询用户最近购买记录
+ * $userid 用户id
+ * $num 数量
 */
 
 function sp_user_buygoods($userid = '0',$num = 5){
@@ -458,7 +484,7 @@ function sp_user_buygoods($userid = '0',$num = 5){
     return $goods;
 }
 
-/*
+/**
  * 生成随机数字，
  * $len 位数
  * $chars 自定义字符
@@ -475,7 +501,7 @@ function getRandomString($len, $chars=null)
     return $str;
 }
 
-/*
+/**
  * 生成随机数字，
  * $len 位数
  * $chars 自定义字符
@@ -524,7 +550,7 @@ function msubstr($str, $start = 0, $length, $charset = "utf-8", $suffix = true)
         return $slice;
     }
 }
-/*获取IP */
+/** 获取IP */
 function get_client_ip($type = 0,$adv=false) {
     $type       =  $type ? 1 : 0;
     static $ip  =   NULL;

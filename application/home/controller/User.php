@@ -18,7 +18,7 @@ use app\home\common\common;
  */
 class User extends Frontend
 {
-	protected $noNeedLogin = ['login', 'register', 'forgetpwd', 'is_forgetpwd_email', 'third', 'is_email', 'user_bindsns'];
+	protected $noNeedLogin = ['login', 'register', 'forgetpwd', 'is_forgetpwd_email','user_email_activation', 'third', 'is_email', 'user_bindsns'];
 
 	//允许游客访问
 	protected $noTouristAuthority = ['share_list','user_edit'];
@@ -104,7 +104,7 @@ class User extends Frontend
           unset($data['password2']);
           $res=Db::name('user')->insertGetId($data);
           if($res){
-              //Session::set('user_id',$res);
+              Session::set('user_id',$res);
               $this->success('注册成功！',url('user/user_email_activation'));
           }else{
               $this->error('注册失敗！',url('user/register'));
@@ -112,6 +112,49 @@ class User extends Frontend
       }
         $this->assign('title','會員注册');
         return $this->view->fetch();
+    }
+    /**
+     * 邮箱发送激活链接
+     */
+    public function user_email_activation(){
+        $user_id= Session::get('user_id');
+        $info=Db::name('user')->where(array('id'=>$user_id))->find();
+        if(input('email')==1){
+            $email = new Email;
+            $encodeurl=url('User/is_email',array('token'=>base64_encode($user_id)));
+            $message= 'http://'.$_SERVER['SERVER_NAME'].urlencode($encodeurl);
+
+            $url=self::getShort($message);
+            $result = $email
+                ->to($info['email'])
+                ->subject(__("請激活你的帳號"))
+                ->message(''.$url.'')
+                ->send();
+            if($result){
+                $this->success('發送成功！');
+            }else{
+                $this->error('發送失敗！');
+            }
+        }
+        $this->assign('list',$info);
+        return $this->view->fetch();
+    }
+
+    /***
+     * 邮箱激活
+     */
+    public function is_email(){
+        $user_id=base64_decode(input('token'));
+        $res= Db::name('user')->where(array('id'=>$user_id))->value('is_eamil_status');
+        if($res){
+            $this->success('帳號已經激活，去登入！',url('user/login'));
+        }
+        $res= Db::name('user')->where(array('id'=>$user_id))->update(array('is_eamil_status'=>1));
+        if($res){
+            $this->success('激活成功！',url('user/login'));
+        }else{
+            $this->error('激活失敗！');
+        }
     }
 
 
@@ -179,49 +222,6 @@ class User extends Frontend
     }
 
 
-	/**
-     * 邮箱发送激活链接
-     */
-    public function user_email_activation(){
-        $user_id= Session::get('user_id');
-        $list=Db::name('user')->where(array('id'=>$user_id))->find();
-        if(input('email')==1){
-            $email = new Email;
-            $encodeurl=url('User/is_email',array('token'=>base64_encode($user_id)));
-            $message= 'http://'.$_SERVER['SERVER_NAME'].urlencode($encodeurl);
-
-            $url=self::getShort($message);
-            $result = $email
-                ->to($list['email'])
-                ->subject(__("請激活你的帳號"))
-                ->message(''.$url.'')
-                ->send();
-            if($result){
-                $this->success('發送成功！');
-            }else{
-                $this->error('發送失敗！');
-            }
-        }
-       $this->assign('list',$list);
-        return $this->view->fetch();
-    }
-
-    /***
-     * 邮箱激活
-     */
-    public function is_email(){
-    	$user_id=base64_decode(input('token'));
-        $res= Db::name('user')->where(array('id'=>$user_id))->value('is_eamil_status');
-        if($res){
-        	 $this->success('帳號已經激活，去登入！',url('user/login'));
-        }
- 	 	$res= Db::name('user')->where(array('id'=>$user_id))->update(array('is_eamil_status'=>1));
- 		if($res){
-          $this->success('激活成功！',url('user/login'));
-	  	}else{
-          $this->error('激活失敗！');
- 		}
-    }
 
 
     /***

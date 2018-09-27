@@ -95,6 +95,11 @@ class Frontend extends Controller
                 $this->error(__('Please login first'), 'user/login');
             }
 
+            //检测账号是否激活
+            if($user['is_eamil_status'] == 0){
+                $this->error(__('帳號還沒有激活！'), 'user/user_email_activation');
+            }
+
             // 检测游客权限
             if ($this->auth->match($this->noTouristAuthority) && $user['user_type'] == 3) {
                 $this->error(__('游客没有权限访问'), 'user/center');

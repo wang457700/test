@@ -69,45 +69,51 @@
 
 
     <div class="position_ads" style="">
-      <div class="ads_left" style="width: 12%;z-index: 9999;">
-          <a class="close" href="javascript:$('.ads_left').hide()" style="color: #fff;opacity:1">×</a>
-          {foreach name="slide" item="vo"}
-            {eq name="vo['slide_type']" value="float_left_banner"}
-                 <a href="{$vo.slide_url}" target="_blank"><img src="{:fa_get_image_url($vo['slide_pic'])}"></a>
-            {/eq}
-          {/foreach}
-      </div>
-
-      <div class="ads_right" style="width: 16%;z-index: 9999;right: 0;">
-    	 	<a class="close" href="javascript:$('.ads_right').hide()" style="opacity:1">×</a>
-      	<div class="index_news" style="">
-      			<div class="title" style=""></div>
-      			<ul style="">
-      				<li>
-      					<img src="__TMPL_PUBLIC__/img/index_news_img.png">
-      					<p>安神龍眼百合茶唔怕眼光光… </p>
-      					<p >材料：龍眼肉10克百合…</p>
-      					<p>2018-07-03，週二</p>
-      				</li>
-      				<li>
-      					<img src="__TMPL_PUBLIC__/img/index_news_img.png">
-      					<p>安神龍眼百合茶唔怕眼光光… </p>
-      					<p >材料：龍眼肉10克百合…</p>
-      					<p>2018-07-03，週二</p>
-      				</li>
-      				<li>
-      					<img src="__TMPL_PUBLIC__/img/index_news_img.png">
-      					<p>安神龍眼百合茶唔怕眼光光… </p>
-      					<p >材料：龍眼肉10克百合…</p>
-      					<p>2018-07-03，週二</p>
-      				</li>
-      			</ul>
+          <div class="ads_left" style="width: 12%;z-index: 9999;">
+              <a class="close" href="javascript:$('.ads_left').hide()" style="color: #fff;opacity:1">×</a>
+              {foreach name="slide" item="vo"}
+                {eq name="vo['slide_type']" value="float_left_banner"}
+                     <a href="{$vo.slide_url}" target="_blank"><img src="{:fa_get_image_url($vo['slide_pic'])}"></a>
+                {/eq}
+              {/foreach}
           </div>
-          <img src="__TMPL_PUBLIC__/img/ads_1.png">
-    		</div>
     </div>
 
     <div class="container">
+
+
+
+
+
+        <div class="ads_right" style="width: 300px;position: absolute;right: -350px;">
+            <a class="close" href="javascript:$('.ads_right').hide()" style="opacity:1">×</a>
+            <div class="index_news" style="">
+                <div class="title" style=""></div>
+                <ul style="">
+                    <li>
+                        <img src="__TMPL_PUBLIC__/img/index_news_img.png">
+                        <p>安神龍眼百合茶唔怕眼光光… </p>
+                        <p >材料：龍眼肉10克百合…</p>
+                        <p>2018-07-03，週二</p>
+                    </li>
+                    <li>
+                        <img src="__TMPL_PUBLIC__/img/index_news_img.png">
+                        <p>安神龍眼百合茶唔怕眼光光… </p>
+                        <p >材料：龍眼肉10克百合…</p>
+                        <p>2018-07-03，週二</p>
+                    </li>
+                    <li>
+                        <img src="__TMPL_PUBLIC__/img/index_news_img.png">
+                        <p>安神龍眼百合茶唔怕眼光光… </p>
+                        <p >材料：龍眼肉10克百合…</p>
+                        <p>2018-07-03，週二</p>
+                    </li>
+                </ul>
+            </div>
+            <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Flivesmart.hksr&tabs=timeline&width=300&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=278986015538188" width="300" height="500" style="border:none;overflow:hidden;width: 300px;" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+        </div>
+
+
        <div class="row" style="padding: 20px 0;">
         <div class="col-md-5 col-xs-5" style="padding-left: 0;">
              <p class="index_title">我的記錄</p>
@@ -489,7 +495,7 @@ $(document).ready(function(){
   });
 
   $(".ads_left").floatadv();
-  $(".ads_right").floatadv();
+  //$(".ads_right").floatadv();
 
 });
 
