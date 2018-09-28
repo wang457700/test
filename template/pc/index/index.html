@@ -14,6 +14,15 @@
       .right{
           right:0;
       }
+      .ads_left img{width:100%;}
+      @media (max-width: 1366px){
+          .container {width:70%;}
+      }
+      @media (max-width: 992px) {
+          .container {width:95%;}
+          .ads_left{display: none}
+          .ads_right{display: none}
+      }
   </style>
   <body style="background: url(__TMPL_PUBLIC__/img/index_bg.jpg) repeat-y;">
 
@@ -22,7 +31,6 @@
 <!--头部 end-->
 
 	{include file="common/nav"/}
-
     <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/Swiper/3.4.0/css/swiper.min.css" media="screen">
 	<script src="https://cdn.bootcss.com/Swiper/4.3.0/js/swiper.min.js"></script>
   <div class="swiper-container" style="">
@@ -56,7 +64,7 @@
 
 
     <div class="position_ads" style="">
-          <div class="ads_left" style="width: 12%;z-index: 9999;">
+          <div class="ads_left" style="width:13%;z-index: 9999;">
               <a class="close" href="javascript:$('.ads_left').hide()" style="color: #fff;opacity:1">×</a>
               {foreach name="slide" item="vo"}
                 {eq name="vo['slide_type']" value="float_left_banner"}
@@ -67,13 +75,8 @@
     </div>
 
     <div class="container">
-
-
-
-
-
-        <div class="ads_right" style="width: 300px;position: absolute;right: -350px;">
-            <a class="close" href="javascript:$('.ads_right').hide()" style="opacity:1">×</a>
+        <div class="ads_right" style="">
+            <a class="close" href="javascript:$('.ads_right').hide()" style="opacity:1;margin-right: 10px;">×</a>
             <div class="index_news" style="">
                 <div class="title" style=""></div>
                 <ul style="">
@@ -97,12 +100,12 @@
                     </li>
                 </ul>
             </div>
-            <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Flivesmart.hksr&tabs=timeline&width=300&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=278986015538188" width="300" height="500" style="border:none;overflow:hidden;width: 300px;" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+            <iframe src="" width="300" height="500" style="border:none;overflow:hidden;width: 300px;" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
         </div>
 
 
        <div class="row" style="padding: 20px 0;">
-        <div class="col-md-5 col-xs-5" style="padding-left: 0;">
+        <div class="col-md-5 col-xs-5 col-lg-5" style="padding-left: 0;">
              <p class="index_title">我的記錄</p>
              <div class="row  f1">
               <div class="col-md-5 col-xs-5 list">
@@ -115,12 +118,12 @@
                </div>
             </div>
         </div>
-        <div class="col-md-7 f2 col-xs-7" style="padding: 0;">
+        <div class="col-md-7 f2 col-xs-7 col-lg-7" style="padding: 0;">
             <p class="index_title" style="background-position-y: -25px;"> Top Ten</p>
             <div class="swiper-container2" style="overflow: hidden;position: relative;">
               <div class="swiper-wrapper row">
                   {foreach  name="top_ten" item='vo'}
-                  <div class="swiper-slide col-md-3 list">
+                  <div class="swiper-slide col-md-6 col-lg-6 list">
                       <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
                           <p class="nowrap">{$vo.product_name}</p>
                           {if condition="$vo['cover']"}
@@ -179,21 +182,21 @@
                 <div class="d1">
                     <p class="font16 bold">Polar 心率錶</p>
                     <p class="font12 miaosu">Polar 心率錶 銀黑色 - FT4-SBLK，針對想透過基於心率的基本功能保持簡單健身訓練的人們</p>
-                    <div>
+                    <div class="price">
                         <span class="font24"><i class="font12">$</i>1234</span>
                         <a class="adds">+</a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-10 col-xs-10 " style="background: #fff;">
+            <div class="col-md-10 col-xs-10" style="background: #fff;">
               <div class="row">
                 <div class="col-md-12">
                         <div class="row">
                             {foreach name="product_list" key="k" item="vo"}
                             {if condition="$k eq  0"}
-                                <div class="col-md-6 col-xs-6 n2">
+                                <div class="col-md-6 col-lg-6 col-xs-4 n2 ">
                                     <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
-                                    <div style="text-;text-align:  center;"><img src="__PUBLIC__{$vo['cover']}" class="first" style="width:189px;height:189px;"></div>
+                                    <div style="text-;text-align:  center;"><img src="__PUBLIC__{$vo['cover']}" class="first" style=""></div>
                                     </a>
                                     <div class="d2">
                                         <p class="nowrap">{$vo['product_name']}</p>
@@ -210,7 +213,7 @@
                                 </div>
                             {/if}
                             {if condition="$k egt 1 && $k  elt 2"}
-                            <div class="col-md-3 col-xs-3 n2">
+                            <div class="col-md-3 col-xs-4 n2">
                                 <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
                                 <img src="__PUBLIC__{$vo['cover']}">
                                 </a>
@@ -268,11 +271,11 @@
           <p class="index_title" style="background-position-y: -75px;"> 健康及有機產品</p>
           <div class="border_top1"></div>
           <div class="col-md-2 col-xs-2 n1">
-              <img src="__TMPL_PUBLIC__/data/index_1.png">
+              <img src="__TMPL_PUBLIC__/data/index_2.png">
               <div class="d1">
 				<p class="font16 bold">Polar 心率錶</p>
                 <p class="font12 miaosu">Polar 心率錶 銀黑色 - FT4-SBLK，針對想透過基於心率的基本功能保持簡單健身訓練的人們</p>
-                <div>
+                <div class="price">
                     <span class="font24"><i class="font12">$</i>1234</span>
                     <a class="adds">+</a>
                 </div>
@@ -286,7 +289,7 @@
                          {if condition="$k eq  0"}
                          <div class="col-md-6 col-xs-6 n2">
                              <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
-                             <div style="text-;text-align:  center;"><img src="__PUBLIC__{$vo['cover']}" class="first" style="width:189px;height:189px;"></div>
+                             <div style="text-;text-align:  center;"><img src="__PUBLIC__{$vo['cover']}" class="first" ></div>
                              </a>
                              <div class="d2">
                                  <p class="nowrap">{$vo['product_name']}</p>
@@ -361,11 +364,11 @@
             <p class="index_title" style="background-position-y: -75px;">科技產品</p>
             <div class="border_top1"></div>
             <div class="col-md-2 col-xs-2 n1">
-                <img src="__TMPL_PUBLIC__/data/index_1.png">
+                <img src="__TMPL_PUBLIC__/data/index_2.png">
                 <div class="d1">
                     <p class="font16 bold">Polar 心率錶</p>
                     <p class="font12 miaosu">Polar 心率錶 銀黑色 - FT4-SBLK，針對想透過基於心率的基本功能保持簡單健身訓練的人們</p>
-                    <div>
+                    <div class="price">
                         <span class="font24"><i class="font12">$</i>1234</span>
                         <a class="adds">+</a>
                     </div>
@@ -379,14 +382,14 @@
                             {if condition="$k eq  0"}
                             <div class="col-md-6 col-xs-6 n2">
                                 <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
-                                <div style="text-;text-align:  center;"><img src="__PUBLIC__{$vo['cover']}" class="first" style="width:189px;height:189px;"></div>
+                                <div style="text-;text-align:  center;"><img src="__PUBLIC__{$vo['cover']}" class="first" ></div>
                                 </a>
                                 <div class="d2">
                                     <p class="nowrap">{$vo['product_name']}</p>
                                     {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
                                     {if condition="$vo['discount_type'] eq 2"}<p class="color_ro">特惠全民享</p>{/if}
                                     {if condition="$vo['discount_type'] eq 3"}<p class="color_ro">优惠全民享</p>{/if}
-                                    <div>
+                                    <div class="price">
                                         <span class="font24"><i class="font12">$</i>
                                           {:product_price($vo['product_id'])}
                                         </span>
@@ -492,16 +495,8 @@ jQuery.fn.floatadv = function(loaded) {
   block_height = parseInt(obj.height());
   container = parseInt($('.f3').height()+200);
 
-
   top_position = parseInt((body_height/2) - (block_height/2) + $(window).scrollTop());
   if (body_height<block_height) { top_position = 0 + $(window).scrollTop(); };
-
-
-  console.log("top_position:" + top_position);
-  console.log("container:" + container);
-
-
-
 	if(!loaded){
 		obj.css({'position': 'absolute'});
 		obj.css({ 'top': container });
@@ -523,8 +518,44 @@ jQuery.fn.floatadv = function(loaded) {
 			obj.animate({ 'top': top_position }, 500, 'linear');
 		}
 	}
+}
 
+$(window).resize(function (){         //当浏览器大小变化时
 
+    auto_height()
+});
+auto_height();
+function auto_height(){
+    var f3_height =  $('.row .col-md-10').height();
+    var f3_img =  $('.row .n1 img').height();
+
+    $('.row .d1').each(function(i){
+        $(this).css('height',f3_height - f3_img);
+    });
+
+    var ads_right =  $('.ads_right').width();
+    $('.ads_right iframe').attr('src','https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Flivesmart.hksr&tabs=timeline&width=' + parseInt(ads_right)+ '&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=278986015538188')
+
+    var container_width =  $(document.body).width();
+    if(container_width <=1366 && container_width >=1024){
+        $('.container').each(function(i){
+            if(i>1){
+                $(this).css('width',container_width - 400);
+                $(this).css('padding',0);
+            }
+        });
+    }else{
+        $('.container').each(function(i){
+            if(i>1){
+                $(this).css('width','');
+                $(this).css('padding','');
+            }
+        });
+    }
+    var swiper2_width =  $('.swiper-container2').width();
+    $('.swiper-container2 .list').each(function(i){
+        //  $(this).css('margin-right',swiper2_width / 60);
+    });
 }
 </script>
 
