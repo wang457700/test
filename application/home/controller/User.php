@@ -11,6 +11,7 @@ use think\Hook;
 use think\Session;
 use think\Validate;
 use app\common\library\Email;
+use fast\Random;
 use app\home\common\common;
 
 /**
@@ -98,6 +99,7 @@ class User extends Frontend
           };
           $data['password']= md5(input('password'));
           $data['nickname']= $data['username'];
+          $data['salt']= Random::alnum();
           $data['joinip']= request()->ip();
           $data['jointime']= time();
           $data['user_type']= 2;

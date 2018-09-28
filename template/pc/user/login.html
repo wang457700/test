@@ -1,8 +1,18 @@
 {include file="layout/public_head" /}
+
+
+<?php
+	if(!((isset($_SERVER['HTTPS'])&&$_SERVER['HTTPS']=='on')||(isset($_SERVER['HTTP_X_FORWARDED_PROTO'])&&$_SERVER['HTTP_X_FORWARDED_PROTO']=='https'))){
+		Header("HTTP/1.1 301 Moved Permanently");
+		header('Location: https://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);
+
+
+		dump(1);
+	}
+?>
+
 	<body style="background: url(__TMPL_PUBLIC__/img/login_bg.jpg) repeat center;background-size: cover !important;">
-
 	 <div class="container">
-
        <div class="row">
 	        <div class="col-md-5 col-xs-11 login" style="">
 				<img src="__TMPL_PUBLIC__/img/logo-3.png" class="logo3">
