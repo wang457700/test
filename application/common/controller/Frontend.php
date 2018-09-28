@@ -97,7 +97,7 @@ class Frontend extends Controller
 
             //检测账号是否激活
             if($user['is_eamil_status'] == 0){
-                $this->error(__('帳號還沒有激活！'), 'user/user_email_activation');
+                $this->error(__('帳號還沒有激活！'), 'user/user_email_activation','',0);
             }
 
             // 检测游客权限

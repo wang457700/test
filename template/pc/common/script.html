@@ -54,6 +54,7 @@
     /* 公共get */
     $(".js-ajax-operation").click(function(){
         var url = $(this).attr('href');
+        var location = $(this).data('location');
         $.ajax({
             type: "GET",
             url: url,
@@ -64,6 +65,9 @@
                 }else{
                     $.message(data.msg);
                     setTimeout(function () {
+                        if(location == false){
+                            return false;
+                        }
                         if(data.url){
                             window.location = data.url;
                         }else {

@@ -99,9 +99,7 @@ trait Jump
             $result = ViewTemplate::instance($template, $view)
                 ->fetch(Config::get('dispatch_error_tmpl'), $result);
         }
-
         $response = Response::create($result, $type)->header($header);
-
         throw new HttpResponseException($response);
     }
 

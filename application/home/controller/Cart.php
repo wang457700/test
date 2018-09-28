@@ -91,7 +91,7 @@ class Cart extends Frontend
                 /*运费*/
                 $freight = 0 ;
                 $cofing_freight = config('site')['freight'];
-                if(strval($total) > $cofing_freight['no_freight']){
+                if(strval($total) < $cofing_freight['no_freight']){
                     $freight = $cofing_freight['freight'];
                 }
                 /*服务费*/

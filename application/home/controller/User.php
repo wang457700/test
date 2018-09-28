@@ -115,16 +115,23 @@ class User extends Frontend
         $this->assign('title','會員注册');
         return $this->view->fetch();
     }
+
     /**
      * 邮箱发送激活链接
      */
     public function user_email_activation(){
+
+
         $user_id= Session::get('user_id');
         $info=Db::name('user')->where(array('id'=>$user_id))->find();
+
+        if($info['is_eamil_status'] == 1){
+            $this->success('邮箱已激活，去登入！',url('user/center'),'',1);
+        }
         if(input('email')==1){
             $email = new Email;
             $encodeurl=url('User/is_email',array('token'=>base64_encode($user_id)));
-            $message= 'http://'.$_SERVER['SERVER_NAME'].urlencode($encodeurl);
+            $message= 'https://'.$_SERVER['SERVER_NAME'].urlencode($encodeurl);
 
             $url=self::getShort($message);
             $result = $email
@@ -151,11 +158,13 @@ class User extends Frontend
         if($res){
             $this->success('帳號已經激活，去登入！',url('user/login'));
         }
+
         $res= Db::name('user')->where(array('id'=>$user_id))->update(array('is_eamil_status'=>1));
         if($res){
-            $this->success('激活成功！',url('user/login'));
+            Session::set('user_id',$user_id);
+            $this->success('驗證成功！',url('user/center'));
         }else{
-            $this->error('激活失敗！');
+            $this->error('驗證失敗！');
         }
     }
 
@@ -225,7 +234,7 @@ class User extends Frontend
 
 
     /***
-     * 绑定账号
+     * 填写邮箱
      */
     public function user_bindsns(){
         if ($this->request->isPost()){
@@ -249,14 +258,12 @@ class User extends Frontend
                 $res = Db::name('third')->where(array('user_id'=>$third_user_id))->update(array('uid'=>$third_user_id));
                 $url = url('user/user_email_activation');
             }
-
             if($res){
                 Session::set("user_id", $user['id']);
                 $this->success('绑定成功！',$url);
             }else{
                 $this->error('绑定失敗！');
             }
-
         }
 
         $third_user_id = Session::get('third_user_id');
@@ -269,7 +276,7 @@ class User extends Frontend
             $this->success('登入成功！',url('user/center'));
         }
 
-        $this->assign('title', '綁定帳號');
+        $this->assign('title', '填寫郵箱');
         $this->assign('token', $user['salt']);
         return $this->view->fetch();
     }
