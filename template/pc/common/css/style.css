@@ -1,6 +1,6 @@
 @import "message.css";
 a {color:#000000;}
-a:hover {text-decoration:none;color:#7ac141}
+a:hover {text-decoration:none;color:#7ac141;transition-duration:0.3s;}
 ul {margin:0;list-style:none;}
 i{ font-style:normal}
 body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !important;overflow:-Scroll;overflow-x:hidden}
@@ -201,6 +201,7 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 
 .product2 ul{padding: 0;padding-bottom: 40px;}
 .product2 li{padding: 20px 30px;border-top: 1px solid #eee;}
+.product2 li .img_left2{width:100%}
 .product2 li .adds{padding: 0.2em 0.6em;background: #7ac142;color:  #fff;border-radius: 2em;font-size: 1.5em;float: right;line-height: 0.8em;}
 .product2 li .adds:hover{background: #6da93e;}
 .product2 li i{font-style: inherit;font-size: 14px;}

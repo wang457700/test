@@ -538,14 +538,13 @@ function getRandomString($len, $chars=null)
 }
 
 /**
- * 生成随机数字，
- * $len 位数
- * $chars 自定义字符
+ * 查询用户默认地址
+ *
  */
 function sp_user_default_address()
 {
     $user_id = Session::get('user_id');
-    $address= Db::name('user_address')->where(array('user_id'=>$user_id,'default'=>1))->find();
+    $address= Db::name('user_address')->where(array('user_id'=>$user_id,'default'=>1,'status'=>1))->find();
     return $address;
 }
 

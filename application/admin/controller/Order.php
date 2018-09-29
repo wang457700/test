@@ -45,14 +45,14 @@ class Order extends Backend
             //->join('__GOODS__ c', 'a.goods_id=c.product_id', 'LEFT')
             ->whereOr($keywordComplex)
             ->where($where)
-            ->field('a.*,e.username,(select sum(money_total) from fa_order where order_sn=a.order_sn) as money_total')
+            ->field('a.*,e.nickname,(select sum(money_total) from fa_order where order_sn=a.order_sn) as money_total')
             ->alias('a')
             ->join('__USER__ e', 'a.user_id=e.id', 'LEFT')
             ->group('a.order_sn')
             ->order('addtime desc')
             ->paginate(10,false,array('query'=>$request));
 
-        $payment = array('0'=>'','1'=>'微信','2'=>'支付宝','3'=>'其他银行');
+        $payment = array('0'=>'','1'=>'微信','2'=>'支付宝','3'=>'Mastercard','4'=>'Visa');
         $pay_status = array('0'=>'未支付','2'=>'已支付','3'=>'已发货','6'=>'已取消',);
         $page = $order_list->render();
         $this->assign('page', $page);

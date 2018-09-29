@@ -40,15 +40,18 @@ class Index extends Frontend
         $tree = Tree::instance();
         $slide =  Db::name('slide')->where(array('slide_status'=>1))->select();
         $where['is_on_sale'] = 1;
-        $top_ten= Db::name('goods')->where('is_best_status',0)->limit(10)->select();
+        $top_ten= Db::name('goods')->where('is_best_status',0)->limit(10)->order('add_time desc')->select();
         $product_list= Db::name('goods')
             ->where(array('cat_id'=>array('in',$tree->getChildrenIds(input('categoryid',15))),'is_on_sale'=>1))
+            ->order('add_time desc')
             ->limit(9)->select();
         $health_food= Db::name('goods')
             ->where(array('cat_id'=>array('in',$tree->getChildrenIds(input('categoryid',16))),'is_on_sale'=>1))
+            ->order('add_time desc')
             ->limit(9)->select();
         $science_food= Db::name('goods')
             ->where(array('cat_id'=>array('in',$tree->getChildrenIds(input('categoryid',17))),'is_on_sale'=>1))
+            ->order('add_time desc')
             ->limit(9)->select();
 
         $news= Db::name('article')->where('post_type',2)->limit(3)->select();

@@ -85,13 +85,13 @@
                   <li class="col-md-3 col-xs-6">
                       <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
                           {if condition="$vo['cover']"}
-                          <img src="__PUBLIC__/{$vo.cover}" id="img_{$vo.product_id}"/>
+                          <img src="__PUBLIC__/{$vo.cover}" id="img_{$vo.product_id}" class="img_left2"/>
                           {else/}
-                          <img src="__TMPL_PUBLIC__/img/default.jpg">
+                          <img src="__TMPL_PUBLIC__/img/default.jpg"  class="img_left2" id="img_{$vo.product_id}"/>
                           {/if}
                       </a>
                       <div class="d2">
-                          <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
+                          <a href="{:url('product/detail',array('id'=>$vo['product_id']))}"/>
                               <p>{$vo.product_name}</p>
                           </a>
                           {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
@@ -123,9 +123,18 @@
                 $('input[name=sort]').val(sort);
                 $('#search').submit();
             }
-
-            console.log(sort);
             return false;
+        });
+
+        $(document).ready(function() {
+            var img_left = "{$input['style'] == 'grid'?'img_left':''}";
+            $('.product2 li a:nth-child(1)').each(function() {
+                var width = $(this).find('img:nth-child(1)').width();    // 图片实际宽度
+                var src = $(this).find('img:nth-child(1)').attr('src');
+                $(this).find('img:nth-child(1)').css('display','none');
+                $(this).append('<div style="max-width: 100%;width:'+width+'px;height:'+ width +'px;background:url('+src+') no-repeat center;background-size:90%;margin: 0 auto;" class="'+ img_left +'"></div>');
+                //$(this).find('img:nth-child(1)').attr({'src':'null'});
+            });
         });
     </script>
   </body>

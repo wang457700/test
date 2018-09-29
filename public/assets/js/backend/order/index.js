@@ -35,7 +35,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {checkbox: true},
                         {field: 'order_id', title: __('訂單ID'), operate: false},
                         {field: 'order_time', title: __('下單日期'),sortable: true,formatter: Table.api.formatter.datetime,operate: 'RANGE',addclass: 'datetimerange'},
-                        {field: 'user_name', title: __('用戶名'), operate: false},
+                        {field: 'nickname', title: __('用戶名'), operate: false},
                         {field: 'total_amount', title: __('總金額'), operate: false},
                         {field: 'amount_payable', title: __('應付金額'), operate: false},
                         {field: 'address', title: __('送貨地址'), operate: false},
