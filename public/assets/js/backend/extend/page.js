@@ -60,7 +60,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template'], function
                         {field: 'post_title', title: __('文章標題'), operate:false},
                         //直接响应搜索
                         {field: 'post_terms', title: __('類型'), operate: false},
-                        {field: 'smeta', title: __('封面'), formatter: Table.api.formatter.image, operate: false}, 
+                        {field: 'smeta', title: __('封面'), formatter: Table.api.formatter.image, operate: false},
+                        {field: 'url', title: __('Url'), align: 'left', formatter: Controller.api.formatter.url},
                         {field: 'post_date', title: __('發佈時間'),operate: false},
                         {field: 'post_status', title: __('狀態'),operate: false},
                       

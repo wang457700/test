@@ -20,29 +20,29 @@
         <div class="tab-pane active">
             <form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="{:url('general.config/meta_edit')}" >
                 <div class="form-group">
-                    <div class="col-sm-4">
-                        <label for="rule" class="control-label col-xs-12 col-sm-4">運費：</label>
-                        <div class="col-xs-12 col-sm-6">
+                    <div class="col-md-12 col-lg-4" style="margin-bottom: 10px;">
+                        <label for="rule" class="control-label col-xs-12 col-sm-5">運費：</label>
+                        <div class="col-xs-12 col-sm-6 ">
                             <input type="text" class="form-control NumText" id="rule" name="row[freight][freight]" value="{$config_data.freight.freight}">
                         </div>
                     </div>
-                    <div class="col-sm-4">
-                        <label for="rule" class="control-label col-xs-12 col-sm-6">免運費金額：</label>
+                    <div class="col-md-12 col-lg-4" style="margin-bottom: 10px;">
+                        <label for="rule" class="control-label col-xs-12 col-sm-5">免運費金額：</label>
                         <div class="col-xs-12 col-sm-6">
                             <input type="text" class="form-control NumText" id="rule" name="row[freight][no_freight]" value="{$config_data.freight.no_freight}">
                         </div>
                     </div>
-                    <div class="col-sm-4">
-                        <label for="rule" class="control-label col-xs-12 col-sm-6">偏遠地區服務費：</label>
+                    <div class="col-md-12 col-lg-4" style="margin-bottom: 10px;">
+                        <label for="rule" class="control-label col-xs-12 col-sm-5 ">偏遠地區服務費：</label>
                         <div class="col-xs-12 col-sm-6">
                             <input type="text" class="form-control NumText" id="rule" name="row[freight][remote_area]" value="{$config_data.freight.remote_area}">
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-12">
-                        <label for="rule" class="control-label col-xs-12 col-sm-2">免服务费地区：</label>
-                        <div class="col-xs-12 col-sm-6" style="padding-top: 7px;">
+                    <div class="col-sm-12 ">
+                        <label for="rule" class="control-label col-xs-12 col-md-5 col-lg-2">免服务费地区：</label>
+                        <div class="col-xs-12  col-md-7 col-lg-7" style="padding-top: 7px;">
                             {:implode(' ',$region)}   <a href="javascript:;" id="fastadmin">修改</a>
                         </div>
                     </div>
@@ -82,14 +82,14 @@
             <div class="tab-pane active">
                 <form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="{:url('general.config/meta_edit')}">
                     <div  class="form-group">
-                        <div class="col-sm-6">
+                        <div class="col-md-12 col-lg-6"  style="margin-bottom: 10px;">
                             <label for="rule" class="control-label col-xs-12 col-sm-4">积分获取：</label>
                             <div class="col-xs-12 col-sm-6">
                                 <input type="text" class="form-control NumText" id="rule" name="row[integral][obtain]" value="{$config_data.integral.obtain}" />
                             </div>
                             <div class="col-xs-12 col-sm-2">=1分</div>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-md-12 col-lg-6"  style="margin-bottom: 10px;">
                             <label for="rule" class="control-label col-xs-12 col-sm-4">积分使用：</label>
                             <div class="col-xs-12 col-sm-6">
                                 <input type="text" class="form-control NumText" id="rule" name="row[integral][use]" value="{$config_data.integral.use}" />
@@ -101,7 +101,7 @@
                     <?php $level = array('level1'=>'普通会员','level2'=>'白金会员','level3'=>'金牌会员','level4'=>'商业会员',);?>
                     <div  class="form-group">
                         {foreach $config_data.user_upgrade as $index=>$item}
-                        <div class="col-sm-6" style="margin-bottom: 10px;">
+                        <div class="col-md-12 col-lg-6" style="margin-bottom: 10px;">
                             <label for="rule" class="control-label col-xs-12 col-sm-4">{$level[$index]}：</label>
                             <div class="col-xs-12 col-sm-6">
                                 <input type="text" class="form-control NumText" id="rule" name="row[user_upgrade][{$index}]" value="{$item}" data-rule="required;data4"/>
@@ -121,58 +121,56 @@
         </div>
     </div>
 </div>
-<div class="title">会员升级</div>
+<div class="title">Meta 管理</div>
 <div class="panel panel-default panel-intro col-sm-12" >
 
     <div class="panel-body">
         <div id="myTabContent" class="tab-content">
             <div class="tab-pane active">
                 <form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="{:url('general.config/meta_edit')}">
-
-                    <div class="col-sm-1 meta_title">
+                    <div class="col-lg-2  col-md-2 meta_title">
                         主页
                     </div>
-                    <div  class="form-group form-group2 col-sm-11" style="border-bottom:  1px solid #eee;padding-bottom:  20px;margin: 0;">
+                    <div  class="form-group form-group2 col-lg-10 col-md-10" style="border-bottom:  1px solid #eee;padding-bottom:  20px;margin: 0;">
                         <?php $ch = array('title'=>'标题','keywords'=>'关键字','description'=>'描述');?>
                         {foreach $config_data.index_seo as $index=>$item}
                         <div class="col-sm-12">
-                            <label for="rule" class="control-label col-xs-12 col-sm-1">{$ch[$index]}</label>
+                            <label for="rule" class="control-label col-xs-2 col-md-2">{$ch[$index]}</label>
                             <div class="col-xs-12 col-sm-6">
                                 <input type="text" class="form-control" id="rule" name="row[index_seo][{$index}]" value="{$item}" />
                             </div>
                         </div>
                         {/foreach}
                     </div>
-                    <div class="col-sm-1 meta_title">
+                    <div class="col-lg-2  col-md-2 meta_title">
                         产品列表
                     </div>
-                    <div  class="form-group form-group2 col-sm-11" style="border-bottom:  1px solid #eee;padding-bottom:  20px;margin: 0;">
+                    <div  class="form-group form-group2 col-lg-10 col-md-10" style="border-bottom:  1px solid #eee;padding-bottom:  20px;margin: 0;">
                         {foreach $config_data.product_seo as $index=>$item}
                         <div class="col-sm-12">
-                            <label for="rule" class="control-label col-xs-12 col-sm-1">{$ch[$index]}</label>
+                            <label for="rule" class="control-label col-xs-2 col-md-2">{$ch[$index]}</label>
                             <div class="col-xs-12 col-sm-6">
                                 <input type="text" class="form-control" id="rule" name="row[product_seo][{$index}]" value="{$item}" />
                             </div>
                         </div>
                         {/foreach}
                     </div>
-                    <div class="col-sm-1 meta_title" style="line-height: 130px;text-align:  center;">
+                    <div class="col-lg-2 col-md-2  meta_title" style="line-height: 130px;text-align:  center;">
                         社区服务资讯
                     </div>
-                    <div  class="form-group form-group2 col-sm-11" style="border-bottom:  1px solid #eee;padding-bottom:  20px;margin: 0;">
+                    <div  class="form-group form-group2  col-lg-10 col-md-10" style="border-bottom:  1px solid #eee;padding-bottom:7px;margin: 0;">
 
                         {foreach $config_data.news_seo as $index=>$item}
                         <div class="col-sm-12">
-                            <label for="rule" class="control-label col-xs-12 col-sm-1">{$ch[$index]}</label>
+                            <label for="rule" class="control-label col-xs-2 col-md-2">{$ch[$index]}</label>
                             <div class="col-xs-12 col-sm-6">
                                 <input type="text" class="form-control" id="rule" name="row[news_seo][{$index}]" value="{$item}" />
                             </div>
                         </div>
                         {/foreach}
-
                     </div>
-
-                    <div class="form-group">
+                    <div class="clearfix"></div>
+                    <div class="form-group" style="margin-top: 10px;">
                         <label class="control-label col-xs-12 col-sm-2"></label>
                         <div class="col-xs-12 col-sm-4">
                             <button type="submit" class="btn btn-success btn-embossed">{:__('OK')}</button>

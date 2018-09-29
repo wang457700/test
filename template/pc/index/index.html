@@ -16,7 +16,7 @@
       }
       .ads_left img{width:100%;}
       @media (max-width: 1366px){
-          .container {width:70%;}
+          .container:nth-child(2) {width:70%;}
       }
       @media (max-width: 992px) {
           .container {width:95%;}
@@ -80,24 +80,25 @@
             <div class="index_news" style="">
                 <div class="title" style=""></div>
                 <ul style="">
+                    {foreach  name="news" item='vo'}
                     <li>
-                        <img src="__TMPL_PUBLIC__/img/index_news_img.png">
-                        <p>安神龍眼百合茶唔怕眼光光… </p>
-                        <p >材料：龍眼肉10克百合…</p>
-                        <p>2018-07-03，週二</p>
+                        <a href="{:url('news/article',array('id'=>$vo['id']))}" >
+                            {if condition="$vo['smeta']"}
+                            <img src="__PUBLIC__/{$vo.smeta}">
+                            {else/}
+                            <img src="__TMPL_PUBLIC__/img/default.jpg">
+                            {/if}
+                        </a>
+                        <a href="{:url('news/article',array('id'=>$vo['id']))}">
+                            <p>{$vo.post_title}</p>
+                            <p >{$vo.post_excerpt}</p>
+
+                            <p>{:date('Y-m-d',strtotime($vo['post_date']))}</p>
+                        </a>
+                        <!--，週二-->
                     </li>
-                    <li>
-                        <img src="__TMPL_PUBLIC__/img/index_news_img.png">
-                        <p>安神龍眼百合茶唔怕眼光光… </p>
-                        <p >材料：龍眼肉10克百合…</p>
-                        <p>2018-07-03，週二</p>
-                    </li>
-                    <li>
-                        <img src="__TMPL_PUBLIC__/img/index_news_img.png">
-                        <p>安神龍眼百合茶唔怕眼光光… </p>
-                        <p >材料：龍眼肉10克百合…</p>
-                        <p>2018-07-03，週二</p>
-                    </li>
+                    {/foreach}
+
                 </ul>
             </div>
             <iframe src="" width="300" height="500" style="border:none;overflow:hidden;width: 300px;" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>

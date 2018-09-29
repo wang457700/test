@@ -25,13 +25,7 @@ class Page extends Backend
      */
     public function index(){
         if ($this->request->isAjax()) {
-
-        
-
-
         list($where, $sort, $order, $offset, $limit) = $this->buildparams(NULL);
-
-
             $where = array('post_type'=>1);
             $total = Db::name('Article')
                 ->where($where)
@@ -46,9 +40,9 @@ class Page extends Backend
             
 
              $status =array('0'=>'隐藏','1'=>'顯示');
-             $terms =array('1'=>'资讯');
             foreach ($list as $k => &$v)
             {
+                $v['url'] = url('home/index/page',array('id'=>$v['id']));
                 $v['post_status'] = $status[$v['post_status']];
                 $v['post_date'] = date('Y/m/d',strtotime($v['post_date']));
             }

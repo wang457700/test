@@ -38,6 +38,9 @@ class Index extends Frontend
     public function index()
     {
 
+
+        $isischina = sp_ip_ischina();
+        dump($isischina);
         $tree = Tree::instance();
         $slide =  Db::name('slide')->where(array('slide_status'=>1))->select();
         $where['is_on_sale'] = 1;
@@ -52,20 +55,19 @@ class Index extends Frontend
             ->where(array('cat_id'=>array('in',$tree->getChildrenIds(input('categoryid',17))),'is_on_sale'=>1))
             ->limit(9)->select();
 
+        $news= Db::name('article')->where('post_type',2)->limit(3)->select();
+
         $share= Db::name('user_share')->limit(4)->select();
         $this->view->assign("top_ten", $top_ten);   //Top Ten
         $this->view->assign("share", $share); //共享产品
         $this->view->assign("product_list", $product_list); //復康產品
         $this->view->assign("health_food", $health_food);   //健康及有機產品
         $this->view->assign("science_food", $science_food);   //科技產品
-
-
+        $this->view->assign("news", $news);   //最新消息
         $this->view->assign("slide", $slide);
         $this->view->assign("title", '首頁');
         return $this->view->fetch();
     }
-
-
 
     //单页面
     public function page()
