@@ -37,10 +37,6 @@ class Index extends Frontend
 
     public function index()
     {
-
-
-        $isischina = sp_ip_ischina();
-        dump($isischina);
         $tree = Tree::instance();
         $slide =  Db::name('slide')->where(array('slide_status'=>1))->select();
         $where['is_on_sale'] = 1;

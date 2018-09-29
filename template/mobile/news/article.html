@@ -15,8 +15,9 @@
 		<div class="mui-content">                     
 			<div>
 				<div class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary my_order_segmented" style="background:#fff">
-					<a class="mui-control-item mui-active" href="{:url('news/index')}">活動資訊</a>
-					<a class="mui-control-item" href="#item2">專訪</a>
+					{foreach name="newscategory" item="vo"}
+						<a href="{:url('news/index',array('cid'=>$vo['id']))}" class="mui-control-item {$data['post_term_id'] == $vo['id']?'mui-active':''}">{$vo['name']}</a>
+					{/foreach}
 				</div>                                  
 			</div>
 			<div class="Info_list">

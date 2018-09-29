@@ -38,8 +38,7 @@ class Coupon extends Backend
                 ->where('coupon_category',$category)
                 ->count();
 
-
-            $level = array('0'=>'不限','1'=>'普通会员','2'=>'白金会员','3'=>'金牌会员','4'=>'商业会员');
+            $level = array('0'=>'不限','1'=>'普通會員','2'=>'白金會員','3'=>'金牌會員','4'=>'商業會員');
             foreach ($list as $key=>$item){
                 $list[$key]['coupon_time_text'] = ''.date('Y/m/d',strtotime($item['coupon_end_time']));
                 if($item['user_level']){
@@ -72,7 +71,7 @@ class Coupon extends Backend
             $coupon_id=$this->request->param("coupon_id");
             $list = Db::name('order')
                 ->alias('a')
-                ->field('a.*,e.username,(select sum(money_total) from fa_order where order_sn=a.order_sn) as money_total')
+                ->field('a.*,e.nickname,(select sum(money_total) from fa_order where order_sn=a.order_sn) as money_total')
                 ->join('__USER__ e', 'a.user_id=e.id', 'LEFT')
                 ->where('coupon_id',$coupon_id)
                 ->group('a.order_sn')

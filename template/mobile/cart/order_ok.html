@@ -13,7 +13,7 @@
 
 	<form action="{:url('cart/action_cart')}"  method="post" enctype="multipart/form-data" onsubmit="return orderform()" id="order-form">
 		<header class="mui-bar mui-bar-nav">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #7ac141;"></a>
+			<a href="javascript:"onclick="self.location=document.referrer;" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #7ac141;"></a>
 			<h1 class="mui-title">確認訂單</h1>
 		</header>
 
@@ -146,14 +146,12 @@
                     var phone = $(this).data('phone');
                     var name = $(this).data('name');
                     var address = $(this).data('address');
-
                     $('#name').text('收貨人：' + name);
                     $('#address_id').text(id);
                     $('#phone').text(phone);
                     $('#address').text(address);
                     $('#address_list').animate({top:'100%'}).hide();
 				}
-
 			});
 
 

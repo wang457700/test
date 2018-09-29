@@ -10,17 +10,16 @@
 		<div class="mui-content">                     
 			<div>
 				<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary my_order_segmented" style="background:#fff">
-					<a class="mui-control-item mui-active" href="#item1">活動資訊</a>
-					<a class="mui-control-item" href="#item2">專訪</a>
+					{foreach name="newscategory" item="vo"}
+						<a href="{:url('news/index',array('cid'=>$vo['id']))}" class="mui-control-item {:input('cid',64) == $vo['id']?'mui-active':''}">{$vo['name']}</a>
+					{/foreach}
 				</div>                                  
 			</div>
 			<div class="Info_list">
 				<div id="item1" class="mui-control-content mui-active">
 					<div id="scroll" class="mui-scroll-wrapper">
 						<div class="mui-scroll">
-							
 							<ul class="mui-table-view" >
-
 								{foreach name="list" item="vo"}
 								 <li class="mui-table-view-cell">
 									 <a href="{:url('home/news/article',array('id'=>$vo['id']))}">

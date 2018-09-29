@@ -51,6 +51,8 @@ class News extends Frontend
         $this->assign('title',$data['post_title']);
         $this->view->assign("prev",$prevArticle);
         $this->view->assign("next",$nextArticle);
+        $newscategory = sp_getTreeList(1);
+        $this->view->assign("newscategory",$newscategory);
         $this->view->assign("name",$name);
         return $this->view->fetch();
     }

@@ -28,12 +28,18 @@
 						{/foreach}
 					</div>
 					<div class="product-top-right col-md-6">
-						  <a href="javascript: void(0);"><i class="fa fa-th-large" aria-hidden="true"></i></a>
+						{if condition="$input['style'] eq 'list'"}
+							<a href="{:url('product/index',array('style'=>'grid','categoryid'=>$input['categoryid']))}"><i class="fa fa-th-large" aria-hidden="true"></i></a>
+						{else/}
+							<a href="{:url('product/index',array('style'=>'list','categoryid'=>$input['categoryid']))}" style="background-image: none;"><i class="mui-icon mui-icon-bars" aria-hidden="true" style="color:#9e9e9e;"></i></a>
+						{/if}
+
+
 					</div>
 				</div>
 			</form>
 			<!--下拉刷新容器-->
-			<div id="pullrefresh" class="mui-scroll-wrapper product_list" style="top: 145px;"> 
+			<div id="pullrefresh" class="mui-scroll-wrapper {$input['style']=='list'?'product_list2':'product_list'}" style="top: 145px;">
 				<div class="mui-scroll">
 					<!--数据列表-->
 					<ul class="mui-table-view mui-table-view-chevron mui-row" data-page_count="1" data-last_page="0">
@@ -126,7 +132,14 @@
                         }
                         $.each(data.data.data,function(index, value) { //遍历json数据列
                             console.log(value);
+
+                            {if condition="$input['style'] eq 'grid'"}
                             li += '<li class="swiper-slide mui-col-sm-6 mui-col-xs-6 list"><a class="news"></a><a href="'+ url + value.product_id +'" style="display: inline-block;"><img src="'+ public_url + value.cover + '"><p class="p2">'+ value.product_name +'</p></a><span class="color_ro">$</span><span class="color_ro font18">'+ value.price +'</span>  <span class="price">$'+ value.price +'</span></p></li>';
+							{/if}
+
+							{if condition="$input['style'] eq 'list'"}
+							li += '<li class="swiper-slide mui-col-sm-12 mui-col-xs-12 list2"><div class="mui-pull-left mui-col-xs-4"><a class="news"></a><img src="'+ public_url + value.cover + '"class="img_left" id="img_'+ value.product_id +'"></div><div class="mui-pull-right mui-col-xs-8"><p class="p2">'+ value.product_name +'</p><div class="right_bottom"><p class="mui-pull-left"><span class="color_ro">$</span><span class="color_ro font18">'+ value.price +'</span>  <span class="price">$'+ value.price +'</span></p><button type="button" class="mui-btn mui-btn-success mui-pull-right" id="adds" data-productid="'+ value.product_id +'" data-flyimg="true">加入購物車</button></div></div></li>';
+							{/if}
                         });
                         $(".mui-table-view-chevron").append(li);
                         $(".mui-table-view-chevron").data('page_count',Number(data.data.current_page)+1);

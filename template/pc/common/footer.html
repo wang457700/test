@@ -92,9 +92,10 @@
 	</div>
 
 
+    {if condition="empty(sp_ip_ischina())"}
+
     <script src="https://apis.google.com/js/api:client.js"></script>
     <script>
-
         $('#logout').click(function(){
             {if condition="$user['platform'] eq 'google'"}
                 disconnectUser();
@@ -168,3 +169,4 @@
         }(document, 'script', 'facebook-jssdk'));
 
     </script>
+{/if}

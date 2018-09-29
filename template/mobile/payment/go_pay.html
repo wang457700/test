@@ -12,7 +12,7 @@
 		</header>
 		<div class="mui-content">
 			<form action="{:url('payment/go_pay')}" method="post" enctype="multipart/form-data" onsubmit="return payform()" id="pay-form">
-			<input type="hidden" name="payment" id="payment" value="1">
+			<input type="hidden" name="payment" id="payment" value="3">
 			<input type="hidden" name="order_sn" value="{$order_sn}">
 			<ul class="mui-table-view mui-table-view-radio">
 				<li class="mui-table-view-cell" style="text-align: center;padding-left: 70px;">
@@ -24,12 +24,12 @@
 				</li>
 
 				<li class="mui-table-view-cell mui-selected">
-					<a class="mui-navigate-right" data-value="1">
+					<a class="mui-navigate-right" data-value="3">
 						<img src="__TMPL_PUBLIC__/img/pay_1.png" class="left_ico"> Visa
 					</a>
 				</li>
 				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right"  data-value="2">
+					<a class="mui-navigate-right"  data-value="4">
 						<img src="__TMPL_PUBLIC__/img/pay_2.png" class="left_ico"> Matercard
 					</a>
 				</li>

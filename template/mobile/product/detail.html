@@ -4,8 +4,8 @@
 		.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{border-bottom: 2px solid #FFAA00;color: #FFAA00;}
 		.my_order .mui-btn{ position: relative;transform: inherit;right: 0;}
 		#text_box{width:50px;text-align: center;border: 0;margin: 0;}
-		.buy-goods{margin-right: 10px;margin-left: 0px !important;border-radius: 0 7px 7px 0;}
-		.addcart{width: auto;border-radius: 7px 0 0 7px;}
+		.buy-goods{margin-right: 10px;margin-left: 0px !important;border-radius: 0 7px 7px 0;padding:5px 5px 7px !important}
+		.addcart{width: auto;border-radius: 7px 0 0 7px;padding: 5px 5px 7px !important}
 
 	</style>
 	<body>
@@ -31,7 +31,7 @@
 
 						  <div class="swiper-slide">
 							  <a href="#"  target="_bank">
-								  <img src="__PUBLIC__/{$goods.cover}">
+								  <img src="__PUBLIC__/{$goods.cover}" id="img_{$goods.product_id}">
 							  </a>
 						  </div>
 						  {foreach name="img_url" item="vo"}

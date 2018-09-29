@@ -12,10 +12,8 @@
 		{if condition="count($car_list) neq 0"}
 		<nav class="mui-bar mui-bar-tab" style="box-shadow: none;padding-top: 5px;padding-right: 5px;">
 			<div class="mui-checkbox mui-col-sm-1 mui-col-xs-1" style="line-height: 40px;width: 80px;height:  40px;float: left;">
-				
-				<input name="checkbox" value="Item 2" type="checkbox" style="left: 8px;top: 5px;" id="checked">
+				<input name="checkbox" value="" type="checkbox" style="left: 8px;top: 5px;" id="checked" checked="checked" data-id="1">
 			<label style="line-height: 40px;padding-left: 40px;padding-right: 0;">全选</label></div>
-			
 			<button type="type" class="mui-btn mui-btn-success mui-pull-right" style="top: 5px;">結算(<span id="total_sum">0</span>)</button>
 			<p class="mui-pull-right" style="margin: 0;line-height: 40px;margin-right: 20px;">合計：<span class="color_ro">$</span><span class="color_ro font18" id="total">0.00</span></p>
 		</nav>
@@ -28,7 +26,7 @@
 						<div class="mui-card-content-inner">
 							<ul class="mui-row">
 								<li class="mui-checkbox mui-col-sm-1 mui-col-xs-1" style="line-height: 40px;">
-									<input name="goods_id[]" value="{$vo.product_id}" type="checkbox" class="js-check" data-key="{$key}" style="right: 8px;top: 35px;" id="goods_{$key}">
+									<input name="goods_id[]" value="{$vo.product_id}" type="checkbox" class="js-check" data-key="{$key}" style="right: 8px;top: 35px;" id="goods_{$key}" checked="checked">
 									<input type="hidden" value="{$vo['price']*$vo['total']}" id="subtotal_{$key}" data-subtotal="{$vo['price']*$vo['total']}"  class="subtotal">
 								</li>
 						        <li class="mui-col-sm-4 mui-col-xs-4" style="padding-right: 5px">
@@ -40,12 +38,12 @@
 									<div>
 										<p class="mui-pull-left" style="margin:  0;line-height: 40px;"><span class="color_ro">$</span><span class="color_ro font18" data-price='{$vo.price}' id="price_{$key}">{$vo.price}</span></p>
 										<div class="col-md-12 mui-pull-right number" style="">
-											<input id="min_{$key}" name="" type="button" value="-" class="reduce" disabled="disabled" onclick="on_number({$key},'min')">
-											<input id="number_{$key}" name="goods_num[]" type="text" value="{$vo.total}" style="width:40px;text-align: center;border: 0;height: 20px;">
+											<input id="min_{$key}" name="" type="button" value="-" class="reduce" {$vo['total']==1?'disabled="disabled"':''} onclick="on_number({$key},'min')">
+											<input id="number_{$key}" name="goods_num[]" type="text" value="{$vo.total}" style="width:40px;text-align: center;border: 0;height: 20px;" class="goods_num">
 											<input id="add_{$key}" name="" type="button" value="+" class="add" onclick="on_number({$key},'add')">
 										  </div>
 									</div>
-									<a href="{:url('cart/cart_del',array('product_id'=>$vo['product_id']))}" class="js-ajax-delete del" onclick="return false;">×</a>
+									<div href="javascript:;" data-ajaxurl="{:url('cart/cart_del',array('product_id'=>$vo['product_id']))}" class="js-ajax-delete del" onclick="return false;">×</div>
 						        </li>
 						    </ul>
 						</div>
@@ -96,6 +94,11 @@
 				}
 			}
 
+
+            total();
+
+
+			//输入
             $("input[name='goods_num[]']").focusout(function() {
                 var key = $(this).data('key');
                 total_price(key);
@@ -107,8 +110,10 @@
                 var key =  $(this).data('key');
                 if($(this).is(':checked') == true){
                     $('#subtotal_' + key).addClass('subtotal');
+                    $('#number_' + key).attr('name','goods_num[]');
                 }else {
                     $('#subtotal_' + key).removeClass('subtotal');
+                    $('#number_' + key).attr('name','');
                 }
                 total();
             });
@@ -118,6 +123,8 @@
 				if($(this).data('id') == 1){
 					$("input[name='goods_id[]']").each(function(){
 						$(this).prop('checked', false);
+                        $('#subtotal_' + $(this).data('key')).removeClass('subtotal'); //去除单个商品总金额
+                        $('#number_' + $(this).data('key')).removeClass('goods_num'); //去除单个商品总金额
 					});
 
                     $("input[class^='subtotal']").each(function(){
@@ -128,8 +135,10 @@
 				}else{
 					$("input[name='goods_id[]']").each(function(){
 						$(this).prop('checked', true);
-					});
+                        $('#subtotal_' + $(this).data('key')).addClass('subtotal');
+                        $('#number_' + $(this).data('key')).addClass('goods_num');
 
+					});
                     $("input[class^='subtotal']").each(function(){
                         $(this).val($(this).data('subtotal'));
                     });
@@ -145,11 +154,9 @@
                 $("input[class^='subtotal']").each(function(){
                     goods_price+= Number($(this).val());
                 });
-                $("input[name^='goods_num[]']").each(function(){
+                $("input[class^='goods_num']").each(function(){
                     total_sum+= Number($(this).val());
                 });
-
-
                 $('#total_sum').text(Number(total_sum));
                 $('#total').text(goods_price.toFixed(2));
                // $('#total_no_yunxfei').text('$ '+ sum.toFixed(2));
@@ -173,8 +180,6 @@
                 });
                //return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
             }
-
-
 		</script>
 
 	</body>

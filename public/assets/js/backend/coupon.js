@@ -253,7 +253,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                     [
                         {field: 'order_sn', title: '訂單ID'},
                         {field: 'user_id', title: '用戶ID',operate: false},
-                        {field: 'username', title: '用戶名', operate: false},
+                        {field: 'nickname', title: '用戶名', operate: false},
                         {field: 'addtime', title: '使用日期', operate: false},
                         {field: 'all_price', title: '訂單金額', operate: false},
                     ]

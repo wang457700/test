@@ -377,6 +377,21 @@ function count_cart_num($user_id)
 
 
 /**
+* 计算一个订单总金额
+* $order_sn 订单号
+*/
+function sum_order_price($order_sn)
+{
+    $goods_money_total =  Db::name('order')->where(array('order_sn'=>$order_sn))->sum('money_total');
+
+    //输出 运费金额，积分抵扣金额，运费，服务费
+    $order =  Db::name('order')->where(array('order_sn'=>$order_sn))->value('coupon_price,integral_price,freight,service_price');
+
+
+   dump($order);
+}
+
+/**
  * 查询支付方式
  * $payment 支付方式id
 */
@@ -545,10 +560,10 @@ function sp_ip_ischina()
     $json = request_post($url,$data = 'null');
     $data = json_decode($json,true);
     $echo = false;
-    if($data['status'] == 'success' && $data['countryCode'] = 'CN'){
+    if($data['status'] == 'success' && $data['countryCode'] == 'CN'){
         $echo = true;
     }
-    return $url;
+    return $echo;
 }
 
 

@@ -1,7 +1,7 @@
 <header class="mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #7ac141;"></a>
     <h1 class="mui-title">{$title}</h1>
-    <a href="{:url('cart/shopping_cart')}" class="mui-action-menu mui-pull-right index-hd-right2">
+    <a href="{:url('cart/shopping_cart')}" class="mui-action-menu mui-pull-right index-hd-right2 shopping">
         <span class="mui-badge mui-badge-success mui-pull-right" id="shopping_total" >{:count_cart_num($user_id)}</span>
     </a>
     {if condition="is_login()"}
@@ -11,3 +11,4 @@
     {/if}
 </header>
 <a href="{:url('product/search')}" class="mui-action-menu mui-pull-right search-btn search-fixed"></a>
+<a href="{:url('index/index')}" class="mui-action-menu mui-pull-right search-btn search-fixed" style=" bottom: 120px;background-image: url('__TMPL_PUBLIC__/img/index_ico.png')"></a>
