@@ -32,14 +32,14 @@ class Cart extends Frontend
         if ($res) {
             $data = array(
                 'code' => 1,
-                'msg' => '加入购物车成功！',
+                'msg' => '加入購物車成功！',
                 'total' => $total
             );
             $this->ajaxReturn($data);
         }else{
             $data = array(
                 'code' => 0,
-                'msg' => '加入购物车失败！',
+                'msg' => '加入購物車失敗！',
 
             );
             $this->ajaxReturn($data);
@@ -107,12 +107,11 @@ class Cart extends Frontend
                 $this->assign('address_default',$address_default);
                 $this->assign('order_list',$data);
             }else{
-
-                $this->error('请选择商品！',url('cart/shopping_cart'));
+                $this->error('請選擇商品！',url('cart/shopping_cart'));
 
             }
 
-        $this->assign('title','确认订单');
+        $this->assign('title','確認訂單');
         return  $this->fetch();
     }
 
@@ -212,7 +211,7 @@ class Cart extends Frontend
             /*运费*/
             $freight = 0 ;
             $cofing_freight = config('site')['freight'];
-            if($all_total > $cofing_freight['no_freight']){
+            if($all_total < $cofing_freight['no_freight']){
                 $freight = $cofing_freight['freight'];
             }
 
@@ -259,14 +258,14 @@ class Cart extends Frontend
 
                 $data = array(
                     'code' => 1,
-                    'msg' => '你已经生成订单！',
+                    'msg' => '你已經生成訂單！',
                     'order_url' =>url('payment/go_pay',array('order_sn'=>base64_encode($order_sn))),
                 );
                 $this->ajaxReturn($data);
             }else{
                 $data = array(
                     'code' => 0,
-                    'msg' => '订单生成失败！',
+                    'msg' => '訂單生成失敗！',
                 );
                 $this->ajaxReturn($data);
             }
@@ -274,7 +273,7 @@ class Cart extends Frontend
         }else{
             $data = array(
                 'code' => 0,
-                'msg' => '没有选择商品！',
+                'msg' => '沒有選擇商品！',
             );
             $this->ajaxReturn($data);
         }

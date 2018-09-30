@@ -15,7 +15,7 @@
               {/if}
           {/foreach}
       </div>
-      <div class="product2">
+      <div class="{$input['style'] == 'list'?'product':'product2'}">
         <div class="row" style="padding: 20px 0;">
             <form method="get" action="{:url('product/index')}" id="search">
                 <?php
@@ -59,9 +59,9 @@
                     <div class="row">
                         <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
                             {if condition="$vo['cover']"}
-                                <img src="__PUBLIC__/{$vo.cover}" class="img_left col-md-4" id="img_{$vo.product_id}"/>
+                                <img src="__PUBLIC__/{$vo.cover}" class="img_left col-md-4 auto_img" id="img_{$vo.product_id}"/>
                             {else/}
-                                <img src="__PUBLIC__/img/default.jpg" class="img_left col-md-4">
+                                <img src="__PUBLIC__/img/default.jpg" class="img_left col-md-4 auto_img">
                             {/if}
                         </a>
                       <div class="d1 col-md-8">
@@ -82,7 +82,7 @@
                   </li>
               {/if}
               {if condition="$input['style'] eq 'list'"}
-                  <li class="col-md-3 col-xs-6">
+                  <li class="col-md-3 col-xs-4">
                       <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
                           {if condition="$vo['cover']"}
                           <img src="__PUBLIC__/{$vo.cover}" id="img_{$vo.product_id}" class="img_left2"/>
@@ -110,7 +110,6 @@
               {/if}
           </ul>
         </div>
-
     </div>
     <script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
     <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
@@ -124,17 +123,6 @@
                 $('#search').submit();
             }
             return false;
-        });
-
-        $(document).ready(function() {
-            var img_left = "{$input['style'] == 'grid'?'img_left':''}";
-            $('.product2 li a:nth-child(1)').each(function() {
-                var width = $(this).find('img:nth-child(1)').width();    // 图片实际宽度
-                var src = $(this).find('img:nth-child(1)').attr('src');
-                $(this).find('img:nth-child(1)').css('display','none');
-                $(this).append('<div style="max-width: 100%;width:'+width+'px;height:'+ width +'px;background:url('+src+') no-repeat center;background-size:90%;margin: 0 auto;" class="'+ img_left +'"></div>');
-                //$(this).find('img:nth-child(1)').attr({'src':'null'});
-            });
         });
     </script>
   </body>
