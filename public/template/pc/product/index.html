@@ -85,7 +85,7 @@
                   <li class="col-md-3 col-xs-4">
                       <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
                           {if condition="$vo['cover']"}
-                          <img src="__PUBLIC__/{$vo.cover}" id="img_{$vo.product_id}" class="img_left2"/>
+                          <img src="__PUBLIC__/{$vo.cover}" id="img_{$vo.product_id}" class="img_left2 auto_img"/>
                           {else/}
                           <img src="__TMPL_PUBLIC__/img/default.jpg"  class="img_left2" id="img_{$vo.product_id}"/>
                           {/if}

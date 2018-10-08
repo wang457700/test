@@ -27,7 +27,6 @@ class News extends Backend
         if ($this->request->isAjax()) {
             list($where, $sort, $order, $offset, $limit) = $this->buildparams(NULL);
 
-
             $where = array('post_type'=>2);
             $total = Db::name('Article')
                 ->where($where)

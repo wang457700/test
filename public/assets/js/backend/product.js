@@ -328,6 +328,12 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                // $(this).addClass("on").siblings().removeClass("on");
             });
         });
+
+
+
+
+
+
     });
 
 
@@ -384,6 +390,24 @@ function get_category(id,next,select_id){
         }
     });
 }
+
+
+    $("input[type='radio']").click(function(){
+        if($(this).attr('checked') == 'checked'){
+            $(this).removeAttr('checked');
+            if($(this).val() == 3){
+                $('#discount_time').hide();
+            }
+        }else{
+            $(this).attr('checked','checked');
+            if($(this).val() == 3){
+                $('#discount_time').show();
+            }
+        }
+
+        console.log($(this).attr('checked'));
+        console.log($(this).val());
+    });
 
     return Controller;
 });

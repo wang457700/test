@@ -57,8 +57,19 @@ class Index extends Frontend
 
         $news= Db::name('article')->where('post_type',2)->limit(3)->select();
 
+        //浏览记录排序
         $product_history_list = Session::get('product_history');
-
+        if($product_history_list){
+        foreach ($product_history_list as $k => $v) {
+            $time[] = $v['time'];
+            $product_history_list[$k]  = Db::name('goods')
+                ->field('product_name,product_id,product_name,cover')
+                ->where('product_id',$v['product_history'])
+                ->find();
+            $product_history_list[$k]['time'] = $v['time'];
+        }
+        array_multisort($time, SORT_DESC, $product_history_list);
+        }
 
         $share= Db::name('user_share')->limit(4)->select();
         $this->view->assign("top_ten", $top_ten);   //Top Ten
@@ -67,7 +78,7 @@ class Index extends Frontend
         $this->view->assign("health_food", $health_food);   //健康及有機產品
         $this->view->assign("science_food", $science_food);   //科技產品
         $this->view->assign("news", $news);   //最新消息
-        $this->view->assign("product_history_list", $product_history_list);   //浏览产品记录
+        $this->view->assign("product_history_list",$product_history_list);   //浏览产品记录
         $this->view->assign("slide", $slide);
         $this->view->assign("title", '首頁');
         return $this->view->fetch();

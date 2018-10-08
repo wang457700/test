@@ -4,7 +4,7 @@
 	 <div class="container">
        <div class="row">
 	        <div class="col-md-5 col-xs-11 login" style="">
-				<img src="__TMPL_PUBLIC__/img/logo-3.png" class="logo3">
+				<a href="{:url('index/index')}"><img src="__TMPL_PUBLIC__/img/logo-3.png" class="logo3"></a>
     			<form action="{:url('user/login')}" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return loginform()" id="login-form">
 	        		<div class="form-group label1">
                       <label for="exampleInputEmail1"></label>
@@ -21,8 +21,8 @@
 					<div class="form-group" style="border: 0;">
 				  		<button type="submit" class="btn btn-success btn-success-edit" style="margin-bottom: 1em"  id="login">登    錄</button>
 						{if condition="empty(sp_ip_ischina())"}
-						<button type="button" class="btn btn-default btn-default-edit" style="margin-bottom: 1em" id="facebook">Facebook 客戶登錄</button>
-						<button type="button" class="btn btn-default btn-default-edit" style="margin-bottom: 1em" id="customBtn" >Google 客戶登錄</button>
+						<button type="button" class="btn btn-default btn-default-edit" style="margin-bottom: 1em" id="facebook"><img src="__TMPL_PUBLIC__/img/logo-facebook.png" style="width:  30px;margin-right:  10px;">Facebook 客戶登錄</button>
+						<button type="button" class="btn btn-default btn-default-edit" style="margin-bottom: 1em" id="customBtn" ><img src="__TMPL_PUBLIC__/img/logo-google.png" style="width:  30px;margin-right:  10px;">Google 客戶登錄</button>
 						{/if}
 					 	<button type="button" class="btn btn-default btn-default-edit"><img src="__TMPL_PUBLIC__/img/logo-weixin.png" style="width:  30px;margin-right:  10px;">Wechat 登錄</button>
 					</div>

@@ -53,7 +53,7 @@
 					?>
 				{/foreach}
 				<li class="row" style="text-align: center;padding:20px;">
-					<a href="{:url('user/address_list')}" target="_blank">
+					<a href="{:url('user/address_list',array('close'=>1))}" target="_self">
 						<i class="fa fa-plus" aria-hidden="true"></i>
 						添加新的收貨地址
 					</a>
@@ -75,7 +75,7 @@
 		<div class="row cart-item-list">
 				<div class="col-md-4 col-sm-6 t2" style=""> 
 					<div class="row">
-						<img src="__PUBLIC__/{$vo.cover}" class="col-md-5 col-xs-5">
+						<img src="__PUBLIC__/{$vo.cover}" class="col-md-5 col-xs-5 auto_img">
 						<p class="col-md-6 col-xs-6">
 							<span class="color_75 bold">{$vo.product_name}&nbsp;&nbsp;&nbsp;&nbsp;{$vo.place_origin}</span>
 							產品型號：{$vo.freight_num}
@@ -106,10 +106,10 @@
 				<p style="font-size:22px;text-align: right;display: inline-block;float:right;">合計 (不含運費)：<span class="color_ro">$ {:number_format($all_total,2)}</span></p>
 				<p style="">
 					<input type="text" class="checkbox" name="coupon" placeholder="請輸入優惠碼" style="width: 200px;padding: 5px;height: 30px;" value=""/>
+					<a href="javascript:;" class="btn-warning-edit cx_coupon" style="background: #eee;color: #666666;padding: 5px 15px;" id="cx_coupon">确定</a>
 				</p>
 			</div>
 		</div>
-
 		<div class="row cart-item-footer" style="padding: 20px;">
 			<div class="col-md-8" style="" id="on_address">
 				{foreach name="address_list" item="vo"}
@@ -171,7 +171,22 @@
                $('#score_price_text').text('$ ' + scoreprice) ;
                $('#all_total').text('$ ' + payable) ;
             }
-        })
+        });
+
+        $("#cx_coupon").click(function(){
+				var coupon = $('input[name=coupon]').val();
+				$.ajax({
+					type: "POST",
+					url:"{:url('api/user/cx_coupon')}",
+					data:{'coupon':coupon},
+					dataType:"json",
+					success: function(data){
+
+
+					},
+        		});
+		});
+
     });
 
     function orderform(){
@@ -200,6 +215,19 @@
         });
         return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
     }
+
+    function refersh_window() {
+        var pageFresh  = $.cookie("orderok-refresh");
+        if (pageFresh) {
+            $.cookie('orderok-refresh', '');
+            window.location.reload();
+        }
+        console.log(pageFresh);
+    }
+
+    setInterval(function() {
+        refersh_window();
+    }, 2000);
 </script>
 </body>
 </html>

@@ -121,7 +121,6 @@ class User extends Frontend
      */
     public function user_email_activation(){
 
-
         $user_id= Session::get('user_id');
         $info=Db::name('user')->where(array('id'=>$user_id))->find();
 
@@ -139,6 +138,7 @@ class User extends Frontend
                 ->subject(__("請激活你的帳號"))
                 ->message(''.$url.'')
                 ->send();
+
             if($result){
                 $this->success('發送成功！');
             }else{

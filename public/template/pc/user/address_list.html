@@ -83,14 +83,11 @@
 
                         <div class="form-group">
                           <label class="col-sm-2 control-label"><span class="color_ro">*</span>手機號碼</label>
-                          <div class="col-sm-3">
-                            <select class="form-control select_e" name="phone_type">
-                              <option value="中國香港+852">中國香港+852</option>
-                              <option value="香港">香港</option>
-                              <option value="香港">香港</option>
-                            </select>
+
+                          <div class="col-sm-2">
+                             <input type="text" class="form-control input_e" id="phone_type" placeholder="" value="{$row.phone|default = '+852'}"  name="phone_type" required oninvalid="setCustomValidity('请输入手機號碼！')"  oninput="setCustomValidity('') " onkeyup="value=value.replace(/[^\d]/g,'') " ng-pattern="/[^a-zA-Z]/" maxlength="11">
                           </div>
-                          <div class="col-sm-6" >
+                          <div class="col-sm-7" >
                             <input type="text" class="form-control input_e" id="phone" placeholder="" value="{$row.phone}"  name="phone" required oninvalid="setCustomValidity('请输入手機號碼！')" oninput="setCustomValidity('') "onkeyup="value=value.replace(/[^\d]/g,'') " ng-pattern="/[^a-zA-Z]/" maxlength="11">
                           </div>
                           
@@ -197,6 +194,7 @@
         }
 
         function addressform(){
+            var close = '<?php echo input("close") ?>' ;
             // jquery 表单提交
             $("#address-form").ajaxSubmit(function(data) {
               console.log(data);
@@ -205,7 +203,12 @@
               }else{
                 $.message(data.msg);
                 setTimeout(function () {
-                   window.location = data.url
+                    if(close == 1){
+                        history.go(-1);
+                        $.cookie("orderok-refresh",1,{ expires: 7, path: '/' });
+                    }else{
+                        window.location = data.url;
+                    }
                 },1000);
               }
             });

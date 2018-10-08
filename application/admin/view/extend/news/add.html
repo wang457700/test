@@ -1,4 +1,19 @@
 <form id="edit-form" class="form-horizontal form-ajax" role="form" data-toggle="validator" method="POST" action="" style="min-height: 450px;">
+
+    <div class="form-group">
+        <label for="c-image" class="control-label col-xs-12 col-sm-2">封面:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="input-group">
+                <input id="c-image" class="form-control" size="50" name="row[smeta]" type="text" value="">
+                <div class="input-group-addon no-border no-padding">
+                    <span><button type="button" id="plupload-image" class="btn btn-danger plupload" data-input-id="c-image" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image"><i class="fa fa-upload"></i> 上传</button></span>
+                    <span><button type="button" id="fachoose-image" class="btn btn-primary fachoose" data-input-id="c-image" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> 选择</button></span>
+                </div>
+                <span class="msg-box n-right"></span>
+            </div>
+            <ul class="row list-inline plupload-preview" id="p-image"></ul>
+        </div>
+    </div>
     <div class="form-group">
         <label for="c-type" class="control-label col-xs-12 col-sm-2">类型:</label>
         <div class="col-xs-12 col-sm-8">
@@ -25,10 +40,10 @@
             <input type="text" class="form-control" id="post_excerpt" name="row[post_excerpt]" value="" data-rule="required;post_excerpt" />
         </div>
     </div>
-   <div class="form-group">
-        <label for="username" class="control-label col-xs-12 col-sm-2">詳情</label>
+    <div class="form-group">
+        <label for="post_date" class="control-label col-xs-12 col-sm-2">发布时间</label>
         <div class="col-xs-12 col-sm-8">
-            <textarea id="c-post_content" data-rule="" class="form-control editor" rows="15" name="row[post_content]" cols="50"></textarea>
+            <input id="c-starttime" class="form-control datetimepicker " data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="post_date" type="text" value="{:date('Y-m-d H:i:s',time())}" style="width: 40%">
         </div>
     </div>
     <div class="form-group">
@@ -37,25 +52,18 @@
             {:build_radios('row[post_status]', ['1'=>'顯示', '0'=>'隐藏'],1)}
         </div>
     </div>
+   <div class="form-group">
+        <label for="username" class="control-label col-xs-12 col-sm-2">詳情</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea id="c-post_date" data-rule="" class="form-control editor" rows="15" name="row[post_content]" cols="50"></textarea>
+        </div>
+    </div>
+
     <div class="form-group hidden layer-footer">
         <label class="control-label col-xs-12 col-sm-2"></label>
         <div class="col-xs-12 col-sm-8">
             <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
             <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="c-image" class="control-label col-xs-12 col-sm-2">封面:</label>
-        <div class="col-xs-12 col-sm-8">
-            <div class="input-group">
-                <input id="c-image" class="form-control" size="50" name="row[smeta]" type="text" value="">
-                <div class="input-group-addon no-border no-padding">
-                    <span><button type="button" id="plupload-image" class="btn btn-danger plupload" data-input-id="c-image" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image"><i class="fa fa-upload"></i> 上传</button></span>
-                    <span><button type="button" id="fachoose-image" class="btn btn-primary fachoose" data-input-id="c-image" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> 选择</button></span>
-                </div>
-                <span class="msg-box n-right"></span>
-            </div>
-            <ul class="row list-inline plupload-preview" id="p-image"></ul>
         </div>
     </div>
 </form>

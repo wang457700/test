@@ -375,6 +375,21 @@ function count_cart_num($user_id)
     return $num;
 }
 
+/**
+ * 匯率
+ * $price 金额
+ * $type 类型  HKD,RMB
+ */
+function sp_exchangerate($type = 'RMB',$price)
+{
+    $onprice = '';
+    if($type == 'RMB'){
+        $rmb = config('site')['exchangerate']['rmb'];
+        $onprice = $price * $rmb;
+    }
+    return $onprice;
+}
+
 
 /**
 * 计算一个订单总金额
@@ -439,7 +454,7 @@ function create_tourist()
     $tourist_id = getRandomString(3);
     $data = array(
         'username'=>'youke'.$tourist_id,
-        'nickname'=>'游客'.$tourist_id,
+        'nickname'=>'遊客'.$tourist_id,
         'user_type'=>'3',
         'is_eamil_status'=>'1',
         'joinip'=>get_client_ip(0,true),

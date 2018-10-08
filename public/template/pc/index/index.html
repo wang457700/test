@@ -106,19 +106,44 @@
 
 
        <div class="row" style="padding: 20px 0;">
-        <div class="col-md-5 col-xs-5 col-lg-5" style="padding-left: 0;">
+        <div class="col-md-5 col-xs-5 col-lg-5 " style="padding-left:0;padding-right: 45px;">
              <p class="index_title">我的記錄</p>
-             <div class="row  f1">
-              <div class="col-md-5 col-xs-5 list">
-					<div style="padding: 1em;"><img src="__TMPL_PUBLIC__/img/f2_1.jpg" class="auto_img"></div>
-                    <p>安而康成人纸尿片</p>
-              </div>
-               <div class="col-md-5 col-xs-5 list margin_0">
-					<div style="padding: 1em;"><img src="__TMPL_PUBLIC__/img/f2_1.jpg" class="auto_img"></div>
-                    <p>安而康成人纸尿片</p>
-               </div>
+            <div class="swiper-container-my" style="overflow: hidden;position: relative;">
+                 <div class="swiper-wrapper row  f1" style="margin: 0px;">
+
+                     {foreach  name="product_history_list" item='vo'}
+                     <div class="swiper-slide col-md-4 col-xs-4 list ">
+                         <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
+                         <div style="padding: 1em;">
+                             {if condition="$vo['cover']"}
+                             <img src="__PUBLIC__/{$vo.cover}" class="auto_img">
+                             {else/}
+                             <img src="__TMPL_PUBLIC__/img/default.jpg" class="auto_img">
+                             {/if}
+                         </div>
+                         <p class="nowrap">{$vo.product_name}</p>
+                         </a>
+                     </div>
+                     {/foreach}
+                </div>
             </div>
+            <div class="swiper-button-next next-my"></div>
         </div>
+       <script>
+           var swiper = new Swiper('.swiper-container-my', {
+               slidesPerView: 2,
+               spaceBetween: 20,
+               lazy: {
+                   loadPrevNext: true,
+               },
+               loop: true,
+               loopFillGroupWithBlank: true,
+               navigation: {
+                   nextEl: '.next-my',
+               },
+           });
+       </script>
+
         <div class="col-md-7 f2 col-xs-7 col-lg-7" style="padding: 0;">
             <p class="index_title" style="background-position-y: -25px;"> Top Ten</p>
             <div class="swiper-container2" style="overflow: hidden;position: relative;">
@@ -142,16 +167,15 @@
                 </div>
                 <!-- Add Arrows -->
               </div>
-               <div class="swiper-button-next"></div>
+               <div class="swiper-button-next next"></div>
                 <script>
                     var swiper = new Swiper('.swiper-container2', {
                       slidesPerView: 3,
                       spaceBetween: 30,
-                      slidesPerGroup: 3,
                       loop: true,
                       loopFillGroupWithBlank: true,
                       navigation: {
-                        nextEl: '.swiper-button-next',
+                        nextEl: '.next',
                       },
                     });
                   </script>

@@ -130,9 +130,10 @@ class Product extends Frontend
     public function detail()
     {
         $goods_id = input('id');
+        $goods =  Db::name('goods')->where('product_id',$goods_id)->find();
         $this->product_history($goods_id);
 
-        $goods =  Db::name('goods')->where('product_id',$goods_id)->find();
+        //Session::set('product_history','');
         $goods_list =  Db::name('goods')->limit(6)->select();
         $comment_list =  Db::name('goods_comment')
             ->alias('a')->field('a.*,a.user_id as id,c.username,c.level')
@@ -193,10 +194,11 @@ class Product extends Frontend
             unset($history[$product_array]);
         }
         $row=array();
-        $row['keyword']=$product_array;
+        $row['product_history']=$product_array;
+        $row['time']=time();
         $history[$product_array]=$row;
-//保证只有6条历史记录
-        if(count($history)>6){
+//保证只有10条历史记录
+        if(count($history)>10){
             $key=key($history);
             unset($history[$key]);
         }

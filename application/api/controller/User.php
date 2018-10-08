@@ -389,5 +389,56 @@ class User extends Api
     }
 
 
+    //查询优惠券
+    public function cx_coupon(){
+        $user = Db::name('user')->where('id',Session::get('user_id'))->find();
+        $coupon_sn = input('post.coupon');
+        /*优惠券*/
+        $coupon  = Db::name('coupon')->where(array('coupon_sn'=>$coupon_sn))->find();
+        $coupon_price =  0;
+        $coupon_id =  0;
+        if($coupon){
+            if($coupon['coupon_term']){ //1有限期
+                if(strtotime(date('Y-m-d H:i:s',strtotime('+1 day',strtotime($coupon['coupon_end_time'])))) < time()){
+                    $this->error('優惠碼已失效！');
+                }
+                if(strtotime($coupon['coupon_start_time']) > time()){
+                    $this->error('優惠時間還沒有開始！');
+                }
+            }
+            if($coupon['coupon_num'] <= 0){
+                $this->error('優惠券被抢光了！');
+            }
+
+            $level = array('1'=>'普通會員','2'=>'白金會員','3'=>'金牌會員','4'=>'商业會員');
+            if(strstr($coupon['user_level'],strval($user['level'])) == false && $coupon['user_level']!=0){
+                $this->error('優惠碼不適合'.$level[$user['level']].'使用！');
+            }
+
+            if($coupon['min_money'] > ($all_total-$score_price)){
+                $this->error('最低消费'.$coupon['min_money'].'，才能使用優惠碼！');
+            }
+
+            if($coupon['coupon_type'] == 1){ //1现金券 2折扣
+                $coupon_price = $coupon['coupon_cash'];
+            }else{
+                $coupon_price = ($coupon['coupon_discount']/100)*($all_total-$score_price);
+            }
+
+            if(strval($coupon_price) >= strval($all_total-$score_price)){
+                $coupon_price = ($all_total-$score_price);
+            }
+            $coupon_id = $coupon['coupon_id'];
+
+
+            $this->success('ok', $coupon_price);
+        }else{
+            $this->error('優惠碼有誤！');
+        }
+    }
+
+
+
+
 
 }

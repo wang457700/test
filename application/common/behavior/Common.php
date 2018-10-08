@@ -74,8 +74,6 @@ class Common
                     Config::set('view_replace_str.__TMPL_PUBLIC__', preg_replace("/\/public\/$/", '', $url . '/').'/public/template/pc/common');
             }
         }
-
-
     }
 
     public function addonBegin(&$request)

@@ -20,6 +20,7 @@ return array (
     'article' => 'Article',
     'test' => 'Test',
     'product' => '产品',
+    'news' => '新闻',
   ),
   'configgroup' => 
   array (
@@ -31,12 +32,12 @@ return array (
     'aaaaaa' => 'Aaaaaa',
   ),
   'mail_type' => '1',
-  'mail_smtp_host' => 'smtp.qq.com',
+  'mail_smtp_host' => 'smtp.gmail.com',
   'mail_smtp_port' => '587',
-  'mail_smtp_user' => '457700516@qq.com',
-  'mail_smtp_pass' => 'ljwszifunczgcaej',
+  'mail_smtp_user' => 'smtpout@wahhong.hk',
+  'mail_smtp_pass' => '9KqFL6&Y',
   'mail_verify_type' => '1',
-  'mail_from' => '457700516@qq.com',
+  'mail_from' => 'smtpout@wahhong.hk',
   'integral' => 
   array (
     'obtain' => '10',
@@ -44,10 +45,10 @@ return array (
   ),
   'user_upgrade' => 
   array (
-    'level1' => '200',
+    'level1' => '300',
     'level2' => '400',
-    'level3' => '600',
-    'level4' => '60066',
+    'level3' => '8000',
+    'level4' => '10000',
   ),
   'index_seo' => 
   array (
@@ -70,7 +71,11 @@ return array (
   'freight' => 
   array (
     'freight' => '100',
-    'no_freight' => '1000',
+    'no_freight' => '10000',
     'remote_area' => '200',
+  ),
+  'exchangerate' => 
+  array (
+    'rmb' => '0.8833',
   ),
 );

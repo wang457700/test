@@ -41,7 +41,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-12 ">
-                        <label for="rule" class="control-label col-xs-12 col-md-5 col-lg-2">免服务费地区：</label>
+                        <label for="rule" class="control-label col-xs-12 col-md-5 col-lg-2">免服務費地區：</label>
                         <div class="col-xs-12  col-md-7 col-lg-7" style="padding-top: 7px;">
                             {:implode(' ',$region)}   <a href="javascript:;" id="fastadmin">修改</a>
                         </div>
@@ -83,22 +83,22 @@
                 <form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="{:url('general.config/meta_edit')}">
                     <div  class="form-group">
                         <div class="col-md-12 col-lg-6"  style="margin-bottom: 10px;">
-                            <label for="rule" class="control-label col-xs-12 col-sm-4">积分获取：</label>
+                            <label for="rule" class="control-label col-xs-12 col-sm-4">積分獲取：</label>
                             <div class="col-xs-12 col-sm-6">
                                 <input type="text" class="form-control NumText" id="rule" name="row[integral][obtain]" value="{$config_data.integral.obtain}" />
                             </div>
                             <div class="col-xs-12 col-sm-2">=1分</div>
                         </div>
                         <div class="col-md-12 col-lg-6"  style="margin-bottom: 10px;">
-                            <label for="rule" class="control-label col-xs-12 col-sm-4">积分使用：</label>
+                            <label for="rule" class="control-label col-xs-12 col-sm-4">積分使用：</label>
                             <div class="col-xs-12 col-sm-6">
                                 <input type="text" class="form-control NumText" id="rule" name="row[integral][use]" value="{$config_data.integral.use}" />
                             </div>
                             <div class="col-xs-12 col-sm-2">=$1</div>
                         </div>
                     </div>
-                    <div class="title" style="padding-top: 0;">会员升级</div>
-                    <?php $level = array('level1'=>'普通会员','level2'=>'白金会员','level3'=>'金牌会员','level4'=>'商业会员',);?>
+                    <div class="title" style="padding-top: 0;">會員陞級</div>
+                    <?php $level = array('level1'=>'普通會員','level2'=>'白金會員','level3'=>'金牌會員','level4'=>'商業會員',);?>
                     <div  class="form-group">
                         {foreach $config_data.user_upgrade as $index=>$item}
                         <div class="col-md-12 col-lg-6" style="margin-bottom: 10px;">
@@ -109,6 +109,16 @@
                             <div class="col-xs-12 col-sm-2">=分</div>
                         </div>
                         {/foreach}
+                    </div>
+                    <div class="title" style="padding-top: 0;">匯率</div>
+                    <div  class="form-group">
+                        <div class="col-md-12 col-lg-6"  style="margin-bottom: 10px;">
+                            <label for="rule" class="control-label col-xs-12 col-sm-4">HKD 1 = RMB</label>
+                            <div class="col-xs-12 col-sm-6">
+                                <input type="text" class="form-control NumDecText" id="rule" name="row[exchangerate][rmb]" value="{$config_data.exchangerate.rmb}" />
+                            </div>
+
+                        </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-xs-12 col-sm-2"></label>
@@ -129,10 +139,10 @@
             <div class="tab-pane active">
                 <form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="{:url('general.config/meta_edit')}">
                     <div class="col-lg-2  col-md-2 meta_title">
-                        主页
+                        主頁
                     </div>
                     <div  class="form-group form-group2 col-lg-10 col-md-10" style="border-bottom:  1px solid #eee;padding-bottom:  20px;margin: 0;">
-                        <?php $ch = array('title'=>'标题','keywords'=>'关键字','description'=>'描述');?>
+                        <?php $ch = array('title'=>'標題','keywords'=>'關鍵字','description'=>'描述');?>
                         {foreach $config_data.index_seo as $index=>$item}
                         <div class="col-sm-12">
                             <label for="rule" class="control-label col-xs-2 col-md-2">{$ch[$index]}</label>
@@ -143,7 +153,7 @@
                         {/foreach}
                     </div>
                     <div class="col-lg-2  col-md-2 meta_title">
-                        产品列表
+                        產品列表
                     </div>
                     <div  class="form-group form-group2 col-lg-10 col-md-10" style="border-bottom:  1px solid #eee;padding-bottom:  20px;margin: 0;">
                         {foreach $config_data.product_seo as $index=>$item}
@@ -156,7 +166,7 @@
                         {/foreach}
                     </div>
                     <div class="col-lg-2 col-md-2  meta_title" style="line-height: 130px;text-align:  center;">
-                        社区服务资讯
+                        社區服務資訊
                     </div>
                     <div  class="form-group form-group2  col-lg-10 col-md-10" style="border-bottom:  1px solid #eee;padding-bottom:7px;margin: 0;">
 

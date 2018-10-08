@@ -76,9 +76,8 @@
 
     <div class="form-group">
         <div class="col-sm-12">
-            <label for="discount_type-1" class="control-label col-xs-12 col-sm-3 discount">
-                <input id="discount_type-1" type="radio" value="1" name="discount_type" {$product_list['discount_type']==1?'checked="checked"':''}/>
-                價格</label>
+            <input id="discount_type-1" type="text" value="1" name="discount_type"{$product_list['discount_type']==1?'checked="checked"':''} style="display: none"/>
+            <div for="discount_type-1" class="control-label col-xs-12 col-sm-3 discount">價格</div>
             <div class="col-xs-12 col-sm-5">
                 <input type="text" class="form-control NumDecText" id="data5" name="price" value="{$product_list.price}" data-rule=";data5" />
             </div>

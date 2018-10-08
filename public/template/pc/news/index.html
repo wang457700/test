@@ -29,7 +29,11 @@
                    {foreach name="list" item="vo"}
                         <li class="row">
                             <div class="col-sm-3 d1">
-                                <img src="{:fa_get_image_url($vo['smeta'])}" />
+                                {if condition="$vo['smeta']"}
+                                  <img src="{:fa_get_image_url($vo['smeta'])}" />
+                                {else/}
+                                    <img src="__TMPL_PUBLIC__/img/default.jpg"/>
+                                {/if}
                             </div>
                             <div class="col-sm-7 d2">
                                 <h4><a href="{:url('home/news/article',array('id'=>$vo['id']))}">{$vo.post_title}</a></h4>
