@@ -87,8 +87,10 @@ class Product extends Frontend
         $new_list =  Db::name('article')->where(array('post_type'=>2,'post_title'=>array('like',"%$keyword%")))->select();
         $goods_list =  Db::name('goods')->where(array('is_on_sale'=>1,'product_name'=>array('like',"%$keyword%")))->select();
 
+        //记录历史纪录
         $this->keyword($keyword);
         $keyword_list = Session::get('keyword');
+
         $this->view->assign("new_list",$new_list);
         $this->view->assign("product_list",$goods_list);
         $this->view->assign("input",input('categoryid',14));
@@ -128,6 +130,8 @@ class Product extends Frontend
     public function detail()
     {
         $goods_id = input('id');
+        $this->product_history($goods_id);
+
         $goods =  Db::name('goods')->where('product_id',$goods_id)->find();
         $goods_list =  Db::name('goods')->limit(6)->select();
         $comment_list =  Db::name('goods_comment')
@@ -178,7 +182,27 @@ class Product extends Frontend
         }
     }
 
-
+    public function product_history($product_array){
+//判断session里有没有history
+        $history=Session::get('product_history');//此处用了tp框架
+        if(empty($history)){
+            $history=array();
+        }
+//取出重复浏览的商品只保留最新的
+        if( isset($history[$product_array])){
+            unset($history[$product_array]);
+        }
+        $row=array();
+        $row['keyword']=$product_array;
+        $history[$product_array]=$row;
+//保证只有6条历史记录
+        if(count($history)>6){
+            $key=key($history);
+            unset($history[$key]);
+        }
+//储存在session里
+        Session::set('product_history',$history);
+    }
 
 
 

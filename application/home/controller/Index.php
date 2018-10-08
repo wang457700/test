@@ -7,6 +7,7 @@ use think\Db;
 use app\common\library\Token;
 use app\common\model\Category as CategoryModel;
 use fast\Tree;
+use think\Session;
 
 
 class Index extends Frontend
@@ -56,6 +57,9 @@ class Index extends Frontend
 
         $news= Db::name('article')->where('post_type',2)->limit(3)->select();
 
+        $product_history_list = Session::get('product_history');
+
+
         $share= Db::name('user_share')->limit(4)->select();
         $this->view->assign("top_ten", $top_ten);   //Top Ten
         $this->view->assign("share", $share); //共享产品
@@ -63,6 +67,7 @@ class Index extends Frontend
         $this->view->assign("health_food", $health_food);   //健康及有機產品
         $this->view->assign("science_food", $science_food);   //科技產品
         $this->view->assign("news", $news);   //最新消息
+        $this->view->assign("product_history_list", $product_history_list);   //浏览产品记录
         $this->view->assign("slide", $slide);
         $this->view->assign("title", '首頁');
         return $this->view->fetch();
