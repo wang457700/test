@@ -1,0 +1,149 @@
+<script src="__TMPL_PUBLIC__/js/mui.min.js"></script>
+<script src='__PUBLIC__/assets/js/message/messageIE.js'></script>
+<script src='__PUBLIC__/assets/js/message/message.js'></script>
+<script src='__PUBLIC__/assets/js/message/messageIE.js'></script>
+<script src="__TMPL_PUBLIC__/js/scripts.js"></script>
+<script>
+    mui.init({
+    });
+
+    /* 加入购物车 */
+    mui('body').on('tap','.adds,#adds' ,function(){
+        var product_id = $(this).data('productid');
+        var name = $(this).data('name');
+
+        var flyimg = $(this).data('flyimg');
+        var img = $('#img_' + product_id);
+        if(flyimg){
+            var flyElm = img.clone().css('opacity','0.7');
+            flyElm.css({
+                'z-index': 9000,
+                'display': 'block',
+                'position': 'absolute',
+                'b': 'absolute',
+                'top': img.offset().top +'px',
+                'left': img.offset().left +'px',
+                'width':img.width() +'px',
+                'height':img.height() +'px'
+            });
+            $('body').append(flyElm);
+            flyElm.animate({
+                top:$('.shopping').offset().top,
+                left:$('.shopping').offset().left,
+                width:0,
+                height:0,
+                opacity:0,
+            },'slow');
+        }
+        $.ajax({
+            type: "POST",
+            url: "{:url('cart/checkin_cart')}",
+            dataType: 'json',
+            data:{product_id:product_id},
+            success: function(data) {
+                if (data.code) {
+                    $.message(data.msg);
+                    $('#shopping_total').text(Number(data.total));
+                }else{
+                    $.message({message:data.msg,type:'warning',time:'3000'});
+                }
+            }
+        });
+    });
+
+
+
+    /* 公共get */
+    mui('body').on('tap','.js-ajax-delete' ,function(){
+        var url = $(this).attr('href');
+        var location = $(this).data('location');
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType:"json",
+            success: function(data) {
+                if(data.code == 0){
+                    $.message({message:data.msg,type:'warning',time:'3000'});
+                }else{
+                    $.message(data.msg);
+                    setTimeout(function () {
+                        if(location == false){
+                            return false;
+                        }
+                        if(data.url){
+                            window.location = data.url;
+                        }else {
+                            window.location.reload()
+                        }
+                    },500);
+                }
+            }
+        });
+    });
+
+
+    /*删除*/
+    mui('body').on('tap','.js-ajax-delete' ,function(){
+        var url = $(this).data('ajaxurl');
+        if(confirm("确定要刪除吗？")){
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType:"json",
+                success: function(data) {
+                    if(data.code == 0){
+                        $.message({message:data.msg,type:'warning',time:'3000'});
+                    }else{
+                        $.message(data.msg);
+                        setTimeout(function () {
+                            window.location.reload()
+                        },500);
+                    }
+                }
+            });
+        }
+    });
+
+    function MoveBox(obj) {
+        var divTop = $(obj).offset().top;
+        var divLeft = $(obj).offset().left;
+        $(obj).css({
+            "position": "absolute",
+            "z-index": "0",
+            "left": divLeft + "px",
+            "top": divTop + "px"
+        });
+        $(obj).parent().append($(obj).clone());
+        $(obj).animate({
+            "left": ($("#posBtnR").offset().left) + "px",
+            "top": $("#posBtnR").offset().top + "px",
+            "width": "100px",
+            "height": "70px"
+        }, 1000, function() {
+            $(obj).animate({
+                "left": $("#posBtnR").offset().left + "px",
+                "top": $("#posBtnR").offset().top + "px"
+            }, 1000);
+            num++;
+            $("#btn_num", parent.document).text(num).animate({
+                'opacity': 1,
+                'marginTop': '0'
+            }, 500, function() {
+                setTimeout(function() {
+                    $("#btn_num").hide()
+                }, 8000);
+            });
+        });
+    }
+
+
+    mui('body').on('tap','a' ,function(){
+        if(this.getAttribute('href')){
+            location.href = this.getAttribute('href');
+        }
+
+        if(this.getAttribute('data-ajaxurl')){
+
+        }
+    });
+</script>

@@ -1,0 +1,328 @@
+{include file="layout/public_head" /}
+<!--头部 str-->
+{include file="common/header"/}
+<!--头部 end-->
+{include file="common/nav"/}
+  <style type="text/css">
+      .product li {border-top:0;}
+  </style>
+  <body style="background: url(__TMPL_PUBLIC__/img/index_bg.jpg) repeat-y;"> 
+    <div class="container">
+  		<div class="alzx-crumbs alzx-crumbs-f1"> 
+  			<div class="alzx-con" style="border:  0;margin: 0;"> 
+  				<a class="crumbs-01" href="{:url('index/index')}">主頁</a>
+                {foreach name="getparents" item="vo"}
+                    {if condition="$vo['id'] neq 14"}
+                        <em>&gt;</em>
+                        <a href="{:url('product/index',array('categoryid'=>$vo['id']))}"><span class="crumbs-02">{$vo.name}</span></a>
+                    {/if}
+                {/foreach}
+  			</div>
+  		</div>
+	
+      <div class="product_detail bgcolor_white">
+
+          <div class="row hd">
+            <div class="col-md-6" style="">
+                    <div class="imgdet wrap">
+                      <div class="imglist">
+                        <ul>
+                            <li class="active"><img src="__PUBLIC__/{$goods.cover}" alt=""></li>
+                        {foreach name="img_url" item="vo"}
+                            {if condition="$vo"}
+                                  <li class=""><img src="__PUBLIC__/{$vo}" alt=""></li>
+                            {/if}
+                        {/foreach}
+                        </ul>
+                      </div>
+                      <div class="imgpart">
+                        <div class="pic">
+                          <img src="__PUBLIC__/{$goods.cover}" alt="">
+                          <div class="magnify"></div>
+                        </div>
+                        <div class="bigpic">
+                          <img src="__PUBLIC__/{$goods.cover}" alt="">
+                      </div>
+
+                      </div>
+                    </div>
+                    <script src="__TMPL_PUBLIC__/js/imgdet.js"></script>
+            </div>
+            <div class="col-md-6">
+                <div class="title_detail">
+                  <h4>{$goods.product_name}</h4>
+                  <p>{$goods.summary}</p>
+                </div>
+                <div class="row price">
+                    <div class="col-md-6" style="">
+                        港幣：<span>$<i>{:product_price($goods['product_id'])}</i></span>
+                    </div>
+
+                    <div class="col-md-6" style="">
+                        人民幣約：$xxxx元
+                    </div>
+                </div>
+                <div class="row spec">
+                    <div class="col-md-6" style="">
+                       商品編號：{$goods.freight_num}
+                    </div>
+                    <div class="col-md-6" style="">
+                        商品品牌：{$goods.brand}
+                    </div>
+                    <div class="col-md-6" style="">
+                        郵寄重量：{$goods.weight_ioc}克（g）
+                    </div>
+                    <div class="col-md-6" style="">
+                        可售庫存：{$goods.stock}件
+                    </div>
+                </div>
+            <form action="{:URL('cart/order_ok')}" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return cartform()" id="cart-form">
+
+                <div class="row number">
+                  <div class="col-md-12" style="">
+                     数量：
+                    <input id="min" name="" type="button" value="-" class="reduce" />  
+                    <input id="text_box" name="goods_num[]" type="text" value="1" style="width:60px;text-align: center"/>
+                    <input id="add" name="" type="button" value="+" class="add" />
+                  </div>
+                </div>
+                <div class="row" style="padding:10px 0 ">
+                   <div class="col-md-5 col-xs-6" style="">
+                        <button type="submit" class="btn btn-default btn-default-edit" style="margin-bottom: 1em">{$user_id?'快速購買':'遊客購買'}</button>
+                    </div>
+                     <div class="col-md-5 col-xs-6" style="">
+                        <button type="button" class="btn btn-warning btn-warning-edit" id="adds" data-productid="{$goods.product_id}"><img src="__TMPL_PUBLIC__/img/invest_detail_addshop.png" style="width:  20px;margin-right:  10px;">加入購物車</button>
+                    </div> 
+                </div>
+                <input type="hidden" name="goods_id[]" value="{$goods.product_id}">
+                </form>
+              <div></div>
+            </div>
+          </div>
+          <div> 
+              <div  class="xg-title">
+                  相關產品
+              </div>
+              <div class="product">
+                    <ul class="row" style="border-top: 1px solid #e5e5e5;margin: 0;">
+                        {foreach name="goods_list" item="vo"}
+                        {if condition="$key lt 5"}
+                            <li class="col-md-2 col-xs-3">
+                                <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
+                                {if condition="$vo['cover']"}
+                                    <img src="__PUBLIC__/{$vo.cover}">
+                                {else/}
+                                 <img src="__TMPL_PUBLIC__/img/default.jpg">
+                                {/if}
+                                </a>
+                                <div class="d2">
+                                    <p class="nowrap"><a href="{:url('product/detail',array('id'=>$vo['product_id']))}">{$vo.product_name}</a></p>
+                                      {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
+                                      {if condition="$vo['discount_type'] eq 2"}<p class="color_ro">特惠全民享</p>{/if}
+                                      {if condition="$vo['discount_type'] eq 3"}<p class="color_ro">优惠全民享</p>{/if}
+                                    <div>
+                                        <span class="product_price"><i>￥</i>{:product_price($vo['product_id'])}</span>
+                                        <a class="adds" data-productid="{$vo.product_id}">+</a>
+                                    </div>
+                                </div>
+                            </li>
+                        {/if}
+                        {/foreach}
+                    </ul>
+               </div>
+          </div>
+          <div>
+              <?php
+                  $page =  input('page',0);
+                ?>
+              <div class="investment_f">
+                <div class="investment_title">
+                  <div class="{if condition="$page eq 0"}on{/if}">商品詳情</div>
+                  <div class="{if condition="$page"}on{/if}">用戶評論({$comment_list->total()})</div>
+                </div>
+                <div class="investment_con">
+                  <div class="investment_con_list" style="display: {if condition="$page eq 0"}block{/if};">
+                    {$goods.content}
+                  </div>
+                  <div class="investment_con_list comment" style="display: {if condition="$page"}block{/if};">
+                      <div class="xuan font16 color_ro">
+                         发表评论
+                      </div>
+                      <div class="message" style="padding:  20px;">
+                      <form action="{:url('product/comment')}" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return commentform()" id="comment-form">
+                          <input type="hidden" name="goods_id" value="{$goods.product_id}">
+                          <div class="row" style="">
+                              <textarea rows="3" cols="20" style="height:100px;margin: 0 auto;border:  1px solid #eee;padding: 10px;" class="col-md-12" placeholder="请填写您想发表的评论" name="content"></textarea>
+                          </div>
+                          <br>
+                          星级评分：
+                          <div id="star1" style="display: inline-block;width:140px !important;"></div>
+                          <div id="result1"></div>
+                          <br>
+                          <br>
+                          <div class="row" style="">
+                            <button type="submit" class="btn btn-warning btn-warning-edit col-md-1" style="width:120px">发表评论</button>
+                          </div>
+                      </form>
+                      </div>
+                        <div class="xuan">
+                          <a href="" class="color_ro">全部評價({$comment_list->total()})</a>
+                          <a href="">滿意 (0）</a>
+                          <a href="">一般 (0）</a>
+                          <a href="">不滿意 (0）</a>
+                        </div>
+                        <ul class=" pllist">
+                        {foreach name="comment_list" item="vo"}
+                          <li class="row">
+                                <div class="col-md-2 col-xs-3 d1">
+                                    {for start="0" end="$vo['score']" name="i"}
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                    {/for}
+                                    <p>{:date('Y-m-d',strtotime($vo['addtime']))}<span>{:date('H:i',strtotime($vo['addtime']))}</span></p>
+                                </div>
+                                <div class="col-md-7 col-xs-6 d2">
+                                    {$vo.content}
+                                </div>
+                                <div class="col-md-3 col-xs-3 d3">
+                                  <div class="row">
+                                      <p class="col-md-8 col-xs-8" style="padding: 0;">
+                                          {:substr($vo['username'],0,-3)}****<br>
+                                          <span>{$level[$vo['level']]}</span>
+                                      </p>
+                                  </div>
+                                </div>
+                          </li>
+                        {/foreach}
+
+                        {if condition="count($comment_list) eq 0"}
+                        <div style="text-align:  center;padding:  20px;">暂时没有评论</div>
+                        {/if}
+                        </ul>
+                        <div class="pagination">
+                            {$comment_list->render()}
+                        </div>
+                        <div class="clear"></div>
+                  </div> 
+                </div>
+              </div>
+          </div>
+
+      </div>
+    </div>
+
+<script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
+<script src="__TMPL_PUBLIC__/js/scripts.js"></script>
+<script src="__TMPL_PUBLIC__/js/star.js"></script>
+{include file="common/script" /}
+    <script type="text/javascript">
+        rat('star1','result1',1);
+        ;
+        function rat(star,result,m){
+
+            star= '#' + star;
+            result= '#' + result;
+            $(result).hide();//将结果DIV隐藏
+
+            $(star).raty({
+                hints: ['1', '2', '3', '4', '5'],
+                number:5,
+                path: "__TMPL_PUBLIC__/img/",
+                starOff: 'star-off-big.png',
+                starOn: 'star-on-big.png',
+                size: 24,
+                start: 3,
+                showHalf: true,
+                //target: result,
+                //targetKeep : false,//targetKeep 属性设置为true，用户的选择值才会被保持在目标DIV中，否则只是鼠标悬停时有值，而鼠标离开后这个值就会消失
+                click: function (score, evt){
+                    //第一种方式：直接取值
+
+                }
+            });
+        }
+    </script>
+   <script>
+      $(document).ready(function(){
+      //获得文本框对象
+      var t = $("#text_box");
+      //初始化数量为1,并失效减
+      $('#min').attr('disabled',true);
+          //数量增加操作
+          $("#add").click(function(){    
+              // 给获取的val加上绝对值，避免出现负数
+              t.val(Math.abs(parseInt(t.val()))+1);
+              if (parseInt(t.val())!=1){
+              $('#min').attr('disabled',false);
+              };
+          }) 
+          //数量减少操作
+          $("#min").click(function(){
+          t.val(Math.abs(parseInt(t.val()))-1);
+          if (parseInt(t.val())==1){
+          $('#min').attr('disabled',true);
+          };
+          })
+       
+      });
+
+      $(function() {
+          function tabs(tabTit, on, tabCon) {
+              $(tabCon).each(function() {
+                 // $(this).children().eq(0).show();
+              });
+              $(tabTit).each(function() {
+                  // $(this).children().eq(0).addClass(on);
+              });
+              $(tabTit).children().click(function() {
+                  $(this).addClass(on).siblings().removeClass(on);
+                  var index = $(tabTit).children().index(this);
+                  $(tabCon).children().eq(index).show().siblings().hide();
+              });
+          }
+          tabs(".investment_title", "on", ".investment_con");
+      });
+
+      function cartform(){
+          //console.log($('#cart-form').serializeArray());
+          // jquery 表单提交
+          $("#cart-form").ajaxSubmit(function(data){
+              console.log(data);
+              if(data.code == 0){
+                  $.message({message:data.msg,type:'warning',time:'3000'});
+              }else{
+                  //$.message(data.msg);
+                  setTimeout(function (){
+                      window.location = data.url
+                  },1500);
+              }
+          });
+          //  return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
+      }
+
+      function commentform(){
+          //console.log($('#cart-form').serializeArray());
+          // jquery 表单提交
+          $("#comment-form").ajaxSubmit(function(data){
+              console.log(data);
+              if(data.code == 0){
+                  $.message({message:data.msg,type:'warning',time:'3000'});
+              }else{
+                  $.message(data.msg);
+                  setTimeout(function (){
+                      window.location.reload()
+                  },1000);
+              }
+          });
+           return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
+      }
+        var comment = {$page};
+        if(comment != 0){
+            $('html,body').animate({scrollTop:$('.investment_f').position().top},'slow');
+        }
+
+    </script>
+    {include file="common/footer"/}
+
+  </body>
+
+</html>

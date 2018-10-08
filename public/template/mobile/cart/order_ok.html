@@ -1,0 +1,289 @@
+{include file="layout/public_head" /}
+	<style>
+		.mui-card .mui-control-content{padding:10px}
+		.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{border-bottom:2px solid #FA0;color:#FA0}
+		.my_order .mui-btn{position:relative;transform:inherit;right:0}
+		.adddz{padding:50px 20px;position:fixed;top:0;width:100%;height:100%;z-index: 9999;}
+		.select_e{width:21%!important;font-size:12px!important}
+		#address_list{width:100%;height:100%;position:fixed;top:0;padding:50px 0;display:none}
+		.close{background:rgba(0,0,0,.4);width:20px;height:20px;text-align:center;border-radius:20px;color:#fff}
+
+	</style>
+	<body>
+
+	<form action="{:url('cart/action_cart')}"  method="post" enctype="multipart/form-data" onsubmit="return orderform()" id="order-form">
+		<header class="mui-bar mui-bar-nav">
+			<a href="javascript:"onclick="self.location=document.referrer;" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #7ac141;"></a>
+			<h1 class="mui-title">確認訂單</h1>
+		</header>
+
+		<nav class="mui-bar mui-bar-tab" style="box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);line-height: 50px;">
+			<button type="submit" class="mui-btn mui-btn-success mui-pull-right" style="margin-right: 10px;">提交訂單</button>
+			<p class="mui-pull-right" style="margin:0;margin-right: 20px;">合計：<span class="color_ro">$</span><span class="color_ro font18">{:number_format($all_total,2)}</span></p>
+		</nav>
+
+		<div class="mui-content my_order">
+
+			<?php
+				$default_address = sp_user_default_address();
+			?>
+			{if condition="!empty($default_address)"}
+				<ul class="mui-table-view" onclick="$('#address_list').animate({top:'0%'}).show()" style="margin: 0;">
+					 <li class="mui-table-view-cell">
+							<span><img src="__TMPL_PUBLIC__/img/empty.png" class="left_ico" > </span><span id="name">收貨人：{$default_address.name} </span>
+							<span class="mui-pull-right" id="phone">{$default_address.phone}</span>
+					 </li>
+					 <li class="mui-table-view-cell">
+						<div class="mui-navigate-right" style="padding-right: 35px;">
+							<span><img src="__TMPL_PUBLIC__/img/diz2.png" class="left_ico">收貨地址：</span>
+							<span class="mui-pull-right" id="address">{:sp_region_value($default_address['province'])}{:sp_region_value($default_address['city'])}{:sp_region_value($default_address['district'])}<br>{$default_address.address}</span>
+						</div>
+					 </li>
+				</ul>
+			{/if}
+
+			{if condition="empty($address_list)"}
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell" style="text-align: center" onclick="$('#address-form').animate({top:'0%'}).show()">
+						添加收货地址
+					</li>
+				</ul>
+			{/if}
+			<input type="hidden" name="address_id" id="address_id" value="{$default_address['id']|default='0'}">
+			<ul class="mui-table-view">
+				 <li class="mui-table-view-cell"><i class="left_menu_ico i3"></i>健康及有機產品</li>
+				{foreach name="order_list" item="vo"}
+				<input type="hidden"  name="goods_id[]" value="{$vo.goods_id}" />
+				<input type="hidden"  name="goods_num[]" value="{$vo.goods_num}" />
+		         <li class="mui-table-view-cell l2">
+		         	<img src="__PUBLIC__/{$vo.cover}" class=" mui-pull-left" />
+			          <p class="p1">{$vo.product_name}</p>
+			          <p>{$vo.model}</p>
+			          <p><span class="color_ro">$</span><span class="color_ro font18">{:number_format($vo['price'],2)}</span><span class="mui-pull-right">x{$vo.goods_num}</span></p>
+		         </li>
+				{/foreach}
+		         <li class="mui-table-view-cell"><a class="mui-navigate-right">配送方式<span class="mui-pull-right" style="margin-right: 20px;">快遞 免郵</span></a></li>
+
+				<li class="mui-table-view-cell" style="text-align:right">
+		         	共{$num}件商品    合計 <span class="color_ro">$</span><span class="color_ro font18">{:number_format($all_total,2)}</span>(含運費$0.00)
+	        	</li>
+			</ul>
+		</div>
+	</form>
+
+
+<!--选择收货地址-->
+	<div class="mui-input-group" id="address_list" style="top:100%">
+		<p style="text-align: center">选择地址</p>
+		<ul class="mui-table-view mui-table-view-radio">
+			{foreach name="address_list" item="vo"}
+			<li class="mui-table-view-cell" data-id="{$vo.id}" data-name="{$vo.name}" data-phone="{$vo.phone}" data-address="{:sp_region_value($vo['province'])}{:sp_region_value($vo['city'])}{:sp_region_value($vo['district'])}{$vo.address}" >
+				<div class="mui-navigate-right">
+					收貨人：{$vo.name}
+					<span class="{$vo['default']==1?'color_gr':''}">默认</span>
+					<span class="mui-pull-right">{$vo.phone}</span>
+					<br>
+					收貨地址:{:sp_region_value($vo['province'])}{:sp_region_value($vo['city'])}{:sp_region_value($vo['district'])}{$vo.address}
+				</div>
+			</li>
+			{/foreach}
+			<li class="mui-table-view" style="text-align: center;padding: 10px;" onclick="$('#address-form').animate({top:'0'}).show()">
+				添加收货地址
+			</li>
+			<li class="mui-table-view" style="text-align: center;padding: 10px;">
+				<a href="{:url('user/address_list')}">管理收货地址</a>
+			</li>
+		</ul>
+	</div>
+<!--添加收货地址-->
+	<form action="{:url('user/address_add')}" class="mui-input-group adddz" method="post" enctype="multipart/form-data" onsubmit="return addressform()" id="address-form" style="display: none;top: 100%;">
+		<div class="close mui-pull-right">×</div><br>
+	<div class="mui-input-row">
+			<label>收件人姓名</label>
+			<input type="text" placeholder="收件人姓名" name="name" required oninvalid="setCustomValidity('请输入收件人姓名！')" oninput="setCustomValidity('')">
+		</div>
+		<div class="mui-input-row">
+			<label>手機號碼</label>
+			<input type="text" placeholder="手機號碼" name="phone" required oninvalid="setCustomValidity('请输入手機號碼！')" oninput="setCustomValidity('') "onkeyup="value=value.replace(/[^\d]/g,'') " ng-pattern="/[^a-zA-Z]/" maxlength="11">
+		</div>
+		<div class="mui-input-row">
+			<label>所在地區</label>
+			<select onchange="" class="select_e" id="district" name="district"  title="请选择所在区域" >
+				<option value="">选择区域</option>
+			</select>
+			<select onchange="get_area(this)" class="select_e" id="city" name="city"  title="请选择所在城市" required oninvalid="setCustomValidity('请选择城市！')" oninput="setCustomValidity('')">
+				<option value="">选择城市</option>
+			</select>
+			<select onchange="get_city(this)" class="select_e" id="province" name="province"  title="请选择所在省份" required oninvalid="setCustomValidity('请选择省份！')" oninput="setCustomValidity('')">
+				<option value="">选择省份</option>
+			</select>
+		</div>
+		<div class="mui-input-row">
+			<label>詳細地址</label>
+			<input type="text" placeholder="请請輸入詳細地址信息，如道路、門牌號、小區、樓棟號、單元室等" name="address" required oninvalid="setCustomValidity('请输入詳細地址！')" oninput="setCustomValidity('')">
+		</div>
+		<div class="mui-input-row mui-checkbox mui-left">
+			<label>設置為默認收貨地址</label>
+			<input name="cards[]" value="uploads/cards/card1.jpg" type="hidden">
+			<input name="cards[]" value="uploads/cards/card2.jpg" type="hidden">
+			<input name="default" value="0" type="hidden">
+			<input name="default" value="1" type="checkbox" checked="checked">
+		</div>
+		<div class="mui-button-row">
+			<button class="mui-btn mui-btn-success btn-success-edit">
+				保  存
+			</button>
+		</div>
+	</form>
+
+		{include file="common/script" /}
+		<script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
+		<script>
+			mui('.mui-scroll-wrapper').scroll();
+			$('#address_list li').click(function () {
+			    var id = $(this).data('id');
+			    if(id){
+                    var phone = $(this).data('phone');
+                    var name = $(this).data('name');
+                    var address = $(this).data('address');
+                    $('#name').text('收貨人：' + name);
+                    $('#address_id').text(id);
+                    $('#phone').text(phone);
+                    $('#address').text(address);
+                    $('#address_list').animate({top:'100%'}).hide();
+				}
+			});
+
+
+            $('.close').click(function () {
+                $('#address-form').animate({top:'100%'}).show();
+            });
+
+            function addressform(){
+                // jquery 表单提交
+                $("#address-form").ajaxSubmit(function(data) {
+                    console.log(data);
+                    if(data.code == 0){
+                        $.message({message:data.msg,type:'warning',time:'3000'});
+                    }else{
+                        $.message(data.msg);
+                        setTimeout(function () {
+                             window.location.reload();
+                        },1000);
+                    }
+                });
+
+                return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
+            }
+
+            function orderform(){
+                //console.log($('#cart-form').serializeArray());
+                var address_id = $('#address_id').val();
+                if(address_id == ''){
+                    $.message({message:'請選擇收貨地址！',type:'warning',time:'3000'});
+                    return false;
+                }
+                if(address_id == 0){
+                    $.message({message:'你還沒有添加收貨地址！',type:'warning',time:'3000'});
+                    return false;
+                }
+
+                // jquery 表单提交
+                $("#order-form").ajaxSubmit(function(data){
+                    var data = $.parseJSON(data);
+                    if(data.code == 0){
+                        $.message({message:data.msg,type:'warning',time:'3000'});
+                    }else{
+                        $.message(data.msg);
+                        setTimeout(function (){
+                          window.location = data.order_url;
+                        },1000);
+                    }
+                });
+                return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
+            }
+
+
+            get_province();
+            /**
+             * 获取省份
+             */
+            function get_province(){
+                //  var url = '/index.php?m=Admin&c=Api&a=getRegion&level=1&parent_id=0';
+                var url ="{:url('api/index/getRegion')}";
+                $.ajax({
+                    type : "GET",
+                    url  : url,
+                    data :{level:1,parent_id:0},
+                    error: function(request) {
+                        alert("服务器繁忙, 请联系管理员!");
+                        return;
+                    },
+                    success: function(v) {
+                        v = '<option value="0">选择省份</option>'+ v;
+                        $('#province').empty().html(v);
+                    }
+                });
+            }
+
+
+            /**
+             * 获取城市
+             * @param t  省份select对象
+             */
+            function get_city(t){
+                var parent_id = $(t).val();
+                if(!parent_id > 0){
+                    return;
+                }
+                $('#district').empty()
+                $('#city').empty()
+                // var url = '/index.php?m=Admin&c=Api&a=getRegion&level=2&parent_id='+ parent_id;
+                var url ="{:url('api/index/getRegion')}";
+                $.ajax({
+                    type : "GET",
+                    url  : url,
+                    data :{level:2,parent_id:parent_id},
+                    error: function(request) {
+                        alert("服务器繁忙, 请联系管理员!");
+                        return;
+                    },
+                    success: function(v) {
+                        v = '<option value="0">选择城市</option>'+ v;
+                        $('#city').empty().html(v);
+                    }
+                });
+            }
+
+            /**
+             * 获取地区
+             * @param t  城市select对象
+             */
+            function get_area(t){
+                var parent_id = $(t).val();
+                if(!parent_id > 0){
+                    return;
+                }
+                $('#district').empty().css('display','inline');
+                $('#twon').empty().css('display','none');
+                //var url = '/index.php?m=Admin&c=Api&a=getRegion&level=3&parent_id='+ parent_id;
+                var url ="{:url('api/index/getRegion')}";
+                $.ajax({
+                    type : "GET",
+                    url  : url,
+                    data :{level:3,parent_id:parent_id},
+                    error: function(request) {
+                        alert("服务器繁忙, 请联系管理员!");
+                        return;
+                    },
+                    success: function(v) {
+                        v = '<option>选择区域</option>'+ v;
+                        $('#district').empty().html(v);
+                    }
+                });
+            }
+		</script>
+
+	</body>
+
+</html>

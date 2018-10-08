@@ -1,0 +1,76 @@
+{include file="layout/public_head" /}
+<!--头部 str-->
+{include file="common/header"/}
+<!--头部 end-->
+{include file="common/nav"/}
+  <body style="background: url(__TMPL_PUBLIC__/img/index_bg.jpg) repeat-y;">
+    <div class="container bgcolor_white">
+      <div class="pr_name">搜索結果</div>
+
+        {if condition="!$product_list"}
+            <div class="search_page_empty"></div>
+        {/if}
+      <div class="product">
+           
+          <ul class="row">
+              {foreach name="product_list" item="vo"}
+                  <li class="col-md-3 col-xs-3">
+                      <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
+                          {if condition="$vo['cover']"}
+                          <img src="__PUBLIC__/{$vo.cover}"/>
+                          {else/}
+                          <img src="__TMPL_PUBLIC__/img/default.jpg">
+                          {/if}
+                      </a>
+                        <div class="d2">
+                          <p> <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">{$vo.product_name}</a></p>
+                            {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
+                            {if condition="$vo['discount_type'] eq 2"}<p class="color_ro">特惠全民享</p>{/if}
+                            {if condition="$vo['discount_type'] eq 3"}<p class="color_ro">优惠全民享</p>{/if}
+                          <div>
+                              <span style="font-size: 20px;"><i>$</i>{:product_price($vo['product_id'])}</span>
+                              <a class="adds" data-productid="{$vo.product_id}">+</a>
+                          </div>
+                        </div>
+                  </li>
+              {/foreach}
+          </ul>	 
+        </div>
+        <div class="pr_name">相關新聞</div>
+        <div class="info_list">
+          <div class="right-list">
+                <ul>
+
+
+                {foreach name="new_list" item="vo"}
+                   <li class="row">
+                        <div class="col-sm-2 col-xs-2 d1">
+                                <img src="{:fa_get_image_url($vo['smeta'])}" />
+                        </div>
+                        <div class="col-sm-8 col-xs-8 d2">
+                            <h4 style="margin: 5px 0;"><a href="{:url('news/article',array('id'=>$vo['id']))}">{$vo.post_title}</h4>
+                            <p>
+                                {$vo.post_excerpt}
+                            </p>
+                        </div>
+                        <div class="col-sm-2 d3">
+                            <p>{:date('m-d',strtotime($vo['post_date']))}<br><i class="fa fa-long-arrow-right" aria-hidden="true"></i></p>
+                        </div>
+                    </li>
+                {/foreach}
+                {if condition="count($new_list) eq 0"}
+                <div style="text-align:  center;padding:  20px;">没有相關新聞</div>
+                {/if}
+
+                </ul>
+          </div>
+        </div>
+         
+            </div>
+    <script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
+    <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
+    {include file="common/script" /}
+    {include file="common/footer"/}
+  </body>
+
+</html>

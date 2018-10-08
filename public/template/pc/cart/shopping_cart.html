@@ -1,0 +1,223 @@
+{include file="layout/public_head" /}
+<!--头部 str-->
+	<body style="background: url(__TMPL_PUBLIC__/img/index_bg.jpg) repeat-y;">
+	{include file="common/header"/}
+	<!--头部 end-->
+	<!-- 导航 str-->
+	{include file="common/nav"/}
+	<!--导航 end-->
+	 <div class="container shopping_cart">
+		<style>
+			.number input::-webkit-outer-spin-button,
+			.number input::-webkit-inner-spin-button {-webkit-appearance: none;}
+			.number input[type="number"]{-moz-appearance: textfield;}
+		</style>
+		<div class="row topstate">
+			<ul class="row">
+				<div class="alzx-crumbs alzx-crumbs-f1"> 
+					<div class="alzx-con"> 
+						<a class="crumbs-01" href="#">主頁</a> 
+					  <em>&gt;</em> 
+					  <span class="crumbs-02">購物車</span> 
+					</div>
+				</div>
+				<li class="col-md-3 col-xs-3 on1" style=""><img src="__TMPL_PUBLIC__/img/shopping_cart_top_lc1_w.png" />購物車</li>
+				<li class="col-md-3 col-xs-3" style=""><img src="__TMPL_PUBLIC__/img/shopping_cart_top_lc2.png" />確認訂單</li>
+				<li class="col-md-3 col-xs-3" style=""><img src="__TMPL_PUBLIC__/img/shopping_cart_top_lc3.png" />支付</li>
+				<li class="col-md-3 col-xs-3" style="background-image: url();"><img src="__TMPL_PUBLIC__/img/shopping_cart_top_lc4.png" />訂單完成</li>
+			</ul>
+		</div>
+		<div class="row item-single">
+			<div class="col-md-1 col-xs-1" style="text-align: center;cursor: default;color: #7ac141;" id="checked" data-id='1' >全選</div>
+			<div class="col-md-4 col-xs-4" style="">商品</div>
+			<div class="col-md-1 col-xs-1" style="">單價</div>
+			<div class="col-md-3 col-xs-3" style="">購買數量	</div>
+			<div class="col-md-2 col-xs-2" style="">小計</div>
+			<div class="col-md-1 col-xs-1" style="">操作</div>
+		</div>
+		<form action="{:URL('cart/order_ok')}" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return cartform()" id="cart-form">
+			{foreach name="car_list" item="vo"}
+				<!--第{$key}个产品-->
+				<div class="row cart-item-list"  id="list_{$key}" >
+					<input type="hidden" value="{$vo.price}" name="price[]" id="unit_price_{$key}"/>
+					<input type="hidden" value="{$vo['total']*$vo['price']}" id="subtotal_{$key}" class="subtotal"/>
+					<!-- <input type="hidden" value="2" id="number_1"/> -->
+					<div class="col-md-1 col-xs-1" style="">
+						<input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="goods_id[]" value="{$vo.product_id}" title="ID:106" data-key="{$key}">
+						<label for='checkbox1'></label>
+					</div>
+					<div class="col-md-4 col-xs-4 t2" style="">
+						<div class="row">
+							<img src="__PUBLIC__/{$vo.cover}" class="col-md-5  col-xs-12">
+							<p class="col-md-6 col-xs-12">
+								<span class="bold">{$vo.product_name} {$vo.model}</span>
+								產品型號：{$vo.model}
+							</p>
+						</div>
+					</div>
+					<div class="col-md-2 col-xs-2 color_ro font18" id="unit_price_span_{$key}">$ {$vo.price}</div>
+					<div class="col-md-2 col-xs-2" style="">
+							<div class="row number">
+							  <div class="col-md-12" style="">
+								<input id="min_{$key}" name="" type="button" value="-" class="reduce" onclick="on_number({$key},'min')">
+								<input id="number_{$key}" name="goods_num[]" type="number" value="{$vo.total}" style="width:50px;text-align: center"  class="color_75" data-key="{$key}">
+								<input id="add_{$key}" name="" type="button" value="+" class="add" onclick="on_number({$key},'add')">
+							  </div>
+							</div>
+					</div>
+					<div class="col-md-2 col-xs-2 color_ro font18" style="">$ <span id="subtotal_span_{$key}">{:number_format($vo['price']*$vo['total'],2)}</span></div>
+					<div class="col-md-1 col-xs-1 t6" style=""><a href="{:url('cart/cart_del',array('product_id'=>$vo['product_id']))}" class="js-ajax-delete" onclick="return false;"><i class="fa fa-trash-o" aria-hidden="true" style="color:#666;line-height: 110px;"></i></a></div>
+				</div>
+		 	{/foreach}
+			{if condition="count($car_list) eq 0"}
+				<div class="search_page_empty"></div>
+			{/if}
+			<div class="row" style="padding: 20px;display: {if condition="count($car_list) eq 0"}none{/if}">
+				<div class="col-md-8" style="display: none">
+					<h4>積分抵扣現金</h4>
+					<input type="checkbox" class="checkbox"/>您當前有<span class="color_ro">120</span>積分，可抵扣<span class="color_ro">$12.0</span>
+				</div>
+				<div class="col-md-4" style="float: right;text-align: right;">
+					<span class="color_ro" id="total_sum">{$goods_sum}</span>件商品, 總計: <span class="color_ro" id="total">$ {:number_format($all_price,2)}</span>
+					<p style="font-size:22px ">合計 (不含運費)：<span class="color_ro" id="total_no_yunxfei">$ {:number_format($all_price,2)}</span></p>
+					<div class="row" style="padding:10px 0 ">
+					   <div class="col-md-6" style=""><a href="{:url('index/index')}">
+						   <button type="button" class="btn btn-default btn-default-edit" style="margin-bottom: 1em">繼續購物</button></a>
+						</div>
+						 <div class="col-md-6" style="">
+							<button type="submit" class="btn btn-warning btn-warning-edit" id="submit">提交訂單</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<input id="jump" value="0" type="hidden">
+		</form>
+	 </div>
+ {include file="common/footer" /}
+ <script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
+ <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
+ {include file="common/script" /}
+	<script type="text/javascript">
+
+       		 //单选
+			$(".js-check").on('click',function(){
+				var key =  $(this).data('key');
+				if($(this).is(':checked') == true){
+                    $('#subtotal_' + key).addClass('subtotal');
+				}else {
+                    $('#subtotal_' + key).removeClass('subtotal');
+				}
+                total();
+			});
+
+            //全选或不选
+            $("#checked").on('click',function(){
+                if($(this).data('id') == 1){
+                    $("input[name^='goods_id[]']").each(function(){
+                        $(this).prop('checked', false);
+                    });
+                    $(this).data('id',0);
+                }else{
+                    $("input[name^='goods_id[]']").each(function(){
+                        $(this).prop('checked', true);
+                    });
+                    $(this).data('id',1);
+                }
+            });
+
+			function on_number(id,type){
+				//初始化数量为1,并失效减
+				//$('#min' + id).attr('disabled',true);
+				//获得文本框对象
+				var t = $("#number_" + id); 
+				 
+				if(type=='add'){
+					// 给获取的val加上绝对值，避免出现负数
+					t.val(Math.abs(parseInt(t.val()))+1);
+					  if (parseInt(t.val())!=1){
+					  $('#min_' + id).attr('disabled',false);
+					}; 
+				}
+				if(type=='min'){
+					t.val(Math.abs(parseInt(t.val()))-1);
+					  if (parseInt(t.val())==1){
+					  $('#min_' + id).attr('disabled',true);
+					};
+				}
+                total_price(id);
+				total();
+			}
+
+             $("input[name='goods_num[]']").focusout(function() {
+                 var key = $(this).data('key');
+                 total_price(key);
+                 total();
+			 });
+
+             $("input[name='goods_num[]']").focusout(function() {
+                 var key = $(this).data('key');
+                 total_price(key);
+                 total();
+			 });
+
+             //计算单条总价格
+			 function  total_price(id){
+                 var t = $("#number_" + id);
+                 var unit_price = $('#unit_price_' + id).val();
+                 var number = t.val();
+                 var subtotal_price = Number(unit_price)*Number(number);
+                 $('#subtotal_span_' + id).text(subtotal_price.toFixed(2));
+                 $('#subtotal_' + id).val(subtotal_price.toFixed(2));
+             }
+			//统计总价格	
+			function total(){
+				var sum=0;
+				var total_sum=0;
+				$("input[class^='subtotal']").each(function(){
+						sum+= Number($(this).val());
+						console.log($(this).val());
+				});
+                $("input[name^='goods_num[]']").each(function(){
+                    total_sum+= Number($(this).val());
+                });
+				$('#total_sum').text(Number(total_sum));
+				$('#total').text('$ '+ sum.toFixed(2));
+				$('#total_no_yunxfei').text('$ '+ sum.toFixed(2));
+			}
+
+            $("input[name^='goods_id[]']").each(function(){
+                $(this).prop('checked', true);
+            });
+
+
+            function cartform(){
+                var data = $('#cart-form').serializeArray();
+
+
+                $.each(data, function(i, field){
+                    console.log(field.name);
+                    if(field.name == 'goods_id[]'){
+                        console.log(1);
+					}else {
+                        console.log(0);
+					}
+                });
+
+                // jquery 表单提交
+                $("#cart-form").ajaxSubmit(function(data){
+                    console.log(data);
+                    if(data.code == 0){
+                        $.message({message:data.msg,type:'warning',time:'3000'});
+                    }else{
+                        //$.message(data.msg);
+                        setTimeout(function (){
+                           window.location = data.url
+                        },1500);
+                    }
+                });
+              //return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
+            }
+	</script> 
+
+	</body>
+</html>

@@ -1,0 +1,223 @@
+
+{include file="layout/public_head" /}
+<!--头部 str-->
+{include file="common/header"/}
+<!--头部 end-->
+{include file="common/nav"/}
+  <body style="background: url(__TMPL_PUBLIC__/img/index_bg.jpg) repeat-y;font-size: 14px;">
+    <style>
+      @media (min-width: 768px){
+        .share_product_add .col-sm-1 {
+          width: 10.33333333%;
+        }
+      }
+    </style>
+    <div class="container bgcolor_white">
+      <div class="pr_name">發佈共享</div>
+
+      <div class="share_product_add">
+            <form action="{:url('user/share_edit')}" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return share()" id="share-form"  style="padding: 0 20px;">
+              <input type="hidden"  name="id" value="{$info.id}" >
+              <div class="form-group form-group-e">
+                <label for="inputEmail3" class="col-sm-1 col-xs-12 control-label"><span class="color_ro">* </span>&nbsp;商品名稱:</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control input_e" id="title" placeholder="" name="title" value="{$info.product_name}" required oninvalid="setCustomValidity('请输入商品名稱！')" oninput="setCustomValidity('')">
+                </div>
+              </div>
+              <div class="form-group form-group-e">
+                <label for="inputPassword3" class="col-sm-1 col-xs-6 control-label"><span class="color_ro">* </span>分&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;類：</label>
+                <div class="col-sm-3">
+                  <select class="form-control select_e" name="cid[]" id="cat_id" >
+                  </select>
+                </div>
+                <div class="col-sm-3">
+                  <select class="form-control select_e" name="cid[]" id="cat_id_2" style="display: none">
+                  </select>
+                </div>
+                <div class="col-sm-3">
+                  <select class="form-control select_e" name="cid[]" id="cat_id_3" style="display: none">
+                  </select>
+                </div>
+
+              </div>
+
+              <div class="form-group form-group-e">
+                <label 
+                for="inputPassword3" class="col-sm-1 col-xs-6 control-label"><span class="color_ro">* </span>圖片上傳:</label>
+                <div class="col-sm-6">
+                  <div id="preview" style="padding: 20px;">
+                    <img id="imghead"  class="upload_image" src="__PUBLIC__{$info['product_pic']}"  style="max-width:  200px;">
+                  </div>
+                  <input name="pic" type="hidden"  id="pic" value=""/>
+                  <input type="file" onchange="previewImage(this)" style="display: none;" id="previewImg" accept=".gif,.jpg,.jpeg,.png">
+                  <img src="__TMPL_PUBLIC__/control/images/add_img.png"  onclick="$('#previewImg').click();" id="add_img"  style="display: none">
+                  <img src="__TMPL_PUBLIC__/control/images/edit_img.png"  onclick="$('#previewImg').click();" id="edit_img">
+                  <script>
+                      //图片上传预览    IE是用了滤镜。
+                      function previewImage(file)
+                      {
+                          var MAXWIDTH  = 90;
+                          var MAXHEIGHT = 90;
+                          var div = document.getElementById('preview');
+                          if (file.files && file.files[0])
+                          {
+                              div.innerHTML ='<img id=imghead onclick=$("#previewImg").click()>';
+                              var img = document.getElementById('imghead');
+                              img.onload = function(){
+                                  var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+                                  img.width  =  rect.width*2;
+                                  img.height =  rect.height*2;
+                              }
+                              var reader = new FileReader();
+                              reader.onload = function(evt){img.src = evt.target.result;$('#pic').val(evt.target.result)}
+                              reader.readAsDataURL(file.files[0]);
+                              $('#preview').show();
+                              $('#edit_img').show();
+                              $('#add_img').hide();
+                          }
+                          else //兼容IE
+                          {
+                              var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+                              file.select();
+                              var src = document.selection.createRange().text;
+                              div.innerHTML = '<img id=imghead> ';
+                              var img = document.getElementById('imghead');
+                              img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
+                              var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+                              status =('rect:'+rect.top+','+rect.left+','+rect.width+','+rect.height);
+                              div.innerHTML = "<div id=divhead style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;"+sFilter+src+"\"'></div>";
+                          }
+                      }
+                      function clacImgZoomParam( maxWidth, maxHeight, width, height ){
+                          var param = {top:0, left:0, width:width, height:height};
+                          if( width>maxWidth || height>maxHeight ){
+                              rateWidth = width / maxWidth;
+                              rateHeight = height / maxHeight;
+
+                              if( rateWidth > rateHeight ){
+                                  param.width =  maxWidth;
+                                  param.height = Math.round(height / rateWidth);
+                              }else{
+                                  param.width = Math.round(width / rateHeight);
+                                  param.height = maxHeight;
+                              }
+                          }
+                          param.left = Math.round((maxWidth - param.width) / 2);
+                          param.top = Math.round((maxHeight - param.height) / 2);
+                          return param;
+                      }
+                  </script>
+                   <!-- <div id="upload" class="upload"></div> -->
+                </div>
+              </div>
+              <div class="form-group form-group-e no_border">
+                <label for="inputPassword3" class="col-md-1 control-label"><span class="color_ro">* </span>简&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;介&nbsp;:</label>
+                <div class="col-md-8">
+
+                  <link rel="stylesheet" href="__TMPL_PUBLIC__/kindedit/design/css/trumbowyg.css">
+                  <script src="__TMPL_PUBLIC__/kindedit/trumbowyg.js"></script>
+                  <script src="__TMPL_PUBLIC__/kindedit/plugins/base64/trumbowyg.base64.js"></script>
+                  <style type="text/css">.trumbowyg-box, .editor{margin:0;}</style>
+                  <div id="odiv" style="display:none;position:absolute;z-index:100;">
+                     <img src="__TMPL_PUBLIC__/kindedit/pic/sx.png" title="缩小" border="0" alt="缩小" onclick="sub(-1);"/>
+                      <img src="__TMPL_PUBLIC__/kindedit/pic/fd.png" title="放大" border="0" alt="放大" onclick="sub(1)"/>
+                      <img src="__TMPL_PUBLIC__/kindedit/pic/cz.png" title="重置" border="0" alt="重置" onclick="sub(0)"/>
+                      <img src="__TMPL_PUBLIC__/kindedit/pic/sc.png" title="删除" border="0" alt="删除" onclick="del();odiv.style.display='none';"/>
+                  </div>
+                  <div  onmousedown="show_element(event)" style="clear:both" id="customized-buttonpane" class="editor">{$info.product_content}</div>
+               </div>
+              </div>
+              <div class="form-group" style="padding-top: 20px;">
+                  <div class="col-md-1"></div>
+                  <div class="col-md-2" style="">
+                    <button type="submit" class="btn btn-success btn-success-edit" style="border-radius: 0;">提交編輯</button>
+                  </div>
+              </div>
+
+            </form> 
+        </div>
+
+
+    </div>
+    {include file="common/footer"/}
+    <script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
+    <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
+    {include file="common/script" /}
+    <script>
+      function share(){
+          var title = $('#title');
+          var pic = $('#pic').val();
+          
+        // jquery 表单提交
+        $("#share-form").ajaxSubmit(function(data) { 
+          console.log(data);
+          if(data.code == 0){
+            $.message({message:data.msg,type:'error'});
+          }else{
+              $.message(data.msg);
+              setTimeout(function () {
+                  window.location = data.url
+              },1500);
+          }
+        }); 
+        return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转 
+      }
+
+      //选择分类
+      var cat_id_01 = {$info.product_category[1]};
+      var cat_id_02 = {$info.product_category[2]?$info.product_category[2]:0};
+      var cat_id_03 = {$info.product_category[3]?$info.product_category[3]:0};
+      get_category(14,'cat_id',cat_id_01);
+      if(cat_id_02){
+          get_category(cat_id_01,'cat_id_2',cat_id_02);
+      }
+      if(cat_id_03){
+          get_category(cat_id_02,'cat_id_3',cat_id_03);
+      }
+
+      $(document).on("change",'#cat_id',function(){
+          get_category($(this).val(),'cat_id_2','0');
+          $('#cat_id_2').empty().html("<option value='0'>请选择商品分类</option>");
+      });
+
+      $(document).on("change",'#cat_id_2',function(){
+          get_category($(this).val(),'cat_id_3','0');
+          $('#cat_id_3').empty().html("<option value='0'>请选择商品分类</option>");
+      })
+      /**
+       * 获取多级联动的商品分类
+       */
+
+      function get_category(id,next,select_id){
+          if(id == 0){
+              return false;
+          }
+          $.ajax({
+              type : "GET",
+              url: "{:url('api/index/get_category')}",
+              data:{parent_id:id},
+              dataType:'json',
+              success: function(data) {
+                  if(data.status == 1){
+                      var html = "<option value='0'>请选择商品分类</option>";
+                      $.each(data.result,function(index, value) {
+                          if(value.id == select_id){
+                              var selected = 'selected';
+                              html+= "<option value='"+value.id+"' selected>"+value.name+"</option>";
+                          }else {
+                              html+= "<option value='"+value.id+"'>"+value.name+"</option>";
+                          }
+                      });
+                      $('#'+next).empty().append(html).show().attr('name','cid[]');
+                  }else{
+                      $('#'+next).hide().attr('name','');
+                  }
+              }
+          });
+      }
+    </script>
+
+
+  </body>
+
+</html>
