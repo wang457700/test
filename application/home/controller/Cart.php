@@ -12,19 +12,22 @@ use think\Db;
 use think\Session;
 class Cart extends Frontend
 {
-
-
     protected $noNeedLogin = ['checkin_cart','order_ok'];
-
-
     public function checkin_cart()
     {
-
         if(empty(is_login())){
             $tourist = create_tourist();
         }
-
         $data['product_id'] = input('product_id');
+        $goods = Db::name('goods')->where('product_id',$data['product_id'])->find();
+        if(sp_ip_ischina() && !$goods['is_inland']){
+            $data = array(
+                'code' => 0,
+                'msg' => '加入購物車失敗，只供內地以外購買！',
+            );
+            $this->ajaxReturn($data);
+        }
+
         $data['user_id'] = Session::get('user_id');
         $data['add_time'] = date('Y-m-d H:i:s');
         $res = Db::name('cart_order')->insertGetId($data);
@@ -68,23 +71,28 @@ class Cart extends Frontend
                 }
                 $total=0;
                 $num=0;
-                foreach ($data as $k => $v) {
-                     $goods= Db::name('goods')->where('product_id',$v['goods_id'])->find();
-                     $goods['price']= product_price($v['goods_id']);
-                    $data[$k]['product_name'] = $goods['product_name'];
-                    $data[$k]['brand'] = $goods['brand'];
-                    $data[$k]['freight_num'] = $goods['freight_num'];
-                    $data[$k]['model'] = $goods['model'];
-                    $data[$k]['price'] = $goods['price'];
-                    $data[$k]['pricevip'] = $goods['pricevip'];
-                    $data[$k]['discount_price'] = $goods['discount_price'];
-                    $data[$k]['place_origin'] = $goods['place_origin']; //规格
-                    $data[$k]['cover'] = $goods['cover'];
-                    $data[$k]['goods_id'] = $v['goods_id'];
-                    $data[$k]['money_total'] = $goods['price']*$v['goods_num'];
-                    $total+=($goods['price']*$v['goods_num']);
-                    $num+=$v['goods_num'];
+                foreach ($data as $k => $v){
+                        $goods= Db::name('goods')->where('product_id',$v['goods_id'])->find();
+                        $goods_json[$goods['cat_id']][$v['goods_id']] = array('cat_id'=>$goods['cat_id'],'goods_id'=>$v['goods_id']);
+
+                        $goods['price']= product_price($v['goods_id']);
+                        $data[$k]['product_name'] = $goods['product_name'];
+                        $data[$k]['brand'] = $goods['brand'];
+                        $data[$k]['freight_num'] = $goods['freight_num'];
+                        $data[$k]['model'] = $goods['model'];
+                        $data[$k]['price'] = $goods['price'];
+                        $data[$k]['pricevip'] = $goods['pricevip'];
+                        $data[$k]['discount_price'] = $goods['discount_price'];
+                        $data[$k]['place_origin'] = $goods['place_origin']; //规格
+                        $data[$k]['cover'] = $goods['cover'];
+                        $data[$k]['goods_id'] = $v['goods_id'];
+                        $data[$k]['money_total'] = $goods['price']*$v['goods_num'];
+                        $total+=($goods['price']*$v['goods_num']);
+                        $num+=$v['goods_num'];
                 }
+
+
+
 
                 $address_list=Db::name('user_address')->where(array('user_id'=>$user_id,'status'=>1))->select();
                 $address_default=Db::name('user_address')->where(array('user_id'=>$user_id,'status'=>1,'default'=>1))->find();
@@ -106,6 +114,8 @@ class Cart extends Frontend
                 $this->assign('address_list',$address_list);
                 $this->assign('address_default',$address_default);
                 $this->assign('order_list',$data);
+                $this->assign('goods_json',base64_encode(json_encode($goods_json,true))); //输出goods_ids，用于判断优惠券条件
+
             }else{
                 $this->error('請選擇商品！',url('cart/shopping_cart'));
 
@@ -147,13 +157,17 @@ class Cart extends Frontend
 
             $all_total = 0;
             foreach ($data as $k => $v) {
-                $price=Db::name('goods')->where('product_id',$v['goods_id'])->find();
-                $price['price']= product_price($v['goods_id']);
-                $fat['price'] =$price['price'];
-                $fat['money_total']=$v['goods_num']*$price['price'];
-                $all_total +=$v['goods_num']*$price['price'];
-            }
+                $goods=Db::name('goods')->where('product_id',$v['goods_id'])->find();
+                $goods['price']= product_price($v['goods_id']);
+                $fat['price'] =$goods['price'];
+                $fat['money_total']=$v['goods_num']*$goods['price'];
+                $all_total +=$v['goods_num']*$goods['price'];
 
+                if($goods['stock'] <= 0 && $goods['pre_order'] == 0){
+                    $data = array('code' => 0,'msg' => '当前有商品"'.$goods['product_name'].'"库存不足！');
+                    $this->ajaxReturn($data);
+                }
+            }
             $res='';
             $order_sn=date('Ymd').time();
 
@@ -224,29 +238,30 @@ class Cart extends Frontend
                 $service_price = $cofing_freight['remote_area'];
             }
 
-
             foreach ($data as $k => $v) {
-                    $price=Db::name('goods')->where('product_id',$v['goods_id'])->find();
-                    $price['price']= product_price($v['goods_id']);
-                    $fat['price'] =$price['price'];
-                    $fat['money_total']=$v['goods_num']*$price['price'];
-                    $fat['goods_sn'] =$price['freight_num'];
-                    $fat['address_id'] =$address_id;
-                    $fat['address'] =$address['text'];
-                    $fat['integral_price'] =$score_price;
-                    $fat['coupon_price'] =$coupon_price;
-                    $fat['coupon_id'] =$coupon_id;
-                    $fat['freight'] =$freight;
-                    $fat['service_price'] =$service_price;
-                    $fat['order_sn'] =$order_sn;
-                    $fat['goods_id'] = $v['goods_id'];//这里都要加上下标
-                    $fat['goods_num'] = $v['goods_num'];//这里都要加上下标
-                    $fat['user_id'] = Session::get('user_id');
-                    $fat['addtime'] = date('Y-m-d H:i:s',time());
-                    if ($v != "") {
-                       $res= db("order")->insert($fat);
-                    }
-                    $goods_id[]  = $v['goods_id'];
+                $goods=Db::name('goods')->where('product_id',$v['goods_id'])->find();
+                $goods['price']= product_price($v['goods_id']);
+                $fat['price'] =$goods['price'];
+                $fat['money_total']=$v['goods_num']*$goods['price'];
+                $fat['goods_sn'] =$goods['freight_num'];
+                $fat['address_id'] =$address_id;
+                $fat['address'] =$address['text'];
+                $fat['integral_price'] =$score_price;
+                $fat['coupon_price'] =$coupon_price;
+                $fat['coupon_id'] =$coupon_id;
+                $fat['freight'] =$freight;
+                $fat['service_price'] =$service_price;
+                $fat['order_sn'] =$order_sn;
+                $fat['goods_id'] = $v['goods_id'];
+                $fat['goods_is_pre_order'] = $goods['pre_order']; //是否pre_order
+                $fat['goods_is_inland'] = $goods['is_inland']; //是否内地商品
+                $fat['goods_num'] = $v['goods_num'];
+                $fat['user_id'] = Session::get('user_id');
+                $fat['addtime'] = date('Y-m-d H:i:s',time());
+                if ($v != "") {
+                   $res= db("order")->insert($fat);
+                }
+                $goods_id[]  = $v['goods_id'];
             }
 
             if ($res) {

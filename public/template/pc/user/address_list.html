@@ -85,15 +85,13 @@
                           <label class="col-sm-2 control-label"><span class="color_ro">*</span>手機號碼</label>
 
                           <div class="col-sm-2">
-                             <input type="text" class="form-control input_e" id="phone_type" placeholder="" value="{$row.phone|default = '+852'}"  name="phone_type" required oninvalid="setCustomValidity('请输入手機號碼！')"  oninput="setCustomValidity('') " onkeyup="value=value.replace(/[^\d]/g,'') " ng-pattern="/[^a-zA-Z]/" maxlength="11">
+                             <input type="text" class="form-control input_e" id="phone_type" placeholder="" value="{$row.phone|default = '+852'}"  name="phone_type" required oninvalid="setCustomValidity('请输入手機號碼！')"  oninput="setCustomValidity('') " onkeyup="value=value.replace(/[^\d\+\/]/g,'') " ng-pattern="/[^a-zA-Z]/" maxlength="11">
                           </div>
                           <div class="col-sm-7" >
                             <input type="text" class="form-control input_e" id="phone" placeholder="" value="{$row.phone}"  name="phone" required oninvalid="setCustomValidity('请输入手機號碼！')" oninput="setCustomValidity('') "onkeyup="value=value.replace(/[^\d]/g,'') " ng-pattern="/[^a-zA-Z]/" maxlength="11">
                           </div>
-                          
                         </div>
-
-                        <div class="form-group">
+                        <div class="form-group" id="card_div" style="display:{$row['province']==47494?'none':''}{$row['province']==47506?'none':''}">
                           <label for="" class="col-sm-2 control-label"><span class="color_ro">*</span>上传身份证</label>
                           <div class="col-sm-10" >
                               <div id="preview_z" style="">
@@ -124,16 +122,16 @@
                     </div>
                     
                     <div class="col-md-12 right-list">       
-            						<div class="color_ro" style="padding: 50px 0 10px 0;">已保存了3條地址，還能新建7條地址</div>
-            						<div class="row item-single">
-            							<div class="col-md-1" style="">收貨人</div>
-            							<div class="col-md-3" style="">所在地區</div>
-            							<div class="col-md-3" style="">詳細地址</div>
-            							<div class="col-md-2" style="">電話</div>
-            							<div class="col-md-1" style="">操作</div>
-            						</div>
-                      {foreach name="address_list" item="vo"}
-            						<div class="row cart-item-list">
+                            <div class="color_ro" style="padding: 50px 0 10px 0;">已保存了3條地址，還能新建7條地址</div>
+                                <div class="row item-single">
+                                    <div class="col-md-1" style="">收貨人</div>
+                                    <div class="col-md-3" style="">所在地區</div>
+                                    <div class="col-md-3" style="">詳細地址</div>
+                                    <div class="col-md-2" style="">電話</div>
+                                    <div class="col-md-1" style="">操作</div>
+                                </div>
+                        {foreach name="address_list" item="vo"}
+                                <div class="row cart-item-list">
             						  <div class="col-md-1 nowrap">
             							 {$vo.name}
             						  </div>
@@ -153,12 +151,12 @@
             							   <span class="btn btn-warning btn-disabled" disabled="disabled">{$vo.default_text}</span>
                                         {/eq}
             						  </div>
-            						</div>
-                      {/foreach}
-                    {if condition="count($address_list) eq 0"}
-                         <div style="text-align:  center;padding:  20px;">没有地址信息</div>
-                    {/if}
-            					</div>
+                                </div>
+                        {/foreach}
+                        {if condition="count($address_list) eq 0"}
+                             <div style="text-align:  center;padding:  20px;">没有地址信息</div>
+                        {/if}
+                    </div>
  
                 </div>
             </div>
@@ -236,16 +234,23 @@
           });
       }
 
-
       /**
        * 获取城市
        * @param t  省份select对象
        */
       function get_city(t){
+
           var parent_id = $(t).val();
           if(!parent_id > 0){
               return;
           }
+
+          if(parent_id == 47494 || parent_id == 47506){
+              $('#card_div').hide();
+          }else{
+              $('#card_div').show();
+          }
+
           $('#district').empty().css('display','none');
           $('#twon').empty().css('display','none');
           // var url = '/index.php?m=Admin&c=Api&a=getRegion&level=2&parent_id='+ parent_id;

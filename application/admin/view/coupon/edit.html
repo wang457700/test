@@ -4,6 +4,7 @@
     .danxuan .fa-circle{color: #eee;}
     .danxuan.on .fa-circle{display: inline-block;color: #18bc9b;}
 </style>
+
 <form id="edit-form" class="form-horizontal form-ajax" role="form" data-toggle="validator" method="POST" action="" style="min-height: 450px;">
     <input type="hidden" name="coupon_id" value="{$row.coupon_id}">
     <div class="form-group">
@@ -31,8 +32,6 @@
     <div class="form-group">
         <label for="username" class="control-label col-xs-12 col-sm-2">會員類別</label>
         <div class="col-xs-12 col-sm-8">
-
-
             {foreach name="level" item="vo" key="k"}
                 {foreach name="row['user_level']" item="vov"}
                         <?php
@@ -42,15 +41,25 @@
                         ?>
                 {/foreach}
                 <label><input type="checkbox" name="row[user_level][]" value="{$k}" {$checked[$k]|default=''}>{$vo}</label>
-
             {/foreach}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <input type="hidden" name="row[no_product_categoryids]" value="{$row.no_product_categoryids}"/>
+        <label class="control-label col-xs-12 col-sm-2">不可用分類:</label>
+        <div class="col-xs-12 col-sm-8">
+            <span class="text-muted"><input type="checkbox" name="" id="checkall" /> <label for="checkall"><small>{:__('Check all')}</small></label></span>
+            <span class="text-muted"><input type="checkbox" name="" id="expandall" /> <label for="expandall"><small>{:__('Expand all')}</small></label></span>
+
+            <div id="treeview"></div>
         </div>
     </div>
 
     <div class="form-group">
         <label for="coupon_sn" class="control-label col-xs-12 col-sm-2">優惠码</label>
         <div class="col-xs-12 col-sm-8">
-            <input type="text" class="form-control NumText" id="coupon_sn" name="row[coupon_sn]" value="{$row.coupon_sn}" data-rule="required;coupon_sn" />
+            <input type="text" class="form-control" id="coupon_sn" name="row[coupon_sn]" value="{$row.coupon_sn}" data-rule="required;coupon_sn" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9/\-\/]/g,'')" onpaste="value=value.replace(/[^\a-\z\A-\Z0-9/\-\/]/g,'')" oncontextmenu = "value=value.replace(/[^\a-\z\A-\Z0-9/\-\/]/g,'')"/>
         </div>
     </div>
     <div class="form-group">

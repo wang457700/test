@@ -77,7 +77,7 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 
 /* nav_menu */.nav_menu {background-color:#7ac141;}
 .nav {width:1170px;position:relative;margin:0 auto;}
-.nav .list li {float:left;width:11%;list-style-type:none;text-align:center;}
+.nav .list li {float:left;width:10%;list-style-type:none;text-align:center;}
 .nav .list ul {list-style-type:none;}
 .nav .list a {display:block;text-align:center;font:bold 14px/36px "Helvetica Neue",Helvetica,Arial,sans-serif;color:#fff;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;background: url(../img/nav-right.png) no-repeat right;}
 .nav .list a:hover {color:#FFA304;}
@@ -98,11 +98,11 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 .f2 .swiper-wrapper {margin: 0;}
 .f2 .swiper-button-next {margin: 0;right: -3em;background: #ffffff85 url(../img/swiper-button-next.png) no-repeat center;background-size: 20px;opacity: 0.8;padding:  20px;}
 .adds:hover{background: #6ea742 !important;cursor:default}
-.f2 .list img {width:100%;margin: 1em auto;object-fit: cover;}
+.f2 .list img {width:100%;margin: 1em auto;object-fit: contain;}
 
 .next-my.swiper-button-next {margin: 0;right: 4px;background: #ffffff85 url(../img/swiper-button-next.png) no-repeat center;background-size: 20px;opacity: 1;padding:  20px;}
 .f1 .list {background:#fff;border-radius: 10px;padding:0;text-align:center;margin: 0 25px;margin-left: 0;/* margin-right: 5px !important; */}
-.f1 .list img {width:100%;margin: 3em 0 0em 0;object-fit: cover;}
+.f1 .list img {width:100%;margin: 3em 0 0em 0;object-fit: contain;}
 .f1 .list p {background:#7ac142;color:#fff;border-radius: 0 0 10px 10px;margin:0;padding: 1em;margin-bottom: -1px;}
 .index_title {background: url(../img/title_ico.png) no-repeat;padding-left:30px;background-size: 25px;height:  25px;line-height: 25px;font-weight:  bold;font-size:  16px;}
 
@@ -309,6 +309,7 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 .payment2 .info {background:#eee;padding:20px;font-size:16px;line-height:25px}
 .payment2 .type{padding:20px;border-bottom: 1px solid #eeeeee;}
 .payment2 .type img{width: 100%}
+.payment2 .type label{padding:5px}
 .payment2 .type label::before{top:20px}
 .payment2 .type label:after{top:23px}
 

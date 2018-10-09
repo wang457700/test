@@ -503,8 +503,10 @@ function auto_height(){
     });
 
     var ads_right =  $('.ads_right').width();
-    $('.ads_right iframe').attr('src','https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Flivesmart.hksr&tabs=timeline&width=' + parseInt(ads_right)+ '&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=278986015538188')
 
+    {if condition="empty(sp_ip_ischina())"}
+    $('.ads_right iframe').attr('src','https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Flivesmart.hksr&tabs=timeline&width=' + parseInt(ads_right)+ '&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=278986015538188')
+    {/if}
     var container_width =  $(document.body).width();
     if(container_width <=1366 && container_width >=1024){
         $('.container').each(function(i){

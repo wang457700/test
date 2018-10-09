@@ -383,7 +383,7 @@ class User extends Frontend
             ->join('__USER_ADDRESS__ e', 'a.address_id=e.id', 'LEFT')
             ->group('a.order_sn')
             ->order('addtime desc')
-            ->paginate(2);
+            ->paginate(5);
 
         $result = $order_list->all();
         foreach ($result as $key=>$item){
@@ -403,9 +403,6 @@ class User extends Frontend
             ->column('contribution_price'));
 
         $goods_list= Db::name('order')->alias('a')->join('__GOODS__ c','a.goods_id=c.product_id','LEFT')->where('user_id',Session::get('user_id'))->order('addtime desc')->paginate(4);
-
-        $pay_status = array('0'=>'未支付','2'=>'已支付','6'=>'已取消');
-        $payment = array('0'=>'未支付','2'=>'已支付','6'=>'已取消');
 
         //手机端ajax列表
         if($this->request->isPost()){
@@ -437,9 +434,9 @@ class User extends Frontend
         $this->assign('page',$page);
         $this->assign('order_list',$result);
         $this->assign('level_text',$level_text);
-        $this->assign('pay_status',$pay_status);
+        $this->assign('pay_status',sp_paystatus_array());
         $this->assign('lastPage',$lastPage=6);
-        $this->assign('payment',$payment);
+        $this->assign('payment',sp_payment_array());
         $this->assign('contribution_price',$sum_contribution_price);
         $this->assign('config_use',config('site')['integral']['use']);
           $this->assign('goods_list',$goods_list);

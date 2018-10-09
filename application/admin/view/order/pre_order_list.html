@@ -1,0 +1,100 @@
+
+ <form class="form-horizontal form-commonsearch nice-validator n-default n-bootstrap" novalidate="" method="post" action="{:url('order/pre_order_list')}">
+     <fieldset>
+         <div class="row">
+             <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                 <label for="ip" class="control-label col-xs-4">关键词</label>
+                 <div class="col-xs-8">
+                     <input type="hidden" class="form-control operate" name="ip-operate" data-name="ip" value="=" readonly=""><input type="text" class="form-control" name="keyword" value="{$request['keyword']|default=''}" placeholder="输入產品名稱|貨品ID|訂單號" data-index="6">
+                 </div>
+             </div>
+             <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                 <div class="col-sm-8 col-xs-offset-4">
+                     <button type="submit" class="btn btn-success" formnovalidate="">搜索</button>
+                     <a href="{:url('order/pre_order_list')}" type="reset" class="btn btn-default">重置</a>
+                 </div>
+             </div>
+         </div>
+     </fieldset>
+ </form>
+<div class="panel panel-default panel-intro">
+    {:build_heading()}
+    <div class="panel-body">
+
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade active in" id="one">
+                <div class="widget-body no-padding">
+                    <div id="toolbar" class="toolbar">
+                        <a href="javascript:window.location.reload();" class="btn btn-primary btn-refresh" title="刷新"><i class="fa fa-refresh"></i> </a>
+                        <div class="dropdown btn-group {:$auth->check('user/user/multi')?'':'hide'}">
+
+                        </div>
+                    </div>
+                    <table  class="table table-striped table-bordered table-hover" data-operate-edit="1" data-operate-del="1" width="100%">
+                        <thead>
+                        <tr>
+
+                            <th style="text-align: center; vertical-align: middle; " data-field="product_id">
+                                <div class="th-inner ">訂單號</div>
+                                <div class="fht-cell"></div>
+                            </th>
+                            <th style="text-align: center; vertical-align: middle; " data-field="product_id">
+                                <div class="th-inner ">產品ID</div>
+                                <div class="fht-cell"></div>
+                            </th>
+                            <th style="text-align: center; vertical-align: middle; " data-field="product_name">
+                                <div class="th-inner ">產品名稱</div>
+                                <div class="fht-cell"></div>
+                            </th>
+                            <th style="text-align: center; vertical-align: middle; " data-field="brand">
+                                <div class="th-inner ">下单價格</div>
+                                <div class="fht-cell"></div>
+                            </th>
+                            <th style="text-align: center; vertical-align: middle; " data-field="place_origin">
+                                <div class="th-inner ">產品圖片</div>
+                                <div class="fht-cell"></div>
+                            </th>
+                            <th style="text-align: center; vertical-align: middle;" data-field="price">
+                                <div class="th-inner ">貨品ID</div>
+                                <div class="fht-cell"></div>
+                            </th>
+                            <th style="text-align: center; vertical-align: middle;" data-field="price">
+                                <div class="th-inner ">售出數量</div>
+                                <div class="fht-cell"></div>
+                            </th>
+                            <th style="text-align: center; vertical-align: middle; " data-field="freight_num">
+                                <div class="th-inner ">狀態</div>
+                                <div class="fht-cell"></div>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody data-listidx="0">
+
+                        {foreach name="goods_list" item="vo" }
+                        <tr data-index="0">
+                            <td style="text-align: center; vertical-align: middle; ">{$vo.order_sn}</td>
+                            <td style="text-align: center; vertical-align: middle; ">{$vo.goods_id}</td>
+                            <td style="text-align: center; vertical-align: middle; ">{$vo.product_name}</td>
+                            <td style="text-align: center; vertical-align: middle; ">{$vo.price}</td>
+                            <td style="text-align: center; vertical-align: middle; "><a href="__PUBLIC__/{$vo.cover}" target="_blank">
+                                <img class="img-sm img-center" src="__PUBLIC__/{$vo.cover}"></a></td>
+                            <td style="text-align: center; vertical-align: middle; ">{$vo.goods_sn}</td>
+                            <td style="text-align: center; vertical-align: middle; ">{$vo.goods_num}</td>
+                            <td style="text-align: center; vertical-align: middle; ">{$paystatus[$vo['pay_status']]}</td>
+                            <td style="text-align: center; vertical-align: middle; ">
+
+                            </td>
+                        </tr>
+                        {/foreach}
+                        </tbody>
+                    </table>
+                    <div class="pull-right pagination">
+                        {$page}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

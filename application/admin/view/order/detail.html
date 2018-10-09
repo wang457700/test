@@ -1,4 +1,19 @@
+<style>
+.btn{margin-right: 10px;border-radius: 5px !important;}
+</style>
 <a href="javascript:history.back(-1);" class="btn btn-primary" style="margin-bottom: 10px;"><i class="fa fa-mail-reply"></i> 返回上一页</a><br>
+<div class="columns columns-right btn-group pull-right">
+    {if condition="$order['pay_status'] eq 2"}
+        <a href="{:url('order/deliver_order',array('order_sn'=>$order['order_sn']))}" class="btn btn-primary btn-ajax-xs" title="點擊發貨" data-table-id="table" data-field-index="11" data-row-index="0" data-button-index="1">
+            發貨
+        </a>
+    {/if}
+    {if condition="$order['pay_status'] eq 0"}
+        <a href="{:url('order/cancel_order',array('order_sn'=>$order['order_sn']))}" class="btn btn-success btn-ajax-xs" title="點擊取消訂單" data-table-id="table" data-field-index="11" data-row-index="0" data-button-index="1">
+            取消訂單
+        </a>
+    {/if}
+</div>
 <h3>訂單信息</h3>
 <table class="table table-striped">
     <thead>
@@ -23,7 +38,8 @@
         </tr> 
         <tr class="col-xs-6 col-sm-6">
             <th>支付方式：</th>
-            <td>{$payment[$order['payment']]}</td>
+            <td>{:sp_payment($order['payment'])}
+            </td>
         </tr> 
         <tr class="col-xs-6 col-sm-6">
             <th>應付金額：</th>

@@ -129,12 +129,16 @@ class Product extends Frontend
 
     public function detail()
     {
+        if(!sp_ip_ischina()){
+
+            $this->error('內地專區只供內地用戶購買！',url('index/index'));
+        }
         $goods_id = input('id');
         $goods =  Db::name('goods')->where('product_id',$goods_id)->find();
         $this->product_history($goods_id);
 
         //Session::set('product_history','');
-        $goods_list =  Db::name('goods')->limit(6)->select();
+        $goods_list =  Db::name('goods')->limit(6)->order('add_time desc')->select();
         $comment_list =  Db::name('goods_comment')
             ->alias('a')->field('a.*,a.user_id as id,c.username,c.level')
             ->join('__USER__ c','a.user_id=c.id','RIGHT')
@@ -152,6 +156,7 @@ class Product extends Frontend
         $this->view->assign("goods_list",$goods_list);
         $this->view->assign("getparents",$getparents);
         $this->view->assign("img_url",$img_url);
+
         $this->view->assign("title",$goods['seo_title']);
         $this->view->assign("seo_keywords",$goods['seo_keywords']);
         $this->view->assign("seo_description",$goods['seo_desc']);

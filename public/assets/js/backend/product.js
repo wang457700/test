@@ -329,11 +329,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             });
         });
 
-
-
-
-
-
     });
 
 
@@ -391,23 +386,33 @@ function get_category(id,next,select_id){
     });
 }
 
-
-    $("input[type='radio']").click(function(){
-        if($(this).attr('checked') == 'checked'){
-            $(this).removeAttr('checked');
-            if($(this).val() == 3){
-                $('#discount_time').hide();
-            }
-        }else{
-            $(this).attr('checked','checked');
-            if($(this).val() == 3){
-                $('#discount_time').show();
-            }
+    $("input[name='discount_type']").click(function(){
+        if($(this).val() == 3){
+            $('#discount_time').show();
+        }else {
+            $('#discount_time').hide();
         }
 
-        console.log($(this).attr('checked'));
-        console.log($(this).val());
+        $('#no_checked').show();
     });
 
+    $("#no_checked").click(function(){
+
+        $("input[name='discount_type']").each(function(){
+            console.log($(this).val());
+            $(this).removeAttr('checked');
+        });
+        $(this).hide();
+        $('#discount_time').hide();
+    });
+
+
+    $("input[name=is_inland]").click(function(){
+        if( $(this).val() == 1){
+            $('#is_inland_tip').text('*已選擇內地專區，請輸入人民幣價格！');
+        }else{
+            $('#is_inland_tip').text('');
+        }
+    });
     return Controller;
 });

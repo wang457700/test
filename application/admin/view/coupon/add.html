@@ -39,12 +39,21 @@
         </div>
     </div>
 
+    <div class="form-group">
+        <input type="hidden" name="row[no_product_categoryids]" value="" />
+        <label class="control-label col-xs-12 col-sm-2">不可用分類:</label>
+        <div class="col-xs-12 col-sm-8">
+            <span class="text-muted"><input type="checkbox" name="" id="checkall" /> <label for="checkall"><small>{:__('Check all')}</small></label></span>
+            <span class="text-muted"><input type="checkbox" name="" id="expandall" /> <label for="expandall"><small>{:__('Expand all')}</small></label></span>
 
+            <div id="treeview"></div>
+        </div>
+    </div>
     {if condition="$coupon_category eq 1"}
     <div class="form-group">
         <label for="username" class="control-label col-xs-12 col-sm-2">優惠码</label>
         <div class="col-xs-12 col-sm-8">
-            <input type="text" class="form-control NumText" id="coupon_sn" name="row[coupon_sn]" value="" data-rule="required;data4" />
+            <input type="text" class="form-control" id="coupon_sn" name="row[coupon_sn]" value="" data-rule="required;data4"   onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9/\-\/]/g,'')" onpaste="value=value.replace(/[^\a-\z\A-\Z0-9/\-\/]/g,'')" oncontextmenu = "value=value.replace(/[^\a-\z\A-\Z0-9/\-\/]/g,'')"/>
         </div>
     </div>
     {/if}

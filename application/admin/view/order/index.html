@@ -1,102 +1,22 @@
  <style type="text/css">
-        .sm-st {
-            background:#fff;
-            padding:20px;
-            -webkit-border-radius:3px;
-            -moz-border-radius:3px;
-            border-radius:3px;
-            margin-bottom:20px;
-            -webkit-box-shadow: 0 1px 0px rgba(0,0,0,0.05);
-            box-shadow: 0 1px 0px rgba(0,0,0,0.05);
-        }
-        .sm-st-icon {
-            width:60px;
-            height:60px;
-            display:inline-block;
-            line-height:60px;
-            text-align:center;
-            font-size:30px;
-            -webkit-border-radius:5px;
-            -moz-border-radius:5px;
-            border-radius:5px;
-            float:left;
-            margin-right:10px;
-            color:#1a8551;
-        }
-        .sm-st-info {
-            font-size:12px;
-            padding-top:2px;
-        }
-        .sm-st-info span {
-            display:block;
-            font-size:24px;
-            color: #1a8551;
-            font-weight:600;
-        }
-        .sm-st .jine{
-            color: #1a8551;
-            font-size: 18px;
-        }
-
-        .stat-elem {
-            background-color: #fff;
-            padding: 18px;
-            border-radius: 40px;
-        }
-
-        .stat-info {
-            text-align: center;
-            background-color:#fff;
-            border-radius: 5px;
-            margin-top: -5px;
-            padding: 8px;
-            -webkit-box-shadow: 0 1px 0px rgba(0,0,0,0.05);
-            box-shadow: 0 1px 0px rgba(0,0,0,0.05);
-            font-style: italic;
-        }
-
-        .stat-icon {
-            text-align: center;
-            margin-bottom: 5px;
-        }
-
-        .stats .stat-icon {
-            color: #28bb9c;
-            display: inline-block;
-            font-size: 26px;
-            text-align: center;
-            vertical-align: middle;
-            width: 50px;
-            float:left;
-        }
-
-        .stat {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: inline-block;
-            margin-right: 10px; }
-        .stat .value {
-            font-size: 20px;
-            line-height: 24px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            font-weight: 500; }
-        .stat .name {
-            overflow: hidden;
-            text-overflow: ellipsis; }
-        .stat.lg .value {
-            font-size: 26px;
-            line-height: 28px; }
-        .stat.lg .name {
-            font-size: 16px; }
-        .stat-col .progress {height:2px;}
-        .stat-col .progress-bar {line-height:2px;height:2px;}
-
-        .item {
-            padding:30px 0;
-        }
-    </style>
+     .sm-st{background:#fff;padding:20px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;margin-bottom:20px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.05);box-shadow:0 1px 0 rgba(0,0,0,.05)}
+     .sm-st-icon{width:60px;height:60px;display:inline-block;line-height:60px;text-align:center;font-size:30px;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;float:left;margin-right:10px;color:#1a8551}
+     .sm-st-info{font-size:12px;padding-top:2px}
+     .sm-st-info span{display:block;font-size:24px;color:#1a8551;font-weight:600}
+     .sm-st .jine{color:#1a8551;font-size:18px}
+     .stat-elem{background-color:#fff;padding:18px;border-radius:40px}
+     .stat-info{text-align:center;background-color:#fff;border-radius:5px;margin-top:-5px;padding:8px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.05);box-shadow:0 1px 0 rgba(0,0,0,.05);font-style:italic}
+     .stat-icon{text-align:center;margin-bottom:5px}
+     .stats .stat-icon{color:#28bb9c;display:inline-block;font-size:26px;text-align:center;vertical-align:middle;width:50px;float:left}
+     .stat{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:inline-block;margin-right:10px}
+     .stat .value{font-size:20px;line-height:24px;overflow:hidden;text-overflow:ellipsis;font-weight:500}
+     .stat .name{overflow:hidden;text-overflow:ellipsis}
+     .stat.lg .value{font-size:26px;line-height:28px}
+     .stat.lg .name{font-size:16px}
+     .stat-col .progress{height:2px}
+     .stat-col .progress-bar{line-height:2px;height:2px}
+     .item{padding:30px 0}
+ </style>
     <div class="row">
         <div class="col-sm-1 col-xs-1"> </div>
         <div class="col-sm-2 col-xs-6">
@@ -219,7 +139,7 @@
             <div class="tab-pane fade active in" id="one">
                 <div class="widget-body no-padding">
                     <div id="toolbar" class="toolbar">
-                        {:build_toolbar('refresh')}
+                        <a href="javascript:window.location.reload();" class="btn btn-primary btn-refresh" title="刷新"><i class="fa fa-refresh"></i> </a>
                         <div class="dropdown btn-group {:$auth->check('user/user/multi')?'':'hide'}">
 
                         </div>
@@ -228,9 +148,9 @@
                         <thead>
                         <tr>
                             <th class="bs-checkbox " style="text-align: center; vertical-align: middle; width: 36px; " data-field="0">
-                                <div class="th-inner ">
-                                    <input name="btSelectAll" type="checkbox"></div>
-                                <div class="fht-cell"></div>
+                                <!--<div class="th-inner ">-->
+                                    <!--<input name="btSelectAll" type="checkbox"></div>-->
+                                <!--<div class="fht-cell"></div>-->
                             </th>
                             <th style="text-align: center; vertical-align: middle; " data-field="product_id">
                                 <div class="th-inner ">訂單ID</div>
@@ -248,7 +168,7 @@
                                 <div class="th-inner ">總金額</div>
                                 <div class="fht-cell"></div>
                             </th>
-                            <th style="text-align: center; vertical-align: middle; " data-field="price">
+                            <th style="text-align: center; vertical-align: middle;width: 300px;" data-field="price">
                                 <div class="th-inner ">送貨地址</div>
                                 <div class="fht-cell"></div>
                             </th>
@@ -286,7 +206,7 @@
                             <td style="text-align: center; vertical-align: middle; ">{$vo.address}</td>
                             <td style="text-align: center; vertical-align: middle; ">{$vo.freight}</td>
                             <td style="text-align: center; vertical-align: middle; ">{$vo.contribution_price}</td>
-                            <td style="text-align: center; vertical-align: middle; ">{$payment[$vo['payment']]}</td>
+                            <td style="text-align: center; vertical-align: middle; ">{:sp_payment($vo['payment'])}</td>
                             <td style="text-align: center; vertical-align: middle; ">{$pay_status[$vo['pay_status']]}</td>
                             <td style="text-align: center; vertical-align: middle; ">
 

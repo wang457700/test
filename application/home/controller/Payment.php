@@ -34,6 +34,7 @@ class Payment extends  Frontend
                 $cofing_integral = config('site')['integral'];
             //支付成功处理
 
+
                /* 选中使用积分 */
                 if(!empty($order_info['integral_price']) && $order_info['integral_price']!= '0.00'){
                     $user_score= Db::name("user")->where(array('id'=>Session::get('user_id')))->value('score');
@@ -63,15 +64,12 @@ class Payment extends  Frontend
                     $res= Db::name("user")->where(array('id'=>Session::get('user_id')))->setInc('score',$int['integral']);
                 }
                 /*会员升级*/
-
                 sp_user_vipupgrade(Session::get('user_id'));
-
-                $this->success('支付成功！'.$all_price,url('payment/payment_done',array('order_sn'=>base64_encode($order_sn))));
+                $this->success('支付成功！',url('payment/payment_done',array('order_sn'=>base64_encode($order_sn))));
             }else{
                 $this->error('支付失败！');
             }
         }
-
 
         $order_sn=base64_decode(input('order_sn'));
         $order_info= Db::name('order')

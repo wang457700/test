@@ -2,6 +2,7 @@
 <html lang="{$config.language}">
     <head>
         <!-- 加载部部样式及META信息 -->
+
         {include file="common/meta" /}
     </head>
     <body class="hold-transition skin-green sidebar-mini fixed {if $config.fastadmin.multiplenav}multiplenav{/if}" id="tabs">
@@ -33,8 +34,19 @@
             <div class="control-sidebar-bg"></div>
             {include file="common/control" /}
         </div>
-
         <!-- 加载JS脚本 -->
         {include file="common/script" /}
+        <script type="text/javascript" src="__CDN__/assets/js/language.js"></script>
+        <script type="text/javascript">
+
+            StranBody();
+            setInterval(function() {
+
+            }, 2000);
+
+
+
+        </script>
+
     </body>
 </html>

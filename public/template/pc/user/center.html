@@ -94,10 +94,15 @@
 
                     <div class="cart-item-list">
                         <div class="row row1">
-                              <div class="col-md-10 color_75" style="">
+                              <div class="col-md-8 color_75" style="">
                                  {:date('Y-m-d',strtotime($vo['addtime']))}
                                   訂單編號: <a href="{:url('user/order_detail',array('order_sn'=>base64_encode($vo['order_sn'])))}"><span class="color_ro bold">{$vo['order_sn']}</span></a>
                               </div>
+                                <div class="col-md-2" style="">
+                                    {if condition="$vo['pay_status'] neq 0 && $vo['pay_status'] neq 6"}
+                                        支付方式：{:sp_payment($vo['payment'])}
+                                    {/if}
+                                </div>
                               <div class="col-md-2 t2" style="">
                                     訂單狀態: <span class="color_ro">{$pay_status[$vo['pay_status']]}</span>
                               </div>
@@ -118,23 +123,20 @@
                                       <span class="color_ro bold">{$vv.integral|default='0'}</span>
                                   </p>
                               </td>
-                              <td class="col-md-2 color_ro"><span class="bold font16">{$vv.price}</span> (HKD)</td>
+                              <td class="col-md-2 color_ro"><span class="bold font16">${$vv.price}</span> </td>
                               <td class="col-md-1 bold font16">{$vv.goods_num}</td>
-                              <td class="col-md-2 "><span class="bold font16 color_ro">{$vv.money_total}</span> <span class="color_75">(HKD)</span></td>
+                              <td class="col-md-2 "><span class="bold font16 color_ro">${$vv.money_total}</span> <span class="color_75"></span></td>
                             </tr>
                           {/foreach}
                           </tbody>
                         </table>
                           <div class="row row3">
-                              <div class="col-md-4 color_75" style="text-align:left">
+                              <div class="col-md-3 color_75" style="text-align:left">
                                  下單時間:{:date('H:i:s',strtotime($vo['addtime']))}
-                                  {if condition="$vo['pay_status'] neq 0"}
-                                    支付方式：{:sp_payment($vo['payment'])}
-                                  {/if}
                               </div>
-                              <div class="col-md-5 t2 color_75" style="">
-                                    訂單總價: <span class="bold font16 color_ro">{:number_format(sum_order_payableprice($vo['order_sn']),2)}</span> (HKD)
-                                 (含運費:<span class="color_ro"> {$vo['freight']|default='0'} </span>HKD)
+                              <div class="col-md-6 t2 color_75" style="">
+                                    訂單總價: <span class="bold font16 color_ro">${:number_format(sum_order_payableprice($vo['order_sn']),2)}</span>
+                                 (含運費:<span class="color_ro"> ${$vo['freight']|default='0'} </span>;偏远地区附加费：<span class="color_ro">${$vo['service_price']|default='0'} </span> )<br>
                               </div>
                               <div class="col-md-3 t2" style="">
                                   {if condition="$vo['pay_status'] neq 0"}

@@ -1,5 +1,5 @@
 <?php
-      $category = model('category')->where('pid',14)->select();
+      $category = model('category')->where('pid',14)->order('weigh asc')->select();
 ?>
 <div class="nav_menu">
       <div class="nav">

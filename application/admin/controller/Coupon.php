@@ -2,6 +2,7 @@
 
 namespace app\admin\controller;
 use think\Db;
+use fast\Tree;
 use app\common\controller\Backend;
 
 /**
@@ -152,7 +153,7 @@ class Coupon extends Backend
                     $this->error('現金券不能為零！');
                 }
             }
-
+            //coupon_category=1 通用优惠券
             if($data['row']['coupon_category'] ==1){
                 $info = Db::name('coupon')->where(array('coupon_sn'=>$data['row']['coupon_sn']))->find();
                 if($info){
@@ -171,16 +172,42 @@ class Coupon extends Backend
                     $res=Db::name('coupon')->insertGetId($data['row']);
                 }
             }
-
             if ($res)
             {
-                $this->success('添加成功！');
+                $this->success('添加成功！',json_encode($data['row'],true));
             }
             $this->error();
         }
 
         $this->view->assign("coupon_category",input('category',1));
         return $this->view->fetch();
+    }
+
+    public function roletree()
+    {
+        $id = input('id');
+        $categoryids = [];
+
+        $no_product_categoryids = Db::name('coupon')->where('coupon_id',$id)->value('no_product_categoryids');
+        if($no_product_categoryids){
+            $categoryids = explode(',',$no_product_categoryids);
+        }
+
+        $this->model = model('app\common\model\Category');
+        $tree = Tree::instance();
+        $tree->init(collection($this->model->order('weigh desc,id desc')->select())->toArray(), 'pid');
+        $getTreeList = $tree->getTreeList($tree->getTreeArray(14), 'name');
+
+        $roletree[] = array('id' => '14', 'parent' => '#', 'text' =>'全部分类', 'type' => 'menu');
+        $getChildrenIds = $tree->getChildrenIds(14);
+
+
+        foreach ($getTreeList as $key => $v){
+            $state = array('selected' => in_array($v['id'], $categoryids)); // && !in_array($v['id'], $categoryids)
+            $roletree[] = array('id' => $v['id'], 'parent' => $v['pid']? $v['pid'] : '#', 'text' =>$v['nickname'], 'type' => 'menu', 'state' =>$state);
+
+        }
+        $this->success('获取成功！','',$roletree);
     }
 
 

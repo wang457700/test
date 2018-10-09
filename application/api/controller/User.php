@@ -381,20 +381,44 @@ class User extends Api
             // 输出 jpg
 
             // 输出 20160820/42a79759f284b767dfcb2a0197904287.jpg
-            $this->success('上传成功',$path.'/'.$info->getSaveName());
+            $this->success('上傳成功',$path.'/'.$info->getSaveName());
         }else{
             // 上传失败获取错误信息
-            $this->error('上传失败');
+            $this->error('上傳失敗');
         }
     }
 
 
     //查询优惠券
     public function cx_coupon(){
+
+        $all_total = input('post.all_total'); //不包含积分抵用
+        $goods_json = json_decode(base64_decode(input('post.goods_json')),true); //商品ids
+        $coupon['no_product_categoryids'] = [];
+
+
+        dump($goods_json);
+        foreach($goods_json as $v){
+            $goods_cat_ids[] = $v['cat_id'];
+        }
+
+
+
         $user = Db::name('user')->where('id',Session::get('user_id'))->find();
         $coupon_sn = input('post.coupon');
         /*优惠券*/
         $coupon  = Db::name('coupon')->where(array('coupon_sn'=>$coupon_sn))->find();
+
+
+        if($coupon['no_product_categoryids']){
+            foreach(explode(',',$coupon['no_product_categoryids']) as $item){
+                if(in_array($item,$goods_cat_ids)){
+                    dump($item);
+                }
+            }
+        }
+
+
         $coupon_price =  0;
         $coupon_id =  0;
         if($coupon){
@@ -415,8 +439,8 @@ class User extends Api
                 $this->error('優惠碼不適合'.$level[$user['level']].'使用！');
             }
 
-            if($coupon['min_money'] > ($all_total-$score_price)){
-                $this->error('最低消费'.$coupon['min_money'].'，才能使用優惠碼！');
+            if($coupon['min_money'] > $all_total){
+                $this->error('最低消費'.$coupon['min_money'].'，才能使用優惠碼！');
             }
 
             if($coupon['coupon_type'] == 1){ //1现金券 2折扣
@@ -425,8 +449,8 @@ class User extends Api
                 $coupon_price = ($coupon['coupon_discount']/100)*($all_total-$score_price);
             }
 
-            if(strval($coupon_price) >= strval($all_total-$score_price)){
-                $coupon_price = ($all_total-$score_price);
+            if(strval($coupon_price) >= strval($all_total)){
+                $coupon_price = ($all_total);
             }
             $coupon_id = $coupon['coupon_id'];
 

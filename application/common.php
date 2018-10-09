@@ -398,12 +398,8 @@ function sp_exchangerate($type = 'RMB',$price)
 function sum_order_price($order_sn)
 {
     $goods_money_total =  Db::name('order')->where(array('order_sn'=>$order_sn))->sum('money_total');
-
     //输出 运费金额，积分抵扣金额，运费，服务费
     $order =  Db::name('order')->where(array('order_sn'=>$order_sn))->value('coupon_price,integral_price,freight,service_price');
-
-
-   dump($order);
 }
 
 /**
@@ -412,8 +408,20 @@ function sum_order_price($order_sn)
 */
 function sp_payment($payment)
 {
-    $payment_text = array('0'=>'未知','1'=>'微信','2'=>'支付宝','3'=>'Mastercard','4'=>'Visa');
+    $payment_text = sp_payment_array();
     return $payment_text[$payment];
+}
+
+function sp_payment_array()
+{
+    $payment_text = array('0'=>'','1'=>'微信','2'=>'支付寶','3'=>'Mastercard','4'=>'Visa','5'=>'貨到付款');
+    return $payment_text;
+}
+
+function sp_paystatus_array()
+{
+    $payment_text = array('0'=>'未支付','2'=>'已支付','3'=>'已出貨','6'=>'已取消');
+    return $payment_text;
 }
 
 /**
@@ -570,7 +578,8 @@ function sp_user_default_address()
 function sp_ip_ischina()
 {
     $data['status'] = 0;
-    $url = 'http://ip-api.com/json/'.request()->ip();
+  //  $url = 'http://ip-api.com/json/'.request()->ip();
+    $url = 'http://ip-api.com/json/14.127.80.57'; //模拟深圳ip
     $json = request_post($url,$data = 'null');
     $data = json_decode($json,true);
     $echo = false;

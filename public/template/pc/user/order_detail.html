@@ -48,11 +48,13 @@
     					<div class="row">
 							<div class="col-md-2 col-sm-4 col-xs-4 bold" style="">聯繫電話：</div>	
 							<div class="col-md-10 col-sm-8 col-xs-8" style="">{$order_info.address_info.phone}</div>
-               			</div>	
-    					<div class="row">
-							<div class="col-md-2 col-sm-4 col-xs-4 bold" style="">支付方式：</div>	
-							<div class="col-md-10 col-sm-8 col-xs-8" style="">{:sp_payment($order_info['payment'])}</div>
-               			</div>	
+               			</div>
+						{if condition="$order_info['pay_status'] neq 0 && $order_info['pay_status'] neq 6"}
+							<div class="row">
+								<div class="col-md-2 col-sm-4 col-xs-4 bold" style="">支付方式：</div>
+								<div class="col-md-10 col-sm-8 col-xs-8" style="">{:sp_payment($order_info['payment'])}</div>
+							</div>
+						{/if}
     					<div class="row">
 							<div class="col-md-2 col-sm-4 col-xs-4 bold" style="">收貨地址：</div>	
 							<div class="col-md-10 col-sm-8 col-xs-8" style="">{$order_info.address}</div>
@@ -73,7 +75,7 @@
 					<div class="row cart-item-list">
 						<div class="col-md-6 col-sm-6 col-xs-6 t2" style=""> 
 							<div class="row">
-								<img src="__PUBLIC__/{$vo.cover}" class="col-md-4 col-sm-4 col-xs-4">
+								<img src="__PUBLIC__/{$vo.cover}" class="col-md-4 col-sm-4 col-xs-4 auto_img">
 								<p class="col-md-6 col-sm-6 col-xs-6 ">
 									<span class="bold">{$vo.product_name}</span>
 									產品型號：{$vo.freight_num}
