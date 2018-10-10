@@ -401,9 +401,6 @@ class User extends Api
         foreach($goods_json as $v){
             $goods_cat_ids[] = $v['cat_id'];
         }
-
-
-
         $user = Db::name('user')->where('id',Session::get('user_id'))->find();
         $coupon_sn = input('post.coupon');
         /*优惠券*/

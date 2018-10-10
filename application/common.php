@@ -461,7 +461,7 @@ function create_tourist()
 {
     $tourist_id = getRandomString(3);
     $data = array(
-        'username'=>'youke'.$tourist_id,
+        'username'=>'visitor'.$tourist_id,
         'nickname'=>'遊客'.$tourist_id,
         'user_type'=>'3',
         'is_eamil_status'=>'1',
@@ -577,11 +577,16 @@ function sp_user_default_address()
  */
 function sp_ip_ischina()
 {
-    $data['status'] = 0;
-  //  $url = 'http://ip-api.com/json/'.request()->ip();
-    $url = 'http://ip-api.com/json/14.127.80.57'; //模拟深圳ip
-    $json = request_post($url,$data = 'null');
-    $data = json_decode($json,true);
+    $data = Session::get('ip_info');
+    if($data['time']<= time()){
+        $data['status'] = 0;
+        //  $url = 'http://ip-api.com/json/'.request()->ip();
+        $url = 'http://ip-api.com/json/14.127.80.57'; //模拟深圳ip
+        $json = request_post($url,$data = 'null');
+        $data = json_decode($json,true);
+        $data['time'] = time() + 7200;
+        Session::set('ip_info',$data);
+    }
     $echo = false;
     if($data['status'] == 'success' && $data['countryCode'] == 'CN'){
         $echo = true;
