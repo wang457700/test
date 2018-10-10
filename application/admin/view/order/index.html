@@ -23,7 +23,7 @@
             <div class="sm-st clearfix">
                 <span class="sm-st-icon"><i class="fa fa-shopping-bag"></i></span>
                 <div class="sm-st-info">
-                    <span>35200</span>
+                    <span>{$sum.order_count}</span>
                     訂單數量
                 </div>
             </div>
@@ -32,7 +32,7 @@
             <div class="sm-st clearfix">
                 <span class="sm-st-icon"><i class="fa fa-cube"></i></span>
                 <div class="sm-st-info">
-                    <span>219390</span>
+                    <span>{$sum.goods_num_sum}</span>
                     產品出售數量
                 </div>
             </div>
@@ -41,7 +41,7 @@
             <div class="sm-st clearfix">
                 <span class="sm-st-icon"><i class="fa fa-dollar"></i></span>
                 <div class="sm-st-info">
-                    <span>32143</span>
+                    <span>{$sum.money_total_sum}</span>
                     港幣實付總額
                 </div>
             </div>
@@ -50,7 +50,7 @@
             <div class="sm-st clearfix">
                 <span class="sm-st-icon"><i class="fa fa-cny"></i></span>
                 <div class="sm-st-info">
-                    <span>174800</span>
+                    <span>{$sum.money_total_sum2}</span>
                     人民幣實付總額
                </div>
             </div>
@@ -60,15 +60,15 @@
                 <div>訂單狀態</div>
                 <div class="row" style="color: #999;">
                     <div class="col-sm-4 col-xs-4">
-                        <span class="jine">20</span><br>
+                        <span class="jine">{$pay_sum.count1}</span><br>
                         已發貨
                     </div>
                     <div class="col-sm-4 col-xs-4">
-                        <span class="jine">5</span><br>
+                        <span class="jine">{$pay_sum.count2}</span><br>
                         未發貨
                     </div>
                     <div class="col-sm-4 col-xs-4">
-                        <span class="jine">2</span><br>
+                        <span class="jine">{$pay_sum.count3}</span><br>
                         已取消
                     </div>
                 </div>

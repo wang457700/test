@@ -45,6 +45,28 @@ class Order extends Backend
             ->group('a.order_sn')
             ->order('addtime desc')
             ->paginate(10,false,array('query'=>$request));
+
+
+        //统计
+        $money_total_sum = 0;
+        $money_total_sum2 = 0;
+        $order_count = Db::name('order')->where(array('pay_status'=>array('in','2,3,5,7')))->alias('a')->group('a.order_sn')->count();
+        $goods_num_sum = Db::name('order')->where(array('pay_status'=>array('in','2,3,5,7')))->sum('goods_num');
+        $money_total_list = Db::name('order')->where(array('pay_status'=>array('in','2,3,5,7'),'goods_is_inland'=>0))->field('a.*,(select sum(money_total) from fa_order where order_sn=a.order_sn) as money_total')->alias('a')->group('a.order_sn')->select();
+        $money_total_list2 = Db::name('order')->where(array('pay_status'=>array('in','2,3,5,7'),'goods_is_inland'=>1))->field('a.*,(select sum(money_total) from fa_order where order_sn=a.order_sn) as money_total')->alias('a')->group('a.order_sn')->select();
+        foreach ($money_total_list as $item){
+            $money_total_sum += $item['money_total'];
+        }
+        foreach ($money_total_list2 as $item){
+            $money_total_sum2 += $item['money_total'];
+        }
+        $sum = array('order_count'=>$order_count,'goods_num_sum'=>$goods_num_sum,'money_total_sum'=>$money_total_sum,'money_total_sum2'=>$money_total_sum2);
+        //统计状态
+        $count1 = Db::name('order')->where(array('pay_status'=>array('in','3,5')))->alias('a')->group('a.order_sn')->count();
+        $count2 = Db::name('order')->where(array('pay_status'=>array('in','2,7')))->alias('a')->group('a.order_sn')->count();
+        $count3 = Db::name('order')->where(array('pay_status'=>array('in','6')))->alias('a')->group('a.order_sn')->count();
+        $pay_sum = array('count1'=>$count1,'count2'=>$count2,'count3'=>$count3);
+
         $pay_status = array('0'=>'未支付','2'=>'已支付','3'=>'已发货','6'=>'已取消','7'=>'到付');
         $page = $order_list->render();
         $this->assign('page', $page);
@@ -52,6 +74,8 @@ class Order extends Backend
         $this->assign('payment', sp_payment_array());
 
         $this->assign('request', $request);
+        $this->assign('sum', $sum);
+        $this->assign('pay_sum', $pay_sum);
         $this->assign('pay_status', $pay_status);
 
         return $this->view->fetch();
