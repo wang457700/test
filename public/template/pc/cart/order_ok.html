@@ -190,7 +190,7 @@
                             $.message(data.msg);
                             $('#coupon_tip').text(data.data.coupon_name);
                             if(data.data.coupon_price){
-                                $('#coupon_price').data("price",data.data.coupon_price).text('$ ' + data.data.coupon_price);
+                                $('#coupon_price').data("price",data.data.coupon_price).text('$ ' + data.data.coupon_price).show();
 							}
                             sum_price();
                         }
