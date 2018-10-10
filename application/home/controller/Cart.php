@@ -156,13 +156,12 @@ class Cart extends Frontend
             }
 
             $all_total = 0;
-            foreach ($data as $k => $v) {
+            foreach ($data as $k => $v){
                 $goods=Db::name('goods')->where('product_id',$v['goods_id'])->find();
                 $goods['price']= product_price($v['goods_id']);
                 $fat['price'] =$goods['price'];
                 $fat['money_total']=$v['goods_num']*$goods['price'];
                 $all_total +=$v['goods_num']*$goods['price'];
-
 
                 $goods_list[$v['goods_id']] = array(
                         'cat_id'=>$goods['cat_id'],
@@ -171,7 +170,6 @@ class Cart extends Frontend
                         'discount_type'=>$goods['discount_type'],
                         'price'=>$goods['price']
                 );
-
                 if($goods['stock'] <= 0 && $goods['pre_order'] == 0){
                     $this->error('當前有商品"'.$goods['product_name'].'"庫存不足！',url('cart/shopping_cart'));
                 }

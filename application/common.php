@@ -420,7 +420,7 @@ function sp_payment_array()
 
 function sp_paystatus_array()
 {
-    $payment_text = array('0'=>'未支付','2'=>'已支付','3'=>'已出貨','6'=>'已取消');
+    $payment_text = array('0'=>'未支付','2'=>'已支付','3'=>'已出貨','6'=>'已取消','7'=>'到付');
     return $payment_text;
 }
 

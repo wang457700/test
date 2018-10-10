@@ -131,9 +131,11 @@ class Product extends Frontend
     {
         $tree = Tree::instance();
         $china_categoryids = $tree->getChildrenIds(input('categoryid',72),true);
-
         $goods_id = input('id');
         $goods =  Db::name('goods')->where('product_id',$goods_id)->find();
+        if(empty($goods)){
+            $this->error('错误！');
+        }
 
         //香港用户
         if(!sp_ip_ischina() && in_array($goods['cat_id'],$china_categoryids) && $goods['is_inland']){

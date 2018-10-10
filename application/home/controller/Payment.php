@@ -27,6 +27,10 @@ class Payment extends  Frontend
                 'pay_time'=>date('Y-m-d H:i:s',time()),
                 'pay_status'=>2,
             );
+
+            if($post['payment'] == 5){
+                $data['pay_status'] = 7;
+            }
             $res = Db::name('order')->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))->update($data);
             if($res){
                 $all_price = Db::name('order')->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))->sum('money_total');

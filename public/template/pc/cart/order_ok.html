@@ -101,7 +101,7 @@
 			?>
 			<div class="col-md-12 border_1" style="padding:20px">
 				<p style="display: inline-block;">
-					<input type="checkbox" class="checkbox" name="integral" data-scoreprice="{$score_price}"/>您當前有<span class="color_ro bold">{$user.score}</span>積分，可抵扣<span class="color_ro bold">${:number_format($score_price,2)}</span>
+					<input type="checkbox" class="checkbox" name="integral" data-scoreprice="{$score_price}" id="score_price"/>您當前有<span class="color_ro bold">{$user.score}</span>積分，可抵扣<span class="color_ro bold">${:number_format($score_price,2)}</span>
 				</p>
 				<p style="font-size:22px;text-align: right;display: inline-block;float:right;">合計 (不含運費)：<span class="color_ro">$ {:number_format($all_total,2)}</span></p>
 				<p style="">
@@ -123,9 +123,9 @@
 			<div class="col-md-4" style="float: right;text-align: right;">
 				商品總計: <span>$ {:number_format($all_total,2)}</span><br/>
 				運費: <span id="freight" data-price="{$freight}" >$ {:number_format($freight,2)}</span><br/>
-				偏遠地區服務費: <span id="service_text" >$ 0</span><br/>
-				積分抵扣: <span id="score_price_text" >$ 0</span><br/>
-				优惠: <span id="coupon_price_text" >$ 0</span><br/>
+				偏遠地區服務費: <span id="serviceprice" data-price="0">$ 0</span><br/>
+				積分抵扣: <span id="score_price_text" data-price="0">$ 0</span><br/>
+				优惠: <span id="coupon_price" data-price="0" >$ 0</span><br/>
 				<p>應付款：<span  style="font-size:22px " id="all_total" data-alltotal="{$all_total}">$ {:number_format($all_total+$freight,2)}</span></p>
 				<div class="row" style="padding:10px 0 ">
                    <div class="col-md-6" style="">
@@ -147,25 +147,32 @@
  {include file="common/script" /}
 <script type="text/javascript">
 	$(function(){
+
+		var address_id = $('#address_id').val();
+		if(address_id){
+            service_price(address_id);
+		}
 		 $('.item-address .li').each(function(){
 		  $(this).click(function(){
 			$(this).addClass("on").siblings().removeClass("on");
               $('#on_address').html('收件人：' + $(this).find('#name').text() + '<br>收件地址：' +$(this).find('#address').text())
               $('#address_id').val($(this).data('id'));
+              service_price($(this).data('id'));
 		   });
 		 });
-
 
         $("input[type=checkbox]").click(function(){
             var scoreprice = $(this).data("scoreprice").toFixed(2);
             var freight = $('#freight').data("price").toFixed(2);
             var scoreprice = $(this).data("scoreprice").toFixed(2);
+            var serviceprice = $('#serviceprice').data("price").toFixed(2);
+            var coupon_price = Number($('#coupon_price').data("price")).toFixed(2);
             var all_total = $('#all_total').data("alltotal").toFixed(2);
 
             if($(this).attr("checked")){
                 $(this).removeAttr("checked");
                 $('#score_price_text').text('$ 0') ;
-                $('#all_total').text('$ ' + (Number(all_total)+Number(freight))) ;
+                $('#all_total').text('$ ' + (Number(all_total)+Number(freight)+Number(serviceprice)-Number(coupon_price))) ;
             }else {
                 //應付款金额
                 var  payable = (Number(all_total)-Number(scoreprice)+Number(freight));
@@ -194,11 +201,41 @@
                         }else{
                             $.message(data.msg);
                             $('#coupon_tip').text(data.data.coupon_name);
+                            if(data.data.coupon_price){
+                                $('#coupon_price').data("price",data.data.coupon_price).text('$ ' + data.data.coupon_price);
+							}
+                            sum_price();
                         }
 					},
         		});
 		});
     });
+
+    function service_price(address_id){
+        $.ajax({
+            type: "POST",
+            url:"{:url('api/user/api_cx_service_price')}",
+            data:{'address_id':address_id},
+            dataType:"json",
+            success: function(data){
+                if(data.code == 1){
+                    var service_price = data.data.service_price;
+                    $('#serviceprice').data("price",service_price).text('$ ' + Number(service_price).toFixed(2));
+                    sum_price();
+                }
+            },
+        });
+    }
+
+    function sum_price(){
+        var freight = Number($('#freight').data("price")).toFixed(2);
+        var serviceprice = Number($('#serviceprice').data("price")).toFixed(2);
+        var coupon_price = Number($('#coupon_price').data("price")).toFixed(2);
+        var all_total = $('#all_total').data("alltotal").toFixed(2);
+
+        $('#all_total').text('$ ' + (Number(all_total)+Number(freight)+Number(serviceprice)-Number(coupon_price)).toFixed(2)) ;
+    }
+
 
     function orderform(){
         //console.log($('#cart-form').serializeArray());

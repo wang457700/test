@@ -155,10 +155,11 @@
                  if(data.code == 0){
                      $.message({message:data.msg,type:'warning',time:'3000'});
                  }else{
-                     $.message(data.msg);
-                     setTimeout(function () {
-                         window.location = data.url
-                     },1500);
+                     window.location = data.url
+                     // $.message(data.msg);
+                     // setTimeout(function () {
+                     //     window.location = data.url
+                     // },1500);
                  }
              });
 

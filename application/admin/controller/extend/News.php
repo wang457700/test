@@ -66,14 +66,13 @@ class News extends Backend
         {
             $params = $this->request->post("row/a");
             $params['post_type'] = 2;
-           
-
             $info = Db::name('Article')->where('id',$ids)->update($params);
             if ($info!==false)
             {
                $this->success('修改成功');
             }
         }
+
         $newscategory = sp_getTreeList(1);
         $row = Db::name('Article')->where('id',$ids)->find();
         $this->view->assign("row", $row);

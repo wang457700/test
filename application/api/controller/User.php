@@ -399,6 +399,28 @@ class User extends Api
     }
 
 
+
+    /**
+     * 查询优惠券
+     * @param
+     * @param
+     * @return array
+     */
+    public function api_cx_service_price(){
+
+        $address_id = input('address_id');
+        $cofing_freight = config('site')['freight'];
+        $address = Db::name('user_address')->where('id',$address_id)->find();
+        $service_price = 0;
+        $is_remote_area = Db::name('region')->where(array('id'=>array('in',array($address['city'],$address['district']))))->column('is_remote_area');
+        $is_remote_area = array_filter($is_remote_area);
+        if($is_remote_area){
+            $service_price = $cofing_freight['remote_area'];
+        }
+        $this->success('ok',array('service_price'=>$service_price));
+
+    }
+
     /**
      * @param $goods_list
      * @param $coupon_sn
@@ -450,16 +472,17 @@ class User extends Api
                 }
             }
         }
-
         foreach($coupon_goods as $k =>$v){
             $allprice = $v['price']*$v['goods_num'];
             $all_total +=$allprice;
+        }
+        if(empty($coupon_goods)){
+            $this->error('沒有商品可使用該優惠券！');
         }
 
         $coupon_price =  0;
         $coupon_id =  0;
         if($coupon){
-
             if($coupon['coupon_num'] <= 0){
                 $this->error('優惠券被抢光了！');
             }
@@ -482,7 +505,7 @@ class User extends Api
             }
 
             if($coupon['min_money'] > $all_total){
-                $this->error('最低消費'.$coupon['min_money'].'，才能使用優惠碼！');
+                $this->error('最低消費'.$coupon['min_money'].'，才能使用優惠碼！'.$all_total);
             }
 
             if($coupon['coupon_type'] == 1){ //1现金券 2折扣

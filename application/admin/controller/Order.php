@@ -45,7 +45,7 @@ class Order extends Backend
             ->group('a.order_sn')
             ->order('addtime desc')
             ->paginate(10,false,array('query'=>$request));
-        $pay_status = array('0'=>'未支付','2'=>'已支付','3'=>'已发货','6'=>'已取消',);
+        $pay_status = array('0'=>'未支付','2'=>'已支付','3'=>'已发货','6'=>'已取消','7'=>'到付');
         $page = $order_list->render();
         $this->assign('page', $page);
         $this->assign('order_list', $order_list);
