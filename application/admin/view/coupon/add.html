@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="form-group has-success">
-        <label for="c-logintime" class="control-label col-xs-12 col-sm-2">有效期:</label>
+        <label for="c-logintime" class="control-label col-xs-12 col-sm-2">有效期</label>
         <div class="col-xs-12 col-sm-8" style="position: relative;">
             <input id="c-starttime" class="form-control datetimepicker " data-date-format="YYYY-MM-DD" data-use-current="true" name="row[coupon_start_time]" type="text" value="{:date('Y-m-d')}" style="width: 40%">
             至
@@ -41,12 +41,20 @@
 
     <div class="form-group">
         <input type="hidden" name="row[no_product_categoryids]" value="" />
-        <label class="control-label col-xs-12 col-sm-2">不可用分類:</label>
+        <label class="control-label col-xs-12 col-sm-2">不可用分類</label>
         <div class="col-xs-12 col-sm-8">
             <span class="text-muted"><input type="checkbox" name="" id="checkall" /> <label for="checkall"><small>{:__('Check all')}</small></label></span>
             <span class="text-muted"><input type="checkbox" name="" id="expandall" /> <label for="expandall"><small>{:__('Expand all')}</small></label></span>
 
             <div id="treeview"></div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-12">
+            <label for="no_specials" class="control-label col-xs-12 col-sm-2">特價不可用</label>
+            <div class="col-xs-12 col-sm-8">
+                {:build_radios('row[no_specials]', ['0'=>'否', '1'=>'是'],0)}
+            </div>
         </div>
     </div>
     {if condition="$coupon_category eq 1"}

@@ -118,11 +118,9 @@ class Coupon extends Backend
                     $this->error('現金券不能為零！');
                 }
             }
-
             $data['row']['user_level'] = implode(',',$data['row']['user_level']);
             $data['row']['createtime'] = date('Y-m-d H:i:s',time());
             $res=Db::name('coupon')->where('coupon_id',$data['coupon_id'])->update($data['row']);
-
             if ($res)
             {
                $this->success();

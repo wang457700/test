@@ -722,6 +722,11 @@ class User extends Frontend
         	$row = array('id'=>null,'province'=>null,'city'=>null,'district'=>null,'address'=>null,'name'=>null,'phone'=>null,'cards'=>array('uploads/cards/card1.jpg','uploads/cards/card2.jpg'));
         }
 
+        //code 用于提交页面点击添加地址回调
+        $code = input('code');
+        $order_list = json_decode(base64_decode($code),true);
+		$this->assign('order_list',$order_list);
+
 		$this->assign('address_list',$address_list);
 		$this->assign('row',$row);
         $this->assign('province',$province);

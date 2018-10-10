@@ -580,7 +580,7 @@ function sp_ip_ischina()
     $data = Session::get('ip_info');
     if($data['time']<= time()){
         $data['status'] = 0;
-        //  $url = 'http://ip-api.com/json/'.request()->ip();
+        //$url = 'http://ip-api.com/json/'.request()->ip();
         $url = 'http://ip-api.com/json/14.127.80.57'; //模拟深圳ip
         $json = request_post($url,$data = 'null');
         $data = json_decode($json,true);
@@ -593,7 +593,6 @@ function sp_ip_ischina()
     }
     return $echo;
 }
-
 
 
 /**

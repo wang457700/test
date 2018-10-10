@@ -53,7 +53,7 @@
 					?>
 				{/foreach}
 				<li class="row" style="text-align: center;padding:20px;">
-					<a href="{:url('user/address_list',array('close'=>1))}" target="_self">
+					<a href="{:url('user/address_list',array('close'=>1,'code'=>base64_encode(json_encode($order_list,true))))}" target="_self">
 						<i class="fa fa-plus" aria-hidden="true"></i>
 						添加新的收貨地址
 					</a>

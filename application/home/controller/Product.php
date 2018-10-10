@@ -129,12 +129,16 @@ class Product extends Frontend
 
     public function detail()
     {
-        if(!sp_ip_ischina()){
+        $tree = Tree::instance();
+        $china_categoryids = $tree->getChildrenIds(input('categoryid',72),true);
 
-            $this->error('內地專區只供內地用戶購買！',url('index/index'));
-        }
         $goods_id = input('id');
         $goods =  Db::name('goods')->where('product_id',$goods_id)->find();
+
+        //香港用户
+        if(!sp_ip_ischina() && in_array($goods['cat_id'],$china_categoryids) && $goods['is_inland']){
+             $this->error('內地專區只供內地用戶購買！',url('index/index'));
+        }
         $this->product_history($goods_id);
 
         //Session::set('product_history','');
@@ -155,6 +159,7 @@ class Product extends Frontend
         $this->view->assign("goods",$goods);
         $this->view->assign("goods_list",$goods_list);
         $this->view->assign("getparents",$getparents);
+        $this->view->assign("china_categoryids",$china_categoryids);
         $this->view->assign("img_url",$img_url);
 
         $this->view->assign("title",$goods['seo_title']);
