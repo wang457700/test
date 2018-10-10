@@ -52,18 +52,20 @@ class Frontend extends Controller
         $actionname = strtolower($this->request->action());
         $site = config('site');
 
+        $seo_title = $site['index_seo']['title'];
+        $seo_keywords = $site['index_seo']['keywords'];
+        $seo_description = $site['index_seo']['description'];
+
         $array = array('index','product','news');
         foreach ($array as $item){
             if($controllername == $item){
                 $seo_title = $site[$item.'_seo']['title'];
                 $seo_keywords = $site[$item.'_seo']['keywords'];
                 $seo_description = $site[$item.'_seo']['description'];
-            }else{
-                $seo_title = $site['index_seo']['title'];
-                $seo_keywords = $site['index_seo']['keywords'];
-                $seo_description = $site['index_seo']['description'];
+                //dump($seo_title);
             }
         }
+
         $this->view->assign('seo_title', $seo_title);
         $this->view->assign('seo_keywords', $seo_keywords);
         $this->view->assign('seo_description', $seo_description);

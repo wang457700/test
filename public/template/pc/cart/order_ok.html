@@ -163,26 +163,14 @@
 
         $("input[type=checkbox]").click(function(){
             var scoreprice = $(this).data("scoreprice").toFixed(2);
-            var freight = $('#freight').data("price").toFixed(2);
-            var scoreprice = $(this).data("scoreprice").toFixed(2);
-            var serviceprice = $('#serviceprice').data("price").toFixed(2);
-            var coupon_price = Number($('#coupon_price').data("price")).toFixed(2);
-            var all_total = $('#all_total').data("alltotal").toFixed(2);
-
             if($(this).attr("checked")){
                 $(this).removeAttr("checked");
-                $('#score_price_text').text('$ 0') ;
-                $('#all_total').text('$ ' + (Number(all_total)+Number(freight)+Number(serviceprice)-Number(coupon_price))) ;
+                $('#score_price_text').text('$ 0').data("price",0) ;
             }else {
-                //應付款金额
-                var  payable = (Number(all_total)-Number(scoreprice)+Number(freight));
-                if (Number(scoreprice) > (Number(all_total))){
-                    payable = 0;
-                }
-				$(this).attr("checked","true");
-               $('#score_price_text').text('$ ' + scoreprice) ;
-               $('#all_total').text('$ ' + payable) ;
+                $(this).attr("checked","true");
+               $('#score_price_text').text('$ ' + scoreprice).data("price",scoreprice) ;
             }
+            sum_price();
         });
 
         $("#cx_coupon").click(function(){
@@ -231,9 +219,17 @@
         var freight = Number($('#freight').data("price")).toFixed(2);
         var serviceprice = Number($('#serviceprice').data("price")).toFixed(2);
         var coupon_price = Number($('#coupon_price').data("price")).toFixed(2);
-        var all_total = $('#all_total').data("alltotal").toFixed(2);
+        var scoreprice = Number($('#score_price_text').data("price")).toFixed(2);
+        var all_total = Number($('#all_total').data("alltotal")).toFixed(2); //商品总金额
 
-        $('#all_total').text('$ ' + (Number(all_total)+Number(freight)+Number(serviceprice)-Number(coupon_price)).toFixed(2)) ;
+        //應付款金额
+        if (scoreprice > all_total){
+            scoreprice = all_total;
+            $('#score_price_text').text('$ ' + scoreprice).data("price",scoreprice) ;
+        }
+
+
+        $('#all_total').text('$ ' + (Number(all_total)+Number(freight)+Number(serviceprice)-Number(scoreprice)-Number(coupon_price)).toFixed(2)) ;
     }
 
 

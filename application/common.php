@@ -432,6 +432,8 @@ function sum_order_payableprice($order_sn)
 {
     $order =  Db::name('order')->where('order_sn',$order_sn)->find();
     $goods_money_total =  Db::name('order')->where('order_sn',$order_sn)->sum('money_total');
+
+
     /* 应付金额 = 商品总金额 + 运费 + 服务费 + 捐款金额 - 积分抵扣金额 - 优惠金额 */
     $payableprice = $goods_money_total + $order['freight'] + $order['service_price'] + $order['contribution_price'] - $order['integral_price'] - $order['coupon_price'];
 

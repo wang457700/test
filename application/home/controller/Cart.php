@@ -183,6 +183,9 @@ class Cart extends Frontend
                 $cofing_integral = config('site')['integral']['use'];
                 $user_integral = Db::name('user')->where('id',Session::get('user_id'))->value('score');
                 $score_price = sprintf("%.2f",$user_integral/$cofing_integral);
+                if($all_total <= $score_price){
+                    $score_price = $all_total;
+                }
             }
 
             /*优惠券*/
@@ -208,7 +211,6 @@ class Cart extends Frontend
             $service_price = 0;
             $is_remote_area = Db::name('region')->where(array('id'=>array('in',array($address['city'],$address['district']))))->column('is_remote_area');
             $is_remote_area = array_filter($is_remote_area);
-
             if($is_remote_area){
                 $service_price = $cofing_freight['remote_area'];
             }
@@ -265,12 +267,12 @@ class Cart extends Frontend
         $sum=0;
         $goods_sum=0;
         foreach ($list as $key=>$item){
-                $total=Db::name('cart_order')->where(array('product_id'=>$item['product_id']))->count();
+                $total=Db::name('cart_order')->where(array('user_id'=>$user_id,'product_id'=>$item['product_id']))->count();
                $list[$key]['total']=$total;
                $list[$key]['total_price']=$total*product_price($item['product_id']);
                $list[$key]['price']= product_price($item['product_id']);
                $sum+=$list[$key]['total_price'];
-               $goods_sum+=$list[$key]['total_price'];
+               $goods_sum+=$total;
         }
 
         $this->assign('all_price',$sum);
