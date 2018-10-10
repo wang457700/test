@@ -106,7 +106,8 @@
 				<p style="font-size:22px;text-align: right;display: inline-block;float:right;">合計 (不含運費)：<span class="color_ro">$ {:number_format($all_total,2)}</span></p>
 				<p style="">
 					<input type="text" class="checkbox" name="coupon" placeholder="請輸入優惠碼" style="width: 200px;padding: 5px;height: 30px;" value="HKSR-EC-102108" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9/\-\/]/g,'')" onpaste="value=value.replace(/[^\a-\z\A-\Z0-9/\-\/]/g,'')" oncontextmenu = "value=value.replace(/[^\a-\z\A-\Z0-9/\-\/]/g,'')"/>
-					<a href="javascript:;" class="btn-warning-edit cx_coupon" style="background: #eee;color: #666666;padding: 5px 15px;" id="cx_coupon">确定</a>
+					<a href="javascript:;" class="btn-warning-edit cx_coupon" style="background: #eee;color: #666666;padding: 5px 15px;" id="cx_coupon">确定</a><br>
+					<span class="color_ro bold" id="coupon_tip"></span>
 				</p>
 			</div>
 		</div>
@@ -122,6 +123,7 @@
 			<div class="col-md-4" style="float: right;text-align: right;">
 				商品總計: <span>$ {:number_format($all_total,2)}</span><br/>
 				運費: <span id="freight" data-price="{$freight}" >$ {:number_format($freight,2)}</span><br/>
+				偏遠地區服務費: <span id="service_text" >$ 0</span><br/>
 				積分抵扣: <span id="score_price_text" >$ 0</span><br/>
 				优惠: <span id="coupon_price_text" >$ 0</span><br/>
 				<p>應付款：<span  style="font-size:22px " id="all_total" data-alltotal="{$all_total}">$ {:number_format($all_total+$freight,2)}</span></p>
@@ -133,13 +135,12 @@
                     </div>
                      <div class="col-md-6" style="">
                         <button type="submit" class="btn-warning-edit">提交訂單</button>
-                    </div> 
+                    </div>
                 </div>
 			</div>
 		</div>
 </form>
 </div>
-
  {include file="common/footer" /}
  <script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
  <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
@@ -189,14 +190,14 @@
 					success: function(data){
                         if(data.code == 0){
                             $.message({message:data.msg,type:'warning',time:'3000'});
+                            $('#coupon_tip').text(data.msg).show().delay(2000).hide(0);
                         }else{
                             $.message(data.msg);
+                            $('#coupon_tip').text(data.data.coupon_name);
                         }
-
 					},
         		});
 		});
-
     });
 
     function orderform(){
@@ -220,7 +221,7 @@
             }else{
                 $.message(data.msg);
                 setTimeout(function (){
-                     window.location = data.order_url;
+                     window.location = data.url;
                 },1000);
             }
         });

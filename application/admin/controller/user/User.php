@@ -57,11 +57,13 @@ class User extends Backend
                     ->select();
 
             $level = array('1'=>'普通会员','2'=>'白金会员','3'=>'金牌会员','4'=>'商业会员');
+            $reception_romotion_email = array('0'=>'否','1'=>'是');
             foreach ($list as $k => $v)
             {
                 $third = Db::name('third')->where('user_id',$v['id'])->value('platform'); //获取用户注册来源
                 $v['join_source'] = $third?$third:'普通注册';
                 $v['level'] = $level[$v['level']];
+                $v['reception_romotion_email'] = $reception_romotion_email[$v['reception_romotion_email']];
                 $v->hidden(['password', 'salt']);
             }
             $result = array("total" => $total, "rows" => $list);

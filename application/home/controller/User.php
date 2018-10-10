@@ -64,9 +64,7 @@ class User extends Frontend
 	    	Session::set("user_id", $user['id']);
 	    	Session::set("user", $user);
 	    	$this->success('登入成功！',url('user/center'));
-	    	//dump($user);
 		}
-
 
         $this->assign('title','會員登錄');
         return $this->view->fetch();

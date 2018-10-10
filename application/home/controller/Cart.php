@@ -163,9 +163,17 @@ class Cart extends Frontend
                 $fat['money_total']=$v['goods_num']*$goods['price'];
                 $all_total +=$v['goods_num']*$goods['price'];
 
+
+                $goods_list[$v['goods_id']] = array(
+                        'cat_id'=>$goods['cat_id'],
+                        'goods_num'=>$v['goods_num'],
+                        'goods_id'=>$v['goods_id'],
+                        'discount_type'=>$goods['discount_type'],
+                        'price'=>$goods['price']
+                );
+
                 if($goods['stock'] <= 0 && $goods['pre_order'] == 0){
-                    $data = array('code' => 0,'msg' => '当前有商品"'.$goods['product_name'].'"库存不足！');
-                    $this->ajaxReturn($data);
+                    $this->error('當前有商品"'.$goods['product_name'].'"庫存不足！',url('cart/shopping_cart'));
                 }
             }
             $res='';
@@ -180,50 +188,16 @@ class Cart extends Frontend
             }
 
             /*优惠券*/
-            $cx_coupon = action('api/user/api_cx_coupon',['goods_list'=>1,'coupon_sn'=>1]);
-
-
-//            $coupon  = Db::name('coupon')->where(array('coupon_sn'=>$coupon_sn))->find();
-//            $coupon_price =  0;
-//            $coupon_id =  0;
-//            if($coupon){
-//                if($coupon['coupon_term']){ //1有限期
-//                    if(strtotime(date('Y-m-d H:i:s',strtotime('+1 day',strtotime($coupon['coupon_end_time'])))) < time()){
-//                        $data = array('code' => 0,'msg' => '優惠碼已失效！');
-//                        $this->ajaxReturn($data);
-//                    }
-//                    if(strtotime($coupon['coupon_start_time']) > time()){
-//                        $data = array('code' => 0,'msg' => '優惠時間還沒有開始！');
-//                        $this->ajaxReturn($data);
-//                    }
-//                }
-//                if($coupon['coupon_num'] <= 0){
-//                    $data = array('code' => 0,'msg' => '優惠券被抢光了！');
-//                    $this->ajaxReturn($data);
-//                }
-//
-//                $level = array('1'=>'普通會員','2'=>'白金會員','3'=>'金牌會員','4'=>'商业會員');
-//                if(strstr($coupon['user_level'],strval($user['level'])) == false && $coupon['user_level']!=0){
-//                    $data = array('code' => 0,'msg' => '優惠碼不適合'.$level[$user['level']].'使用！');
-//                    $this->ajaxReturn($data);
-//                }
-//
-//                if($coupon['min_money'] > ($all_total-$score_price)){
-//                    $data = array('code' => 0,'msg' => '最低消费'.$coupon['min_money'].'，才能使用優惠碼！');
-//                    $this->ajaxReturn($data);
-//                }
-//
-//                if($coupon['coupon_type'] == 1){ //1现金券 2折扣
-//                    $coupon_price = $coupon['coupon_cash'];
-//                }else{
-//                    $coupon_price = ($coupon['coupon_discount']/100)*($all_total-$score_price);
-//                }
-//
-//                if(strval($coupon_price) >= strval($all_total-$score_price)){
-//                    $coupon_price = ($all_total-$score_price);
-//                }
-//                $coupon_id = $coupon['coupon_id'];
-//            }
+            $coupon_price =  0;
+            $coupon_id =  0;
+            $coupon  = Db::name('coupon')->where(array('coupon_sn'=>$coupon_sn))->find();
+            if($coupon){
+                $coupon_id =  $coupon['coupon_id'];
+                $coupon_data = action('api/user/api_cx_coupon',['goods_list'=>$goods_list,'coupon_sn'=>$coupon_sn]);
+                if($coupon_data['coupon_price']){
+                    $coupon_price = $coupon_data['coupon_price'];
+                }
+            }
 
             /*运费*/
             $freight = 0 ;
@@ -274,28 +248,14 @@ class Cart extends Frontend
                 /* 优惠券减1 */
                 $res= Db::name("coupon")->where('coupon_id',$coupon_id)->setDec('coupon_num',1);
 
-                $data = array(
-                    'code' => 1,
-                    'msg' => '你已經生成訂單！',
-                    'order_url' =>url('payment/go_pay',array('order_sn'=>base64_encode($order_sn))),
-                );
-                $this->ajaxReturn($data);
+                $this->success('你已經生成訂單！',url('payment/go_pay',array('order_sn'=>base64_encode($order_sn))));
             }else{
-                $data = array(
-                    'code' => 0,
-                    'msg' => '訂單生成失敗！',
-                );
-                $this->ajaxReturn($data);
+                $this->error('訂單生成失敗！',url('cart/shopping_cart'));
             }
 
         }else{
-            $data = array(
-                'code' => 0,
-                'msg' => '沒有選擇商品！',
-            );
-            $this->ajaxReturn($data);
+            $this->error('沒有選擇商品！',url('cart/shopping_cart'));
         }
-
     }
 
 

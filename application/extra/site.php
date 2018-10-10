@@ -52,7 +52,7 @@ return array (
   ),
   'index_seo' => 
   array (
-    'title' => '主页标题',
+    'title' => '營康薈 - 香港復康會',
     'keywords' => '主页关键字',
     'description' => '主页描述',
   ),

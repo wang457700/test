@@ -1,41 +1,39 @@
 {include file="layout/public_head" /}
 	<body style="background: url(__TMPL_PUBLIC__/img/login_bg.jpg) repeat center;background-size: cover !important;">
 	<style type="text/css">
-			input[type=radio],input[type=checkbox] {
-				width:20px;
-				height:20px;
-				vertical-align:middle;
-				opacity:0
-			}
-			.input_style {
-				background:url(__TMPL_PUBLIC__/img/green.png) no-repeat;
-				width:20px;
-				height:20px;
-				display:inline-block;
-				float: left;
-				margin-top: 10px;
-				margin-right: 10px;
-			}
-			.radio_bg {
-				background-position:-118px 0
-			}
-			.checkbox_bg {
-				background-position:0 0
-			}
-			.radio_bg_check {
-				background-position:-166px 0
-			}
-			.checkbox_bg_check {
-				background-position:-48px 0
-			}
-
+		input[type=checkbox],input[type=radio]{width:20px;height:20px;vertical-align:middle;opacity:0}
+		.input_style{background:url(__TMPL_PUBLIC__/img/green.png) no-repeat;width:20px;height:20px;display:inline-block;float:left;margin-top:10px;margin-right:10px}
+		.radio_bg{background-position:-118px 0}
+		.checkbox_bg{background-position:0 0}
+		.radio_bg_check{background-position:-166px 0}
+		.checkbox_bg_check{background-position:-48px 0}
 	</style>
 
-
 	 <div class="container">
-
-       <div class="row">
-	        <div class="col-md-5 col-xs-11 login" style="">
+	 <div class="row">
+		 <div class="col-md-11 col-xs-11 login" style="padding:20px;" id="clause_div">
+			 <div class="ui-dialog-title bold font18">      <span>注册协议和隐私政策</span>     </div>
+			 <div style="padding: 20px;min-height: 400px;">
+				 条款内容<br>
+				 条款内容<br>
+				 条款内容<br>
+				 条款内容<br>
+				 条款内容<br>
+				 条款内容<br>
+				 条款内容<br>
+				 条款内容<br>
+				 条款内容<br>
+			 </div>
+			 <div class="row">
+				<div class="col-md-4"></div>
+				<a href="{:url('index/index')}"><button class="btn btn-success col-md-2" style="margin: 1em;background: #e3e4e5;border: 0;padding: 15px 25px;">取消</button></a>
+			 	<button class="btn btn-success col-md-2" style="margin: 1em;background-color: #7dbe43;border: 0;padding: 15px 25px;" id="agree">同意並繼續</button>
+				<div class="col-md-4"></div>
+			 </div>
+		 </div>
+	 </div>
+   	 <div class="row">
+	        <div class="col-md-5 col-xs-11 login" style="display: none" id="login">
 				<img src="__TMPL_PUBLIC__/img/logo-3.png" class="logo3">
 
 				<form action="{:url('user/register')}" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return register()" id="register-form">
@@ -80,7 +78,12 @@
  	<script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
 	<script src="__TMPL_PUBLIC__/js/scripts.js"></script>
  <script>
-		
+
+		$('#agree').click(function (){
+				$('#clause_div').hide();
+				$('#login').show();
+		});
+
 		function register(){
 
 			var email = $('#email');

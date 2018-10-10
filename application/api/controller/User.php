@@ -417,14 +417,19 @@ class User extends Api
         $no_product_categoryids = [];
         $coupon_goods = [];
         $all_total = 0;
+        $user_id = Session::get('user_id');
 
-        foreach($goods_json as $k =>$v){
+        foreach($goods_list as $k =>$v){
             $goods_cat_ids[] = $v['cat_id'];
         }
         $user = Db::name('user')->where('id',Session::get('user_id'))->find();
 
         /*优惠券*/
         $coupon  = Db::name('coupon')->where(array('coupon_sn'=>$coupon_sn))->find();
+        $coupon_log = Db::name('order')->where(array('coupon_id'=>$coupon['coupon_id'],'user_id'=>Session::get('user_id')))->find();
+        if($coupon_log){
+            $this->error('你已使用該優惠碼，請勿重複使用！！');
+        }
         //过滤不可用分类
         if($coupon['no_product_categoryids']){
             foreach(explode(',',$coupon['no_product_categoryids']) as $item){
@@ -434,7 +439,7 @@ class User extends Api
             }
         }
 
-        foreach($goods_json as $k =>$v){
+        foreach($goods_list as $k =>$v){
             if(!in_array($v['cat_id'],$no_product_categoryids)){
                 if($coupon['no_specials']){
                     if($v['discount_type'] !=2){
@@ -454,6 +459,11 @@ class User extends Api
         $coupon_price =  0;
         $coupon_id =  0;
         if($coupon){
+
+            if($coupon['coupon_num'] <= 0){
+                $this->error('優惠券被抢光了！');
+            }
+
             if($coupon['coupon_term']){ //1有限期
                 if(strtotime(date('Y-m-d H:i:s',strtotime('+1 day',strtotime($coupon['coupon_end_time'])))) < time()){
                     $this->error('優惠碼已失效！');
@@ -491,9 +501,5 @@ class User extends Api
             $this->error('優惠碼有誤！');
         }
     }
-
-
-
-
 
 }

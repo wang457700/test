@@ -28,6 +28,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'level', title:'用户类型', visible: true, searchList: {1: __('Male'), 0: __('Female')}, operate:false},
                         {field: 'score', title: '積分', operate: false,},
                         {field: 'join_source', title:'注册類型', operate:false},
+                        {field: 'reception_romotion_email', title:'是否接收推廣電郵', operate:false},
                         {field: 'jointime', title:'注册日期', formatter: Table.api.formatter.datetime, operate:false},
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate,
                             buttons: [
