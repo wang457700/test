@@ -578,10 +578,12 @@ function sp_user_default_address()
 function sp_ip_ischina()
 {
     $data = Session::get('ip_info');
+    $data['time'] = time();
     if($data['time']<= time()){
         $data['status'] = 0;
         //$url = 'http://ip-api.com/json/'.request()->ip();
-        $url = 'http://ip-api.com/json/14.127.80.57'; //模拟深圳ip
+        // $url = 'http://ip-api.com/json/14.127.80.57'; //模拟深圳ip
+       $url = 'http://ip-api.com/json/47.91.226.24'; //模拟香港ip
         $json = request_post($url,$data = 'null');
         $data = json_decode($json,true);
         $data['time'] = time() + 7200;
@@ -699,4 +701,50 @@ function get_client_ip($type = 0,$adv=false) {
     $long = sprintf("%u",ip2long($ip));
     $ip   = $long ? array($ip, $long) : array('0.0.0.0', 0);
     return $ip[$type];
+}
+
+
+/*
+ *函数功能：返回成功的json数据
+ */
+function returnSuccess($msg="",$data=array(),$token=""){
+    if(empty($token)){
+        $result=array(
+            'code'=>'1',
+            'msg'=>$msg,
+            'data'=>$data,
+        );
+        return json_encode($result);
+    }
+    elseif(empty($token) || empty($data)){
+        $result=array(
+            'code'=>'1',
+            'msg'=>$msg,
+        );
+        return json_encode($result);
+
+    }
+    else{ $result=array(
+        'code'=>'1',
+        'msg'=>$msg,
+        'data'=>array(
+            'user'=>$data,
+            'token'=>$token,
+        ),
+    );
+        return json_encode($result);
+    }
+}
+
+
+/*
+ *函数功能：返回失败的json数据
+ */
+function returnError($msg=""){
+    $result=array(
+        'code'=>'0',
+        'msg'=>$msg,
+    );
+    return json_encode($result);
+
 }

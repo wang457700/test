@@ -388,33 +388,68 @@ class User extends Api
         }
     }
 
-
-    //查询优惠券
     public function cx_coupon(){
+        $data['coupon_price'] = [];
+        $goods_json = json_decode(base64_decode(input('goods_json')),true); //商品ids
+        $coupon_sn = input('coupon');
+        $data = $this->api_cx_coupon($goods_json,$coupon_sn);
+        if($data['coupon_price']){
+            $this->success('ok',array('coupon_price'=>$data['coupon_price'],'coupon_name'=>$data['coupon_name']));
+        }
+    }
 
-        $all_total = input('post.all_total'); //不包含积分抵用
-        $goods_json = json_decode(base64_decode(input('post.goods_json')),true); //商品ids
+
+    /**
+     * @param $goods_list
+     * @param $coupon_sn
+     * @return array
+     */
+    //查询优惠券
+    public function api_cx_coupon($goods_list,$coupon_sn){
+        if(!is_array($goods_list)){
+            $this->error('goods_list is not array！');
+        }
+        if(empty($coupon_sn)){
+            $this->error('coupon_sn is empty！');
+        }
+
         $coupon['no_product_categoryids'] = [];
+        $no_product_categoryids = [];
+        $coupon_goods = [];
+        $all_total = 0;
 
-
-        dump($goods_json);
-        foreach($goods_json as $v){
+        foreach($goods_json as $k =>$v){
             $goods_cat_ids[] = $v['cat_id'];
         }
         $user = Db::name('user')->where('id',Session::get('user_id'))->find();
-        $coupon_sn = input('post.coupon');
+
         /*优惠券*/
         $coupon  = Db::name('coupon')->where(array('coupon_sn'=>$coupon_sn))->find();
-
-
+        //过滤不可用分类
         if($coupon['no_product_categoryids']){
             foreach(explode(',',$coupon['no_product_categoryids']) as $item){
                 if(in_array($item,$goods_cat_ids)){
-                    dump($item);
+                    $no_product_categoryids[] = $item;
                 }
             }
         }
 
+        foreach($goods_json as $k =>$v){
+            if(!in_array($v['cat_id'],$no_product_categoryids)){
+                if($coupon['no_specials']){
+                    if($v['discount_type'] !=2){
+                        $coupon_goods[] = $v;
+                    }
+                }else{
+                    $coupon_goods[] = $v;
+                }
+            }
+        }
+
+        foreach($coupon_goods as $k =>$v){
+            $allprice = $v['price']*$v['goods_num'];
+            $all_total +=$allprice;
+        }
 
         $coupon_price =  0;
         $coupon_id =  0;
@@ -449,10 +484,9 @@ class User extends Api
             if(strval($coupon_price) >= strval($all_total)){
                 $coupon_price = ($all_total);
             }
+
             $coupon_id = $coupon['coupon_id'];
-
-
-            $this->success('ok', $coupon_price);
+            return array('coupon_price'=>$coupon_price,'coupon_name'=>$coupon['coupon_name']);
         }else{
             $this->error('優惠碼有誤！');
         }

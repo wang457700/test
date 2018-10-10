@@ -73,9 +73,9 @@ class Cart extends Frontend
                 $num=0;
                 foreach ($data as $k => $v){
                         $goods= Db::name('goods')->where('product_id',$v['goods_id'])->find();
-                        $goods_json[$goods['cat_id']][$v['goods_id']] = array('cat_id'=>$goods['cat_id'],'goods_id'=>$v['goods_id']);
-
                         $goods['price']= product_price($v['goods_id']);
+                        $goods_json[$v['goods_id']] = array('cat_id'=>$goods['cat_id'],'goods_num'=>$v['goods_num'],'goods_id'=>$v['goods_id'],'discount_type'=>$goods['discount_type'],'price'=>$goods['price']);
+
                         $data[$k]['product_name'] = $goods['product_name'];
                         $data[$k]['brand'] = $goods['brand'];
                         $data[$k]['freight_num'] = $goods['freight_num'];
@@ -180,47 +180,50 @@ class Cart extends Frontend
             }
 
             /*优惠券*/
-            $coupon  = Db::name('coupon')->where(array('coupon_sn'=>$coupon_sn))->find();
-            $coupon_price =  0;
-            $coupon_id =  0;
-            if($coupon){
-                if($coupon['coupon_term']){ //1有限期
-                    if(strtotime(date('Y-m-d H:i:s',strtotime('+1 day',strtotime($coupon['coupon_end_time'])))) < time()){
-                        $data = array('code' => 0,'msg' => '優惠碼已失效！');
-                        $this->ajaxReturn($data);
-                    }
-                    if(strtotime($coupon['coupon_start_time']) > time()){
-                        $data = array('code' => 0,'msg' => '優惠時間還沒有開始！');
-                        $this->ajaxReturn($data);
-                    }
-                }
-                if($coupon['coupon_num'] <= 0){
-                    $data = array('code' => 0,'msg' => '優惠券被抢光了！');
-                    $this->ajaxReturn($data);
-                }
+            $cx_coupon = action('api/user/api_cx_coupon',['goods_list'=>1,'coupon_sn'=>1]);
 
-                $level = array('1'=>'普通會員','2'=>'白金會員','3'=>'金牌會員','4'=>'商业會員');
-                if(strstr($coupon['user_level'],strval($user['level'])) == false && $coupon['user_level']!=0){
-                    $data = array('code' => 0,'msg' => '優惠碼不適合'.$level[$user['level']].'使用！');
-                    $this->ajaxReturn($data);
-                }
 
-                if($coupon['min_money'] > ($all_total-$score_price)){
-                    $data = array('code' => 0,'msg' => '最低消费'.$coupon['min_money'].'，才能使用優惠碼！');
-                    $this->ajaxReturn($data);
-                }
-
-                if($coupon['coupon_type'] == 1){ //1现金券 2折扣
-                    $coupon_price = $coupon['coupon_cash'];
-                }else{
-                    $coupon_price = ($coupon['coupon_discount']/100)*($all_total-$score_price);
-                }
-
-                if(strval($coupon_price) >= strval($all_total-$score_price)){
-                    $coupon_price = ($all_total-$score_price);
-                }
-                $coupon_id = $coupon['coupon_id'];
-            }
+//            $coupon  = Db::name('coupon')->where(array('coupon_sn'=>$coupon_sn))->find();
+//            $coupon_price =  0;
+//            $coupon_id =  0;
+//            if($coupon){
+//                if($coupon['coupon_term']){ //1有限期
+//                    if(strtotime(date('Y-m-d H:i:s',strtotime('+1 day',strtotime($coupon['coupon_end_time'])))) < time()){
+//                        $data = array('code' => 0,'msg' => '優惠碼已失效！');
+//                        $this->ajaxReturn($data);
+//                    }
+//                    if(strtotime($coupon['coupon_start_time']) > time()){
+//                        $data = array('code' => 0,'msg' => '優惠時間還沒有開始！');
+//                        $this->ajaxReturn($data);
+//                    }
+//                }
+//                if($coupon['coupon_num'] <= 0){
+//                    $data = array('code' => 0,'msg' => '優惠券被抢光了！');
+//                    $this->ajaxReturn($data);
+//                }
+//
+//                $level = array('1'=>'普通會員','2'=>'白金會員','3'=>'金牌會員','4'=>'商业會員');
+//                if(strstr($coupon['user_level'],strval($user['level'])) == false && $coupon['user_level']!=0){
+//                    $data = array('code' => 0,'msg' => '優惠碼不適合'.$level[$user['level']].'使用！');
+//                    $this->ajaxReturn($data);
+//                }
+//
+//                if($coupon['min_money'] > ($all_total-$score_price)){
+//                    $data = array('code' => 0,'msg' => '最低消费'.$coupon['min_money'].'，才能使用優惠碼！');
+//                    $this->ajaxReturn($data);
+//                }
+//
+//                if($coupon['coupon_type'] == 1){ //1现金券 2折扣
+//                    $coupon_price = $coupon['coupon_cash'];
+//                }else{
+//                    $coupon_price = ($coupon['coupon_discount']/100)*($all_total-$score_price);
+//                }
+//
+//                if(strval($coupon_price) >= strval($all_total-$score_price)){
+//                    $coupon_price = ($all_total-$score_price);
+//                }
+//                $coupon_id = $coupon['coupon_id'];
+//            }
 
             /*运费*/
             $freight = 0 ;
