@@ -7,12 +7,10 @@
     <div class="panel-heading">
         {:build_heading(null,FALSE)}
         <ul class="nav nav-tabs">
-            <li class="active"><a href="#all" data-toggle="tab">{:__('All')}</a></li>
-               
+             <li class="active"><a href="#all" data-toggle="tab">{:__('All')}</a></li>
                  {foreach name="category_list" item="vo"}
                     <li><a href="#{$vo.id}" data-toggle="tab">{$vo.name}</a></li>
-                {/foreach}
-            
+                 {/foreach}
         </ul>
     </div>
     <div class="panel-body col-sm-6">

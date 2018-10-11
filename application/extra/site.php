@@ -34,14 +34,14 @@ return array (
   'mail_type' => '1',
   'mail_smtp_host' => 'smtp.gmail.com',
   'mail_smtp_port' => '587',
-  'mail_smtp_user' => 'smtpout@wahhong.hk',
-  'mail_smtp_pass' => '9KqFL6&Y',
+  'mail_smtp_user' => 'wh-smtp@rehabsociety.org.hk',
+  'mail_smtp_pass' => 'pqAD7*89',
   'mail_verify_type' => '1',
-  'mail_from' => 'smtpout@wahhong.hk',
+  'mail_from' => 'wh-smtp@rehabsociety.org.hk',
   'integral' => 
   array (
     'obtain' => '10',
-    'use' => '1000',
+    'use' => '100',
   ),
   'user_upgrade' => 
   array (
@@ -52,7 +52,7 @@ return array (
   ),
   'index_seo' => 
   array (
-    'title' => '營康薈 - 香港復康會',
+    'title' => '主页标题',
     'keywords' => '主页关键字',
     'description' => '主页描述',
   ),

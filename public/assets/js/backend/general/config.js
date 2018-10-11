@@ -76,7 +76,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form','template'], function 
         index_meta: function () {
             Table.api.init({
                 extend: {
-                    eidt_url: 'general/config/remotearea',
+                  //  eidt_url: 'general/config/remotearea',
+                    eidt_url: 'extend/region/index',
                 }
             });
 

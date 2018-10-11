@@ -97,15 +97,49 @@ class Frontend extends Controller
                 $this->error(__('Please login first'), 'user/login');
             }
 
+            // 检测游客权限
+            if ($this->auth->match($this->noTouristAuthority) && $user['user_type'] == 3) {
+                $this->error(__('游客没有权限访问'), 'user/center');
+            }
+
             //检测账号是否激活
             if($user['is_eamil_status'] == 0){
                 $this->error(__('帳號還沒有激活！'), 'user/user_email_activation','',0);
             }
 
-            // 检测游客权限
-            if ($this->auth->match($this->noTouristAuthority) && $user['user_type'] == 3) {
-                $this->error(__('游客没有权限访问'), 'user/center');
+
+
+            $user_id = Session::get('user_id');
+            //检查第三方是否绑定账号
+            $third = Db::name('third')->where(array('user_id'=>$user_id))->find();
+            if($third['platform']){
+
+                $uid = Db::name('third')->where('user_id',$user_id)->value('uid');
+                if(empty($uid)){
+                    //没有，去绑定
+                    //$third_user_id 传到 home/user/user_bindsns
+                    Session::set("third_user_id", $user_id);
+                    $this->redirect(url('home/user/user_bindsns'));
+                    exit;
+                }
+
+                $u_user = Db::name('user')->where('id',$uid)->find();
+                Session::set("user_id",$uid);
+                Session::set("user", $u_user);
+                Session::set("platform", $third['platform']); //记录登入第三方
+
+                $this->redirect(url('home/user/center'));
             }
+
+            //检测账号是否綁定電子郵箱
+            if(empty($user['email'])){
+                $this->error(__('帳號還綁定電子郵箱！'), 'user/user_bindsns','',0);
+            }
+
+
+
+
+
 
         } else {
             // 如果有传递token才验证是否登录状态

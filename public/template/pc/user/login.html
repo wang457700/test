@@ -24,7 +24,7 @@
 						<button type="button" class="btn btn-default btn-default-edit" style="margin-bottom: 1em" id="facebook"><img src="__TMPL_PUBLIC__/img/logo-facebook.png" style="width:  30px;margin-right:  10px;">Facebook 客戶登錄</button>
 						<button type="button" class="btn btn-default btn-default-edit" style="margin-bottom: 1em" id="customBtn" ><img src="__TMPL_PUBLIC__/img/logo-google.png" style="width:  30px;margin-right:  10px;">Google 客戶登錄</button>
 						{/if}
-					 	<button type="button" class="btn btn-default btn-default-edit"><img src="__TMPL_PUBLIC__/img/logo-weixin.png" style="width:  30px;margin-right:  10px;">Wechat 登錄</button>
+					 	<button type="button" class="btn btn-default btn-default-edit"  id="weixin"><img src="__TMPL_PUBLIC__/img/logo-weixin.png" style="width:  30px;margin-right:  10px;">Wechat 登錄</button>
 					</div>
 					<div style="text-align: center;">
 						<a href="{:url('User/register')}">註冊會員</a>
@@ -60,7 +60,12 @@
 
 				return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
 			}
+
+            $('#weixin').click(function () {
+                window.location = '{$weixin_url}';
+            });
 		</script>
+
 
 
 		 {if condition="empty(sp_ip_ischina())"}

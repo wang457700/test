@@ -307,7 +307,12 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             });
 
         },
-        api: {
+        region_list: function () {
+
+
+
+            },
+            api: {
             bindevent: function () {
                 Form.api.bindevent($("form[role=form]"));
             }

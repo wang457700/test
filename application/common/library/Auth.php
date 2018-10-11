@@ -10,6 +10,7 @@ use think\Db;
 use think\Hook;
 use think\Request;
 use think\Validate;
+use think\Session;
 
 class Auth
 {
@@ -316,6 +317,7 @@ class Auth
      */
     public function direct($user_id)
     {
+        Session::set('user_id',$user_id);
         $user = User::get($user_id);
         if ($user)
         {

@@ -19,14 +19,19 @@ use app\home\common\common;
  */
 class User extends Frontend
 {
-	protected $noNeedLogin = ['login', 'register', 'forgetpwd', 'is_forgetpwd_email','user_email_activation', 'third', 'is_email', 'user_bindsns'];
+	protected $noNeedLogin = ['login','weixin_login', 'register', 'forgetpwd', 'is_forgetpwd_email','user_email_activation', 'third', 'is_email', 'user_bindsns'];
 
 	//允许游客访问
 	protected $noTouristAuthority = ['share_list','user_edit'];
 
+    const GET_AUTH_CODE_URL = "https://open.weixin.qq.com/connect/qrconnect";
     const APPKEY='4119214287';
     const URL ="www.baidu.com";
 
+    /**
+     * 配置信息
+     * @var array
+     */
      public function _initialize()
     {
     	parent::_initialize();
@@ -36,10 +41,8 @@ class User extends Frontend
 			$user = Db::name('user')->where(array('id'=>$user_id))->find();
  			$this->assign('user',$user);
  			$this->assign('user_id',$user_id);
-
     	};
     }
-
 
     public function Login(){
     	if ($this->request->isPost()) {
@@ -66,10 +69,27 @@ class User extends Frontend
 	    	$this->success('登入成功！',url('user/center'));
 		}
 
+
+        $this->assign('weixin_url', $this->weixin_login());
         $this->assign('title','會員登錄');
         return $this->view->fetch();
     }
 
+
+    public function weixin_login(){
+        $state = md5(uniqid(rand(), TRUE));
+        Session::set('state', $state);
+        $queryarr = array(
+            "appid"         => 'wx497d515fe92670bc',
+            "redirect_uri"  => 'https://wsstest.teamotto.me/hksr/public/third/callback/wechat',
+            "response_type" => "code",
+            "scope"         => 'snsapi_login',
+            "state"         => $state,
+        );
+        request()->isMobile() && $queryarr['display'] = 'mobile';
+        $url = self::GET_AUTH_CODE_URL . '?' . http_build_query($queryarr) . '#wechat_redirect';
+        return $url;
+    }
 
     public function logout(){
         Session::set("user_id",'');
@@ -185,6 +205,7 @@ class User extends Frontend
                 ->to($res['email'])
                 ->subject(__("重置您的密碼"))
                 ->message('<div style="padding:30px"><div><p>您好，<b>'.$res['username'].'</b> ：</p></div><div style="margin:6px 0 60px 0"><p>請點擊下麵的連結來重置您的密碼。</p><p><a href="'.$url.'" rel="noopener" target="_blank">'.$url.'</a></p><p>如果您的邮箱不支持链接点击，请将以上链接地址拷贝到你的浏览器地址栏中。</p></div><div style="color:#999"><p>发件时间：<span style="border-bottom:1px dashed #ccc;position:relative" t="5" times=" 14:30">'.date('Y-m-d H:i:s',time()).'</span></p><p>此邮件为系统自动发出的，请勿直接回复。</p></div></div>')
+               // ->message('<p>111</p>')  //test测试
                 ->send();
             if($result){
                 $this->success('重置密碼郵件已經發送到<span class="color_ro">'.$res['email'].'，</span>請登入郵箱重置！');

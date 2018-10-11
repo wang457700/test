@@ -303,6 +303,28 @@ class User extends Api
         $this->error(__('Operation failed'), $url);
     }
 
+
+
+
+    function user_bindsns($user_id,$platform){
+        //检查第三方是否绑定账号
+        $uid = Db::name('third')->where('user_id',$user_id)->value('uid');
+        if(empty($uid)){
+            //没有，去绑定
+            //$third_user_id 传到 home/user/user_bindsns
+            Session::set("third_user_id", $user_id);
+            $this->success(__('Logged in successful'),url('home/user/user_bindsns'));
+        }
+
+        $u_user = Db::name('user')->where('id',$uid)->find();
+        Session::set("user_id",$uid);
+        Session::set("user", $u_user);
+        Session::set("platform", $platform); //记录登入第三方
+        $this->success(__('Logged in successful'), url('home/user/center'));
+    }
+
+
+
     /**
      * 重置密码
      * 

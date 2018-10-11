@@ -41,6 +41,15 @@ class Product extends Backend
     }
 
 
+
+    /**
+     * 地区管理
+     */
+    public function region_list()
+    {
+
+
+    }
     public function add(){
 
         $cat_list = Db::name('category')->where("pid = 14")->select();

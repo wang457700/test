@@ -3,6 +3,7 @@
 namespace app\admin\controller\Extend;
 use think\Db;
 use app\common\controller\Backend;
+use fast\Tree;
 
 /**
  * banner管理
@@ -10,48 +11,34 @@ use app\common\controller\Backend;
  * @icon fa fa-table
  * @remark 在使用Bootstrap-table中的常用方式,更多使用方式可查看:http://bootstrap-table.wenzhixin.net.cn/zh-cn/
  */
-class News extends Backend
+class Region extends Backend
 {
     protected $model = null;
 
     public function _initialize()
     {
         parent::_initialize();
-
     }
-
     /**
      * 查看
      */
     public function index(){
-        if ($this->request->isAjax()) {
+        if ($this->request->isAjax()){
+            $pid = $this->request->get('type',47494);
+            //数据输出ajax
             list($where, $sort, $order, $offset, $limit) = $this->buildparams(NULL);
-
-            $where = array('post_type'=>2);
-            $total = Db::name('Article')
-                ->where($where)
-                ->order($sort, $order)
-                ->count();
-
-            $list = Db::name('Article')
-            ->limit($offset, $limit)
-            ->where($where)
-            ->select(); 
-            
-
-             $status =array('0'=>'隐藏','1'=>'顯示');
-            foreach ($list as $k => &$v)
-            {
-                $v['post_status'] = $status[$v['post_status']];
-                $v['post_terms'] = Db::name('category')->where('id',$v['post_term_id'])->value('name');
-                $v['post_date'] = date('Y/m/d',strtotime($v['post_date']));
-            }
-            unset($v);
-
-            $result = array("total" => $total, "rows" => $list);
+            $info = Db::name('region')
+                //->where()
+                ->select();
+            $tree = Tree::instance();
+            $tree->init(collection(Db::name('region')->where(array('level'=>array('in','1,2,3')))->order('id desc')->select())->toArray(), 'parent_id');
+            $list = $this->categorylist = $tree->getTreeList($tree->getTreeArray($pid), 'name');
+            $result = array("total" => 0, "rows" => $list, "extend" => ['money' => mt_rand(100000,999999), 'price' => 200]);
             return json($result);
         }
 
+        $level1_list = Db::name('region')->where('level',1)->order('id desc')->select();
+        $this->assign('level1_list',$level1_list);
         return $this->view->fetch();
     }
 
@@ -61,12 +48,12 @@ class News extends Backend
      */
     public function edit($ids = NULL)
     {
-         
         if ($this->request->isPost())
         {
             $params = $this->request->post("row/a");
-            $params['post_type'] = 2;
-            $info = Db::name('Article')->where('id',$ids)->update($params);
+            $parent = Db::name('region')->where('id',$params['parent_id'])->find();
+            $params['level'] = $parent['level'] + 1;
+            $info = Db::name('region')->where('id',$ids)->update($params);
             if ($info!==false)
             {
                $this->success('修改成功');
@@ -74,9 +61,16 @@ class News extends Backend
         }
 
         $newscategory = sp_getTreeList(1);
-        $row = Db::name('Article')->where('id',$ids)->find();
+
+        $row = Db::name('region')->where('id',$ids)->find();
         $this->view->assign("row", $row);
         $this->view->assign("newscategory", $newscategory);
+
+        $tree = Tree::instance();
+        $tree->init(collection(Db::name('region')->where(array('level'=>array('in','1,2')))->order('id desc')->select())->toArray(), 'parent_id');
+        $level1_list = $this->categorylist = $tree->getTreeList($tree->getTreeArray(0), 'name');
+        $this->assign('level1_list',$level1_list);
+
         return $this->view->fetch();
     }
 
@@ -88,21 +82,19 @@ class News extends Backend
         if ($this->request->isPost())
         {
             $params = $this->request->post("row/a");
-            $params['post_type'] = 2;
-           /* if ($params){
-                $params['start_time'] = strtotime($params['start_time']);
-                $params['end_time'] = strtotime($params['end_time']);
-            }*/
-            $params['post_date'] = date('Y-m-d H:i:s', time());
-            $info = Db::name('Article')->insert($params);
+            $parent = Db::name('region')->where('id',$params['parent_id'])->find();
+            $params['level'] = $parent['level'] + 1;
+            $info = Db::name('region')->insert($params);
             if ($info!==false)
             {
                $this->success('添加成功');
             }
         }
 
-        $newscategory = sp_getTreeList(1);
-        $this->view->assign("newscategory", $newscategory);
+        $tree = Tree::instance();
+        $tree->init(collection(Db::name('region')->where(array('level'=>array('in','1,2')))->order('id desc')->select())->toArray(), 'parent_id');
+        $level1_list = $this->categorylist = $tree->getTreeList($tree->getTreeArray(0), 'name');
+        $this->assign('level1_list',$level1_list);
         return $this->view->fetch();
     }
 

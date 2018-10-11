@@ -22,6 +22,7 @@ class Wechat
      */
     private $config = [];
 
+
     public function __construct($options = [])
     {
         if ($config = Config::get('third.wechat'))
@@ -73,11 +74,12 @@ class Wechat
             $access_token = isset($data['access_token']) ? $data['access_token'] : '';
             $refresh_token = isset($data['refresh_token']) ? $data['refresh_token'] : '';
             $expires_in = isset($data['expires_in']) ? $data['expires_in'] : 0;
+
             if ($access_token)
             {
                 $openid = isset($data['openid']) ? $data['openid'] : '';
                 $unionid = isset($data['unionid']) ? $data['unionid'] : '';
-                //获取用户信息
+                //获取用户信息user/index
                 $queryarr = [
                     "access_token" => $access_token,
                     "openid"       => $openid,

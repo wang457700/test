@@ -40,6 +40,11 @@ class Category extends Backend
         $this->view->assign("parentList", $categorydata);
     }
 
+
+
+
+
+
     /**
      * 查看
      */
@@ -91,5 +96,6 @@ class Category extends Backend
     {
         return parent::selectpage();
     }
+
 
 }

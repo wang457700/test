@@ -79,10 +79,11 @@ class Index extends Controller
         $platform = $this->request->param('platform');
 
         // 成功后返回会员中心
-        $url = url('index/user/index');
+        $url = url('home/user/center');
 
         // 授权成功后的回调
         $result = $this->app->{$platform}->getUserInfo();
+
         if ($result) {
             $loginret = Service::connect($platform, $result);
             if ($loginret) {
@@ -92,7 +93,9 @@ class Index extends Controller
                     $uc = new \addons\ucenter\library\client\Client();
                     $synchtml = $uc->uc_user_synlogin($this->auth->id);
                 }
-                $this->success(__('Logged in successful') . $synchtml, $url);
+
+                $this->redirect($url);
+               //$this->success('' . $synchtml, $url);
             }
         }
         $this->error(__('Operation failed'), $url);
