@@ -82,7 +82,6 @@ class Frontend extends Controller
 
         $path = str_replace('.', '/', $controllername) . '/' . $actionname;
 
-
         // 设置当前请求的URI
         $this->auth->setRequestUri($path);
 

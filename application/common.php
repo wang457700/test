@@ -546,6 +546,19 @@ function sp_user_vipupgrade($userid){
 }
 
 /**
+ * 减少库存
+ * $good_id 商品id
+ * $number 数量
+ */
+function save_goods_stock($good_id,$number){
+    $good = Db::name('goods')->where(array('product_id'=>$good_id))->find();
+    if($good['stock'] != 0){
+        $res = Db::name('goods')->where(array('product_id'=>$good_id))->setDec('stock',$number);
+    }
+    return true;
+}
+
+/**
  * 生成随机数字，
  * $len 位数
  * $chars 自定义字符
@@ -583,9 +596,9 @@ function sp_ip_ischina()
     $data['time'] = time();
     if($data['time']<= time()){
         $data['status'] = 0;
-        //$url = 'http://ip-api.com/json/'.request()->ip();
-        // $url = 'http://ip-api.com/json/14.127.80.57'; //模拟深圳ip
-       $url = 'http://ip-api.com/json/47.91.226.24'; //模拟香港ip
+        // $url = 'http://ip-api.com/json/'.request()->ip();
+         $url = 'http://ip-api.com/json/14.127.80.57'; //模拟深圳ip
+        // $url = 'http://ip-api.com/json/47.91.226.24'; //模拟香港ip
         $json = request_post($url,$data = 'null');
         $data = json_decode($json,true);
         $data['time'] = time() + 7200;

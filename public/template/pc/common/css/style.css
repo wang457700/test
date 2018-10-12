@@ -102,8 +102,9 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 
 .next-my.swiper-button-next {margin: 0;right: 4px;background: #ffffff85 url(../img/swiper-button-next.png) no-repeat center;background-size: 20px;opacity: 1;padding:  20px;}
 .f1 .list {background:#fff;border-radius: 10px;padding:0;text-align:center;margin: 0 25px;margin-left: 0;/* margin-right: 5px !important; */}
-.f1 .list img {width:100%;margin: 3em 0 0em 0;object-fit: contain;}
-.f1 .list p {background:#7ac142;color:#fff;border-radius: 0 0 10px 10px;margin:0;padding: 1em;margin-bottom: -1px;}
+.f1 .list img {width:100%;margin: 1em 0 0em 0;object-fit: contain;}
+.f1 .list .product_name{background:#7ac142;color:#fff;border-radius: 0 0 10px 10px;margin:0;padding: 1em;margin-bottom: -1px;}
+
 .index_title {background: url(../img/title_ico.png) no-repeat;padding-left:30px;background-size: 25px;height:  25px;line-height: 25px;font-weight:  bold;font-size:  16px;}
 
 .advert{text-align: center;}
@@ -123,13 +124,11 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 .f3 .n2 .d2 p{margin: 0;}
 .f3 .n2 .d2 .adds{padding: 0.2em 0.6em;background: #7ac142;color:  #fff;border-radius: 2em;font-size: 1.5em;float: right;line-height: 0.8em;}
 
-.f6 .img_left{float: left;margin-right: 10px;border: 1px solid #eee;border-radius: 5px;margin-left: 1px;width: 210px;}
+.f6 .img_left{float: left;margin-right: 10px;border: 1px solid #eee;border-radius: 5px;margin-left: 1px;width: 210px;object-fit: contain;}
 .f6 .d1{font-size: 1.2em;line-height: 2em;}
 .f6 .list{padding: 1em;}
 .f6 .d1 p{color: #888;}
 .f6 .d1 h3{overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
-
-
 
 .cooperation{background:#f7f7f7;padding: 1em 0;margin-top:50px;}
 .cooperation a{border-right: 1px dashed #ccc;text-align: center;margin:0 0.8em;padding: 0;padding-right:1em;}
@@ -411,7 +410,7 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 }
 @media (max-width: 1200px){
 	.ads_right{width: 25%;position: absolute;right: -28%;}
-	.f1 .list img {margin: 3.8em 0 0em 0;}
+	.f1 .list img {margin: 1em 0 0em 0;}
 	.f1 .list p{font-size:14px;overflow: hidden;white-space: nowrap;}
 	.container { width:95%; }
 	.font24{font-size:14px;}
@@ -452,7 +451,7 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 	.header-search {width:45%;}
 	.logo-2 img{text-align: right;position: relative;top: -23px;}
 	.nav {width:100%}
-	.f1 .list img {margin: 2.5em 0 0em 0;}
+	.f1 .list img {margin: 1em 0 0em 0;}
 	.f1 .list {margin-right: 20px;}
 	.f6 .img_left {width:30%}
 	.f6 .d1 {font-size: 1.2em;line-height: 1em;}

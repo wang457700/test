@@ -59,7 +59,6 @@ class Payment extends  Frontend
                     }
                 }
 
-                //310*10
                 /* 获得积分 */
                 $int = array(
                     'order_sn'=>$order_sn,
@@ -78,6 +77,11 @@ class Payment extends  Frontend
                 }
                 /*会员升级*/
                 sp_user_vipupgrade(Session::get('user_id'));
+
+                $order_list = Db::name('order')->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))->select();
+                foreach ($order_list as $v){
+                    save_goods_stock($v['goods_id'],$v['goods_num']);
+                }
                 $this->success('支付成功！',url('payment/payment_done',array('order_sn'=>base64_encode($order_sn))));
             }else{
                 $this->error('支付失败！');

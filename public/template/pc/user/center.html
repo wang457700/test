@@ -94,11 +94,11 @@
 
                     <div class="cart-item-list">
                         <div class="row row1">
-                              <div class="col-md-8 color_75" style="">
+                              <div class="col-md-7 color_75" style="">
                                  {:date('Y-m-d',strtotime($vo['addtime']))}
                                   訂單編號: <a href="{:url('user/order_detail',array('order_sn'=>base64_encode($vo['order_sn'])))}"><span class="color_ro bold">{$vo['order_sn']}</span></a>
                               </div>
-                                <div class="col-md-2" style="">
+                                <div class="col-md-3" style="">
                                     {if condition="$vo['pay_status'] neq 0 && $vo['pay_status'] neq 6"}
                                         支付方式：{:sp_payment($vo['payment'])}
                                     {/if}

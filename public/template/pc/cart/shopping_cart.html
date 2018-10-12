@@ -37,13 +37,30 @@
 		</div>
 		<form action="{:URL('cart/order_ok')}" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return cartform()" id="cart-form">
 			{foreach name="car_list" item="vo"}
+				<?php
+
+					//dump($vo['is_inland']);
+					//dump(sp_ip_ischina());
+					$vo['checkbox'] = 0;
+					if(!sp_ip_ischina()){
+						if($vo['is_inland']){
+							$vo['checkbox'] = 'disabled="disabled"';
+						}
+					}else{
+
+					}
+
+				?>
 				<!--第{$key}个产品-->
 				<div class="row cart-item-list"  id="list_{$key}" >
+
 					<input type="hidden" value="{$vo.price}" name="price[]" id="unit_price_{$key}" data-key="{$key}" />
-					<input type="hidden" value="{$vo['total']*$vo['price']}" id="subtotal_{$key}" data-subtotal="{$vo['price']*$vo['total']}"    class="subtotal"/>
+					<input type="hidden" value="{$vo['total']*$vo['price']}" id="subtotal_{$key}" data-subtotal="{$vo['price']*$vo['total']}" class="{$vo['checkbox']?'':'subtotal'}"/>
 					<!-- <input type="hidden" value="2" id="number_1"/> -->
 					<div class="col-md-1 col-xs-1" style="">
-						<input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="goods_id[]" value="{$vo.product_id}" title="ID:106" data-key="{$key}">
+
+						<input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="goods_id[]" value="{$vo.product_id}" title="ID:106" data-key="{$key}" {$vo['checkbox']}>
+
 						<label for='checkbox1'></label>
 					</div>
 					<div class="col-md-4 col-xs-4 t2" style="">
@@ -56,7 +73,9 @@
 						</div>
 					</div>
 					<div class="col-md-2 col-xs-2 color_ro font18" id="unit_price_span_{$key}">$ {$vo.price}</div>
+
 					<div class="col-md-2 col-xs-2" style="">
+					{if condition="!$vo['checkbox']"}
 							<div class="row number">
 							  <div class="col-md-12" style="">
 								<input id="min_{$key}" name="" type="button" value="-" class="reduce" onclick="on_number({$key},'min')">
@@ -64,6 +83,9 @@
 								<input id="add_{$key}" name="" type="button" value="+" class="add" onclick="on_number({$key},'add')">
 							  </div>
 							</div>
+					{else/}
+						只提供給內地購買
+					{/if}
 					</div>
 					<div class="col-md-2 col-xs-2 color_ro font18" style="">$ <span id="subtotal_span_{$key}">{:number_format($vo['price']*$vo['total'],2)}</span></div>
 					<div class="col-md-1 col-xs-1 t6" style=""><a href="{:url('cart/cart_del',array('product_id'=>$vo['product_id']))}" class="js-ajax-delete" onclick="return false;"><i class="fa fa-trash-o" aria-hidden="true" style="color:#666;line-height: 110px;"></i></a></div>
@@ -94,7 +116,7 @@
  <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
  {include file="common/script" /}
 	<script type="text/javascript">
-
+        total();
        		 //单选
 			$(".js-check").on('click',function(){
 				var key =  $(this).data('key');
@@ -206,13 +228,13 @@
 
 
             $("input[name^='goods_id[]']").each(function(){
-                $(this).prop('checked', true);
+                if(!$(this).attr('disabled')){
+                    $(this).prop('checked', true);
+				}
             });
-
 
             function cartform(){
                 var data = $('#cart-form').serializeArray();
-
 
                 $.each(data, function(i, field){
                     console.log(field.name);

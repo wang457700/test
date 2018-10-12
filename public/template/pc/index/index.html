@@ -95,22 +95,22 @@
 
 
        <div class="row" style="padding: 20px 0;">
-        <div class="col-md-5 col-xs-5 col-lg-5 " style="padding-left:0;padding-right: 45px;">
+        <div class="col-md-5 col-xs-5 col-lg-5 " style="padding-left:0;padding-right: 50px;">
              <p class="index_title">我的記錄</p>
             <div class="swiper-container-my" style="overflow: hidden;position: relative;">
                  <div class="swiper-wrapper row  f1" style="margin: 0px;">
-
                      {foreach  name="product_history_list" item='vo'}
                      <div class="swiper-slide col-md-4 col-xs-4 list ">
                          <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
                          <div style="padding: 1em;">
+                             <p class="nowrap" style="color: #fff;">健康禮籃(低糖)002</p>
                              {if condition="$vo['cover']"}
                              <img src="__PUBLIC__/{$vo.cover}" class="auto_img">
                              {else/}
                              <img src="__TMPL_PUBLIC__/img/default.jpg" class="auto_img">
                              {/if}
                          </div>
-                         <p class="nowrap">{$vo.product_name}</p>
+                         <p class="nowrap product_name">{$vo.product_name}</p>
                          </a>
                      </div>
                      {/foreach}
@@ -119,18 +119,16 @@
             <div class="swiper-button-next next-my"></div>
         </div>
        <script>
-           var swiper = new Swiper('.swiper-container-my', {
-               slidesPerView: 2,
-               spaceBetween: 20,
-               lazy: {
-                   loadPrevNext: true,
-               },
-               loop: true,
-               loopFillGroupWithBlank: true,
-               navigation: {
-                   nextEl: '.next-my',
-               },
-           });
+               var swiper = new Swiper('.swiper-container-my', {
+                   slidesPerView: 2,
+                   spaceBetween: '5%',
+                   loop: true,
+                   loopFillGroupWithBlank: true,
+                   navigation: {
+                       nextEl: '.next-my',
+                   },
+               });
+
        </script>
 
         <div class="col-md-7 f2 col-xs-7 col-lg-7" style="padding: 0;">
@@ -160,7 +158,7 @@
                 <script>
                     var swiper = new Swiper('.swiper-container2', {
                       slidesPerView: 3,
-                      spaceBetween: 30,
+                      spaceBetween: '5%',
                       loop: true,
                       loopFillGroupWithBlank: true,
                       navigation: {
@@ -225,7 +223,7 @@
                                             <span class="font24"><i class="font12">$</i>
                                                 {:product_price($vo['product_id'])}
                                             </span>
-                                            <a class="adds" style="padding: 0.4em 0.8em;" data-id="{$vo['product_id']}">+</a>
+                                            <a class="adds" data-id="{$vo['product_id']}">+</a>
                                         </div>
                                     </div>
                                 </div>
@@ -295,7 +293,7 @@
                                             <span class="font24"><i class="font12">$</i>
                                                 {:product_price($vo['product_id'])}
                                             </span>
-                                     <a class="adds" style="padding: 0.4em 0.8em;" data-id="{$vo['product_id']}">+</a>
+                                     <a class="adds" data-id="{$vo['product_id']}">+</a>
                                  </div>
                              </div>
                          </div>
@@ -361,7 +359,7 @@
                                             <span class="font24"><i class="font12">$</i>
                                                 {:product_price($vo['product_id'])}
                                             </span>
-                                        <a class="adds" style="padding: 0.4em 0.8em;" data-id="{$vo['product_id']}">+</a>
+                                        <a class="adds" data-id="{$vo['product_id']}">+</a>
                                     </div>
                                 </div>
                             </div>
@@ -405,7 +403,7 @@
 
                 {foreach name="share" item="vo"}
 			  <div class="col-md-6 col-xs-6 list">
-					<img src="__PUBLIC__/{$vo.product_pic}" class="img_left" />
+					<img src="__PUBLIC__/{$vo.product_pic}" class="img_left auto_img" />
 					<div class="d1">
 					  <h3>{$vo.product_name}</h3>
 					  <p class="ellipsis3">{$vo.product_content}</p>
@@ -423,19 +421,24 @@
     <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
 {include file="common/script"/}
 <script type="text/javascript">
-$(document).ready(function(){
 
-  $(".fixediv a").click(function(){
 
-    $(".fixediv").fadeOut(400);
-
-  });
-
-  $(".ads_left").floatadv();
-  //$(".ads_right").floatadv();
-
+$(function(){
+    auto_height();
+    console.log(11);
 });
 
+
+
+$(document).ready(function(){
+  $(".fixediv a").click(function(){
+    $(".fixediv").fadeOut(400);
+  });
+  $(".ads_left").floatadv();
+  //$(".ads_right").floatadv();
+});
+
+//左侧广告
 jQuery.fn.floatadv = function(loaded) {
   var obj = this;
   body_height = parseInt($(window).height());
@@ -443,6 +446,7 @@ jQuery.fn.floatadv = function(loaded) {
   container = parseInt($('.f3').height()+200);
 
   top_position = parseInt((body_height/2) - (block_height/2) + $(window).scrollTop());
+
   if (body_height<block_height) { top_position = 0 + $(window).scrollTop(); };
 	if(!loaded){
 		obj.css({'position': 'absolute'});
@@ -468,24 +472,26 @@ jQuery.fn.floatadv = function(loaded) {
 }
 
 $(window).resize(function (){         //当浏览器大小变化时
-
     auto_height()
-});
-
-$(document).ready(function(){
-
-    auto_height();
 });
 
 function auto_height(){
     var f3_height =  $('.index_right').height();
     var f3_img =  $('.row .n1 img').height();
 
-
     $('.index_right').each(function(i){
-        console.log($(this).height());
-
+        $(this).find('img').eq(0).css('height',$(this).find('img').eq(1).height());
+        $(this).find('img').eq(0).css('width','100%');
+        console.log();
     });
+
+    var f1_height =  $('.swiper-container-my .swiper-slide').height();
+
+    $('.swiper-container2 .swiper-slide').each(function(i){
+        $(this).css('height',f1_height);
+    });
+    console.log(f1_height);
+
 
     $('.row .n1').each(function(i){
         $(this).css('height',f3_height);

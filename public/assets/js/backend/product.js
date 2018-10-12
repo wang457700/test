@@ -76,7 +76,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                 },
                                 {
                                     name: 'ajax',
-                                    title: __('发送Ajax'),
+                                    title: __('下架'),
                                     text:'下架',
                                     classname: 'btn btn-xs btn-detail btn-magic btn-ajax',
                                     url: 'Product/',

@@ -9,6 +9,7 @@
 namespace app\home\controller;
 use app\common\controller\Frontend;
 use think\Db;
+use fast\Tree;
 use think\Session;
 class Cart extends Frontend
 {
@@ -20,14 +21,37 @@ class Cart extends Frontend
         }
         $data['product_id'] = input('product_id');
         $goods = Db::name('goods')->where('product_id',$data['product_id'])->find();
-        if(sp_ip_ischina() && !$goods['is_inland']){
+
+        $tree = Tree::instance();
+        $china_categoryids = $tree->getChildrenIds(input('categoryid',72),true);
+
+        if(sp_ip_ischina()){
+            //内地 is_inland=是否内地可买
+            if(!$goods['is_inland'] || in_array($goods['cat_id'],$china_categoryids)){
+                $data = array(
+                    'code' => 0,
+                    'msg' => '提示，只供內地以外購買！',
+                );
+                $this->ajaxReturn($data);
+            }
+        }else{
+            //香港
+            if($goods['is_inland']){
+                $data = array(
+                    'code' => 0,
+                    'msg' => '提示，內地專區只供內地用戶購買！',
+                );
+                $this->ajaxReturn($data);
+            }
+        }
+
+        if($goods['stock'] <= 0 && $goods['pre_order'] == 0){
             $data = array(
                 'code' => 0,
-                'msg' => '加入購物車失敗，只供內地以外購買！',
+                'msg' => '庫存不足！',
             );
             $this->ajaxReturn($data);
         }
-
         $data['user_id'] = Session::get('user_id');
         $data['add_time'] = date('Y-m-d H:i:s');
         $res = Db::name('cart_order')->insertGetId($data);
@@ -90,10 +114,6 @@ class Cart extends Frontend
                         $total+=($goods['price']*$v['goods_num']);
                         $num+=$v['goods_num'];
                 }
-
-
-
-
                 $address_list=Db::name('user_address')->where(array('user_id'=>$user_id,'status'=>1))->select();
                 $address_default=Db::name('user_address')->where(array('user_id'=>$user_id,'status'=>1,'default'=>1))->find();
                 /*运费*/
@@ -174,6 +194,7 @@ class Cart extends Frontend
                     $this->error('當前有商品"'.$goods['product_name'].'"庫存不足！',url('cart/shopping_cart'));
                 }
             }
+
             $res='';
             $order_sn=date('Ymd').time();
 
