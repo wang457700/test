@@ -596,8 +596,8 @@ function sp_ip_ischina()
     $data['time'] = time();
     if($data['time']<= time()){
         $data['status'] = 0;
-        // $url = 'http://ip-api.com/json/'.request()->ip();
-         $url = 'http://ip-api.com/json/14.127.80.57'; //模拟深圳ip
+         $url = 'http://ip-api.com/json/'.request()->ip();
+        //$url = 'http://ip-api.com/json/14.127.80.57'; //模拟深圳ip
         // $url = 'http://ip-api.com/json/47.91.226.24'; //模拟香港ip
         $json = request_post($url,$data = 'null');
         $data = json_decode($json,true);
