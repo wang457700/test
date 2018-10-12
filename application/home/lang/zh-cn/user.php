@@ -57,7 +57,7 @@ return [
     'Captcha is incorrect'                  => '验证码不正确',
     'Upload successful'                     => '上传成功',
     'Sign up successful'                    => '注册成功',
-    'Logged in successful'                  => '登录成功',
+    'Logged in successful'                  => '登錄成功',
     'Logout successful'                     => '注销成功',
     'User center already closed'            => '会员中心已经关闭',
     'Operation failed'                      => '操作失败',

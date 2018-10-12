@@ -5,7 +5,7 @@
 		.mui-input-row{margin-bottom: 10px;border: 1px solid #eee;border-radius: 5px;}
 		.mui-input-group{padding:20px;}
 		.mui-input-row input{float: inherit !important;font-size: 14px;padding-left: 10px !important;border-left: 1px solid #eee !important;}
-		.facebook_img,.weixin_img{vertical-align: middle;margin-right: 10px;width: 20px;}
+		.facebook_img,.weixin_img,.google_img{vertical-align: middle;margin-right: 10px;width: 20px;}
 		.mui-checkbox input[type=checkbox]:checked:before, .mui-radio input[type=radio]:checked:before {color: #7ac142;}
 	</style>
 	<body style="background:#fff">
@@ -17,7 +17,6 @@
 					<label class="login_ico"></label>
 					<input type="email" placeholder="請輸入您的電郵地址" id="email" name="email" required>
 				</div>
-				
 				<div class="mui-input-row">
 					<label class="login_ico" style="background-position-x: -40px;"></label>
 					<input type="password" placeholder="請輸入6-12位數字字母組合密碼" name="password" required>
@@ -33,16 +32,15 @@
 					登  錄
 				</button>
 			</form>
-
 			<img src="__TMPL_PUBLIC__/img/logo_info.jpg" style="width: 100%;margin: 20px 0;" />
 			<div style="padding: 0 20px">
 				<button type="button" class="mui-btn mui-btn-outlined btn-outlined-edit"  id="customBtn" >
-					<img src="__TMPL_PUBLIC__/img/facebook.png" class="facebook_img" />Login with Google
+					<img src="__TMPL_PUBLIC__/img/logo-google.png" class="google_img" />Login with Google
 				</button>
 				<button type="button" class="mui-btn mui-btn-outlined btn-outlined-edit"  id="facebook">
 					<img src="__TMPL_PUBLIC__/img/facebook.png" class="facebook_img" />Login with Facebook
 				</button>
-				<button type="button" class="mui-btn mui-btn-outlined btn-outlined-edit">
+				<button type="button" class="mui-btn mui-btn-outlined btn-outlined-edit" id="weixin">
 					<img src="__TMPL_PUBLIC__/img/wei_xing.png" class="weixin_img" />Login with Wechat
 				</button>
 			</div>
@@ -74,7 +72,9 @@
 
                 return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
             }
-
+            $('#weixin').click(function () {
+                window.location = '{$weixin_url}';
+            });
 		</script>
 		<script>
             // facebook登录

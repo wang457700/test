@@ -393,7 +393,7 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 .address_list .cart-item-list{line-height: 50px;border: 1px solid #e5e5e5;border-top: 0;}
 .address_list .cart-item-list .btn.btn-warning{background:#ffa800;border-radius:0}
 
-.user_data p{line-height:25px;color:#666666;}
+.user_data p{line-height:25px;color:#666666;overflow: hidden;}
 .user_data h4{font-weight: bold;}
 .ads_right{width:300px;position: absolute;right:-350px;}
 

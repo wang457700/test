@@ -130,18 +130,22 @@
                         if (data.status == 0) {
 
                         }
-                        $.each(data.data.data,function(index, value) { //遍历json数据列
+                        $.each(data.data.data,function(index, value){ //遍历json数据列
                             console.log(value);
 
                             {if condition="$input['style'] eq 'grid'"}
-                            li += '<li class="swiper-slide mui-col-sm-6 mui-col-xs-6 list"><a class="news"></a><a href="'+ url + value.product_id +'" style="display: inline-block;"><img src="'+ public_url + value.cover + '"><p class="p2">'+ value.product_name +'</p></a><span class="color_ro">$</span><span class="color_ro font18">'+ value.price +'</span>  <span class="price">$'+ value.price +'</span></p></li>';
+                            li += '<li class="swiper-slide mui-col-sm-6 mui-col-xs-6 list"><a class="news"></a><a href="'+ url + value.product_id +'" style="display: inline-block;"><img src="'+ public_url + value.cover + '" class="auto_img"><p class="p2">'+ value.product_name +'</p></a><span class="color_ro">$</span><span class="color_ro font18">'+ value.price +'</span>  <span class="price">$'+ value.price +'</span></p></li>';
 							{/if}
 
 							{if condition="$input['style'] eq 'list'"}
-							li += '<li class="swiper-slide mui-col-sm-12 mui-col-xs-12 list2"><div class="mui-pull-left mui-col-xs-4"><a class="news"></a><img src="'+ public_url + value.cover + '"class="img_left" id="img_'+ value.product_id +'"></div><div class="mui-pull-right mui-col-xs-8"><p class="p2">'+ value.product_name +'</p><div class="right_bottom"><p class="mui-pull-left"><span class="color_ro">$</span><span class="color_ro font18">'+ value.price +'</span>  <span class="price">$'+ value.price +'</span></p><button type="button" class="mui-btn mui-btn-success mui-pull-right" id="adds" data-productid="'+ value.product_id +'" data-flyimg="true">加入購物車</button></div></div></li>';
+							li += '<li class="swiper-slide mui-col-sm-12 mui-col-xs-12 list2"><div class="mui-pull-left mui-col-xs-4"><a class="news"></a><a href="'+ url + value.product_id +'" style="display: inline-block;"><img src="'+ public_url + value.cover + '"class="img_left auto_img" id="img_'+ value.product_id +'"></a></div><div class="mui-pull-right mui-col-xs-8"><a href="'+ url + value.product_id +'" style="display: inline-block;"><p class="p2">'+ value.product_name +'</p></a><div class="right_bottom"><p class="mui-pull-left"><span class="color_ro">$</span><span class="color_ro font18">'+ value.price +'</span>  <span class="price">$'+ value.price +'</span></p><button type="button" class="mui-btn mui-btn-success mui-pull-right" id="adds" data-productid="'+ value.product_id +'" data-flyimg="true">加入購物車</button></div></div></li>';
 							{/if}
+
                         });
                         $(".mui-table-view-chevron").append(li);
+                        setTimeout(function () {
+                            auto_img();
+                        },100);
                         $(".mui-table-view-chevron").data('page_count',Number(data.data.current_page)+1);
                         $(".mui-table-view-chevron").data('last_page',Number(data.data.last_page));
                     }

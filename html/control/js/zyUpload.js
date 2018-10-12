@@ -172,7 +172,7 @@
 				// 处理配置参数删除按钮
 				var delHtml = "";
 				if(para.del){  // 显示删除按钮
-					delHtml = '<span class="file_del" data-index="'+file.index+'" title="删除"></span>';
+					delHtml = '<span class="file_del" data-index="'+file.index+'" title="刪除"></span>';
 				}
 				
 				// 处理不同类型文件代表的图标

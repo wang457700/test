@@ -132,14 +132,9 @@ class Frontend extends Controller
             }
 
             //检测账号是否綁定電子郵箱
-            if(empty($user['email'])){
+            if(empty($user['email']) && $user['user_type'] ==2){
                 $this->error(__('帳號還綁定電子郵箱！'), 'user/user_bindsns','',0);
             }
-
-
-
-
-
 
         } else {
             // 如果有传递token才验证是否登录状态

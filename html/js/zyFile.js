@@ -9,7 +9,7 @@ var ZYFILE = {
 		url : "",  					  // 上传action路径
 		uploadFile : [],  			  // 需要上传的文件数组
 		lastUploadFile : [],          // 上一次选择的文件数组，方便继续上传使用
-		perUploadFile : [],           // 存放永久的文件数组，方便删除使用
+		perUploadFile : [],           // 存放永久的文件数组，方便刪除使用
 		fileNum : 0,                  // 代表文件总个数，因为涉及到继续添加，所以下一次添加需要在它的基础上添加索引
 		/* 提供给外部的接口 */
 		filterFile : function(files){ // 提供给外部的过滤文件格式等的接口，外部需要把过滤后的文件返回
@@ -18,7 +18,7 @@ var ZYFILE = {
 		onSelect : function(selectFile, files){      // 提供给外部获取选中的文件，供外部实现预览等功能  selectFile:当前选中的文件  allFiles:还没上传的全部文件
 			
 		},
-		onDelete : function(file, files){            // 提供给外部获取删除的单个文件，供外部实现删除效果  file:当前删除的文件  files:删除之后的文件
+		onDelete : function(file, files){            // 提供给外部获取刪除的单个文件，供外部实现刪除效果  file:当前刪除的文件  files:刪除之后的文件
 			
 		},
 		onProgress : function(file, loaded, total){  // 提供给外部获取单个文件的上传进度，供外部实现上传进度效果

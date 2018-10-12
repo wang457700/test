@@ -27,12 +27,11 @@ class Region extends Backend
             $pid = $this->request->get('type',47494);
             //数据输出ajax
             list($where, $sort, $order, $offset, $limit) = $this->buildparams(NULL);
-            $info = Db::name('region')
-                //->where()
-                ->select();
+
             $tree = Tree::instance();
             $tree->init(collection(Db::name('region')->where(array('level'=>array('in','1,2,3')))->order('id desc')->select())->toArray(), 'parent_id');
             $list = $this->categorylist = $tree->getTreeList($tree->getTreeArray($pid), 'name');
+
             $result = array("total" => 0, "rows" => $list, "extend" => ['money' => mt_rand(100000,999999), 'price' => 200]);
             return json($result);
         }

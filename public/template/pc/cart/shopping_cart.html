@@ -39,8 +39,8 @@
 			{foreach name="car_list" item="vo"}
 				<!--第{$key}个产品-->
 				<div class="row cart-item-list"  id="list_{$key}" >
-					<input type="hidden" value="{$vo.price}" name="price[]" id="unit_price_{$key}"/>
-					<input type="hidden" value="{$vo['total']*$vo['price']}" id="subtotal_{$key}" class="subtotal"/>
+					<input type="hidden" value="{$vo.price}" name="price[]" id="unit_price_{$key}" data-key="{$key}" />
+					<input type="hidden" value="{$vo['total']*$vo['price']}" id="subtotal_{$key}" data-subtotal="{$vo['price']*$vo['total']}"    class="subtotal"/>
 					<!-- <input type="hidden" value="2" id="number_1"/> -->
 					<div class="col-md-1 col-xs-1" style="">
 						<input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="goods_id[]" value="{$vo.product_id}" title="ID:106" data-key="{$key}">
@@ -73,7 +73,6 @@
 				<div class="search_page_empty"></div>
 			{/if}
 			<div class="row" style="padding: 20px;display: {if condition="count($car_list) eq 0"}none{/if}">
-
 				<div class="col-md-4" style="float: right;text-align: right;">
 					<span class="color_ro" id="total_sum">{$goods_sum}</span>件商品, 總計: <span class="color_ro" id="total">$ {:number_format($all_price,2)}</span>
 					<p style="font-size:22px ">合計 (不含運費)：<span class="color_ro" id="total_no_yunxfei">$ {:number_format($all_price,2)}</span></p>
@@ -101,26 +100,46 @@
 				var key =  $(this).data('key');
 				if($(this).is(':checked') == true){
                     $('#subtotal_' + key).addClass('subtotal');
+                    $('#number_' + key).attr('name','goods_num[]');
 				}else {
                     $('#subtotal_' + key).removeClass('subtotal');
+                    $('#number_' + key).attr('name','');
 				}
                 total();
 			});
 
             //全选或不选
-            $("#checked").on('click',function(){
-                if($(this).data('id') == 1){
-                    $("input[name^='goods_id[]']").each(function(){
-                        $(this).prop('checked', false);
-                    });
-                    $(this).data('id',0);
-                }else{
-                    $("input[name^='goods_id[]']").each(function(){
-                        $(this).prop('checked', true);
-                    });
-                    $(this).data('id',1);
-                }
-            });
+             $("#checked").on('click',function(){
+                 if($(this).data('id') == 1){
+
+                     $("input[name='goods_id[]']").each(function(){
+                         $(this).prop('checked', false);
+                         var key = $(this).data('key');
+                         $('#subtotal_' + key).removeClass('subtotal'); //去除单个商品总金额
+                         $('#number_' + key).removeClass('goods_num'); //去除单个商品总数量
+                         $('#number_' + key).attr('name','');
+                     });
+
+                     $("input[class^='subtotal']").each(function(){
+                         $(this).val('');
+                     });
+
+                     $(this).data('id',0);
+                 }else{
+                     $("input[name='goods_id[]']").each(function(){
+                         var key = $(this).data('key');
+                         $(this).prop('checked', true);
+                         $('#subtotal_' + key).addClass('subtotal');
+                         $('#number_' + key).addClass('goods_num');
+                         $('#number_' + key).attr('name','goods_num[]');
+                     });
+                     $("input[class^='subtotal']").each(function(){
+                         $(this).val($(this).data('subtotal'));
+                     });
+                     $(this).data('id',1);
+                 }
+                 total();
+             });
 
 			function on_number(id,type){
 				//初始化数量为1,并失效减
@@ -166,6 +185,7 @@
                  $('#subtotal_span_' + id).text(subtotal_price.toFixed(2));
                  $('#subtotal_' + id).val(subtotal_price.toFixed(2));
              }
+
 			//统计总价格	
 			function total(){
 				var sum=0;
@@ -178,9 +198,12 @@
                     total_sum+= Number($(this).val());
                 });
 				$('#total_sum').text(Number(total_sum));
+
+				console.log(total_sum);
 				$('#total').text('$ '+ sum.toFixed(2));
 				$('#total_no_yunxfei').text('$ '+ sum.toFixed(2));
 			}
+
 
             $("input[name^='goods_id[]']").each(function(){
                 $(this).prop('checked', true);

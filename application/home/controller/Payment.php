@@ -34,11 +34,10 @@ class Payment extends  Frontend
             $res = Db::name('order')->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))->update($data);
             if($res){
                 $all_price = Db::name('order')->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))->sum('money_total');
-                $all_price = $all_price-$order_info['integral_price']-$order_info['coupon_price']-$order_info['freight'];
+                $all_price = $all_price-$order_info['integral_price']-$order_info['coupon_price'];
                 $cofing_integral = config('site')['integral'];
+
             //支付成功处理
-
-
                 /* 选中使用积分 */
                 if(!empty($order_info['integral_price']) && $order_info['integral_price']!= '0.00'){
                     $user_score= Db::name("user")->where(array('id'=>Session::get('user_id')))->value('score');
@@ -46,6 +45,7 @@ class Payment extends  Frontend
                     if($setdec_score > $user_score){
                         $setdec_score = $user_score;
                     }
+
                     $int = array(
                         'order_sn'=>$order_sn,
                         'user_id'=>Session::get('user_id'),
@@ -59,7 +59,7 @@ class Payment extends  Frontend
                     }
                 }
 
-
+                //310*10
                 /* 获得积分 */
                 $int = array(
                     'order_sn'=>$order_sn,
@@ -68,6 +68,10 @@ class Payment extends  Frontend
                     'type'=>'add',
                     'createtime'=>date('Y-m-d H:i:s',time()),
                 );
+                if($int['integral'] <= 0){
+                    $int['integral'] = 0;
+                }
+
                 $res= Db::name("integral_log")->insertGetId($int);
                 if($res!==false){
                     $res= Db::name("user")->where(array('id'=>Session::get('user_id')))->setInc('score',$int['integral']);
@@ -86,7 +90,7 @@ class Payment extends  Frontend
         ->find();
 
         if($order_info['pay_status']!=0 && $order_info['pay_status']!=1){
-           $this->error('订单已成功支付！',url('user/center'));
+          $this->error('订单已成功支付！',url('user/center'));
         }
         $address_info= Db::name('user_address')
         ->where(array('user_id'=>Session::get('user_id'),'id'=>$order_info['address_id']))

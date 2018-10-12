@@ -37,7 +37,7 @@ body{font-size: 14px;max-width:450px;margin: 0 auto;}
 .index-hd-left{background:#fff url(../img/cebian.png) no-repeat center;background-size: 20px;width: 44px;height: 44px;}
 .index-hd-right{background:#fff url(../img/denglu.png) no-repeat center;background-size: 15px;width: 30px;height: 44px;position: relative;}
 .index-hd-right2{background:#fff url(../img/gouwuche.png) no-repeat center;background-size: 20px;width: 44px;height: 44px;}
-.index_banner .swiper-slide img{width: 100%;}
+.index_banner .swiper-slide img{width: 100%;object-fit: contain;}
 .index-left-logo {padding:  20px;}
 .index-left-logo a{color:#000}
 .index-left-logo img{width:80px;border:1px solid #7ac141;border-radius: 50%;vertical-align: middle;margin-right: 5px;}
@@ -56,7 +56,7 @@ body{font-size: 14px;max-width:450px;margin: 0 auto;}
 .left_menu_ico.i11{background-position-y: -200px;}
 
 
-.my_lj .list img{width: 100%;border: 1px solid #efefef;border-radius: 5px;}
+.my_lj .list img{width: 100%;border: 1px solid #efefef;border-radius: 5px;object-fit: contain;}
 .my_lj .list .p2{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .my_lj .list .price{color:#3F3F3F;text-decoration:line-through;margin-left: 5px;}
 .my_lj .list .news{background: url(../img/new.png) no-repeat center;background-size: 30px;width: 30px;height: 30px;display:  inline-block;position:  absolute;top: 0;}
@@ -71,7 +71,7 @@ body{font-size: 14px;max-width:450px;margin: 0 auto;}
 
 .swiper-pagination-bullet-active{background: #7ac141 !important}
 .my_order .l2 {line-height: 30px;background: #efefef;}
-.my_order .l2 img{width: 100px;margin-right:  10px;}
+.my_order .l2 img{width: 100px;margin-right:  10px;object-fit: contain;}
 .my_order .l2 .p1{color: #000}
 .my_order ul{border-top: 10px solid #efefef;}
 .contribution .s_right{border: 1px solid #efefef;padding: 5px;position: absolute;right: 5px;top: 2px;border-radius: 5px;}
@@ -99,19 +99,17 @@ body{font-size: 14px;max-width:450px;margin: 0 auto;}
 
 .product_list li{list-style-type:none;padding: 5px;}
 .product_list ul{padding: 10px;}
-.product_list li img{width: 100%;border: 1px solid #eee;padding: 5%;margin: 0 auto;}
+.product_list li img{width: 100%;border: 1px solid #eee;padding: 5%;margin: 0 auto;object-fit: contain;}
 .product_list li .p2{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color: #333333;}
 .product_list li .price{text-decoration:line-through;margin-left: 5px;}
 .product_list li .news{background: url(../img/new.png) no-repeat center;background-size: 30px;width: 30px;height: 30px;display:  inline-block;position:  absolute;top: 5px;}
-
-
 
 .product_list2 li{list-style-type:none;padding: 10px 5px;border-bottom: 1px solid #efefef}
 .product_list2 ul{padding: 10px;}
 .product_list2 li .p2{min-height: 65px;    color: #333333;}
 .product_list2 li .price{text-decoration: line-through;margin-left: 5px;}
 .product_list2 li .news{background: url(../img/new.png) no-repeat center;background-size: 30px;width: 30px;height: 30px;display:  inline-block;position:  absolute;top: 0;}
-.product_list2 li .img_left{width: 100%;border: 1px solid #efefef;}
+.product_list2 li .img_left{width: 100%;border: 1px solid #efefef;object-fit: contain;}
 .product_list2 li .mui-pull-left{padding-right: 10px;margin: 0;}
 .product_list2 li .right_bottom{line-height: 35px;}
 .product_list2 li .right_bottom .mui-pull-left{width: 60%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
@@ -124,7 +122,7 @@ body{font-size: 14px;max-width:450px;margin: 0 auto;}
 .search-list a{background:#efefef;padding:  5px 10px;border-radius:  50px;color: #666666;width: 30%;display: inline-block;text-align: center;margin-bottom: 10px;}
 
 .shopping_cart ul {margin: 0;}
-.shopping_cart ul li .img_left{width: 100%;border: 1px solid #efefef;}
+.shopping_cart ul li .img_left{width: 100%;border: 1px solid #efefef;object-fit: contain;}
 .shopping_cart ul li .title{min-height: 40px;margin: 0;color: #000;}
 .shopping_cart ul li .xuan{background: #efefef;color: #666666;width: 100px;display: inline-block;padding: 2px;border-radius: 5px;}
 .shopping_cart ul li .del{position:  absolute;right: -5px;top: -10px;color: #666;font-size:  20px;}

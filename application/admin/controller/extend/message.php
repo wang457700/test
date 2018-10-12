@@ -55,7 +55,7 @@ class Message extends Backend
             $info = Db::name('message')->where('id',$ids)->delete();
             if ($info!==false)
             {
-                $this->success('删除成功');
+                $this->success('刪除成功');
             }
         }
     }

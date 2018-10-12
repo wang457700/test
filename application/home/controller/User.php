@@ -425,6 +425,7 @@ class User extends Frontend
 
         //手机端ajax列表
         if($this->request->isPost()){
+            $pay_status = sp_paystatus_array();
             $ajax = [];
             foreach ($result as $k => $item){
                 $html = null;
@@ -432,7 +433,7 @@ class User extends Frontend
                     $html = '<a href="'.url('user/order_detail',array('order_sn'=>base64_encode($item['order_sn']))).'"  class="mui-btn mui-btn-warning mui-btn-outlined">查看訂單</a>';
                 }
                 if($item['pay_status']  == 0){
-                    $html = '<a href="'.url('payment/go_pay',array('order_sn'=>base64_encode($item['order_sn']))).'"  class="mui-btn mui-btn-success mui-btn-outlined">去支付</a> <a  href="'.url('user/order_cancel',array('order_sn'=>base64_encode($item['order_sn']))).'" class="mui-btn mui-btn-warning mui-btn-outlined">取消訂單</a>';
+                    $html = '<a href="'.url('payment/go_pay',array('order_sn'=>base64_encode($item['order_sn']))).'"  class="mui-btn mui-btn-success mui-btn-outlined">去支付</a> <a  href="'.url('user/order_cancel',array('order_sn'=>base64_encode($item['order_sn']))).'" class="mui-btn mui-btn-warning mui-btn-outlined js-ajax-operation" onclick="return false;">取消訂單</a>';
                 }
                 $ajax[$k]['freight'] = $item['freight'];
                 $ajax[$k]['price'] = sum_order_payableprice($item['order_sn']);
@@ -657,9 +658,9 @@ class User extends Frontend
 	 		$where = array('id'=>$id,'user_id'=>$user_id);
 	 		$info = Db::name('user_share')->where($where)->update(array('status' => 3));
  			if($info!==false){
-				$this->success('删除成功'.$info.$user_id.$id);
+				$this->success('刪除成功'.$info.$user_id.$id);
 			}else{
-				$this->error('删除失敗');
+				$this->error('刪除失敗');
 			}
     	}else{
 			$this->error('非法操作！');
@@ -826,9 +827,9 @@ class User extends Frontend
 	 		$where = array('id'=>$id,'user_id'=>$user_id);
 	 		$info = Db::name('user_address')->where($where)->update(array('status'=>0));
  			if($info){
-				$this->success('删除成功');
+				$this->success('刪除成功');
 			}else{
-				$this->error('删除失败');
+				$this->error('刪除失败');
 			}
     	}
     }

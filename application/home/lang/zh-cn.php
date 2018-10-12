@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'Keep login'                                             => '保持会话',
+    'Keep login'                                             => '保持會話',
     'Forgot password'                                        => '忘记密码?',
     'Sign in'                                                => '登入',
     'Username'                                               => '用户名',
@@ -10,13 +10,13 @@ return [
     'Nickname'                                               => '昵称',
     'Password'                                               => '密码',
     'Sign up'                                                => '注 册',
-    'Sign in'                                                => '登 录',
+    'Sign in'                                                => '登 入',
     'Sign out'                                               => '注 销',
     'Guest'                                                  => '游客',
     'Welcome'                                                => '%s，你好！',
     'Add'                                                    => '添加',
     'Edit'                                                   => '编辑',
-    'Delete'                                                 => '删除',
+    'Delete'                                                 => '刪除',
     'Move'                                                   => '移动',
     'Name'                                                   => '名称',
     'Status'                                                 => '状态',

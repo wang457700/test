@@ -19,7 +19,7 @@
 
 		<nav class="mui-bar mui-bar-tab" style="box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);line-height: 50px;">
 			<button type="submit" class="mui-btn mui-btn-success mui-pull-right" style="margin-right: 10px;">提交訂單</button>
-			<p class="mui-pull-right" style="margin:0;margin-right: 20px;">合計：<span class="color_ro">$</span><span class="color_ro font18">{:number_format($all_total,2)}</span></p>
+			<p class="mui-pull-right" style="margin:0;margin-right: 20px;">合計：<span class="color_ro">$</span><span class="color_ro font18" id="all_total2">0.00</span></p>
 		</nav>
 
 		<div class="mui-content my_order">
@@ -56,21 +56,22 @@
 				<input type="hidden"  name="goods_id[]" value="{$vo.goods_id}" />
 				<input type="hidden"  name="goods_num[]" value="{$vo.goods_num}" />
 		         <li class="mui-table-view-cell l2">
-		         	<img src="__PUBLIC__/{$vo.cover}" class=" mui-pull-left" />
+		         	<img src="__PUBLIC__/{$vo.cover}" class=" mui-pull-left auto_img" />
 			          <p class="p1">{$vo.product_name}</p>
 			          <p>{$vo.model}</p>
 			          <p><span class="color_ro">$</span><span class="color_ro font18">{:number_format($vo['price'],2)}</span><span class="mui-pull-right">x{$vo.goods_num}</span></p>
 		         </li>
 				{/foreach}
-		         <li class="mui-table-view-cell"><a class="mui-navigate-right">配送方式<span class="mui-pull-right" style="margin-right: 20px;">快遞 免郵</span></a></li>
+		         <!--<li class="mui-table-view-cell"><a class="mui-navigate-right">配送方式<span class="mui-pull-right" style="margin-right: 20px;">快遞 免郵</span></a></li>-->
 
 				<li class="mui-table-view-cell" style="text-align:right">
-		         	共{$num}件商品    合計 <span class="color_ro">$</span><span class="color_ro font18">{:number_format($all_total,2)}</span>(含運費$0.00)
+					(含運費<span id="freight" data-price="{$freight}" >$ {:number_format($freight,2)}</span>)<br>
+					(含偏遠地區服務費<span id="serviceprice" data-price="0" >$ 0.00</span>)<br>
+		         	共{$num}件商品    合計 <span class="color_ro">$</span><span class="color_ro font18" id="all_total" data-alltotal="{$all_total}">0.00</span>
 	        	</li>
 			</ul>
 		</div>
 	</form>
-
 
 <!--选择收货地址-->
 	<div class="mui-input-group" id="address_list" style="top:100%">
@@ -140,6 +141,14 @@
 		<script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
 		<script>
 			mui('.mui-scroll-wrapper').scroll();
+
+
+            var address_id = $('#address_id').val();
+            if(address_id){
+                service_price(address_id);
+            }
+
+
 			$('#address_list li').click(function () {
 			    var id = $(this).data('id');
 			    if(id){
@@ -151,9 +160,34 @@
                     $('#phone').text(phone);
                     $('#address').text(address);
                     $('#address_list').animate({top:'100%'}).hide();
+                    service_price(id);
 				}
 			});
+            sum_price();
+            function service_price(address_id){
+                $.ajax({
+                    type: "POST",
+                    url:"{:url('api/user/api_cx_service_price')}",
+                    data:{'address_id':address_id},
+                    dataType:"json",
+                    success: function(data){
+                        if(data.code == 1){
+                            var service_price = data.data.service_price;
+                            $('#serviceprice').data("price",service_price).text('$ ' + Number(service_price).toFixed(2));
+                            sum_price();
+                        }
+                    },
+                });
+            }
 
+            function sum_price() {
+                var freight = Number($('#freight').data("price")).toFixed(2);
+                var serviceprice = Number($('#serviceprice').data("price")).toFixed(2);
+                var all_total = Number($('#all_total').data("alltotal")).toFixed(2); //商品总金额
+
+                $('#all_total').text((Number(all_total)+Number(freight)+Number(serviceprice)).toFixed(2)) ;
+                $('#all_total2').text((Number(all_total)+Number(freight)+Number(serviceprice)).toFixed(2)) ;
+            }
 
             $('.close').click(function () {
                 $('#address-form').animate({top:'100%'}).show();
@@ -162,7 +196,7 @@
             function addressform(){
                 // jquery 表单提交
                 $("#address-form").ajaxSubmit(function(data) {
-                    console.log(data);
+
                     if(data.code == 0){
                         $.message({message:data.msg,type:'warning',time:'3000'});
                     }else{
@@ -175,6 +209,7 @@
 
                 return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
             }
+
 
             function orderform(){
                 //console.log($('#cart-form').serializeArray());
@@ -190,13 +225,13 @@
 
                 // jquery 表单提交
                 $("#order-form").ajaxSubmit(function(data){
-                    var data = $.parseJSON(data);
+                   // var data = $.parseJSON(data);
                     if(data.code == 0){
                         $.message({message:data.msg,type:'warning',time:'3000'});
                     }else{
                         $.message(data.msg);
                         setTimeout(function (){
-                          window.location = data.order_url;
+                          window.location = data.url;
                         },1000);
                     }
                 });

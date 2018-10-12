@@ -147,7 +147,6 @@
  {include file="common/script" /}
 <script type="text/javascript">
 	$(function(){
-
 		var address_id = $('#address_id').val();
 		if(address_id){
             service_price(address_id);
@@ -223,7 +222,7 @@
         var all_total = Number($('#all_total').data("alltotal")).toFixed(2); //商品总金额
 
         //應付款金额
-        if (scoreprice > all_total){
+        if (Number(scoreprice) > Number(all_total)){
             scoreprice = all_total;
             $('#score_price_text').text('$ ' + scoreprice).data("price",scoreprice) ;
         }

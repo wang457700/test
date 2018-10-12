@@ -21,7 +21,7 @@
 				</li>
 				{foreach name="goods_list" item="vo"}
 				<li class="mui-table-view-cell l2">
-					<img src="__PUBLIC__/{$vo.cover}" class=" mui-pull-left" />
+					<img src="__PUBLIC__/{$vo.cover}" class=" mui-pull-left auto_img" />
 					<p class="p1">{$vo.product_name}</p>
 					<p>{$vo.freight_num}</p>
 					<p><span class="color_ro">$</span><span class="color_ro font18">{:number_format($vo['price'],2)}</span><span class="mui-pull-right">x{$vo['goods_num']}</span></p>

@@ -2,19 +2,41 @@
 <script src='__PUBLIC__/assets/js/message/message.js'></script>
 <script src='__PUBLIC__/assets/js/message/messageIE.js'></script>
 <script src="__TMPL_PUBLIC__/js/jquery.cookie.min.js"></script>
-<script type="text/javascript" src="__TMPL_PUBLIC__/js/language.js"></script>
+<script src="__CDN__/assets/js/language_plus.js"></script>
 <script>
 
     /* 第一次加载 */
     $(document).ready(function() {
         auto_img();
-        StranBody();
     });
+
+    zh_tran('{$language|default="t"}');
 
     /* 窗口移动 */
     $(window).resize(function (){
         auto_img();
     });
+
+
+    $("#language_plus").click(function(){
+            if($(this).data('language') == 't'){
+                zh_tran('s');
+                $(this).data('language','s');
+            }else{
+                zh_tran('t');
+                $(this).data('language','t');
+            }
+
+            $.ajax({
+                type: "get",
+                url: "{:url('index/language')}",
+                dataType: 'json',
+                success: function(data) {
+
+                }
+            });
+    });
+
 
     function auto_img(){
         $('.auto_img').each(function() {

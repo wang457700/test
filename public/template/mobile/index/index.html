@@ -108,9 +108,6 @@
 							        })
 						      </script>
 						</div>
-
-
-
 						{if condition="is_login()"}
 						<?php $goods = sp_user_buygoods($user['id'],3);?>
 						<ul class="mui-table-view {$goods?'':'none'}">
@@ -124,7 +121,7 @@
 								  <div class="swiper-wrapper my_lj">
 									  {foreach  name="product_history_list" item='vo'}
 										  <div class="swiper-slide col-md-3 list">
-											  <img src="__PUBLIC__/{$vo.cover}" />
+											  <img src="__PUBLIC__/{$vo.cover}"  class="auto_img"/>
 											  <p>{$vo.product_name}</p>
 										  </div>
 									  {/foreach}
@@ -157,7 +154,7 @@
 								      <div class="swiper-slide col-md-3 list">
 										  <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
 								      	  <i class="news"></i>
-								          <img src="__PUBLIC__/{$vo.cover}" />
+								          <img src="__PUBLIC__/{$vo.cover}" class="auto_img"/>
 								          <p class="p2">{$vo.product_name}</p>
 								          <p><span class="color_ro">$</span><span class="color_ro font18">{:product_price($vo['product_id'])}</span>  <span class="price">${$vo.price}</span></p>
 								     	</a>
@@ -191,7 +188,7 @@
 									  <div class="swiper-slide col-md-3 list">
 										  <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
 											  <i class="news"></i>
-											  <img src="__PUBLIC__/{$vo.cover}" />
+											  <img src="__PUBLIC__/{$vo.cover}" class="auto_img"/>
 											  <p class="p2">{$vo.product_name}</p>
 											  <p><span class="color_ro">$</span><span class="color_ro font18">{:product_price($vo['product_id'])}</span>  <span class="price">${$vo.price}</span></p>
 										  </a>
@@ -226,7 +223,7 @@
 									  <div class="swiper-slide col-md-3 list">
 										  <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
 											  <i class="news"></i>
-											  <img src="__PUBLIC__/{$vo.cover}" />
+											  <img src="__PUBLIC__/{$vo.cover}" class="auto_img"/>
 											  <p class="p2">{$vo.product_name}</p>
 											  <p><span class="color_ro">$</span><span class="color_ro font18">{:product_price($vo['product_id'])}</span>  <span class="price">${$vo.price}</span></p>
 										  </a>
@@ -288,11 +285,10 @@
 							<li class="mui-table-view-cell">
 								<div class="swiper-container6 f6swiper" style="overflow: hidden;position: relative;">
 								  <div class="swiper-wrapper f6">
-								       
 
 								        {foreach name="share" item="vo"}
 										    <div class="swiper-slide list"> 
-								                <img src="__PUBLIC__/{$vo.product_pic}" class="img_left" />
+								                <img src="__PUBLIC__/{$vo.product_pic}" class="img_left auto_img"/>
 								                <div class="d1">
 								                  <h4>{$vo.product_name}</h4>
 								                  <p>{$vo.product_content}</p>
@@ -353,7 +349,6 @@
 			mui.init({
 				swipeBack: false,
 			});
-
             mui('.mui-bar').on('tap','a' ,function(){
                 location.href = this.getAttribute('href')
             });

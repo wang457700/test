@@ -19,7 +19,7 @@
 				<input id="text_box" name="goods_num" type="text" value="1" class="mui-pull-left">
 				<input id="add" name="" type="button" value="+" class="add bgcolor_gr mui-pull-left" >
 			</div>
-			<button type="submit" class="mui-btn mui-btn-warning mui-pull-right buy-goods">立即購買</button>
+			<button type="submit" class="mui-btn mui-btn-warning mui-pull-right buy-goods">{$user_id?'立即購買':'遊客購買'}</button>
 			<button type="button" class="mui-btn mui-btn-success mui-pull-right btn-success-edit addcart" id="adds" data-productid="{$goods.product_id}">加入購物車</button>
 		</nav>
 	</form>
@@ -31,13 +31,13 @@
 
 						  <div class="swiper-slide">
 							  <a href="#"  target="_bank">
-								  <img src="__PUBLIC__/{$goods.cover}" id="img_{$goods.product_id}">
+								  <img src="__PUBLIC__/{$goods.cover}" id="img_{$goods.product_id}" class="auto_img">
 							  </a>
 						  </div>
 						  {foreach name="img_url" item="vo"}
 				            <div class="swiper-slide"> 
 				              <a href="#"  target="_bank">
-				                <img src="__PUBLIC__/{$vo}">
+				                <img src="__PUBLIC__/{$vo}" class="auto_img">
 				              </a>
 				            </div>
 						  {/foreach}
@@ -66,10 +66,22 @@
 					<div class="mui-col-sm-9 mui-col-xs-9">{$goods.place_origin}</div>
 					<div class="mui-col-sm-3 mui-col-xs-3 color_777777">產地：</div>
 					<div class="mui-col-sm-9 mui-col-xs-9">{$goods.model}</div>
+
 					<div class="mui-col-sm-3 mui-col-xs-3 color_777777">原價：</div>
-					<div class="mui-col-sm-9 mui-col-xs-9">${$goods.price}</div>
+					{if condition="$goods['discount_type'] eq 1"}
+						<div class="mui-col-sm-9 mui-col-xs-9 color_ro">$<span class="font18">{:product_price($goods['product_id'])}</span></div>
+					{else/}
+						<div class="mui-col-sm-9 mui-col-xs-9">${$goods.price}</div>
+					{/if}
+					{if condition="$goods['discount_type'] eq 2"}
 					<div class="mui-col-sm-3 mui-col-xs-3 color_777777">特價：</div>
-					<div class="mui-col-sm-9 mui-col-xs-9 color_ro">$<span class="font18">{$goods.pricevip}</span></div>
+					<div class="mui-col-sm-9 mui-col-xs-9 color_ro">$<span class="font18">{:product_price($goods['product_id'])}</span></div>
+					{/if}
+
+					{if condition="$goods['discount_type'] eq 3"}
+					<div class="mui-col-sm-3 mui-col-xs-3 color_777777">特價：</div>
+					<div class="mui-col-sm-9 mui-col-xs-9 color_ro">$<span class="font18">{:product_price($goods['product_id'])}</span></div>
+					{/if}
 				</div> 
 			<div class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary my_order_segmented">
 				<a class="mui-control-item mui-active" href="#item1">產品描述</a>
@@ -89,9 +101,9 @@
 								{/if}
 							<a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
 								{if condition="$vo['cover']"}
-								<img src="__PUBLIC__/{$vo.cover}">
+									<img src="__PUBLIC__/{$vo.cover}" class="auto_img">
 								{else/}
-								<img src="__TMPL_PUBLIC__/img/default.jpg">
+									<img src="__TMPL_PUBLIC__/img/default.jpg" class="auto_img">
 								{/if}
 								<p class="p2">{$vo.product_name}</p>
 								<p>
@@ -104,7 +116,6 @@
 				</ul>
 				<div class="clear"></div>
 			</div>
-			  	
 		</div>
 
 		<script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>

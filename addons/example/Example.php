@@ -31,7 +31,7 @@ class Example extends Addons
                             ['name' => 'example/bootstraptable/index', 'title' => '查看'],
                             ['name' => 'example/bootstraptable/detail', 'title' => '详情'],
                             ['name' => 'example/bootstraptable/change', 'title' => '变更'],
-                            ['name' => 'example/bootstraptable/del', 'title' => '删除'],
+                            ['name' => 'example/bootstraptable/del', 'title' => '刪除'],
                             ['name' => 'example/bootstraptable/multi', 'title' => '批量更新'],
                         ]
                     ],
@@ -41,7 +41,7 @@ class Example extends Addons
                         'icon'    => 'fa fa-table',
                         'sublist' => [
                             ['name' => 'example/customsearch/index', 'title' => '查看'],
-                            ['name' => 'example/customsearch/del', 'title' => '删除'],
+                            ['name' => 'example/customsearch/del', 'title' => '刪除'],
                             ['name' => 'example/customsearch/multi', 'title' => '批量更新'],
                         ]
                     ],
@@ -51,7 +51,7 @@ class Example extends Addons
                         'icon'    => 'fa fa-table',
                         'sublist' => [
                             ['name' => 'example/colorbadge/index', 'title' => '查看'],
-                            ['name' => 'example/colorbadge/del', 'title' => '删除'],
+                            ['name' => 'example/colorbadge/del', 'title' => '刪除'],
                             ['name' => 'example/colorbadge/multi', 'title' => '批量更新'],
                         ]
                     ],
@@ -61,7 +61,7 @@ class Example extends Addons
                         'icon'    => 'fa fa-table',
                         'sublist' => [
                             ['name' => 'example/controllerjump/index', 'title' => '查看'],
-                            ['name' => 'example/controllerjump/del', 'title' => '删除'],
+                            ['name' => 'example/controllerjump/del', 'title' => '刪除'],
                             ['name' => 'example/controllerjump/multi', 'title' => '批量更新'],
                         ]
                     ],
@@ -71,7 +71,7 @@ class Example extends Addons
                         'icon'    => 'fa fa-table',
                         'sublist' => [
                             ['name' => 'example/cxselect/index', 'title' => '查看'],
-                            ['name' => 'example/cxselect/del', 'title' => '删除'],
+                            ['name' => 'example/cxselect/del', 'title' => '刪除'],
                             ['name' => 'example/cxselect/multi', 'title' => '批量更新'],
                         ]
                     ],
@@ -81,7 +81,7 @@ class Example extends Addons
                         'icon'    => 'fa fa-table',
                         'sublist' => [
                             ['name' => 'example/multitable/index', 'title' => '查看'],
-                            ['name' => 'example/multitable/del', 'title' => '删除'],
+                            ['name' => 'example/multitable/del', 'title' => '刪除'],
                             ['name' => 'example/multitable/multi', 'title' => '批量更新'],
                         ]
                     ],
@@ -91,7 +91,7 @@ class Example extends Addons
                         'icon'    => 'fa fa-table',
                         'sublist' => [
                             ['name' => 'example/relationmodel/index', 'title' => '查看'],
-                            ['name' => 'example/relationmodel/del', 'title' => '删除'],
+                            ['name' => 'example/relationmodel/del', 'title' => '刪除'],
                             ['name' => 'example/relationmodel/multi', 'title' => '批量更新'],
                         ]
                     ],
@@ -102,7 +102,7 @@ class Example extends Addons
                         'sublist' => [
                             ['name' => 'example/tabletemplate/index', 'title' => '查看'],
                             ['name' => 'example/tabletemplate/detail', 'title' => '详情'],
-                            ['name' => 'example/tabletemplate/del', 'title' => '删除'],
+                            ['name' => 'example/tabletemplate/del', 'title' => '刪除'],
                             ['name' => 'example/tabletemplate/multi', 'title' => '批量更新'],
                         ]
                     ],
@@ -113,7 +113,7 @@ class Example extends Addons
                         'sublist' => [
                             ['name' => 'example/baidumap/index', 'title' => '查看'],
                             ['name' => 'example/baidumap/map', 'title' => '详情'],
-                            ['name' => 'example/baidumap/del', 'title' => '删除'],
+                            ['name' => 'example/baidumap/del', 'title' => '刪除'],
                         ]
                     ],
                 ]

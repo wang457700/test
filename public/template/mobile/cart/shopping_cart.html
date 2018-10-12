@@ -30,7 +30,7 @@
 									<input type="hidden" value="{$vo['price']*$vo['total']}" id="subtotal_{$key}" data-subtotal="{$vo['price']*$vo['total']}"  class="subtotal">
 								</li>
 						        <li class="mui-col-sm-4 mui-col-xs-4" style="padding-right: 5px">
-						            <img src="__PUBLIC__/{$vo.cover}" class="img_left" />
+						            <img src="__PUBLIC__/{$vo.cover}" class="img_left auto_img" />
 						        </li>
 						        <li class="mui-col-sm-7 mui-col-xs-7">
 						            <p class="title">{$vo.product_name}</p>
@@ -39,7 +39,7 @@
 										<p class="mui-pull-left" style="margin:  0;line-height: 40px;"><span class="color_ro">$</span><span class="color_ro font18" data-price='{$vo.price}' id="price_{$key}">{$vo.price}</span></p>
 										<div class="col-md-12 mui-pull-right number" style="">
 											<input id="min_{$key}" name="" type="button" value="-" class="reduce" {$vo['total']==1?'disabled="disabled"':''} onclick="on_number({$key},'min')">
-											<input id="number_{$key}" name="goods_num[]" type="text" value="{$vo.total}" style="width:40px;text-align: center;border: 0;height: 20px;" class="goods_num">
+											<input id="number_{$key}" name="goods_num[]" type="text" value="{$vo.total}" style="width:40px;text-align: center;border: 0;height: 20px;" class="goods_num" data-key="{$key}">
 											<input id="add_{$key}" name="" type="button" value="+" class="add" onclick="on_number({$key},'add')">
 										  </div>
 									</div>
@@ -120,21 +120,22 @@
 				if($(this).data('id') == 1){
 					$("input[name='goods_id[]']").each(function(){
 						$(this).prop('checked', false);
-                        $('#subtotal_' + $(this).data('key')).removeClass('subtotal'); //去除单个商品总金额
-                        $('#number_' + $(this).data('key')).removeClass('goods_num'); //去除单个商品总金额
+                        var key = $(this).data('key');
+                        $('#subtotal_' + key).removeClass('subtotal'); //去除单个商品总金额
+                        $('#number_' + key).removeClass('goods_num'); //去除单个商品总数量
+                        $('#number_' + key).attr('name','');
 					});
-
                     $("input[class^='subtotal']").each(function(){
                         $(this).val('');
                     });
-
 					$(this).data('id',0);
 				}else{
 					$("input[name='goods_id[]']").each(function(){
 						$(this).prop('checked', true);
-                        $('#subtotal_' + $(this).data('key')).addClass('subtotal');
-                        $('#number_' + $(this).data('key')).addClass('goods_num');
-
+                        var key = $(this).data('key');
+                        $('#subtotal_' + key).addClass('subtotal');
+                        $('#number_' + key).addClass('goods_num');
+                        $('#number_' + key).attr('name','goods_num[]');
 					});
                     $("input[class^='subtotal']").each(function(){
                         $(this).val($(this).data('subtotal'));

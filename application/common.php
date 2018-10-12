@@ -461,10 +461,10 @@ function sp_user_info()
 /**  创建游客信息  */
 function create_tourist()
 {
-    $tourist_id = getRandomString(3);
+    $tourist_id = md5(uniqid(rand(), TRUE));
     $data = array(
         'username'=>'visitor'.$tourist_id,
-        'nickname'=>'遊客'.$tourist_id,
+        'nickname'=>'遊客',
         'user_type'=>'3',
         'is_eamil_status'=>'1',
         'joinip'=>get_client_ip(0,true),

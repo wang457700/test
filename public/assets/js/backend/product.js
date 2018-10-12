@@ -60,7 +60,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                 },{
                                     name: 'ajax',
                                     title: __('发送Ajax'),
-                                    text:'删除',
+                                    text:'刪除',
                                     classname: 'btn btn-xs btn-detail btn-magic btn-ajax',
                                     url: 'order/index/detail',
                                     success: function (data, ret) {

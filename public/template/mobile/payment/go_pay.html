@@ -1,7 +1,7 @@
 {include file="layout/public_head" /}
-
 	<style>
-
+		#topPopover {position:fixed;top:90px;right:6px;height: 270px}
+		#topPopover .mui-popover-arrow {left:auto;right:6px;}
 		.mui-table-view-radio .mui-table-view-cell.mui-selected .mui-navigate-right:after {content: '\e442';font-size: 28px;color: #79c143;    font-weight: 500;}
 		.mui-table-view-radio .mui-table-view-cell .mui-navigate-right:after {content: '\e411';color: #aaa;line-height: 1;    font-weight: 500;}
 	</style>
@@ -16,13 +16,13 @@
 			<input type="hidden" name="order_sn" value="{$order_sn}">
 			<ul class="mui-table-view mui-table-view-radio">
 				<li class="mui-table-view-cell" style="text-align: center;padding-left: 70px;">
-					確認付款<span class="color_777777  mui-pull-right" style="position:  absolute;right: 10px;">規則</span>
+					確認付款<span class="color_777777  mui-pull-right" style="position:absolute;right: 10px;" id="Popover">規則</span>
 				</li>
 				<li class="mui-table-view-cell" style="text-align: center;padding: 30px;">
-					HKD <span class="font16">${:number_format($all_total-$order_info['integral_price'] - $order_info['coupon_price'] + $order_info['freight'],2)}</span>
-
+					<span class="font16">${:number_format(sum_order_payableprice($order_info['order_sn']),2)}</span>
 				</li>
-
+			</ul>
+			<ul class="mui-table-view mui-table-view-radio">
 				<li class="mui-table-view-cell mui-selected">
 					<a class="mui-navigate-right" data-value="4">
 						<img src="__TMPL_PUBLIC__/img/pay_1.png" class="left_ico"> Visa
@@ -49,10 +49,38 @@
 			</div>
 			</form>
 		</div>
+
+		<!--右上角弹出菜单-->
+		<div id="topPopover" class="mui-popover">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view" style="text-align:  right;">
+						<li class="mui-table-view-cell"><a href="#">商品合計:${:number_format($all_total,2)}</a> </li>
+						<li class="mui-table-view-cell"><a href="#">運費:${:number_format($order_info['freight'],2)}</a> </li>
+						<li class="mui-table-view-cell"><a href="#">服務費:${:number_format($order_info['service_price'],2)}</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">積分抵扣:${:number_format($order_info['integral_price'],2)}</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">优惠:${:number_format($order_info['coupon_price'],2)}</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">應付款:${:number_format(sum_order_payableprice($order_info['order_sn']),2)}</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+
+
 		<script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
 		{include file="common/script" /}
 		<script>
-			mui('.mui-scroll-wrapper').scroll();
+
+            $("#Popover").click(function(){
+                mui('#topPopover').popover('toggle');
+            });
+
             var info = document.getElementById("info");
 
             $(".mui-navigate-right").click(function(){

@@ -85,6 +85,13 @@ class Index extends Frontend
         return $this->view->fetch();
     }
 
+    public function language(){
+        if(Session::get('language') == 't'){
+            Session::set('language','s');
+        }else{
+            Session::set('language','t');
+        }
+    }
     //单页面
     public function page()
     {
