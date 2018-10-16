@@ -54,6 +54,10 @@ class Index extends Frontend
             ->where(array('cat_id'=>array('in',$tree->getChildrenIds(input('categoryid',17))),'is_on_sale'=>1))
             ->order('add_time desc')
             ->limit(9)->select();
+        $promotion= Db::name('goods')
+            ->where(array('cat_id'=>array('in',$tree->getChildrenIds(input('categoryid',63))),'is_on_sale'=>1))
+            ->order('add_time desc')
+            ->limit(9)->select();
 
         $news= Db::name('article')->where('post_type',2)->limit(3)->select();
 
@@ -78,6 +82,7 @@ class Index extends Frontend
         $this->view->assign("product_list", $product_list); //復康產品
         $this->view->assign("health_food", $health_food);   //健康及有機產品
         $this->view->assign("science_food", $science_food);   //科技產品
+        $this->view->assign("promotion", $promotion);   //節日促銷
         $this->view->assign("news", $news);   //最新消息
         $this->view->assign("product_history_list",$product_history_list);   //浏览产品记录
         $this->view->assign("slide", $slide);
@@ -116,12 +121,47 @@ class Index extends Frontend
     public function message()
     {
        $data = input('post.');
+
+        if(empty($data['phone'])){
+            $this->error('請輸入聯絡電話！');
+        }
+
+       if(empty($data['name'])){
+        $this->error('請輸入聯絡人！');
+       }
+        if(empty($data['content'])){
+            $this->error('請輸入諮詢內容！');
+        }
        $data['datetime'] = date('Y-m-d H:i:s',time());
+       $data['type'] = 1;
        $res = Db::name('message')->insert($data);
        if($res){
            $this->success('發送成功！');
        }else{
            $this->error('發送失敗！');
+       }
+    }
+
+
+
+    //搜索 - 留言板
+    public function search_message()
+    {
+       $data = input('post.');
+        if(empty($data['content'])){
+            $this->error('請輸入貨品描述！');
+        }
+       if(empty($data['phone'])){
+           $this->error('請輸入聯絡電郵地址，微信賬戶！');
+       }
+
+       $data['datetime'] = date('Y-m-d H:i:s',time());
+       $data['type'] = 2;
+       $res = Db::name('message')->insert($data);
+       if($res){
+           $this->success('提交成功！');
+       }else{
+           $this->error('提交失敗！');
        }
     }
 

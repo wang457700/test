@@ -28,13 +28,13 @@ class Message extends Backend
             list($where, $sort, $order, $offset, $limit) = $this->buildparams(NULL);
 
             $total = Db::name('message')
-                ->where($where)
+                ->where('type',1)
                 ->order($sort, $order)
                 ->count();
 
             $list = Db::name('message')
                 ->limit($offset, $limit)
-                ->where($where)
+                ->where('type',1)
                 ->order($sort, $order)
                 ->select();
 
@@ -58,6 +58,32 @@ class Message extends Backend
                 $this->success('刪除成功');
             }
         }
+    }
+
+
+
+    /**
+     * 搜索产品为空，提交货品详情
+     */
+    public function searchindex(){
+        if ($this->request->isAjax()) {
+            list($where, $sort, $order, $offset, $limit) = $this->buildparams(NULL);
+
+            $total = Db::name('message')
+                ->where('type',2)
+                ->order($sort, $order)
+                ->count();
+
+            $list = Db::name('message')
+                ->limit($offset, $limit)
+                ->where('type',2)
+                ->order($sort, $order)
+                ->select();
+
+            $result = array("total" => $total, "rows" => $list);
+            return json($result);
+        }
+        return $this->view->fetch();
     }
 
 
