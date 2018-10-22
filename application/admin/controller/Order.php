@@ -140,6 +140,7 @@ class Order extends Backend
 
             $line = 1;
             $list = [];
+            $where = [];
 
             if (!empty($keyword)) {
                 $where['order_sn'] = ['like', "%$keyword%"];

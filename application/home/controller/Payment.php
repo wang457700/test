@@ -146,11 +146,13 @@ class Payment extends  Frontend
 
             /* 发送邮件 */
             $email = new Email;
-            $result = $email
-                ->to($user['email'])
-                ->subject(__("Order payment successfully"))
-                ->message('<div style="width:950px;margin:0 auto;background:#7ac141;border-radius:20px;padding:50px;padding-bottom:1px;text-align:center"><div style="background:#fff;font-size:20px;font-weight:400;padding:30px 90px;border-radius:20px;text-align:left"><img src="http://wsstest.teamotto.me/hksr/public/assets/img/logo400.png" style="width:200px"><br>親愛的'.$user['nickname'].',<br><br>感謝您的購買，您的預訂已確認！<br><br>您的訂單號是:<br>'.$order_info['order_sn'].'<br><br>預訂詳情<br>日期： '.week(date('w',strtotime($order_info['addtime']))).'，'.month(date('m',strtotime($order_info['addtime']))).date('Y',strtotime($order_info['addtime'])).'<br>時間： '.date('H:i',strtotime($order_info['addtime'])).'<br>購買： '.implode('，',$product_name).'<br>已付金額：$ '.sum_order_payableprice($order_info['order_sn']).'<br>您的訂單正在處理中，<br>我們將會把您的貨品派送到：<br><br>'.$address_info['name'].'<br>'.$user['email'].'<br>'.$address_info['phone_type'].' '.$address_info['phone'].' (手機）<br>'.$order_info['address'].'<br>更多關於訂單的詳細資訊和更新情況，請<a href="'.url('user/login','','',true).'">登入</a>您的帳戶查詢。<br><br>謝謝！<br>客戶服務中心<br>營康薈Live Smart<br><br><br>這是一封自動生成的電子郵件，請不要回覆。<br>如果您對您的帳戶有任何疑問，<br>請與我們聯絡dsc@wahhong.hk<br><p style="text-align:center;color:#7ac141;font-size:26px">香港復康會屬下社企"營康薈"支持殘疾人仕及長期病患者投入社會</p></div><p style="font-size:40px;color:#fff;font-weight:bold"><a style="color:#fff;text-decoration:none" href="http://hksr.com">http://hksr.com/</a></p></div>')
-                ->send();
+            if($user['email']){
+                $result = $email
+                    ->to($user['email'])
+                    ->subject(__("Order payment successfully"))
+                    ->message('<div style="width:950px;margin:0 auto;background:#7ac141;border-radius:20px;padding:50px;padding-bottom:1px;text-align:center"><div style="background:#fff;font-size:20px;font-weight:400;padding:30px 90px;border-radius:20px;text-align:left"><img src="http://wsstest.teamotto.me/hksr/public/assets/img/logo400.png" style="width:200px"><br>親愛的'.$user['nickname'].',<br><br>感謝您的購買，您的預訂已確認！<br><br>您的訂單號是:<br>'.$order_info['order_sn'].'<br><br>預訂詳情<br>日期： '.week(date('w',strtotime($order_info['addtime']))).'，'.month(date('m',strtotime($order_info['addtime']))).date('Y',strtotime($order_info['addtime'])).'<br>時間： '.date('H:i',strtotime($order_info['addtime'])).'<br>購買： '.implode('，',$product_name).'<br>已付金額：$ '.sum_order_payableprice($order_info['order_sn']).'<br>您的訂單正在處理中，<br>我們將會把您的貨品派送到：<br><br>'.$address_info['name'].'<br>'.$user['email'].'<br>'.$address_info['phone_type'].' '.$address_info['phone'].' (手機）<br>'.$order_info['address'].'<br>更多關於訂單的詳細資訊和更新情況，請<a href="'.url('user/login','','',true).'">登入</a>您的帳戶查詢。<br><br>謝謝！<br>客戶服務中心<br>營康薈Live Smart<br><br><br>這是一封自動生成的電子郵件，請不要回覆。<br>如果您對您的帳戶有任何疑問，<br>請與我們聯絡dsc@wahhong.hk<br><p style="text-align:center;color:#7ac141;font-size:26px">香港復康會屬下社企"營康薈"支持殘疾人仕及長期病患者投入社會</p></div><p style="font-size:40px;color:#fff;font-weight:bold"><a style="color:#fff;text-decoration:none" href="http://hksr.com">http://hksr.com/</a></p></div>')
+                    ->send();
+            }
                 $return = array('code'=>1);
         }else{
             $return = array('code'=>0);

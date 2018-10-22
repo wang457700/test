@@ -165,13 +165,12 @@
     {include file="common/footer"/}
     {include file="common/script" /}
 
-
     {if condition="$user['user_type'] eq 2"}
     <script>
         var tip = $.cookie('tip');
         console.log(tip);
         if(tip != 1){
-            $('.search-tip-bow,.search-tip').show();
+            $('#user_tip').show();
             $.cookie('tip', '1', { expires: 1 });
         }
     </script>

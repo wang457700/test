@@ -171,11 +171,11 @@ class Product extends Frontend
             $buy = true;
         }elseif(!$ischina){
             $buy = true;
-            $tip = '';
         }else{
-        $buy = false;
-        $tip = '内地用户可以到内地专区购买  <a href="'.url('product/index',array('categoryid'=>72)).'" style="color: #ffa800;">立即跳转</a>';
-    }
+            $buy = false;
+            $tip = '内地用户可以到内地专区购买  <a href="'.url('product/index',array('categoryid'=>72)).'" style="color: #ffa800;">立即跳转</a>';
+        }
+
 
         $tree = Tree::instance();
         $level = array('1'=>'普通会员','2'=>'白金会员','3'=>'金牌会员','4'=>'商业会员');

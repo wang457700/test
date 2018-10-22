@@ -17,7 +17,7 @@ class News extends Backend
     public function _initialize()
     {
         parent::_initialize();
-        $this->model = model('Article');
+       // $this->model = model('Article');
     }
 
     /**
