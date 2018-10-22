@@ -1,0 +1,181 @@
+
+{include file="layout/public_head" /}
+<!--头部 str-->
+{include file="common/header"/}
+<!--头部 end-->
+{include file="common/nav"/}
+    <body style="background: url(__TMPL_PUBLIC__/img/index_bg.jpg) repeat-y;">
+    <div class="container bgcolor_white">
+      <div class="alzx-crumbs alzx-crumbs-f1">
+          <div class="alzx-con">
+                <a class="crumbs-01" href="{:url('index/index')}">主頁</a>
+              <em>&gt;</em>
+              <a href="{:url('user/center')}" class="crumbs-02">用戶中心</a>
+              <em>&gt;</em>
+              <span class="crumbs-02">{$title}</span>
+          </div>
+
+        </div>
+        <div class="user_center">
+            <div class="row">
+                <div class="col-md-2 left-list">
+                    {include file="common/user_left" /}
+                </div>
+                <div class="col-md-10 right-list">
+
+                {if condition="$style eq 'order'"}
+                    <div class="pr_name">近期購買</div>
+                    <div class="product">
+                        <ul class="row">
+                            {foreach name="goods_list" item="vv"}
+                                <li class="col-md-3 col-xs-3">
+                                    {if condition="$vv['cover']"}
+                                    <img src="__PUBLIC__/{$vv.cover}"/>
+                                    {else/}
+                                    <img src="__TMPL_PUBLIC__/img/default.jpg">
+                                    {/if}
+                                    <div class="d2">
+                                        <p>{$vv.product_name}</p>
+                                        <p class="color_ro">优惠全民享</p>
+                                        <div>
+                                            <span style="font-size: 20px;"><i>$</i>{:product_price($vv['product_id'])}</span>
+                                            <a class="adds" data-productid="{$vv.product_id}">+</a>
+                                        </div>
+                                    </div>
+                                </li>
+                            {/foreach}
+                            {if condition="count($goods_list) eq 0"}
+                            <div style="text-align:  center;padding:  20px;">近期没有購買信息</div>
+                            {/if}
+                        </ul>
+                    </div>
+                {/if}
+                {if condition="$style eq 'center'"}
+                    <div class="top_connt" >
+                       <p class="title">{$user.nickname} ,<span class="color_777777">歡迎回來!</span></p>
+
+                        <div class="row">
+                            <div class="col-md-4" style="">
+                              <h5>我的積分</h5>
+                              <span class="color_ro font24">{$user.score}</span><br>
+                              <span class="font12">({$config_use}積分=1元)</span>
+                            </div>
+                            <div class="col-md-4" style="">
+                              <h5>我的捐款</h5>
+                              <span class="color_ro font24">{:number_format($contribution_price,2)}</span><br>
+                                <a href="{:url('user/user_contribution_list')}">
+                                    <span class="font12">(查看消費記錄) </span>
+                                </a>
+                            </div>
+                            <div class="col-md-4" style="border: 0">
+                              <h5>會員區別</h5>
+                              <span class="color_ro font24">{$level_text}</span><br>
+                             <span class="font12">(升级成高級會員)</span>
+                            </div>
+                        </div>
+
+                    </div>
+                {/if}
+
+
+                    <div class="pr_name">近期訂單</div>
+            {foreach name="order_list" item="vo"}
+				<!--订单列表-->
+                    <div class="row item-single">
+                        <div class="col-md-6" style="">商品信息</div>
+                        <div class="col-md-2" style="">價格</div>
+                        <div class="col-md-1" style="">數量</div>
+                        <div class="col-md-3" style="">實付款</div>
+                    </div>
+
+                    <div class="cart-item-list">
+                        <div class="row row1">
+                              <div class="col-md-7 color_75" style="">
+                                 {:date('Y-m-d',strtotime($vo['addtime']))}
+                                  訂單編號: <a href="{:url('user/order_detail',array('order_sn'=>base64_encode($vo['order_sn'])))}"><span class="color_ro bold">{$vo['order_sn']}</span></a>
+                              </div>
+                                <div class="col-md-3" style="">
+                                    {if condition="$vo['pay_status'] neq 0 && $vo['pay_status'] neq 6"}
+                                        支付方式：{:sp_payment($vo['payment'])}
+                                    {/if}
+                                </div>
+                              <div class="col-md-2 t2" style="">
+                                    訂單狀態: <span class="color_ro">{$pay_status[$vo['pay_status']]}</span>
+                              </div>
+                        </div>
+                        <table class="table table-bordered row2" style="width: 98%;margin: 0;">
+                          <tbody>
+                          {foreach name="vo.goods_list" item="vv"}
+                            <tr>
+                              <td class="col-md-3 "scope="row">
+                                  {if condition="$vv['cover']"}
+                                    <img src="__PUBLIC__/{$vv.cover}" class="img_left"  style="width: 70px;float: left"/>
+                                  {else/}
+                                    <img src="__TMPL_PUBLIC__/img/default.jpg" class="img_left" style="width: 70px;float: left">
+                                  {/if}
+                                  <p>
+                                    <h4 class="bold">{$vv.product_name}</h4>
+                                      <span class="color_66">返還積分：</span>
+                                      <span class="color_ro bold">{$vv.integral|default='0'}</span>
+                                  </p>
+                              </td>
+                              <td class="col-md-2 color_ro"><span class="bold font16">${$vv.price}</span> </td>
+                              <td class="col-md-1 bold font16">{$vv.goods_num}</td>
+                              <td class="col-md-2 "><span class="bold font16 color_ro">${$vv.money_total}</span> <span class="color_75"></span></td>
+                            </tr>
+                          {/foreach}
+                          </tbody>
+                        </table>
+                          <div class="row row3">
+                              <div class="col-md-3 color_75" style="text-align:left">
+                                 下單時間:{:date('H:i:s',strtotime($vo['addtime']))}
+                              </div>
+                              <div class="col-md-6 t2 color_75" style="">
+                                    訂單總價: <span class="bold font16 color_ro">${:number_format(sum_order_payableprice($vo['order_sn']),2)}</span>
+                                 (含運費:<span class="color_ro"> ${$vo['freight']|default='0'} </span>;偏远地区附加费：<span class="color_ro">${$vo['service_price']|default='0'} </span> )<br>
+                              </div>
+                              <div class="col-md-3 t2" style="">
+                                  {if condition="$vo['pay_status'] neq 0"}
+                                      <a href="{:url('user/order_detail',array('order_sn'=>base64_encode($vo['order_sn'])))}">
+                                            <button type="button" class="btn btn-warning">查看訂單</button>
+                                      </a>
+                                  {/if}
+                                  {if condition="$vo['pay_status'] eq 0"}
+                                  <a href="{:url('payment/go_pay',array('order_sn'=>base64_encode($vo['order_sn'])))}">
+                                      <button type="button" class="btn btn-warning">去支付</button>
+                                  </a>
+                                  <a href="{:url('user/order_cancel',array('order_sn'=>base64_encode($vo['order_sn'])))}" class="js-ajax-operation" onclick="return false;">
+                                      <button type="button" class="btn btn-success">取消訂單</button>
+                                  </a>
+                                  {/if}
+                              </div>
+                          </div>
+                    </div>
+                {/foreach}
+                {if condition="count($goods_list) eq 0"}
+                 <div style="text-align:  center;padding:  20px;">近期没有訂單信息</div>
+                {/if}
+                </div>
+            </div>
+            <div class="pagination">
+                {$page}
+            </div>
+        </div>
+    </div>
+    {include file="common/footer"/}
+    {include file="common/script" /}
+
+
+    {if condition="$user['user_type'] eq 2"}
+    <script>
+        var tip = $.cookie('tip');
+        console.log(tip);
+        if(tip != 1){
+            $('.search-tip-bow,.search-tip').show();
+            $.cookie('tip', '1', { expires: 1 });
+        }
+    </script>
+    {/if}
+  </body>
+
+</html>

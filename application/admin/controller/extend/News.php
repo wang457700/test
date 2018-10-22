@@ -3,6 +3,7 @@
 namespace app\admin\controller\Extend;
 use think\Db;
 use app\common\controller\Backend;
+use think\Config;
 
 /**
  * banner管理
@@ -13,11 +14,10 @@ use app\common\controller\Backend;
 class News extends Backend
 {
     protected $model = null;
-
     public function _initialize()
     {
         parent::_initialize();
-
+        $this->model = model('Article');
     }
 
     /**
@@ -153,6 +153,73 @@ class News extends Backend
         }
     }
 
+
+    /**
+     * 导入
+     */
+//    public function import()
+//    {
+//        Config::set('default_return_type', 'json');
+//        $file = $this->request->param('file');
+//        dump($file);
+//    }
+
+    public function import(){
+        $file = $this->request->request('file');
+        if (!$file) {
+            $this->error(__('Parameter %s can not be empty', 'file'));
+        }
+        $filePath = ROOT_PATH . DS . 'public' . DS . $file;
+        if (!is_file($filePath)) {
+            $this->error(__('No results were found'));
+        }
+        $PHPReader = new \PHPExcel_Reader_Excel2007();
+        if (!$PHPReader->canRead($filePath)) {
+            $PHPReader = new \PHPExcel_Reader_Excel5();
+            if (!$PHPReader->canRead($filePath)) {
+                $PHPReader = new \PHPExcel_Reader_CSV();
+                if (!$PHPReader->canRead($filePath)) {
+                    $this->error(__('Unknown data format'));
+                }
+            }
+        }
+        $PHPExcel = $PHPReader->load($filePath); //加载文件
+        $currentSheet = $PHPExcel->getSheet(0);  //读取文件中的第一个工作表
+        $allColumn = $currentSheet->getHighestDataColumn(); //取得最大的列号
+        $allRow = $currentSheet->getHighestRow(); //取得一共有多少行
+        $maxColumnNumber = \PHPExcel_Cell::columnIndexFromString($allColumn);
+        for ($currentRow = 1; $currentRow <= 1; $currentRow++) {
+            for ($currentColumn = 0; $currentColumn < $maxColumnNumber; $currentColumn++) {
+                $val = $currentSheet->getCellByColumnAndRow($currentColumn, $currentRow)->getValue();
+                $fields[] = $val;
+            }
+        }
+
+        $insert = [];
+        for ($currentRow = 2; $currentRow <= $allRow; $currentRow++) {
+            $values = [];
+            for ($currentColumn = 0; $currentColumn < $maxColumnNumber; $currentColumn++) {
+                $val = $currentSheet->getCellByColumnAndRow($currentColumn, $currentRow)->getValue();
+                $values[] = is_null($val) ? '' : $val;
+            }
+            $row = [];
+            $temp = array_combine($fields, $values);
+            foreach ($temp as $k => $v) {
+                $row[$k] = $v;
+            }
+            if ($row) {
+                $insert[] = $row;
+            }
+
+        }
+        if (!$insert) {
+            $this->error(__('No rows were updated'));
+        }
+
+        $info = Db::name('Article')->insertAll($insert);
+
+        $this->success('导入成功！');
+    }
 
 
 

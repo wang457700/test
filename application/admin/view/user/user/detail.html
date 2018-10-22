@@ -79,10 +79,11 @@
             <tr>
               <th>訂單ID</th>
               <th>日期</th>
-              <th>收货地址</th>
-              <th>訂單金額</th>
-              <th>訂單狀態</th>
+              <th>收貨人姓名</th>
+              <th>聯繫電話</th>
+              <th>收貨地址</th>
               <th>實付金額</th>
+              <th>支付方式</th>
               <th>支付狀態</th>
               <th>操作</th>
             </tr>
@@ -92,12 +93,16 @@
             <tr>
                 <td>{$vo.order_sn}</td>
                 <td>{$vo.addtime}</td>
-                <td>收貨人姓名：{$vo.address_info.name}</td>
-                <td>聯繫電話：{$vo.address_info.phone}</td>
-                <td>收貨地址：{$vo.address}</td>
-                 <td>$ {:number_format($vo.all_money_total,2)}</td>
-                 <td>已付款</td>
-                 <td><a>查看详情</a></td>
+                <td>{$vo.address_info.name}</td>
+                <td>{$vo.address_info.phone}</td>
+                <td>{$vo.address}</td>
+                <td>$ {:number_format($vo.all_money_total,2)}</td>
+                <td>{:sp_payment($vo['payment'])}</td>
+                <td>{:sp_paystatus($vo['pay_status'])}</td>
+                 <td>
+                     <a href="/public/admin/order/detail?order_sn={$vo.order_sn}" class="btn btn-xs btn-detail btn-dialog" title="查看详情" data-table-id="table" data-field-index="11" data-row-index="0" data-button-index="0">
+                     <i class=""></i>查看详情</a>
+                 </td>
             </tr>
         {/foreach}
         </tbody>

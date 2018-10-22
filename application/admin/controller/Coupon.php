@@ -31,6 +31,7 @@ class Coupon extends Backend
             $category=input('category',1);
             $list = Db::name('coupon')
                 ->where('coupon_category',$category)
+                ->where($where)
                 ->order($sort, $order)
                 ->limit($offset, $limit)
                 ->select();

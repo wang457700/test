@@ -1,7 +1,6 @@
 <?php
 
 namespace app\admin\controller\example;
-
 use app\common\controller\Backend;
 
 /**

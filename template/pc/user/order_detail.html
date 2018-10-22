@@ -1,0 +1,128 @@
+{include file="layout/public_head" /}
+
+
+<!--头部 str-->
+{include file="common/header"/}
+<!--头部 end-->
+
+{include file="common/nav"/}
+  <style type="text/css">
+
+
+	  .cart-item-list{border: 1px solid #e5e5e5;border-top: 0;}
+	  .pr_name{padding-left: 0;}
+	  .order_address .row{}
+  </style>
+    <body style="background: url(__TMPL_PUBLIC__/img/index_bg.jpg) repeat-y;">
+   	
+    <div class="container bgcolor_white">
+      <div class="alzx-crumbs alzx-crumbs-f1"> 
+          <div class="alzx-con"> 
+          <a class="crumbs-01" href="#">主頁</a> 
+              <em>&gt;</em> 
+              <span class="crumbs-02">用戶中心</span> 
+          </div> 
+        
+        </div>
+        <div class="shopping_cart">
+
+            <div class="row">
+                <div class="col-md-2 left-list">
+					{include file="common/user_left" /}
+                </div>
+                <div class="col-md-10 right-list" style="padding-right: 30px;">
+	          		<div class="pr_name">訂單詳情</div>
+    				<div class="order_address">
+    					<div class="row">
+							<div class="col-md-2 col-sm-4 col-xs-4 bold" style="">訂單ID：</div>	
+							<div class="col-md-10 col-sm-8 col-xs-8" style="">{$order_info.order_sn}</div>
+               			</div>	
+    					<div class="row">
+							<div class="col-md-2 col-sm-4 col-xs-4 bold" style="">訂單日期：</div>	
+							<div class="col-md-10 col-sm-8 col-xs-8" style="">{:date('Y年m月d日 H:i',strtotime($order_info['addtime']))}</div>
+               			</div>	
+    					<div class="row">
+							<div class="col-md-2 col-sm-4 col-xs-4 bold" style="">收件人姓名：</div>	
+							<div class="col-md-10 col-sm-8 col-xs-8" style="">{$order_info.address_info.name}</div>
+               			</div>	
+    					<div class="row">
+							<div class="col-md-2 col-sm-4 col-xs-4 bold" style="">聯繫電話：</div>	
+							<div class="col-md-10 col-sm-8 col-xs-8" style="">{$order_info.address_info.phone}</div>
+               			</div>
+						{if condition="$order_info['pay_status'] neq 0 && $order_info['pay_status'] neq 6"}
+							<div class="row">
+								<div class="col-md-2 col-sm-4 col-xs-4 bold" style="">支付方式：</div>
+								<div class="col-md-10 col-sm-8 col-xs-8" style="">{:sp_payment($order_info['payment'])}</div>
+							</div>
+						{/if}
+    					<div class="row">
+							<div class="col-md-2 col-sm-4 col-xs-4 bold" style="">收貨地址：</div>	
+							<div class="col-md-10 col-sm-8 col-xs-8" style="">{$order_info.address}</div>
+               			</div>	
+             
+           			</div> 
+
+                    <div class="pr_name">訂單信息</div>
+					<div class="row item-single"> 
+
+							<div class="col-md-6 col-sm-6 col-xs-6" style="">商品</div>
+							<div class="col-md-2 col-sm-2 col-xs-2" style="">單價</div>
+							<div class="col-md-2 col-sm-2 col-xs-2" style="">購買數量	</div>
+							<div class="col-md-2 col-sm-2 col-xs-2" style="">小計</div>
+					</div>
+
+				{foreach name="goods_list" item="vo"}
+					<div class="row cart-item-list">
+						<div class="col-md-6 col-sm-6 col-xs-6 t2" style=""> 
+							<div class="row">
+								<img src="__PUBLIC__/{$vo.cover}" class="col-md-4 col-sm-4 col-xs-4 auto_img">
+								<p class="col-md-6 col-sm-6 col-xs-6 ">
+									<span class="bold">{$vo.product_name}</span>
+									產品型號：{$vo.freight_num}
+								</p>
+							</div> 
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-2 color_ro" style="">$ {:number_format($vo['price'],2)}</div>
+						<div class="col-md-2 col-sm-2 col-xs-2" style="">
+							{$vo['goods_num']}
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-2 color_ro" style="">$ {:number_format($vo['money_total'],2)}</div>
+					</div>
+				{/foreach}
+					<div class="row" style="margin-bottom: 10px;">
+						<div class="col-md-12 border_1" style="text-align: right;padding:20px">
+							<span class="color_ro">{$all_goods_num}</span>件商品,  總計(不含運費): <span class="color_ro">$ {:number_format($all_money_total,2)}</span><br/>
+							運費: $ {$order_info['freight']}<br/>
+							服務費: $ {$order_info['service_price']}<br/>
+							优惠: <span class="color_ro">$ {$order_info['coupon_price']|default='0'}</span><br/>
+						</div>
+						<div class="col-md-12 border_1" style="padding:20px">
+							<p style="display: inline-block;">
+								<span class="color_ro">{$order_info['integral']|default='0'}</span>積分可抵扣
+								<span class="color_ro">${$order_info['integral_price']|default='0'}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+								捐款<span class="color_ro">${$order_info['contribution_price']|default='0'}</span>
+
+							</p>
+							<p style="font-size:22px;text-align: right;display: inline-block;float:right;">合計 ：<span class="color_ro">$ {:number_format(sum_order_payableprice($order_info['order_sn']),2)}</span></p>
+						</div>
+					</div>
+					<!--<div class="row">-->
+                        <!--<div class="col-sm-8 col-xs-4"></div> -->
+                        <!--<div class="col-md-2 col-xs-4" style="">-->
+                          <!--<button type="button" class="btn btn-default btn-default-edit" style="margin-bottom: 1em">再次下單</button>-->
+                        <!--</div>-->
+                        <!--<div class="col-md-2 col-xs-4" style="">-->
+                          <!--<button type="button" class="btn btn-success btn-success-edit" style="border-radius:  0;">評價</button>-->
+                        <!--</div> -->
+                    <!--</div>-->
+   
+                </div>
+            </div>
+        </div>
+    </div>
+	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+	{include file="common/footer"/}
+	{include file="common/script"/}
+  </body>
+
+</html>

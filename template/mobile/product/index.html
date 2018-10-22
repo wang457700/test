@@ -1,0 +1,158 @@
+{include file="layout/public_head" /}
+	<style>
+		.mui-card .mui-control-content {padding: 10px;}
+		.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{border-bottom: 2px solid #FFAA00;color: #FFAA00;}
+		.mui-btn-success{border: 1px solid #7ac141;background-color: #7ac141;padding: 5px}
+		.mui-segmented-control.mui-segmented-control-inverted{display: -webkit-box;overflow-x: scroll;}
+		.mui-segmented-control .mui-control-item {padding: 0 10px;}
+	</style>
+	<body style="background:#fff">
+		{include file="common/header" /}
+		<div class="mui-content" style="background: #fff;">
+			<div>
+				<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary my_order_segmented" style="background:#fff">
+					<a class="mui-control-item {$input['categoryid']=='14'?'mui-active':''}" href="{:url('product/index',array('categoryid'=>14))}">全部</a>
+					{foreach name="getchild" item="vo"}
+						<a class="mui-control-item {$input['categoryid']==$vo['id']?'mui-active':''}" data-catid="{}" href="{:url('product/index',array('categoryid'=>$vo['id']))}">{$vo.name}</a>
+					{/foreach}
+				</div>
+			</div>
+			<form method="get" action="{:url('product/index',array('categoryid'=>$input['categoryid']))}" id="search">
+				<div class="row" style="padding: 20px;padding-bottom: 2px;border-bottom: 1px solid #eee;">
+					<div class="product-top-item col-md-6">
+						<input type="hidden" name="categoryid" value="{$input['categoryid']}">
+						<input type="hidden" name="sort" value="{$sort}">
+						<input type="hidden" name="search" value="true">
+						{foreach name="$sort_array" item="vo"}
+						<a href="javascript:;"  data-sort="{$key}-{if condition="strpos($sort,'desc') !== false"}asc{else/}desc{/if}" class="{if condition="strpos($sort,$key) !== false"}active{/if}">{$vo}</a>
+						{/foreach}
+					</div>
+					<div class="product-top-right col-md-6">
+						{if condition="$input['style'] eq 'list'"}
+							<a href="{:url('product/index',array('style'=>'grid','categoryid'=>$input['categoryid']))}"><i class="fa fa-th-large" aria-hidden="true"></i></a>
+						{else/}
+							<a href="{:url('product/index',array('style'=>'list','categoryid'=>$input['categoryid']))}" style="background-image: none;"><i class="mui-icon mui-icon-bars" aria-hidden="true" style="color:#9e9e9e;"></i></a>
+						{/if}
+
+
+					</div>
+				</div>
+			</form>
+			<!--下拉刷新容器-->
+			<div id="pullrefresh" class="mui-scroll-wrapper {$input['style']=='list'?'product_list2':'product_list'}" style="top: 145px;">
+				<div class="mui-scroll">
+					<!--数据列表-->
+					<ul class="mui-table-view mui-table-view-chevron mui-row" data-page_count="1" data-last_page="0">
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		{include file="common/script" /}
+		<script>
+            mui('#search .product-top-item').on('tap','a' ,function(){
+                var sort = $(this).data('sort');
+                if(sort){
+                    $('input[name=sort]').val(sort);
+                    $('#search').submit();
+                }
+
+                console.log(sort);
+                return false;
+            });
+
+            mui('#search .product-top-item').on('tap','a' ,function(){
+                var sort = $(this).data('sort');
+                if(sort){
+                    $('input[name=sort]').val(sort);
+                    $('#search').submit();
+                }
+
+                console.log(sort);
+                return false;
+            });
+
+
+
+			mui('.mui-scroll-wrapper').scroll();
+
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+			 
+			var count =  1;
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh(){
+				setTimeout(function() {
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > {$product_list->lastPage()})); //参数为true代表没有更多数据了。
+					var table = document.body.querySelector('.mui-table-view');
+					var cells = document.body.querySelectorAll('.mui-table-view-cell');
+                    var page_count = $(".mui-table-view-chevron").data('page_count');
+                    product_list(page_count);
+				}, 1500);
+			}
+			if (mui.os.plus) {
+				mui.plusReady(function() {
+					setTimeout(function() {
+						mui('#pullrefresh').pullRefresh().pullupLoading();
+					}, 1000);
+				});
+			} else {
+				mui.ready(function() {
+					mui('#pullrefresh').pullRefresh().pullupLoading();
+				});
+			}
+
+			function product_list(page) {
+                var page_count = $(".mui-table-view-chevron").data('page_count');
+				console.log(page_count);
+                var li = '';
+                var public_url = '__PUBLIC__';
+                var url = '{:url('product/detail',false,false)}/id/';
+                $.ajax({
+                    type: "POST",
+                    url: "{:url('product/index')}",
+                    data: {
+                        page: page,
+                        categoryid: {$input['categoryid']},
+                        sort: '{$sort}',
+                    },
+                    success: function(data) {
+                        if (data.status == 0) {
+
+                        }
+                        $.each(data.data.data,function(index, value){ //遍历json数据列
+                            console.log(value);
+
+                            {if condition="$input['style'] eq 'grid'"}
+                            li += '<li class="swiper-slide mui-col-sm-6 mui-col-xs-6 list"><a class="news"></a><a href="'+ url + value.product_id +'" style="display: inline-block;"><img src="'+ public_url + value.cover + '" class="auto_img"><p class="p2">'+ value.product_name +'</p></a><span class="color_ro">$</span><span class="color_ro font18">'+ value.price +'</span>  <span class="price">$'+ value.price +'</span></p></li>';
+							{/if}
+
+							{if condition="$input['style'] eq 'list'"}
+							li += '<li class="swiper-slide mui-col-sm-12 mui-col-xs-12 list2"><div class="mui-pull-left mui-col-xs-4"><a class="news"></a><a href="'+ url + value.product_id +'" style="display: inline-block;"><img src="'+ public_url + value.cover + '"class="img_left auto_img" id="img_'+ value.product_id +'"></a></div><div class="mui-pull-right mui-col-xs-8"><a href="'+ url + value.product_id +'" style="display: inline-block;"><p class="p2">'+ value.product_name +'</p></a><div class="right_bottom"><p class="mui-pull-left"><span class="color_ro">$</span><span class="color_ro font18">'+ value.price +'</span>  <span class="price">$'+ value.price +'</span></p><button type="button" class="mui-btn mui-btn-success mui-pull-right" id="adds" data-productid="'+ value.product_id +'" data-flyimg="true">加入購物車</button></div></div></li>';
+							{/if}
+
+                        });
+                        $(".mui-table-view-chevron").append(li);
+                        setTimeout(function () {
+                            auto_img();
+                        },100);
+                        $(".mui-table-view-chevron").data('page_count',Number(data.data.current_page)+1);
+                        $(".mui-table-view-chevron").data('last_page',Number(data.data.last_page));
+                    }
+                });
+            }
+		</script>
+
+	</body>
+
+</html>

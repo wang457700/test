@@ -159,19 +159,23 @@ class Product extends Frontend
         $from_bow = 0;
         $tip = 0;
         if($goods['stock'] <= 0){
-             $tip = '库存不足';
+             $tip = '<sapn style="color: #ffa800;">库存不足</sapn>';
         }
         if($goods['pre_order'] == 1){
             $from_bow = true;
             $tip = '';
         }
+
         $ischina = sp_ip_ischina();
         if ($ischina && ($goods['is_inland'] == 1 || in_array($goods['cat_id'],$china_categoryids))){
-            $china_buy = true;
+            $buy = true;
+        }elseif(!$ischina){
+            $buy = true;
+            $tip = '';
         }else{
-            $china_buy = false;
-        }
-
+        $buy = false;
+        $tip = '内地用户可以到内地专区购买  <a href="'.url('product/index',array('categoryid'=>72)).'" style="color: #ffa800;">立即跳转</a>';
+    }
 
         $tree = Tree::instance();
         $level = array('1'=>'普通会员','2'=>'白金会员','3'=>'金牌会员','4'=>'商业会员');
@@ -187,7 +191,7 @@ class Product extends Frontend
 
         $this->view->assign("from_bow",$from_bow);
         $this->view->assign("tip",$tip);
-        $this->view->assign("china_buy",$china_buy);
+        $this->view->assign("buy",$buy);
 
         $this->view->assign("title",$goods['seo_title']);
         $this->view->assign("seo_keywords",$goods['seo_keywords']);

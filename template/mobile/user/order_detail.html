@@ -1,0 +1,52 @@
+{include file="layout/public_head" /}
+	<style>
+
+	</style>
+	<body>
+		{include file="common/header" /}
+		<div class="mui-content">
+			<ul class="mui-table-view my_order" >
+				<li class="mui-table-view-cell">
+					<div class="mui-row">
+
+						<div class="mui-col-sm-12 mui-col-xs-12">
+							訂單ID：{$order_info.order_sn}<br>
+							訂單日期：{:date('Y年m月d日 H:i',strtotime($order_info['addtime']))}<br>
+							收件人姓名：{$order_info.address_info.name}<br>
+							聯繫電話：{$order_info.address_info.phone}<br>
+							支付方式：{:sp_payment($order_info['payment'])}<br>
+							收貨地址：{$order_info.address}<br>
+						</div>
+					</div>
+				</li>
+				{foreach name="goods_list" item="vo"}
+				<li class="mui-table-view-cell l2">
+					<img src="__PUBLIC__/{$vo.cover}" class=" mui-pull-left auto_img" />
+					<p class="p1">{$vo.product_name}</p>
+					<p>{$vo.freight_num}</p>
+					<p><span class="color_ro">$</span><span class="color_ro font18">{:number_format($vo['price'],2)}</span><span class="mui-pull-right">x{$vo['goods_num']}</span></p>
+				</li>
+				{/foreach}
+				<li class="mui-table-view-cell" style="text-align:right">
+					<span class="mui-pull-right">
+							積分抵扣：$ {$order_info['integral_price']|default='0'}<br>
+							捐款：$ {$order_info['contribution_price']|default='0'}<br>
+							服務費: $ {$order_info['service_price']}<br/>
+							优惠：$ {$order_info['coupon_price']|default='0'}<br/>
+					</span>
+				</li>
+				<li class="mui-table-view-cell" style="text-align:right">
+					共{$all_goods_num}件商品    合計 <span class="color_ro">$</span><span class="color_ro font18">{:number_format(sum_order_payableprice($order_info['order_sn']),2)}</span>(含運費${$order_info['freight']})
+				</li>
+
+			</ul>
+			  	
+		</div>
+		{include file="common/script" /}
+		<script>
+			mui('.mui-scroll-wrapper').scroll();
+		</script>
+
+	</body>
+
+</html>

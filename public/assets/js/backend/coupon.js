@@ -42,6 +42,9 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'jstree'], function (
 
             // 初始化表格
             table.bootstrapTable({
+                //禁用默认搜索
+                search: false,
+                searchFormVisible: true,
                 url: $.fn.bootstrapTable.defaults.extend.index_url,
                 pk: 'coupon_id',
                 sortName: 'coupon_id',
@@ -50,10 +53,10 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'jstree'], function (
                     [
                         {checkbox: true},
                         {field: 'coupon_id', title: __('ID'), operate: false},
-                        {field: 'coupon_name', title: __('優惠名稱'),operate: false},
+                        {field: 'coupon_name', title: __('優惠名稱'),operate: 'LIKE'},
                         {field: 'coupon_time_text', title: __('有效期'), operate: false},
-                        {field: 'coupon_sn', title: __('優惠碼'), operate: false},
-                        {field: 'coupon_content', title: __('優惠內容'), operate: false},
+                        {field: 'coupon_sn', title: __('優惠碼'),operate: 'LIKE'},
+                        {field: 'coupon_content', title: __('優惠內容'), operate: 'LIKE'},
                         {field: 'coupon_num', title: __('剩餘數量'),operate: false},
                         {field: 'user_level_text', title: __('會員類別'), operate: false},
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate,
@@ -153,6 +156,9 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'jstree'], function (
 
             // 初始化表格
             table.bootstrapTable({
+                //禁用默认搜索
+                search: false,
+                searchFormVisible: true,
                 url: $.fn.bootstrapTable.defaults.extend.index_url,
                 pk: 'coupon_id',
                 sortName: 'coupon_id',
@@ -160,10 +166,10 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'jstree'], function (
                     [
                         {checkbox: true},
                         {field: 'coupon_id', title: __('ID'), operate: false},
-                        {field: 'coupon_name', title: __('優惠名稱'),operate: false},
+                        {field: 'coupon_name', title: __('優惠名稱'),operate: 'LIKE'},
                         {field: 'coupon_time_text', title: __('有效期'), operate: false},
-                        {field: 'coupon_sn', title: __('優惠碼'), operate: false},
-                        {field: 'coupon_content', title: __('優惠內容'), operate: false},
+                        {field: 'coupon_sn', title: __('優惠碼'), operate: 'LIKE'},
+                        {field: 'coupon_content', title: __('優惠內容'), operate: 'LIKE'},
                         {field: 'coupon_num', title: __('剩餘數量'),operate: false},
                         {field: 'user_level_text', title: __('會員類別'), operate: false},
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate,

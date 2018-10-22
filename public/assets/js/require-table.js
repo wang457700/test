@@ -180,6 +180,9 @@ define(['jquery', 'bootstrap', 'moment', 'moment/locale/zh-cn', 'bootstrap-table
                                 data: {file: data.url},
                             }, function (data, ret) {
                                 table.bootstrapTable('refresh');
+                                if(data.refresh){
+                                    window.location.reload();
+                                }
                             });
                         });
                     });

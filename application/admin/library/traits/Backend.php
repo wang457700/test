@@ -297,6 +297,7 @@ trait Backend
                 $fields[] = $val;
             }
         }
+
         $insert = [];
         for ($currentRow = 2; $currentRow <= $allRow; $currentRow++) {
             $values = [];
@@ -304,20 +305,33 @@ trait Backend
                 $val = $currentSheet->getCellByColumnAndRow($currentColumn, $currentRow)->getValue();
                 $values[] = is_null($val) ? '' : $val;
             }
+
             $row = [];
             $temp = array_combine($fields, $values);
+
             foreach ($temp as $k => $v) {
                 if (isset($fieldArr[$k]) && $k !== '') {
                     $row[$fieldArr[$k]] = $v;
+
+
+                    dump($k);
                 }
+
+
             }
+
+            dump($row);
             if ($row) {
                 $insert[] = $row;
             }
+
         }
         if (!$insert) {
             $this->error(__('No rows were updated'));
         }
+
+
+
         try {
             $this->model->saveAll($insert);
         } catch (\think\exception\PDOException $exception) {

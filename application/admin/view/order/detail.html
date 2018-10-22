@@ -1,10 +1,10 @@
 <style>
 .btn{margin-right: 10px;border-radius: 5px !important;}
 </style>
-<a href="javascript:history.back(-1);" class="btn btn-primary" style="margin-bottom: 10px;"><i class="fa fa-mail-reply"></i> 返回上一页</a><br>
+<!--<a href="javascript:history.back(-1);" class="btn btn-primary" style="margin-bottom: 10px;"><i class="fa fa-mail-reply"></i> 返回上一页</a><br>-->
 <div class="columns columns-right btn-group pull-right">
     {if condition="$order['pay_status'] eq 2"}
-        <a href="{:url('order/deliver_order',array('order_sn'=>$order['order_sn']))}" class="btn btn-primary btn-ajax-xs" title="點擊發貨" data-table-id="table" data-field-index="11" data-row-index="0" data-button-index="1">
+        <a href="{:url('order/deliver_order',array('order_sn'=>$order['order_sn']))}" class="btn btn-success btn-ajax-xs" title="點擊發貨" data-table-id="table" data-field-index="11" data-row-index="0" data-button-index="1">
             發貨
         </a>
     {/if}
@@ -19,7 +19,7 @@
     <thead>
         
     </thead>
-    <tbody  class="col-xs-6 col-sm-6">
+    <tbody  class="col-sm-12 col-md-6">
         <tr class="col-xs-6 col-sm-6">
             <th>訂單ID：</th>
             <td>{$order.order_sn}</td>
@@ -28,7 +28,7 @@
             <th>下單日期：</th>
             <td>{$order.addtime}</td>
         </tr>
-        <tr class="col-xs-6 col-sm-6">
+        <tr class="col-xs-12 col-sm-6">
             <th>用戶ID：</th>
             <td>{$order.user_id}</td>
         </tr>
@@ -86,7 +86,7 @@
     <thead>
         
     </thead>
-    <tbody class="col-xs-6 col-sm-6">
+    <tbody class="col-sm-12 col-md-6">
         <tr class="col-xs-6 col-sm-6">
             <th>收貨人：</th>
             <td>{$order.address_username}</td>
@@ -105,7 +105,6 @@
         </tr> 
     </tbody>
 </table>
-
 <h3>配送信息</h3>
 <table class="table table-striped">
     <thead>
@@ -126,8 +125,6 @@
 
 <div class="hide layer-footer">
     <label class="control-label col-xs-12 col-sm-2"></label>
-    <div class="col-xs-6 col-sm-2">
-        <button type="reset" class="btn btn-success btn-callback">审核通过</button>
     </div>
     <div class="col-xs-6 col-sm-2">
         <button type="reset" class="btn btn-primary btn-embossed btn-close" onclick="Layer.closeAll();">{:__('Close')}</button>

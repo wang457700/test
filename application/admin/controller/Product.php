@@ -251,9 +251,12 @@ class Product extends Backend
     public function category()
     {
         if ($this->request->isAjax()) {
+            $tree = Tree::instance();
+
             //数据输出ajax
             $total = 1;
             $where = array();
+            $list = [];
             $cid = $this->request->get('type');
             if($cid == 'all' || empty($cid)){
                  foreach ($this->categorylist as $k => $v){
@@ -262,17 +265,24 @@ class Product extends Backend
                        }
                 }
             }else{
-                $where['pid'] = $cid;
-                $list = Db::name('Category')->where($where)->select();
+                $tree->init(collection($this->model->order('weigh desc,id desc')->select())->toArray(), 'pid');
+                $list = $this->categorylist = $tree->getTreeList($tree->getTreeArray($cid), 'name');
             }
-
+            foreach ($list as $k =>$item){
+                $item['name'] = '<i style="color:#bfbfbf">CatID:'.$item['id'].'</i>'.$item['name'];
+                $list[$k] = $item;
+            }
             $result = array("total" => $total, "rows" => $list);
             return json($result);
         }
 
         $category_list = Db::name('Category')->where('pid',14)->select();
         $this->view->assign("category_list", $category_list);
+
+
+
         return $this->view->fetch();
+
     }
 
     /**
@@ -369,6 +379,64 @@ class Product extends Backend
         }
         return $this->view->fetch();
     }
+
+    public function import(){
+        $file = $this->request->request('file');
+        if (!$file) {
+            $this->error(__('Parameter %s can not be empty', 'file'));
+        }
+        $filePath = ROOT_PATH . DS . 'public' . DS . $file;
+        if (!is_file($filePath)) {
+            $this->error(__('No results were found'));
+        }
+        $PHPReader = new \PHPExcel_Reader_Excel2007();
+        if (!$PHPReader->canRead($filePath)) {
+            $PHPReader = new \PHPExcel_Reader_Excel5();
+            if (!$PHPReader->canRead($filePath)) {
+                $PHPReader = new \PHPExcel_Reader_CSV();
+                if (!$PHPReader->canRead($filePath)) {
+                    $this->error(__('Unknown data format'));
+                }
+            }
+        }
+        $PHPExcel = $PHPReader->load($filePath); //加载文件
+        $currentSheet = $PHPExcel->getSheet(0);  //读取文件中的第一个工作表
+        $allColumn = $currentSheet->getHighestDataColumn(); //取得最大的列号
+        $allRow = $currentSheet->getHighestRow(); //取得一共有多少行
+        $maxColumnNumber = \PHPExcel_Cell::columnIndexFromString($allColumn);
+        for ($currentRow = 1; $currentRow <= 1; $currentRow++) {
+            for ($currentColumn = 0; $currentColumn < $maxColumnNumber; $currentColumn++) {
+                $val = $currentSheet->getCellByColumnAndRow($currentColumn, $currentRow)->getValue();
+                $fields[] = $val;
+            }
+        }
+
+        $insert = [];
+        for ($currentRow = 2; $currentRow <= $allRow; $currentRow++) {
+            $values = [];
+            for ($currentColumn = 0; $currentColumn < $maxColumnNumber; $currentColumn++) {
+                $val = $currentSheet->getCellByColumnAndRow($currentColumn, $currentRow)->getValue();
+                $values[] = is_null($val) ? '' : $val;
+            }
+            $row = [];
+            $temp = array_combine($fields, $values);
+            foreach ($temp as $k => $v) {
+                $row[$k] = $v;
+            }
+            if ($row) {
+                $insert[] = $row;
+            }
+
+        }
+        if (!$insert) {
+            $this->error(__('No rows were updated'));
+        }
+
+        $info = Db::name('Article')->insertAll($insert);
+
+        $this->success('导入成功！','',array('refresh'=>1));
+    }
+
 
 
     public function get_category($parent_id){

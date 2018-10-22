@@ -1,21 +1,20 @@
 define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefined, Backend, Table, Form) {
-
-
-
     var Controller = {
         index: function () {
             // 初始化表格参数配置
             Table.api.init({
                 extend: {
-                    index_url: 'Myadminjson/product_index',
+                    index_url: '',
                     add_url: 'product/add',
                     edit_url: '',
                     del_url: '',
                     multi_url: 'order/index/multi',
+                    import_url: 'product/import',
                     table: 'user',
                 }
             });
 
+            var table = $("#table");
             var table = $("#table");
             //在普通搜索渲染后
             table.on('post-common-search.bs.table', function (event, table) {
@@ -26,9 +25,14 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 Form.events.selectpage(form);
             });
 
-
             // 初始化表格
             table.bootstrapTable({
+                search:false,
+                showExport:false,
+                showToggle:false,
+                visible:false,
+                showColumns:false,
+                commonSearch:false,
                 url: $.fn.bootstrapTable.defaults.extend.index_url,
                 pk: 'id',
                 sortName: 'user.id',
@@ -190,7 +194,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                       success: function(data) {
                            if((data.rows).length !==0){
                             $.each(data.rows,function(index, value) {
-                                $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12"><input type="text" class="form-control" id="slide_name" name="row[data]['+value.id+']" value="'+value.name+'" data-rule=""/>');
+                                $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12">CatID:'+value.id+'<input type="text" class="form-control" id="slide_name" name="row[data]['+value.id+']" value="'+value.name+'" data-rule=""/>');
                             });
                             }else{
                                 $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12">没有找到匹配的记录</div></div>');
@@ -307,11 +311,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             });
 
         },
-        region_list: function () {
-
-
-
-            },
             api: {
             bindevent: function () {
                 Form.api.bindevent($("form[role=form]"));

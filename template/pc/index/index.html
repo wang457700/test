@@ -1,0 +1,631 @@
+{include file="layout/public_head" /}
+  <style>
+      *{padding:0;margin:0}
+      .left,.right{position:absolute;top:80px}
+      .left{left:0}
+      .right{right:0}
+      .ads_left img{width:100%;}
+      @media (max-width: 1366px){
+          .container:nth-child(2) {width:70%;}
+      }
+      @media (max-width: 992px) {
+          .container {width:95%;}
+          .ads_left{display: none}
+          .ads_right{display: none}
+      }
+  </style>
+  <body style="background: url(__TMPL_PUBLIC__/img/index_bg.jpg) repeat-y;">
+
+<!--头部 str-->
+   {include file="common/header"/}
+<!--头部 end-->
+
+	{include file="common/nav"/}
+    <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/Swiper/3.4.0/css/swiper.min.css" media="screen">
+	<script src="https://cdn.bootcss.com/Swiper/4.3.0/js/swiper.min.js"></script>
+  <div class="swiper-container" style="">
+      <div class="swiper-wrapper">
+          {foreach name="slide" item="vo"}
+              {eq name="vo['slide_type']" value="index_banner"}
+                    <div class="swiper-slide">
+                      <a href="{$vo.slide_url}"  target="_bank">
+                        <img src="{:fa_get_image_url($vo['slide_pic'])}">
+                      </a>
+                    </div>
+              {/eq}
+          {/foreach}
+      </div>
+      <!-- 如果需要分页器 -->
+      <div class="swiper-pagination"></div>
+      <script language="javascript">
+        var mySwiper = new Swiper('.swiper-container',{
+        pagination: {
+          el: '.swiper-pagination',
+        },
+		autoplay: {
+			delay: 2000,//1秒切换一次
+		  },
+		effect : 'fade',
+        //pagination : '#swiper-pagination1',
+        })
+      </script>
+  </div>
+
+
+    <div class="position_ads" style="">
+          <div class="ads_left" style="width:13%;z-index: 9999;">
+              <a class="close" href="javascript:$('.ads_left').hide()" style="color: #fff;opacity:1">×</a>
+              {foreach name="slide" item="vo"}
+                {eq name="vo['slide_type']" value="float_left_banner"}
+                     <a href="{$vo.slide_url}" target="_blank"><img src="{:fa_get_image_url($vo['slide_pic'])}"></a>
+                {/eq}
+              {/foreach}
+          </div>
+    </div>
+
+    <div class="container">
+        <div class="ads_right" style="">
+            <a class="close" href="javascript:$('.ads_right').hide()" style="opacity:1;margin-right: 10px;">×</a>
+            <div class="index_news" style="">
+                <div class="title" style=""></div>
+                <ul style="">
+                    {foreach  name="news" item='vo'}
+                    <li>
+                        <a href="{:url('news/article',array('id'=>$vo['id']))}" >
+                            {if condition="$vo['smeta']"}
+                            <img src="__PUBLIC__/{$vo.smeta}">
+                            {else/}
+                            <img src="__TMPL_PUBLIC__/img/default.jpg">
+                            {/if}
+                        </a>
+                        <a href="{:url('news/article',array('id'=>$vo['id']))}">
+                            <p>{$vo.post_title}</p>
+                            <p >{$vo.post_excerpt}</p>
+
+                            <p>{:date('Y-m-d',strtotime($vo['post_date']))}</p>
+                        </a>
+                        <!--，週二-->
+                    </li>
+                    {/foreach}
+
+                </ul>
+            </div>
+            <iframe src="" width="300" height="500" style="border:none;overflow:hidden;width: 300px;" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+        </div>
+
+
+       <div class="row" style="padding: 20px 0;">
+        <div class="col-md-5 col-xs-5 col-lg-5 " style="padding-left:0;padding-right: 50px;">
+             <p class="index_title">我的記錄</p>
+            <div class="swiper-container-my" style="overflow: hidden;position: relative;">
+                 <div class="swiper-wrapper row  f1" style="margin: 0px;">
+                     {foreach  name="product_history_list" item='vo'}
+                     <div class="swiper-slide col-md-4 col-xs-4 list ">
+                         <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
+                         <div style="padding: 1em;">
+                             <p class="nowrap" style="color: #fff;">健康禮籃(低糖)002</p>
+                             {if condition="$vo['cover']"}
+                             <img src="__PUBLIC__/{$vo.cover}" class="auto_img">
+                             {else/}
+                             <img src="__TMPL_PUBLIC__/img/default.jpg" class="auto_img">
+                             {/if}
+                         </div>
+                         <p class="nowrap product_name">{$vo.product_name}</p>
+                         </a>
+                     </div>
+                     {/foreach}
+                </div>
+            </div>
+            <div class="swiper-button-next next-my"></div>
+        </div>
+       <script>
+               var swiper = new Swiper('.swiper-container-my', {
+                   slidesPerView: 2,
+                   spaceBetween: '5%',
+                   loop: true,
+                   loopFillGroupWithBlank: true,
+                   navigation: {
+                       nextEl: '.next-my',
+                   },
+               });
+
+       </script>
+
+        <div class="col-md-7 f2 col-xs-7 col-lg-7" style="padding: 0;">
+            <p class="index_title" style="background-position-y: -25px;"> Top Ten</p>
+            <div class="swiper-container2" style="overflow: hidden;position: relative;">
+              <div class="swiper-wrapper row">
+                  {foreach  name="top_ten" item='vo'}
+                  <div class="swiper-slide col-md-6 col-lg-6 list">
+                      <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
+                          <p class="nowrap">{$vo.product_name}</p>
+                          {if condition="$vo['cover']"}
+                            <img src="__PUBLIC__/{$vo.cover}" class="auto_img">
+                            {else/}
+                             <img src="__TMPL_PUBLIC__/img/default.jpg" class="auto_img">
+                          {/if}
+                          <span class="font24"><i class="font12">$</i>
+                                {:product_price($vo['product_id'])}
+                          </span>
+                      </a>
+                      <a class="adds" data-productid="{$vo.product_id}" data-name="{$vo.product_name}" >+</a>
+                  </div>
+                  {/foreach}
+                </div>
+                <!-- Add Arrows -->
+              </div>
+               <div class="swiper-button-next next"></div>
+                <script>
+                    var swiper = new Swiper('.swiper-container2', {
+                      slidesPerView: 3,
+                      spaceBetween: '5%',
+                      loop: true,
+                      loopFillGroupWithBlank: true,
+                      navigation: {
+                        nextEl: '.next',
+                      },
+                    });
+                  </script>
+
+           </div>
+        </div>
+        <div class="row advert" style="padding-bottom: 10px;">
+          <div class="col-md-4 col-xs-4" style="padding: 0;">
+              {foreach name="slide" item="vo"}
+                  {eq name="vo['slide_type']" value="center_lefe_banner"}
+                        <a href="{$vo.slide_url}" target="_blank"><img src="{:fa_get_image_url($vo['slide_pic'])}"></a>
+                  {/eq}
+              {/foreach}
+          </div>
+          <div class="col-md-8 col-xs-8 p_right_0">
+              {foreach name="slide" item="vo"}
+                {eq name="vo['slide_type']" value="center_right_banner"}
+                     <a href="{$vo.slide_url}" target="_blank"><img src="{:fa_get_image_url($vo['slide_pic'])}" style="margin-bottom: 1.5em;"></a> <br>
+                 {/eq}
+              {/foreach}
+          </div>
+        </div>
+  <!--- f3 str-->
+        <div class="row f3" style="padding-bottom: 25px;">
+          <p class="index_title" style="background-position-y: -50px;"> 復康產品</p>
+          <div class="border_top1"></div>
+            {foreach name="product_list" key="k" item="vo"}
+            {if condition="$k eq  0"}
+            <div class="col-md-2 col-xs-2 n1">
+                <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
+                    <img src="__PUBLIC__{$vo['cover']}">
+                </a>
+                <div class="d1">
+                    <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
+                        <p class="font16 bold color_ff">{$vo['product_name']}</p>
+                    </a>
+                    <p class="font12 miaosu">{$vo['summary']}</p>
+                    <div class="price">
+                        <span class="font24"><i class="font12">$</i>{:product_price($vo['product_id'])}</span>
+                        <a class="adds" data-id="{$vo['product_id']}">+</a>
+                    </div>
+                </div>
+            </div>
+            {/if}
+            {/foreach}
+            <div class="col-md-10 col-xs-10 index_right" style="background: #fff;">
+              <div class="row">
+                <div class="col-md-12">
+                        <div class="row">
+                            {foreach name="product_list" key="k" item="vo"}
+                            {if condition="$k eq  1"}
+                                <div class="col-md-6 col-lg-6 col-xs-4 n2 ">
+                                    <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
+                                        <div style="text-align:  center;" class="row">
+                                            <div class="col-md-6" style="margin:auto;float:inherit;">
+                                                <img src="__PUBLIC__{$vo['cover']}" class="first auto_img"/>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <div class="d2">
+                                        <p class="nowrap">{$vo['product_name']}</p>
+                                        {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
+                                        {if condition="$vo['discount_type'] eq 2"}<p class="color_ro">特惠全民享</p>{/if}
+                                        {if condition="$vo['discount_type'] eq 3"}<p class="color_ro">优惠全民享</p>{/if}
+                                        <div>
+                                            <span class="font24"><i class="font12">$</i>
+                                                {:product_price($vo['product_id'])}
+                                            </span>
+                                            <a class="adds" data-id="{$vo['product_id']}">+</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {/if}
+                            {if condition="$k egt 2 && $k  elt 7"}
+                            <div class="col-md-3 col-xs-4 n2">
+                                <a href="{:url('product/detail',array('id'=>$vo['product_id']))}" class="auto_img">
+                                <img src="__PUBLIC__{$vo['cover']}" class="auto_img">
+                                </a>
+                                <div class="d2">
+                                  <p class="nowrap">{$vo['product_name']}</p>
+                                    {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
+                                    {if condition="$vo['discount_type'] eq 2"}<p class="color_ro">特惠全民享</p>{/if}
+                                    {if condition="$vo['discount_type'] eq 3"}<p class="color_ro">优惠全民享</p>{/if}
+                                  <div>
+                                       <span class="font24"><i class="font12">$</i>
+                                           {:product_price($vo['product_id'])}
+                                       </span>
+                                      <a class="adds" data-id="{$vo['product_id']}">+</a>
+                                  </div>
+                                </div>
+                            </div>
+                            {/if}
+                            {/foreach}
+                       </div>
+                  </div>
+             </div>
+          </div>
+        </div>
+<!--- f3 end-->
+
+<!--- f4 str-->
+        <div class="row f3" style="padding-bottom: 25px;">
+          <p class="index_title" style="background-position-y: -75px;">健康及有機產品</p>
+          <div class="border_top1"></div>
+        {foreach name="health_food" key="k" item="vo"}
+        {if condition="$k eq  0"}
+          <div class="col-md-2 col-xs-2 n1">
+              <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
+                 <img src="__PUBLIC__{$vo['cover']}">
+              </a>
+              <div class="d1">
+                  <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
+				    <p class="font16 bold color_ff">{$vo['product_name']}</p>
+                  </a>
+                <p class="font12 miaosu">{$vo['summary']}</p>
+                <div class="price">
+                    <span class="font24"><i class="font12">$</i>{:product_price($vo['product_id'])}</span>
+                    <a class="adds" data-id="{$vo['product_id']}">+</a>
+                </div>
+              </div>
+          </div>
+        {/if}
+        {/foreach}
+          <div class="col-md-10 col-xs-10 index_right" style="background: #fff;">
+              <div class="row">
+                 <div class="col-md-12">
+                     <div class="row">
+                         {foreach name="health_food" key="k" item="vo"}
+                         {if condition="$k eq  1"}
+                         <div class="col-md-6 col-lg-6 col-xs-4 n2 ">
+                             <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
+                                 <div style="text-align:  center;" class="row">
+                                     <div class="col-md-6 col-xs-12" style="margin:auto;float:inherit;">
+                                        <img src="__PUBLIC__{$vo['cover']}" class="first auto_img"/>
+                                     </div>
+                                </div>
+                             </a>
+                             <div class="d2">
+                                 <p class="nowrap">{$vo['product_name']}</p>
+                                 {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
+                                 {if condition="$vo['discount_type'] eq 2"}<p class="color_ro">特惠全民享</p>{/if}
+                                 {if condition="$vo['discount_type'] eq 3"}<p class="color_ro">优惠全民享</p>{/if}
+                                 <div>
+                                            <span class="font24"><i class="font12">$</i>
+                                                {:product_price($vo['product_id'])}
+                                            </span>
+                                     <a class="adds" data-id="{$vo['product_id']}">+</a>
+                                 </div>
+                             </div>
+                         </div>
+                         {/if}
+                         {if condition="$k egt 2 && $k  elt 7"}
+                         <div class="col-md-3 col-xs-4 n2">
+                             <a href="{:url('product/detail',array('id'=>$vo['product_id']))}" class="auto_img">
+                                 <img src="__PUBLIC__{$vo['cover']}" class="auto_img">
+                             </a>
+                             <div class="d2">
+                                 <p class="nowrap">{$vo['product_name']}</p>
+                                 {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
+                                 {if condition="$vo['discount_type'] eq 2"}<p class="color_ro">特惠全民享</p>{/if}
+                                 {if condition="$vo['discount_type'] eq 3"}<p class="color_ro">优惠全民享</p>{/if}
+                                 <div>
+                                       <span class="font24"><i class="font12">$</i>
+                                           {:product_price($vo['product_id'])}
+                                       </span>
+                                     <a class="adds" data-id="{$vo['product_id']}">+</a>
+                                 </div>
+                             </div>
+                         </div>
+                         {/if}
+                         {/foreach}
+                      </div>
+                  </div>
+             </div>
+          </div>
+        </div>
+<!--- f4 end-->
+
+        <!--- f5 str-->
+        <div class="row f3" style="padding-bottom: 25px;">
+            <p class="index_title" style="background-position-y: -75px;">科技產品</p>
+            <div class="border_top1"></div>
+            {foreach name="science_food" key="k" item="vo"}
+            {if condition="$k eq  0"}
+            <div class="col-md-2 col-xs-2 n1">
+                <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
+                    <img src="__PUBLIC__{$vo['cover']}">
+                </a>
+                <div class="d1">
+                    <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
+                        <p class="font16 bold color_ff">{$vo['product_name']}</p>
+                    </a>
+                    <p class="font12 miaosu">{$vo['summary']}</p>
+                    <div class="price">
+                        <span class="font24"><i class="font12">$</i>{:product_price($vo['product_id'])}</span>
+                        <a class="adds" data-id="{$vo['product_id']}">+</a>
+                    </div>
+                </div>
+            </div>
+            {/if}
+            {/foreach}
+            <div class="col-md-10 col-xs-10 index_right" style="background: #fff;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            {foreach name="science_food" key="k" item="vo"}
+                            {if condition="$k eq  1"}
+                            <div class="col-md-6 col-lg-6 col-xs-4 n2 ">
+                                <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
+                                    <div style="text-;text-align:  center;"><img src="__PUBLIC__{$vo['cover']}" class="first auto_img" ></div>
+                                </a>
+                                <div class="d2">
+                                    <p class="nowrap">{$vo['product_name']}</p>
+                                    {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
+                                    {if condition="$vo['discount_type'] eq 2"}<p class="color_ro">特惠全民享</p>{/if}
+                                    {if condition="$vo['discount_type'] eq 3"}<p class="color_ro">优惠全民享</p>{/if}
+                                    <div>
+                                            <span class="font24"><i class="font12">$</i>
+                                                {:product_price($vo['product_id'])}
+                                            </span>
+                                        <a class="adds" data-id="{$vo['product_id']}">+</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {/if}
+                            {if condition="$k egt 2 && $k  elt 7"}
+                            <div class="col-md-3 col-xs-4 n2">
+                                <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
+                                    <img src="__PUBLIC__{$vo['cover']}" class="auto_img">
+                                </a>
+                                <div class="d2">
+                                    <p class="nowrap">{$vo['product_name']}</p>
+                                    {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
+                                    {if condition="$vo['discount_type'] eq 2"}<p class="color_ro">特惠全民享</p>{/if}
+                                    {if condition="$vo['discount_type'] eq 3"}<p class="color_ro">优惠全民享</p>{/if}
+                                    <div>
+                                       <span class="font24"><i class="font12">$</i>
+                                           {:product_price($vo['product_id'])}
+                                       </span>
+                                        <a class="adds" data-id="{$vo['product_id']}">+</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {/if}
+                            {/foreach}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--- f5 end-->
+
+        <!--- f6 str-->
+        <div class="row f3" style="padding-bottom: 25px;">
+            <p class="index_title" style="background-position-y: -50px;"> 節日促銷</p>
+            <div class="border_top1"></div>
+            {foreach name="promotion" key="k" item="vo"}
+            {if condition="$k eq  0"}
+            <div class="col-md-2 col-xs-2 n1">
+                <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
+                    <img src="__PUBLIC__{$vo['cover']}">
+                </a>
+                <div class="d1">
+                    <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
+                        <p class="font16 bold color_ff">{$vo['product_name']}</p>
+                    </a>
+                    <p class="font12 miaosu">{$vo['summary']}</p>
+                    <div class="price">
+                        <span class="font24"><i class="font12">$</i>{:product_price($vo['product_id'])}</span>
+                        <a class="adds" data-id="{$vo['product_id']}">+</a>
+                    </div>
+                </div>
+            </div>
+            {/if}
+            {/foreach}
+            <div class="col-md-10 col-xs-10 index_right" style="background: #fff;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            {foreach name="promotion" key="k" item="vo"}
+                            {if condition="$k eq  1"}
+                            <div class="col-md-6 col-lg-6 col-xs-4 n2 ">
+                                <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
+                                    <div style="text-align:  center;" class="row">
+                                        <div class="col-md-6" style="margin:auto;float:inherit;">
+                                            <img src="__PUBLIC__{$vo['cover']}" class="first auto_img"/>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="d2">
+                                    <p class="nowrap">{$vo['product_name']}</p>
+                                    {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
+                                    {if condition="$vo['discount_type'] eq 2"}<p class="color_ro">特惠全民享</p>{/if}
+                                    {if condition="$vo['discount_type'] eq 3"}<p class="color_ro">优惠全民享</p>{/if}
+                                    <div>
+                                            <span class="font24"><i class="font12">$</i>
+                                                {:product_price($vo['product_id'])}
+                                            </span>
+                                        <a class="adds" data-id="{$vo['product_id']}">+</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {/if}
+                            {if condition="$k egt 2 && $k  elt 7"}
+                            <div class="col-md-3 col-xs-4 n2">
+                                <a href="{:url('product/detail',array('id'=>$vo['product_id']))}" class="auto_img">
+                                    <img src="__PUBLIC__{$vo['cover']}" class="auto_img">
+                                </a>
+                                <div class="d2">
+                                    <p class="nowrap">{$vo['product_name']}</p>
+                                    {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
+                                    {if condition="$vo['discount_type'] eq 2"}<p class="color_ro">特惠全民享</p>{/if}
+                                    {if condition="$vo['discount_type'] eq 3"}<p class="color_ro">优惠全民享</p>{/if}
+                                    <div>
+                                       <span class="font24"><i class="font12">$</i>
+                                           {:product_price($vo['product_id'])}
+                                       </span>
+                                        <a class="adds" data-id="{$vo['product_id']}">+</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {/if}
+                            {/foreach}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--- f6 節日促銷 end-->
+
+
+<!--- f7 共享平台 str-->
+        <div class="row f6" style="padding-bottom: 25px">
+          <p class="index_title" style="background-position-y: -100px;"> 共享平台</p>
+          <div class="border_top1"></div>
+
+			<div class="row" style="margin: 0;padding: 2em 20px;background:  #fff;border-radius: 0 0 5px 5px;">
+
+                {foreach name="share" item="vo"}
+			  <div class="col-md-6 col-xs-6 list">
+					<img src="__PUBLIC__/{$vo.product_pic}" class="img_left auto_img" />
+					<div class="d1">
+					  <h3>{$vo.product_name}</h3>
+					  <p class="ellipsis3">{$vo.product_content}</p>
+					</div>
+			  </div>
+                {/foreach}
+			</div>
+        </div>
+  <!--- f7 end-->
+
+
+    </div>
+	{include file="common/footer"/}
+
+    <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
+{include file="common/script"/}
+<script type="text/javascript">
+
+
+$(function(){
+    auto_height();
+    console.log(11);
+});
+
+
+
+$(document).ready(function(){
+  $(".fixediv a").click(function(){
+    $(".fixediv").fadeOut(400);
+  });
+  $(".ads_left").floatadv();
+  //$(".ads_right").floatadv();
+});
+
+//左侧广告
+jQuery.fn.floatadv = function(loaded) {
+  var obj = this;
+  body_height = parseInt($(window).height());
+  block_height = parseInt(obj.height());
+  container = parseInt($('.f3').height()+200);
+
+  top_position = parseInt((body_height/2) - (block_height/2) + $(window).scrollTop());
+
+  if (body_height<block_height) { top_position = 0 + $(window).scrollTop(); };
+	if(!loaded){
+		obj.css({'position': 'absolute'});
+		obj.css({ 'top': container });
+		$(window).bind('resize', function() {
+		  obj.floatadv(!loaded);
+		});
+		$(window).bind('scroll', function() {
+		  obj.floatadv(!loaded);
+		});
+	}else{
+		if(top_position < container){
+			obj.stop();
+			obj.css({'position': 'absolute'});
+			obj.animate({ 'top':container}, 500, 'linear');
+			return false;
+		}else{
+			obj.stop();
+			obj.css({'position': 'absolute'});
+			obj.animate({ 'top': top_position }, 500, 'linear');
+		}
+	}
+}
+
+$(window).resize(function (){         //当浏览器大小变化时
+    auto_height()
+});
+
+function auto_height(){
+    var f3_height =  $('.index_right').height();
+    var f3_img =  $('.row .n1 img').height();
+
+    $('.index_right').each(function(i){
+        $(this).find('img').eq(0).css('height',$(this).find('img').eq(1).height());
+        $(this).find('img').eq(0).css('width','100%');
+        console.log();
+    });
+
+    var f1_height =  $('.swiper-container-my .swiper-slide').height();
+
+    $('.swiper-container2 .swiper-slide').each(function(i){
+        $(this).css('height',f1_height);
+    });
+    console.log(f1_height);
+
+
+    $('.row .n1').each(function(i){
+        $(this).css('height',f3_height);
+    });
+
+    var ads_right =  $('.ads_right').width();
+
+    {if condition="empty(sp_ip_ischina())"}
+    $('.ads_right iframe').attr('src','https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Flivesmart.hksr&tabs=timeline&width=' + parseInt(ads_right)+ '&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=278986015538188')
+    {/if}
+    var container_width =  $(document.body).width();
+    if(container_width <=1366 && container_width >=1024){
+        $('.container').each(function(i){
+            if(i>1){
+                $(this).css('width',container_width - 450);
+                $(this).css('padding',0);
+            }
+        });
+    }else{
+        $('.container').each(function(i){
+            if(i>1){
+                $(this).css('width','');
+                $(this).css('padding','');
+            }
+        });
+    }
+    var swiper2_width =  $('.swiper-container2').width();
+    $('.swiper-container2 .list').each(function(i){
+        //  $(this).css('margin-right',swiper2_width / 60);
+    });
+}
+</script>
+
+  </body>
+
+</html>

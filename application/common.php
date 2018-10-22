@@ -365,6 +365,17 @@ function product_price($product_id)
     return $price;
 }
 
+
+/**
+ * 查询产品的信息
+ * $product_id 商品id
+ */
+function sp_product_info($product_id)
+{
+    $product =  Db::name('goods')->where(array('product_id'=>$product_id))->find();
+    return $product;
+}
+
 /**
  * 查询用户购物车数量
  * $user_id 用户id
@@ -410,6 +421,16 @@ function sp_payment($payment)
 {
     $payment_text = sp_payment_array();
     return $payment_text[$payment];
+}
+
+/**
+ * 查询支付状态
+ * $status 状态id
+*/
+function sp_paystatus($status)
+{
+    $status_text = sp_paystatus_array();
+    return $status_text[$status];
 }
 
 function sp_payment_array()
@@ -458,10 +479,12 @@ function sp_user_info()
     $user['platform'] = Session('platform');
     return $user;
 }
+
+
 /**  创建游客信息  */
 function create_tourist()
 {
-    $tourist_id = md5(uniqid(rand(), TRUE));
+    $tourist_id = rand();
     $data = array(
         'username'=>'visitor'.$tourist_id,
         'nickname'=>'遊客',
@@ -596,8 +619,8 @@ function sp_ip_ischina()
     $data['time'] = time();
     if($data['time']<= time()){
         $data['status'] = 0;
-        //  $url = 'http://ip-api.com/json/'.request()->ip();
-         $url = 'http://ip-api.com/json/14.127.80.57'; //模拟深圳ip
+          $url = 'http://ip-api.com/json/'.request()->ip();
+        // $url = 'http://ip-api.com/json/14.127.80.57'; //模拟深圳ip
         // $url = 'http://ip-api.com/json/47.91.226.24'; //模拟香港ip
         $json = request_post($url,$data = 'null');
         $data = json_decode($json,true);
@@ -605,10 +628,60 @@ function sp_ip_ischina()
         Session::set('ip_info',$data);
     }
     $echo = false;
+//    $data['status'] = 'success';
+//    $data['countryCode'] = 'hk';
     if($data['status'] == 'success' && $data['countryCode'] == 'CN'){
         $echo = true;
     }
     return $echo;
+}
+
+//将数字转成汉字对应的数
+function str_num($str1){
+    switch($str1){
+        case 1:$str_n="一";break;
+        case 2: $str_n="二";break;
+        case 3:$str_n="三";break;
+        case 4:$str_n="四";break;
+        case 5:$str_n="五";break;
+        case 6:$str_n="六"; break;
+        case 7:$str_n="七";break;
+        case 8:$str_n="八";break;
+        case 9:$str_n="九";break;
+        case 0:$str_n="零";break;
+    }
+    return $str_n;
+}
+//转换星期几的函数
+function week($n){
+    switch($n){
+        case 1:$week="星期一";break;
+        case 2:$week="星期二";break;
+        case 3:$week="星期三";break;
+        case 4:$week="星期四";break;
+        case 5:$week="星期五";break;
+        case 6:$week="星期六";break;
+        case 0:$week="星期日";break;
+    }
+    return $week;
+}
+//转换星期几的函数
+function month($n){
+    switch($n){
+        case 1:$week="一月";break;
+        case 2:$week="二月";break;
+        case 3:$week="三月";break;
+        case 4:$week="四月";break;
+        case 5:$week="五月";break;
+        case 6:$week="六月";break;
+        case 7:$week="七月";break;
+        case 8:$week="八月";break;
+        case 9:$week="九月";break;
+        case 10:$week="十月";break;
+        case 11:$week="十一月";break;
+        case 12:$week="十二月";break;
+    }
+    return $week;
 }
 
 
@@ -640,7 +713,7 @@ function curl_post_https($url,$data){ // 模拟提交数据函数
     $curl = curl_init(); // 启动一个CURL会话
     curl_setopt($curl, CURLOPT_URL, $url); // 要访问的地址
     curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0); // 对认证证书来源的检查
-    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 1); // 从证书中检查SSL加密算法是否存在
+    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0); // 从证书中检查SSL加密算法是否存在
     curl_setopt($curl, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']); // 模拟用户使用的浏览器
     curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1); // 使用自动跳转
     curl_setopt($curl, CURLOPT_AUTOREFERER, 1); // 自动设置Referer

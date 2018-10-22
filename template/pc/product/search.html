@@ -1,0 +1,118 @@
+<div class="container" style="display: {:count($product_list)==0?'block':'none'}">
+    <div class="search-tip-bow"></div>
+    <div class="search-tip font18">
+        未有搜尋到"<span class="font24 color_gr">{$keyword}</span>" 相關的貨品...<br>
+        建議：<br>
+        - 請确認所輸入的關鍵字中沒有錯别字，或嘗試使用不同端搜尋字眼<br>
+        - 你亦可按頁面右「<a href="#" onclick="psKiNoow(); return false;" class="color_red">即時對話livechat</a>」向我們的客戶服務員尋求協助<br>
+        仍然找不到所需貨品？請将你想找的貨品告知我們！貨品描述：<br>
+        <form action="{:url('index/search_message')}" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return searchform()" id="search-form">
+        <textarea class="" name="content"></textarea><br>
+        聯絡電郵地址，微信賬戶<br>
+        <input type="text" class="" name="phone">
+        <button type="submit" class="btn btn-success pull-right bgcolor_gr border_none" style="margin-top: 20px;width: 120px;line-height: 30px;">提交</button>
+        </form>
+    </div>
+</div>
+{include file="layout/public_head" /}
+<!--头部 str-->
+{include file="common/header"/}
+<!--头部 end-->
+{include file="common/nav"/}
+  <body style="background: url(__TMPL_PUBLIC__/img/index_bg.jpg) repeat-y;">
+    <div class="container bgcolor_white">
+      <div class="pr_name">搜索結果</div>
+
+        {if condition="!$product_list"}
+            <div class="search_page_empty"></div>
+        {/if}
+      <div class="product">
+           
+          <ul class="row">
+              {foreach name="product_list" item="vo"}
+                  <li class="col-md-3 col-xs-3">
+                      <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
+                          {if condition="$vo['cover']"}
+                          <img src="__PUBLIC__/{$vo.cover}"  class="auto_img" id="img_{$vo.product_id}"/>
+                          {else/}
+                          <img src="__TMPL_PUBLIC__/img/default.jpg"  class="auto_img">
+                          {/if}
+                      </a>
+                        <div class="d2">
+                            <p> <a href="{:url('product/detail',array('id'=>$vo['product_id']))}"  style="text-align: left">{$vo.product_name}</a></p>
+                            {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
+                            {if condition="$vo['discount_type'] eq 2"}<p class="color_ro">特惠全民享</p>{/if}
+                            {if condition="$vo['discount_type'] eq 3"}<p class="color_ro">优惠全民享</p>{/if}
+                          <div>
+                              <span style="font-size: 20px;"><i>$</i>{:product_price($vo['product_id'])}</span>
+                              <a class="adds" data-productid="{$vo.product_id}">+</a>
+                          </div>
+                        </div>
+                  </li>
+              {/foreach}
+          </ul>	 
+        </div>
+        <div class="pr_name">相關新聞</div>
+        <div class="info_list">
+          <div class="right-list">
+                <ul>
+                {foreach name="new_list" item="vo"}
+                   <li class="row">
+                        <div class="col-sm-2 col-xs-2 d1">
+                                <img src="{:fa_get_image_url($vo['smeta'])}" />
+                        </div>
+                        <div class="col-sm-8 col-xs-8 d2">
+                            <h4 style="margin: 5px 0;"><a href="{:url('news/article',array('id'=>$vo['id']))}">{$vo.post_title}</a></h4>
+                            <p>
+                                {$vo.post_excerpt}
+                            </p>
+                        </div>
+                        <div class="col-sm-2 d3">
+                            <p>{:date('m-d',strtotime($vo['post_date']))}<br><i class="fa fa-long-arrow-right" aria-hidden="true"></i></p>
+                        </div>
+                    </li>
+                {/foreach}
+                {if condition="count($new_list) eq 0"}
+                <div style="text-align:  center;padding:  20px;">没有相關新聞</div>
+                {/if}
+
+                </ul>
+          </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
+    <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
+    {include file="common/script" /}
+    {include file="common/footer"/}
+    <script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
+    <script type="text/javascript">
+        function searchform(){
+            // jquery 表单提交
+            $("#search-form").ajaxSubmit(function(data) {
+                console.log(data);
+                if(data.code == 0){
+                    $.message({message:data.msg,type:'warning',time:'3000'});
+                }else{
+                    $.message(data.msg);
+                    setTimeout(function () {
+                        $('.search-tip-bow').hide();
+                        $('.search-tip').hide();
+                    },1500);
+                }
+            });
+            return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
+        }
+    </script>
+  <script>
+
+$('.search-tip-bow').click(function(){
+
+    $(this).toggle();
+    $('.search-tip').toggle();
+});
+
+
+  </script>
+  </body>
+</html>

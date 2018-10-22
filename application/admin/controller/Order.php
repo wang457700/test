@@ -4,6 +4,15 @@ namespace app\admin\controller;
 
 use app\common\controller\Backend;
 use think\Db;
+use PHPExcel;
+use PHPExcel_IOFactory;
+use PHPExcel_Shared_Date;
+use PHPExcel_Style;
+use PHPExcel_Style_Alignment;
+use PHPExcel_Style_Border;
+use PHPExcel_Style_Fill;
+use PHPExcel_Style_NumberFormat;
+
 /**
  * 共享平台
  * 用户发布的共享列表
@@ -81,6 +90,123 @@ class Order extends Backend
         return $this->view->fetch();
     }
 
+
+    //导出订单
+    public function export()
+    {
+        if ($this->request->isPost()) {
+            set_time_limit(0);
+            $ids = $this->request->post('ids');
+            $keyword = $this->request->post('keyword');
+            $payment = $this->request->post('payment');
+            $pay_status = $this->request->post('pay_status');
+            $columns = $this->request->post('columns');
+
+            $excel = new PHPExcel();
+            $excel->getProperties()
+                ->setCreator("FastAdmin")
+                ->setLastModifiedBy("FastAdmin")
+                ->setTitle("标题")
+                ->setSubject("Subject");
+            $excel->getDefaultStyle()->getFont()->setName('Microsoft Yahei');
+            $excel->getDefaultStyle()->getFont()->setSize(15);
+
+            $this->sharedStyle = new PHPExcel_Style();
+            $this->sharedStyle->applyFromArray(
+                array(
+                    'fill'      => array(
+                        'type'  => PHPExcel_Style_Fill::FILL_SOLID,
+                       // 'color' => array('rgb' => '000000')
+                    ),
+                    'font'      => array(
+                        // 'color' => array('rgb' => "000000"),
+                    ),
+                    'alignment' => array(
+                        'vertical'   => PHPExcel_Style_Alignment::VERTICAL_CENTER,
+                        'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+                        'indent'     => 1
+                    ),
+                    'borders'   => array(
+                        'allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+                    )
+                ));
+
+            $worksheet = $excel->setActiveSheetIndex(0);
+            $worksheet->setTitle('标题');
+
+            $whereIds = $ids == 'all' ? '1=1' : ['order_id' => ['in', explode(',', $ids)]];
+           // $this->request->get(['search' => $search, 'ids' => $ids, 'filter' => $filter, 'op' => $op]);
+         //   list($where, $sort, $order, $offset, $limit) = $this->buildparams();
+
+            $line = 1;
+            $list = [];
+
+            if (!empty($keyword)) {
+                $where['order_sn'] = ['like', "%$keyword%"];
+            }
+            if (!empty($payment)) {
+                $where['payment'] = $payment;
+            }
+            if ($pay_status !='all') {
+                $where['pay_status'] = $pay_status;
+            }
+            Db::name('order')
+                ->alias('a')
+                ->field($columns)
+                ->field('(select sum(money_total) from fa_order where order_sn=a.order_sn) as money_total')
+                ->where($where)
+                ->where($whereIds)
+                ->group('a.order_sn')
+                ->chunk(100, function ($items) use (&$list, &$line, &$worksheet) {
+                    $payment = sp_payment_array();
+                    $paystatus = sp_paystatus_array();
+                    $styleArray = array(
+                        'font' => array(
+                            'bold'  => false,
+                           // 'color' => array('rgb' => 'FF0000'),
+                            'size'  => 12,
+                            'name'  => 'Verdana'
+                        ));
+                    $list = $items = collection($items)->toArray();
+                    foreach ($items as $index => $item) {
+                        $item['payment'] = $payment[$item['payment']];
+                        $item['pay_status'] = $paystatus[$item['pay_status']];
+
+                        $line++;
+                        $col = 0;
+                        foreach ($item as $field => $value) {
+                            $worksheet->setCellValueByColumnAndRow($col, $line, $value);
+                            $worksheet->getStyleByColumnAndRow($col, $line)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+                            $worksheet->getCellByColumnAndRow($col, $line)->getStyle()->applyFromArray($styleArray);
+                            $col++;
+                        }
+                    }
+                });
+            $first = array_keys($list[0]);
+            foreach ($first as $index => $item) {
+                $worksheet->setCellValueByColumnAndRow($index, 1, __($item));
+            }
+
+            $excel->createSheet();
+            // Redirect output to a client’s web browser (Excel2007)
+            $title = date("YmdHis");
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename="' . $title . '.xlsx"');
+            header('Cache-Control: max-age=0');
+            // If you're serving to IE 9, then the following may be needed
+            header('Cache-Control: max-age=1');
+
+            // If you're serving to IE over SSL, then the following may be needed
+            header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+            header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+            header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+            header('Pragma: public'); // HTTP/1.0
+
+            $objWriter = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
+            $objWriter->save('php://output');
+            return;
+        }
+    }
 
     public function del($ids = NULL){
         $order_sn=input('order_sn');

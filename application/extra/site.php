@@ -32,12 +32,12 @@ return array (
     'aaaaaa' => 'Aaaaaa',
   ),
   'mail_type' => '1',
-  'mail_smtp_host' => 'smtp.gmail.com',
+  'mail_smtp_host' => 'smtp.qq.com',
   'mail_smtp_port' => '587',
-  'mail_smtp_user' => 'wh-smtp@rehabsociety.org.hk',
-  'mail_smtp_pass' => 'pqAD7*89',
+  'mail_smtp_user' => '457700516@qq.com',
+  'mail_smtp_pass' => 'ljwszifunczgcaej',
   'mail_verify_type' => '1',
-  'mail_from' => 'wh-smtp@rehabsociety.org.hk',
+  'mail_from' => '457700516@qq.com',
   'integral' => 
   array (
     'obtain' => '10',

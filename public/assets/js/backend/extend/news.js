@@ -9,6 +9,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template'], function
                     add_url: 'extend/news/add',
                     edit_url: '',
                     del_url: 'extend/news/del',
+                   // import_url: 'extend/news/import',
                     multi_url: '',
                 }
             });

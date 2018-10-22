@@ -1,0 +1,41 @@
+{include file="layout/public_head" /}
+
+<!--头部 str-->
+{include file="common/header"/}
+<!--头部 end-->
+
+{include file="common/nav"/}
+<body style="background: url(__TMPL_PUBLIC__/img/index_bg.jpg) repeat-y;">
+
+		<div class="container shopping_cart" >
+			<div class="pr_name">完成發佈</div>
+			<div class="order_ok">
+			  <div class="row">
+				<div class="col-md-4 col-sm-2 col-xs-2" style=""></div>
+				<div class="col-md-6 col-sm-8 col-xs-8" style="">
+				  <div class="row">
+					<div class="col-md-2 col-sm-2 col-xs-2">
+					  <img src="__TMPL_PUBLIC__/img/order_ok.jpg" />
+					</div>
+					<div class="col-md-8 col-sm-8" style="">
+					  <h4>已發佈，等待審核~</h4>
+					  <p>您發佈的的共享內容“{$info.product_name}”已提交後台審核,審核成功后將在共享平台對所有用戶展示</p>
+					  <p>審核時間大於24小時，期間不可以修改內容，但可以刪除</p>
+					  <p>
+						  <a type="button" class="btn btn-success" href="{:url('user/share_list',array('id'=>$info['id']))}">查看文章</a>
+						  <a type="button" class="btn btn-warning" href="{:url('user/share_add')}">&nbsp;&nbsp;返回&nbsp;&nbsp;</a>
+					  </p>
+					</div>
+				  </div>
+				</div>
+				<div class="col-md-2 col-sm-2 col-xs-2" style=""></div>
+			  </div>
+			</div>
+		</div>
+		{include file="common/footer"/}
+		<script type="text/javascript">
+
+		</script>
+		{include file="common/script" /}
+	</body>
+</html>

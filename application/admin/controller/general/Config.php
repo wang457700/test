@@ -276,11 +276,11 @@ class Config extends Backend
         $receiver = $this->request->request("receiver");
         $email = new Email;
 
-        dump($email);
         $result = $email
             ->to($receiver)
             ->subject(__("This is a test mail"))
-            ->message('<div style="min-height:550px; padding: 100px 55px 200px;">' . __('This is a test mail content') . '</div>')
+            //->message('<div style="min-height:550px; padding: 100px 55px 200px;">' . __('This is a test mail content') . '</div>')
+            ->message('test')
             ->send();
         if ($result) {
             $this->success();

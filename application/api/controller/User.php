@@ -454,9 +454,8 @@ class User extends Api
             $this->error('goods_list is not array！');
         }
         if(empty($coupon_sn)){
-            $this->error('coupon_sn is empty！');
+            $this->error('優惠碼是空的！');
         }
-
         $coupon['no_product_categoryids'] = [];
         $no_product_categoryids = [];
         $coupon_goods = [];
