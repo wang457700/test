@@ -23,6 +23,10 @@ class Payment extends  Frontend
             if(empty($post['payment'])){
                 $this->error('請選擇支付方式！');
             }
+
+            if($post['payment'] == 3 || $post['payment'] == 4){
+                $this->error('支付失败！');
+            }
             $res = $this->order_payment_success($order_sn,$post['payment'],$post['contribution_price']);
             if($res){
                 $this->success('订单已成功支付！',url('payment/payment_done',array('order_sn'=>base64_encode($order_sn))));
@@ -30,6 +34,7 @@ class Payment extends  Frontend
                 $this->error('支付失败！');
             }
         }
+
         $order_sn=base64_decode(input('order_sn'));
         $session=input('session');
         $sessionVersion=input('sessionVersion');
@@ -47,7 +52,7 @@ class Payment extends  Frontend
         }
 
         if($order_info['pay_status']!=0 && $order_info['pay_status']!=1){
-          $this->error('订单已成功支付！',url('user/center'));
+          $this->success('订单已成功支付！',url('user/center'));
         }
         $address_info= Db::name('user_address')
         ->where(array('user_id'=>Session::get('user_id'),'id'=>$order_info['address_id']))
@@ -165,6 +170,12 @@ class Payment extends  Frontend
 
     public function payment_done(){
         $order_sn=base64_decode(input('order_sn'));
+
+        $order_info = Db::name('order')->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))->find();
+        if(empty($order_info)){
+            $this->error('出错了！',url('index/index'));
+        }
+
         $integral= Db::name('integral_log')
             ->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn,'type'=>'add'))
             ->value('integral');

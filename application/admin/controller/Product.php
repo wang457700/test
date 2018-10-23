@@ -245,6 +245,8 @@ class Product extends Backend
             }
         }
     }
+
+
     /**
      * 分类
      */
@@ -432,12 +434,36 @@ class Product extends Backend
             $this->error(__('No rows were updated'));
         }
 
-        $info = Db::name('Article')->insertAll($insert);
 
-        $this->success('导入成功！','',array('refresh'=>1));
+        $add = [];
+        foreach ($insert as $k => $vo){
+            $goods = Db::name('goods')->where(array('freight_num'=>$vo['ProductCode']))->find();
+            $category = Db::name('category')->where(array('id'=>$vo['CatID']))->find();
+            if(empty($goods) && !empty($category)){
+                $vo['discount_type'] = 1;
+                if(!empty($vo['Price2']) && $vo['Price2'] !='0.00'){
+                    $vo['discount_type'] = 2;
+                }
+                $add[] = array(
+                    'product_name'=>$vo['LNameL1'],
+                    'stock'=>100,
+                    'freight_num'=>$vo['ProductCode'],
+                    'price'=>$vo['Price1'],
+                    'pricevip'=>$vo['Price2'],
+                    'cat_id'=>$vo['CatID'],
+                    'discount_type'=>$vo['discount_type'],
+                    'cover'=>'/uploads/20181023/656b87a1328e1a24efbcca1d4b039d29.jpg',
+                    'add_time'=>date('Y-m-d H:i:s',time()),
+                    'seo_title'=>$vo['LNameL1'],
+                );
+            }else{
+
+            }
+        }
+
+       $info = Db::name('goods')->insertAll($add);
+       $this->success('导入成功！','',array('refresh'=>1));
     }
-
-
 
     public function get_category($parent_id){
         $list = Db::name('category')->where("pid",$parent_id)->select();

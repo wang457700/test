@@ -70,8 +70,8 @@ class Common
                     config('template.view_path',$template_url.'\\mobile\\');
                     Config::set('view_replace_str.__TMPL_PUBLIC__', preg_replace("/\/public\/$/", '', $url . '/').'/template/mobile/common');
                 } else {
-                    config('template.view_path',$template_url.'\\pc\\');
-                    Config::set('view_replace_str.__TMPL_PUBLIC__', preg_replace("/\/public\/$/", '', $url . '/').'/template/pc/common');
+                    config('template.view_path',$template_url.'\\mobile\\');
+                    Config::set('view_replace_str.__TMPL_PUBLIC__', preg_replace("/\/public\/$/", '', $url . '/').'/template/mobile/common');
             }
         }
     }

@@ -101,7 +101,7 @@
 								{/if}
 							<a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
 								{if condition="$vo['cover']"}
-									<img src="__PUBLIC__/{$vo.cover}" class="auto_img">
+									<img src="{:cdnurl($vo['cover'])}" class="auto_img">
 								{else/}
 									<img src="__TMPL_PUBLIC__/img/default.jpg" class="auto_img">
 								{/if}
@@ -117,7 +117,6 @@
 				<div class="clear"></div>
 			</div>
 		</div>
-
 		<script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
 		{include file="common/script" /}
 		<script>

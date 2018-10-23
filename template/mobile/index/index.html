@@ -108,9 +108,8 @@
 							        })
 						      </script>
 						</div>
-						{if condition="is_login()"}
-						<?php $goods = sp_user_buygoods($user['id'],3);?>
-						<ul class="mui-table-view {$goods?'':'none'}">
+						{if condition="$product_history_list"}
+						<ul class="mui-table-view">
 							<li class="mui-table-view-cell">
 								<span class="mui-navigate-right" href="product_list.html">
 									我的記錄
@@ -121,10 +120,15 @@
 								  <div class="swiper-wrapper my_lj">
 									  {foreach  name="product_history_list" item='vo'}
 										  <div class="swiper-slide col-md-3 list">
-											  <img src="__PUBLIC__/{$vo.cover}"  class="auto_img"/>
+											  {if condition="$vo['cover']"}
+											  <img src="{:cdnurl($vo['cover'])}" class="auto_img">
+											  {else/}
+											  <img src="__TMPL_PUBLIC__/img/default.jpg" class="auto_img">
+											  {/if}
 											  <p>{$vo.product_name}</p>
 										  </div>
 									  {/foreach}
+
 								    </div>
 							 	</div>
 							    <script>
@@ -154,7 +158,7 @@
 								      <div class="swiper-slide col-md-3 list">
 										  <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
 								      	  <i class="news"></i>
-								          <img src="__PUBLIC__/{$vo.cover}" class="auto_img"/>
+								          <img src="{:cdnurl($vo['cover'])}" class="auto_img"/>
 								          <p class="p2">{$vo.product_name}</p>
 								          <p><span class="color_ro">$</span><span class="color_ro font18">{:product_price($vo['product_id'])}</span>  <span class="price">${$vo.price}</span></p>
 								     	</a>
@@ -188,7 +192,7 @@
 									  <div class="swiper-slide col-md-3 list">
 										  <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
 											  <i class="news"></i>
-											  <img src="__PUBLIC__/{$vo.cover}" class="auto_img"/>
+											  <img src="{:cdnurl($vo['cover'])}" class="auto_img"/>
 											  <p class="p2">{$vo.product_name}</p>
 											  <p><span class="color_ro">$</span><span class="color_ro font18">{:product_price($vo['product_id'])}</span>  <span class="price">${$vo.price}</span></p>
 										  </a>
@@ -223,7 +227,7 @@
 									  <div class="swiper-slide col-md-3 list">
 										  <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
 											  <i class="news"></i>
-											  <img src="__PUBLIC__/{$vo.cover}" class="auto_img"/>
+											  <img src="{:cdnurl($vo['cover'])}" class="auto_img"/>
 											  <p class="p2">{$vo.product_name}</p>
 											  <p><span class="color_ro">$</span><span class="color_ro font18">{:product_price($vo['product_id'])}</span>  <span class="price">${$vo.price}</span></p>
 										  </a>
@@ -256,7 +260,7 @@
 									  <div class="swiper-slide col-md-3 list">
 										  <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
 											  <i class="news"></i>
-											  <img src="__PUBLIC__/{$vo.cover}" />
+											  <img src="{:cdnurl($vo['cover'])}" />
 											  <p class="p2">{$vo.product_name}</p>
 											  <p><span class="color_ro">$</span><span class="color_ro font18">{:product_price($vo['product_id'])}</span>  <span class="price">${$vo.price}</span></p>
 										  </a>

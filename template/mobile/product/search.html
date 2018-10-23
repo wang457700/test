@@ -43,7 +43,7 @@
 
 								<a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
 									{if condition="$vo['cover']"}
-									<img src="__PUBLIC__/{$vo.cover}"/>
+									<img src="{:cdnurl($vo['cover'])}"/>
 									{else/}
 									<img src="__TMPL_PUBLIC__/img/default.jpg">
 									{/if}

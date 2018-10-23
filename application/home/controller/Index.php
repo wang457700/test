@@ -41,7 +41,7 @@ class Index extends Frontend
         $tree = Tree::instance();
         $slide =  Db::name('slide')->where(array('slide_status'=>1))->select();
         $where['is_on_sale'] = 1;
-        $top_ten= Db::name('goods')->where('is_best_status',0)->limit(10)->order('add_time desc')->select();
+        $top_ten= Db::name('goods')->where(array('is_best_status'=>0,'is_on_sale'=>1))->limit(10)->order('add_time desc')->select();
         $product_list= Db::name('goods')
             ->where(array('cat_id'=>array('in',$tree->getChildrenIds(input('categoryid',15))),'is_on_sale'=>1))
             ->order('add_time desc')

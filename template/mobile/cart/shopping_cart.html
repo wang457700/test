@@ -30,7 +30,7 @@
 									<input type="hidden" value="{$vo['price']*$vo['total']}" id="subtotal_{$key}" data-subtotal="{$vo['price']*$vo['total']}"  class="subtotal">
 								</li>
 						        <li class="mui-col-sm-4 mui-col-xs-4" style="padding-right: 5px">
-						            <img src="__PUBLIC__/{$vo.cover}" class="img_left auto_img" />
+						            <img src="{:cdnurl($vo['cover'])}" class="img_left auto_img" />
 						        </li>
 						        <li class="mui-col-sm-7 mui-col-xs-7">
 						            <p class="title">{$vo.product_name}</p>

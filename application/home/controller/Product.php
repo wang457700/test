@@ -145,7 +145,7 @@ class Product extends Frontend
         $this->product_history($goods_id);
 
         //Session::set('product_history','');
-        $goods_list =  Db::name('goods')->limit(6)->order('add_time desc')->select();
+        $goods_list =  Db::name('goods')->where('is_on_sale',1)->limit(6)->order('add_time desc')->select();
         $comment_list =  Db::name('goods_comment')
             ->alias('a')->field('a.*,a.user_id as id,c.username,c.level')
             ->join('__USER__ c','a.user_id=c.id','RIGHT')
