@@ -134,9 +134,8 @@
                 $.message({message:'支付成功，正在査詢 <img src="__TMPL_PUBLIC__/img/loading.gif" style="width: 10px;margin-left: 10px;" />',type:'success',time:'70000'});
                 var payment = $("input[name=payment]").val();
                 var contribution_price = $("input[name=contribution_price]").val();
-
-                alert(sessionVersion);
-               // window.location.href = "{:url('payment/go_pay')}?order_sn={$order_sn}&session={$mastercard_session}&sessionVersion="+sessionVersion+"&payment=" + payment + "/contribution_price/" + contribution_price;
+                // alert(sessionVersion);
+                window.location.href = "{:url('payment/go_pay')}?order_sn={$order_sn}&session={$mastercard_session}&sessionVersion="+sessionVersion+"&payment=" + payment + "/contribution_price/" + contribution_price;
             }
 
             Checkout.configure({
