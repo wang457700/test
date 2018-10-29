@@ -44,10 +44,6 @@ class Cart extends Frontend
                 $this->ajaxReturn($data);
             }
         }
-
-
-        dump($data);
-
         if($goods['stock'] <= 0 && $goods['pre_order'] == 0){
             $data = array(
                 'code' => 0,
@@ -77,7 +73,6 @@ class Cart extends Frontend
         }
 
     }
-
 
 
     public function order_ok(){

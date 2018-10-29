@@ -104,12 +104,12 @@
     <script src="https://apis.google.com/js/api:client.js"></script>
     <script>
         $('#logout').click(function(){
-            {if condition="$user['platform'] eq 'google'"}
-                disconnectUser();
-            {/if}
-            {if condition="$user['platform'] eq 'facebook'"}
-                fbLogoutUser();
-            {/if}
+            // {if condition="$user['platform'] eq 'google'"}
+            //     disconnectUser();
+            // {/if}
+            // {if condition="$user['platform'] eq 'facebook'"}
+            //     fbLogoutUser();
+            // {/if}
         });
         // 谷歌登录
         var googleUser = {};
@@ -126,35 +126,35 @@
         };
 
         startApp();
-        // 取消与应用关联的代码
-        function disconnectUser(){
-            var revokeUrl = 'https://accounts.google.com/o/oauth2/revoke?token=' + gapi.auth.getToken().access_token;
-            $.ajax({
-                type: 'GET',
-                url: revokeUrl,
-                async: false,
-                contentType: "application/json",
-                dataType: 'json',
-                success: function(nullResponse) {
-                    // 成功以后隐藏登录信息
-                    //alert("退出成功！");
-                },
-                error: function(e) {
-                    //alert("取消關聯失敗！請到 https://plus.google.com/apps 手动解除！");
-                    //window.open("https://plus.google.com/apps");
-                }
-            });
-        }
+        // // 取消与应用关联的代码
+        // function disconnectUser(){
+        //     var revokeUrl = 'https://accounts.google.com/o/oauth2/revoke?token=' + gapi.auth.getToken().access_token;
+        //     $.ajax({
+        //         type: 'GET',
+        //         url: revokeUrl,
+        //         async: false,
+        //         contentType: "application/json",
+        //         dataType: 'json',
+        //         success: function(nullResponse) {
+        //             // 成功以后隐藏登录信息
+        //             //alert("退出成功！");
+        //         },
+        //         error: function(e) {
+        //             //alert("取消關聯失敗！請到 https://plus.google.com/apps 手动解除！");
+        //             //window.open("https://plus.google.com/apps");
+        //         }
+        //     });
+        // }
 
-        function fbLogoutUser() {
-            FB.login(function(response){
-                if (response && response.status === 'connected') {
-                    FB.logout(function(response) {
-                        document.location.reload();
-                    });
-                }
-            });
-        }
+        // function fbLogoutUser() {
+        //     FB.login(function(response){
+        //         if (response && response.status === 'connected') {
+        //             FB.logout(function(response) {
+        //                 document.location.reload();
+        //             });
+        //         }
+        //     });
+        // }
 
         window.fbAsyncInit = function(){
             FB.init({

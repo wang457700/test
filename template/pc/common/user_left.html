@@ -4,7 +4,7 @@
     <p>
         賬號:  {$user.username}<br>
         手機:  {$user.mobile|default='未綁定'}<br>
-        郵箱:{$user.email}
+        <span class="nowrap">郵箱:{$user.email}</span>
     </p>
     <a href="{:url('user/user_edit')}" class="edit">修改信息</a>
 </div>

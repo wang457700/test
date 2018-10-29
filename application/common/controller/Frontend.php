@@ -101,12 +101,6 @@ class Frontend extends Controller
                 $this->error(__('游客没有权限访问'), 'user/center');
             }
 
-            //检测账号是否激活
-            if($user['is_eamil_status'] == 0){
-                $this->error(__('帳號還沒有激活！'), 'user/user_email_activation','',0);
-            }
-
-
 
             $user_id = Session::get('user_id');
             //检查第三方是否绑定账号
@@ -127,12 +121,20 @@ class Frontend extends Controller
                 Session::set("user", $u_user);
                 Session::set("platform", $third['platform']); //记录登入第三方
 
-                $this->redirect(url('home/user/center'));
+                $user = Db::name('user')->where(array('id'=>Session::get('user_id')))->find();
+               // $this->redirect(url('home/user/center'));
+            }
+
+            //检测账号是否激活
+            if($user['is_eamil_status'] == 0){
+                //$this->error(__('帳號還沒有激活！'), 'user/user_email_activation','',0);
+                $this->redirect(url('home/user/user_email_activation'));
             }
 
             //检测账号是否綁定電子郵箱
             if(empty($user['email']) && $user['user_type'] ==2){
-                $this->error(__('帳號還綁定電子郵箱！'), 'user/user_bindsns','',0);
+               // $this->error(__('帳號還綁定電子郵箱！'), 'user/user_bindsns','',0);
+                $this->redirect(url('home/user/user_bindsns'));
             }
 
         } else {
@@ -143,7 +145,6 @@ class Frontend extends Controller
         }
 
         $this->view->assign('user', $this->auth->getUser());
-
         // 语言检测
         $lang = strip_tags($this->request->langset());
 

@@ -18,11 +18,14 @@ class Payment extends  Frontend
 
     public function go_pay(){
         if ($this->request->isPost()){
+
             $order_sn=base64_decode(input('order_sn'));
             $post= input('post.');
+
             if(empty($post['payment'])){
                 $this->error('請選擇支付方式！');
             }
+
 
             if($post['payment'] == 3 || $post['payment'] == 4){
                 $this->error('支付失败！');
@@ -43,7 +46,7 @@ class Payment extends  Frontend
         $order_info= Db::name('order')
         ->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))
         ->find();
-        if($order_sn && $session && $payment&& $sessionVersion){
+        if($order_sn && $session && $payment && $sessionVersion){
             if($this->pageState($session)){
                 Session::set('mastercard_session',null);
                $this->order_payment_success($order_sn,$payment,$contribution_price);
@@ -76,6 +79,44 @@ class Payment extends  Frontend
     }
 
 
+    public function order_payment(){
+
+//        if ($this->request->isPost()){
+//            $order_sn=base64_decode(input('order_sn'));
+//
+//
+//            dump($post);
+//
+//
+//      }
+
+        $post= input('post.');
+        $order_sn = base64_decode($post['order_sn']);;
+        $payment=$post['payment'];
+        $contribution_price=$post['contribution_price'];
+
+        if(empty($post['payment'])){
+            $this->error('請選擇支付方式！');
+        }
+
+        $order_info= Db::name('order')
+            ->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))
+            ->find();
+        $order_payableprice = sum_order_payableprice($order_sn);
+        $mastercard_session = Session::get('mastercard_session');
+        if(empty($mastercard_session)){
+            $mastercard_session = $this->mastercard_session();
+        }
+
+        $this->assign('order_payableprice',$order_payableprice + $contribution_price);
+        $this->assign('contribution_price',$contribution_price);
+        $this->assign('mastercard_session',$mastercard_session);
+        $this->assign('payment',$payment);
+        $this->assign('order_info',$order_info);
+        $this->assign('order_sn',$order_sn);
+        $this->assign('title','支付中...');
+        return $this->fetch();
+    }
     //支付成功处理
     public function order_payment_success($order_sn,$payment,$contribution_price = '0.00'){
         $order_info = Db::name('order')->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))->find();
@@ -170,8 +211,8 @@ class Payment extends  Frontend
 
     public function payment_done(){
         $order_sn=base64_decode(input('order_sn'));
-
         $order_info = Db::name('order')->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))->find();
+
         if(empty($order_info)){
             $this->error('出错了！',url('index/index'));
         }

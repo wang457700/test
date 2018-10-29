@@ -19,7 +19,7 @@ use app\home\common\common;
  */
 class User extends Frontend
 {
-	protected $noNeedLogin = ['login','weixin_login', 'register', 'forgetpwd', 'is_forgetpwd_email','user_email_activation', 'third', 'is_email', 'user_bindsns'];
+	protected $noNeedLogin = ['login','weixin_login', 'register', 'forgetpwd', 'is_forgetpwd_email','user_email_activation', 'third', 'is_email', 'user_bindsns', 'logout'];
 
 	//允许游客访问
 	protected $noTouristAuthority = ['share_list','user_edit'];
@@ -269,21 +269,26 @@ class User extends Frontend
             $password = input('post.password');
             $email = input('post.email');
             $third_user_id = Session::get('third_user_id');
-            $user=Db::name('user')->where(array('email'=>$email))->find();
+            $user=Db::name('user')->where(array('email'=>$email,'is_eamil_status'=>1))->find();
 
             if($user['status'] == 'hidden'){
                 $this->error('帳號已凍結，請聯系管理員！');
             }
             if($user){
                 if(md5($password) !== $user['password']){
-                    $this->error('密碼不正確，請重新輸入！');
+                    $this->error('已注册本站用戶，密碼不正確，請重新輸入！');
                 }
                 $res = Db::name('third')->where(array('user_id'=>$third_user_id))->update(array('uid'=>$user['id']));
                 $url = url('user/center');
+
+                if(empty($user['is_eamil_status'])){
+                    $url = url('user/user_email_activation');
+                }
             }else{
                 $user['id'] = $third_user_id;
+                //更新user资料
                 $res = Db::name('user')->where(array('id'=>$third_user_id))->update(array('password'=>md5($password),'email'=>$email,'is_eamil_status'=>0));
-                $res = Db::name('third')->where(array('user_id'=>$third_user_id))->update(array('uid'=>$third_user_id));
+                Db::name('third')->where(array('user_id'=>$third_user_id))->update(array('uid'=>$third_user_id));//关联账号
                 $url = url('user/user_email_activation');
             }
             if($res){
