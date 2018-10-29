@@ -219,7 +219,7 @@
                                  <a href="{:url('order/detail',array('order_sn'=>$vo['order_sn']))}" class="btn btn-xs btn-detail btn-dialog" title="修改" data-table-id="table" data-field-index="11" data-row-index="0" data-button-index="0">
                                   <i class=""></i>详情</a>
 
-                                <a href="{:url('order/del',array('order_sn'=>$vo['order_sn']))}" class="btn btn-xs btn-detail btn-magic btn-ajax-xs" title="刪除订单" data-table-id="table" data-field-index="11" data-row-index="0" data-button-index="1">
+                                <a href="{:url('order/del',array('order_sn'=>$vo['order_sn']))}" class="btn btn-xs btn-detail btn-magic btn-delone" title="刪除订单"  data-url="{:url('order/del',array('order_sn'=>$vo['order_sn']))}" data-table-id="table" data-field-index="11" data-row-index="0" data-button-index="1">
                                     <i class=""></i>刪除</a>
 
                             </td>

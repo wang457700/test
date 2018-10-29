@@ -470,6 +470,9 @@ class User extends Api
         /*优惠券*/
         $coupon  = Db::name('coupon')->where(array('coupon_sn'=>$coupon_sn))->find();
         $coupon_log = Db::name('order')->where(array('coupon_id'=>$coupon['coupon_id'],'user_id'=>Session::get('user_id')))->find();
+        if(empty($coupon['status'])){
+            $this->error('優惠碼不可用！');
+        }
         if($coupon_log){
             $this->error('你已使用該優惠碼，請勿重複使用！！');
         }
@@ -526,7 +529,7 @@ class User extends Api
             }
 
             if($coupon['min_money'] > $all_total){
-                $this->error('最低消費'.$coupon['min_money'].'，才能使用優惠碼！'.$all_total);
+                $this->error('最低消費 $'.$coupon['min_money'].'，才能使用優惠碼，当前可用商品总额为：$'.$all_total);
             }
 
             if($coupon['coupon_type'] == 1){ //1现金券 2折扣

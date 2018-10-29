@@ -85,7 +85,17 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template'], function
                                     }
                                 },
                             ],
-                            formatter: Table.api.formatter.operate
+                            formatter: Table.api.formatter.operate,formatter: function (value, row, index) {
+                                console.log(row.status);
+                                var that = $.extend({}, this);
+                                var table = $(that.table).clone(true);
+                                if (row.id == 108 || row.id == 109|| row.id == 110|| row.id == 113){
+                                    $(table).data("operate-del", null);
+                                }
+                                that.table = table;
+                                //console.log($(table).data("operate-dongjie"));
+                                return Table.api.formatter.operate.call(that, value, row, index);
+                            }
                         },
                     ],
                 ],
@@ -93,6 +103,10 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template'], function
                 //亦可以参考require-table.js中defaults的配置
                 //禁用默认搜索
                 search: false,
+                showColumns: false,
+                showToggle: false,
+                showExport: false,
+                visible: false,
                 //启用普通表单搜索
                 commonSearch: true,
                 //可以控制是否默认显示搜索单表,false则隐藏,默认为false
@@ -159,6 +173,9 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template'], function
                 Table.api.multi("changestatus", ids.join(","), table, this);
             });
 
+            $('.columns-right').each(function () {
+                $(this).hide();
+            })
         },
         add: function () {
             Controller.api.bindevent();

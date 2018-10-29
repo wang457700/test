@@ -202,7 +202,7 @@
                     <p class="font12 miaosu">{$vo['summary']}</p>
                     <div class="price">
                         <span class="font24"><i class="font12">$</i>{:product_price($vo['product_id'])}</span>
-                        <a class="adds" data-id="{$vo['product_id']}">+</a>
+                        <a class="adds" data-productid="{$vo['product_id']}">+</a>
                     </div>
                 </div>
             </div>
@@ -231,7 +231,7 @@
                                             <span class="font24"><i class="font12">$</i>
                                                 {:product_price($vo['product_id'])}
                                             </span>
-                                            <a class="adds" data-id="{$vo['product_id']}">+</a>
+                                            <a class="adds" data-productid="{$vo['product_id']}">+</a>
                                         </div>
                                     </div>
                                 </div>
@@ -250,7 +250,7 @@
                                        <span class="font24"><i class="font12">$</i>
                                            {:product_price($vo['product_id'])}
                                        </span>
-                                      <a class="adds" data-id="{$vo['product_id']}">+</a>
+                                      <a class="adds" data-productid="{$vo['product_id']}">+</a>
                                   </div>
                                 </div>
                             </div>
@@ -280,7 +280,7 @@
                 <p class="font12 miaosu">{$vo['summary']}</p>
                 <div class="price">
                     <span class="font24"><i class="font12">$</i>{:product_price($vo['product_id'])}</span>
-                    <a class="adds" data-id="{$vo['product_id']}">+</a>
+                    <a class="adds" data-productid="{$vo['product_id']}">+</a>
                 </div>
               </div>
           </div>
@@ -309,7 +309,7 @@
                                             <span class="font24"><i class="font12">$</i>
                                                 {:product_price($vo['product_id'])}
                                             </span>
-                                     <a class="adds" data-id="{$vo['product_id']}">+</a>
+                                     <a class="adds" data-productid="{$vo['product_id']}">+</a>
                                  </div>
                              </div>
                          </div>
@@ -328,7 +328,7 @@
                                        <span class="font24"><i class="font12">$</i>
                                            {:product_price($vo['product_id'])}
                                        </span>
-                                     <a class="adds" data-id="{$vo['product_id']}">+</a>
+                                     <a class="adds" data-productid="{$vo['product_id']}">+</a>
                                  </div>
                              </div>
                          </div>
@@ -358,7 +358,7 @@
                     <p class="font12 miaosu">{$vo['summary']}</p>
                     <div class="price">
                         <span class="font24"><i class="font12">$</i>{:product_price($vo['product_id'])}</span>
-                        <a class="adds" data-id="{$vo['product_id']}">+</a>
+                        <a class="adds" data-productid="{$vo['product_id']}">+</a>
                     </div>
                 </div>
             </div>
@@ -383,7 +383,7 @@
                                             <span class="font24"><i class="font12">$</i>
                                                 {:product_price($vo['product_id'])}
                                             </span>
-                                        <a class="adds" data-id="{$vo['product_id']}">+</a>
+                                        <a class="adds" data-productid="{$vo['product_id']}">+</a>
                                     </div>
                                 </div>
                             </div>
@@ -402,7 +402,7 @@
                                        <span class="font24"><i class="font12">$</i>
                                            {:product_price($vo['product_id'])}
                                        </span>
-                                        <a class="adds" data-id="{$vo['product_id']}">+</a>
+                                        <a class="adds" data-productid="{$vo['product_id']}">+</a>
                                     </div>
                                 </div>
                             </div>
@@ -433,7 +433,7 @@
                     <p class="font12 miaosu">{$vo['summary']}</p>
                     <div class="price">
                         <span class="font24"><i class="font12">$</i>{:product_price($vo['product_id'])}</span>
-                        <a class="adds" data-id="{$vo['product_id']}">+</a>
+                        <a class="adds" data-productid="{$vo['product_id']}">+</a>
                     </div>
                 </div>
             </div>
@@ -462,7 +462,7 @@
                                             <span class="font24"><i class="font12">$</i>
                                                 {:product_price($vo['product_id'])}
                                             </span>
-                                        <a class="adds" data-id="{$vo['product_id']}">+</a>
+                                        <a class="adds" data-productid="{$vo['product_id']}">+</a>
                                     </div>
                                 </div>
                             </div>
@@ -481,7 +481,7 @@
                                        <span class="font24"><i class="font12">$</i>
                                            {:product_price($vo['product_id'])}
                                        </span>
-                                        <a class="adds" data-id="{$vo['product_id']}">+</a>
+                                        <a class="adds" data-productid="{$vo['product_id']}">+</a>
                                     </div>
                                 </div>
                             </div>
@@ -619,7 +619,7 @@ function auto_height(){
     var container_width =  $(document.body).width();
     if(container_width <=1366 && container_width >=1024){
         $('.container').each(function(i){
-            if(i>1){
+            if(i>2){
                 $(this).css('width',container_width - 450);
                 $(this).css('padding',0);
             }

@@ -21,16 +21,17 @@
 	 <div class="container">
        <div class="row">
 	        <div class="col-md-5 col-xs-11 login" style="">
-				<img src="__TMPL_PUBLIC__/img/logo-3.png" class="logo3">
+				<a href="{:url('index/index')}" title="返回首頁"><img src="__TMPL_PUBLIC__/img/logo-3.png" class="logo3"></a>
 				<div class="form-group" style="border: 0;padding: 60px 0;font-size: 19px;color: #7dbe43;">
 					您的電郵：<span class="color_ro">{$list.email}</span><br>
 					<span class="font16">已成功申請帳號！您現在可以去郵箱激活账号。</span>
 				</div>
 				<div class="form-group" style="border: 0;">
 					<a href="{:url('User/user_email_activation',array('email'=>1))}" class="btn btn-success btn-success-edit js-ajax-operation" style="margin-bottom: 1em"  id="login" onclick="return false;" data-location="false">點擊發送郵箱</a>
+					<a href="{:url('index/index')}"><button type="button" class="btn btn-default btn-default-edit"  id="weixin">返回主頁</button></a>
 				</div>
+			</div>
 		</div>
-	</div>
 	{include file="common/script" /}
 	 <script>
 		$('.js-ajax-operation').click();

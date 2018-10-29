@@ -34,7 +34,7 @@
 	 </div>
    	 <div class="row">
 	        <div class="col-md-5 col-xs-11 login" style="display: none" id="login">
-				<img src="__TMPL_PUBLIC__/img/logo-3.png" class="logo3">
+				<a href="{:url('index/index')}" title="返回首頁"><img src="__TMPL_PUBLIC__/img/logo-3.png" class="logo3"></a>
 
 				<form action="{:url('user/register')}" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return register()" id="register-form">
 
@@ -66,6 +66,7 @@
                     </div>
 
 					<div class="form-group" style="border: 0;">
+						<button type="submit" class="btn btn-success btn-success-edit" style="margin: 1em 0" id="button">註    冊</button>
 						<button type="submit" class="btn btn-success btn-success-edit" style="margin: 1em 0" id="button">註    冊</button>
 					</div>
 					<div class="form-group" style="border: 0;text-align: center;">
@@ -109,10 +110,10 @@
 				if(data.code == 0){
 					$.message({message:data.msg,type:'warning',time:'3000'});
 				}else{ 
-					$.message(data.msg);
+					//$.message(data.msg);
 					setTimeout(function () {
 	                  window.location = data.url
-	              },2500);
+	              },1500);
 				}
 
 			}); 

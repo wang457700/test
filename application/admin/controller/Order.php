@@ -172,7 +172,7 @@ class Order extends Backend
                     foreach ($items as $index => $item) {
                         $item['payment'] = $payment[$item['payment']];
                         $item['pay_status'] = $paystatus[$item['pay_status']];
-
+                        $item['order_sn'] = $item['order_sn'].' ';
                         $line++;
                         $col = 0;
                         foreach ($item as $field => $value) {
@@ -267,14 +267,10 @@ class Order extends Backend
         $this->assign('request', $request);
         $this->assign('paystatus', sp_paystatus_array());
         return $this->view->fetch();
-
-
-
     }
 
 
     public function detail(){
-
         $order_sn = input('order_sn');
         $order = Db::name('order')->alias('a')
         ->field('a.*,(select sum(money_total) from fa_order where order_sn=a.order_sn) as all_total,(select sum(goods_num) from fa_order where order_sn=a.order_sn) as all_goods_num,(select username from fa_user where id=a.user_id) as username,(select coupon_name from fa_coupon where coupon_id=a.coupon_id) as coupon_name,(select name from fa_user_address where id=a.address_id) as address_username,(select phone from fa_user_address where id=a.address_id) as address_phone,(select coupon_name from fa_coupon where coupon_id=a.coupon_id) as coupon_name')
@@ -290,6 +286,5 @@ class Order extends Backend
         $this->view->assign("payment", sp_payment_array());
         $this->view->assign("pay_status", sp_paystatus_array());
         return $this->view->fetch();
-
     }
 }

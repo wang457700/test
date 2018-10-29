@@ -100,7 +100,7 @@
                 <td>{:sp_payment($vo['payment'])}</td>
                 <td>{:sp_paystatus($vo['pay_status'])}</td>
                  <td>
-                     <a href="/public/admin/order/detail?order_sn={$vo.order_sn}" class="btn btn-xs btn-detail btn-dialog" title="查看详情" data-table-id="table" data-field-index="11" data-row-index="0" data-button-index="0">
+                     <a href="{:url('order/detail',array('order_sn'=>$vo['order_sn']))}" class="btn btn-xs btn-detail btn-dialog" title="查看详情" data-table-id="table" data-field-index="11" data-row-index="0" data-button-index="0">
                      <i class=""></i>查看详情</a>
                  </td>
             </tr>

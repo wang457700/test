@@ -1,6 +1,7 @@
 <?php
 
 namespace app\admin\controller;
+use fast\Arr;
 use think\config\driver\Json;
 use think\Db;
 use think\validate;
@@ -28,7 +29,7 @@ class Product extends Backend
         $tree = Tree::instance();
         $tree->init(collection($this->model->order('weigh desc,id desc')->select())->toArray(), 'pid');
         $this->categorylist = $tree->getTreeList($tree->getTreeArray(14), 'name');
-        $categorydata = [0 => ['type' => 'all', 'name' => __('None')]];
+        //$categorydata = [0 => ['type' => 'all', 'name' => __('None')]];
         foreach ($this->categorylist as $k => $v)
         {
             $categorydata[$v['id']] = $v;
@@ -455,9 +456,23 @@ class Product extends Backend
                     'cover'=>'/uploads/20181023/656b87a1328e1a24efbcca1d4b039d29.jpg',
                     'add_time'=>date('Y-m-d H:i:s',time()),
                     'seo_title'=>$vo['LNameL1'],
+                    'is_on_sale'=>$vo['Publish'],
                 );
             }else{
-
+                $vo['discount_type'] = 1;
+                if(!empty($vo['Price2']) && $vo['Price2'] !='0.00'){
+                    $vo['discount_type'] = 2;
+                }
+                Db::name('goods')->where(array('freight_num'=>$vo['ProductCode']))->update(array(
+                    'product_name'=>$vo['LNameL1'],
+                    'stock'=>100,
+                    'price'=>$vo['Price1'],
+                    'pricevip'=>$vo['Price2'],
+                    'cat_id'=>$vo['CatID'],
+                    'discount_type'=>$vo['discount_type'],
+                    'seo_title'=>$vo['LNameL1'],
+                    'is_on_sale'=>$vo['Publish'],
+                ));
             }
         }
 

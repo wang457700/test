@@ -180,6 +180,13 @@
          function errorCallback(error) {
              console.log(JSON.stringify(error));
              $.message({message:'支付失敗，請選擇其它支付方式',type:'error',time:'3000'});
+             $.ajax({
+                 type : "GET",
+                 url  : '{:url("payment/mastercard_session")}',
+                 success: function(v) {
+                     window.location.reload();
+                 }
+             });
          }
          function cancelCallback() {
              console.log('Payment cancelled');

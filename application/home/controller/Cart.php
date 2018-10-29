@@ -45,6 +45,9 @@ class Cart extends Frontend
             }
         }
 
+
+        dump($data);
+
         if($goods['stock'] <= 0 && $goods['pre_order'] == 0){
             $data = array(
                 'code' => 0,
@@ -52,6 +55,7 @@ class Cart extends Frontend
             );
             $this->ajaxReturn($data);
         }
+
         $data['user_id'] = Session::get('user_id');
         $data['add_time'] = date('Y-m-d H:i:s');
         $res = Db::name('cart_order')->insertGetId($data);
