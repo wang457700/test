@@ -347,7 +347,7 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 
 .shared_platform .d1{text-align: center;border: 1px solid #eee;margin: 20px 0;}
 
-.shared_platform .d1 img{width: 50%;padding-top: 1px;padding-bottom: 1px;}
+.shared_platform .d1 img{width: 50%;padding-top: 1px;padding-bottom: 1px;object-fit: contain;}
 .shared_platform ul li h4{font-weight: bold;font-size: 16px;}
 .share_product_add .form-horizontal .control-label{color:#666666}
 

@@ -18,14 +18,12 @@ class Payment extends  Frontend
 
     public function go_pay(){
         if ($this->request->isPost()){
-
             $order_sn=base64_decode(input('order_sn'));
             $post= input('post.');
 
             if(empty($post['payment'])){
                 $this->error('請選擇支付方式！');
             }
-
 
             if($post['payment'] == 3 || $post['payment'] == 4){
                 $this->error('支付失败！');

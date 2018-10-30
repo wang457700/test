@@ -65,12 +65,12 @@ class Common
 
         //手机pc端自动切换模版   __TMPL_PUBLIC__：公共资源
         if ($request->module() =='home'){
-            $template_url =dirname(dirname(dirname(dirname(__FILE__)))).'\\template';
+            $template_url =dirname(dirname(dirname(dirname(__FILE__)))).'//template';
             if (request()->isMobile()) {
-                    config('template.view_path',$template_url.'\\mobile\\');
+                    config('template.view_path',$template_url.'//mobile//');
                     Config::set('view_replace_str.__TMPL_PUBLIC__', preg_replace("/\/public\/$/", '', $url . '/').'/template/mobile/common');
                 } else {
-                    config('template.view_path',$template_url.'\\pc\\');
+                    config('template.view_path',$template_url.'//pc//');
                     Config::set('view_replace_str.__TMPL_PUBLIC__', preg_replace("/\/public\/$/", '', $url . '/').'/template/pc/common');
             }
         }

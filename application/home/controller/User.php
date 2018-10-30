@@ -11,6 +11,7 @@ use think\Hook;
 use think\Session;
 use think\Validate;
 use app\common\library\Email;
+//use app\api\Controller\Hksr;
 use fast\Random;
 use app\home\common\common;
 
@@ -68,6 +69,7 @@ class User extends Frontend
 	    	Session::set("user", $user);
 	    	$this->success('登入成功！',url('user/center'));
 		}
+
 
 
         $this->assign('weixin_url', $this->weixin_login());
@@ -175,13 +177,13 @@ class User extends Frontend
         $user= Db::name('user')->where(array('id'=>$user_id))->find();
         $res= Db::name('user')->where(array('id'=>$user_id))->value('is_eamil_status');
         if($res){
-            //$this->success('帳號已經激活，去登入！',url('user/login'));
+            $this->success('帳號已經激活，去登入！',url('user/login'));
         }
 
         $res= Db::name('user')->where(array('id'=>$user_id))->update(array('is_eamil_status'=>1));
         if($res){
             Session::set('user_id',$user_id);
-
+            //成功注册处理
             $email = new Email;
             $result = $email
                 ->to($user['email'])
@@ -190,6 +192,15 @@ class User extends Frontend
                 ->send();
 
             $this->success('驗證成功！',url('user/center'));
+
+//            $hksr = new Hksr;
+//            $gender = array('0'=>'NA','1'=>'F','2'=>'M');
+//            $data = array('nickname'=>$user['nickname'],'username'=>$user['username'],'email'=>$user['email'],'gender'=>$gender[$user['gender']]);
+//            $info = $hksr->member_user_add($data);
+//            if($info){
+//
+//            }
+
         }else{
             $this->error('驗證失敗！');
         }

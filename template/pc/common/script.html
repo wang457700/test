@@ -37,9 +37,23 @@
 
     function auto_img(){
         $('.auto_img').each(function() {
+           //
+           //  var width = $(this).width();
+           //  var height = $(this).height();
+           //
+           //  //  $(this).hide();
+           //
+           // // $(this).prepend("<b>Prepended text</b>. ");
+           //
+           //
+           //
+
             var width = $(this).width();    // 图片实际宽度
             $(this).css('height',parseInt(width));    // 图片实际宽度
+
+
         });
+ 
     }
     /* 加入购物车 */
     $(".adds,#adds").click(function(){

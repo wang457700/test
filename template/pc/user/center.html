@@ -30,7 +30,7 @@
                             {foreach name="goods_list" item="vv"}
                                 <li class="col-md-3 col-xs-3">
                                     {if condition="$vv['cover']"}
-                                    <img src="__PUBLIC__/{$vv.cover}"/>
+                                    <img src="__PUBLIC__/{$vv.cover}" class="auto_img"/>
                                     {else/}
                                     <img src="__TMPL_PUBLIC__/img/default.jpg">
                                     {/if}
@@ -109,7 +109,7 @@
                             <tr>
                               <td class="col-md-3 "scope="row">
                                   {if condition="$vv['cover']"}
-                                    <img src="__PUBLIC__/{$vv.cover}" class="img_left"  style="width: 70px;float: left"/>
+                                    <img src="__PUBLIC__/{$vv.cover}" class="img_left"  style="width: 70px;float: left;object-fit: contain;"/>
                                   {else/}
                                     <img src="__TMPL_PUBLIC__/img/default.jpg" class="img_left" style="width: 70px;float: left">
                                   {/if}
