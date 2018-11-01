@@ -160,7 +160,10 @@
                  if(data.code == 0){
                      $.message({message:data.msg,type:'warning',time:'3000'});
                  }else{
-                     window.location = data.url
+                     
+                     if (data.url){
+                     	window.location = data.url;
+                     }
                      // $.message(data.msg);
                      // setTimeout(function () {
                      //     window.location = data.url

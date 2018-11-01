@@ -12,6 +12,7 @@ use think\Db;
 use app\common\library\Token;
 use think\Session;
 use app\common\library\Email;
+use app\api\Controller\EFTPayment;
 
 class Payment extends  Frontend
 {
@@ -25,6 +26,15 @@ class Payment extends  Frontend
                 $this->error('請選擇支付方式！');
             }
 
+
+            //支付宝
+            if($post['payment'] == 2){
+                $this->success('跳转支付中...',url('payment/order_payment',array('order_sn'=>base64_encode($order_sn))));
+                exit;
+            }
+
+
+            //万事达信用卡
             if($post['payment'] == 3 || $post['payment'] == 4){
                 $this->error('支付失败！');
             }
@@ -44,6 +54,7 @@ class Payment extends  Frontend
         $order_info= Db::name('order')
         ->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))
         ->find();
+
         if($order_sn && $session && $payment && $sessionVersion){
             if($this->pageState($session)){
                 Session::set('mastercard_session',null);
@@ -78,43 +89,29 @@ class Payment extends  Frontend
 
 
     public function order_payment(){
-
-//        if ($this->request->isPost()){
-//            $order_sn=base64_decode(input('order_sn'));
-//
-//
-//            dump($post);
-//
-//
-//      }
-
-        $post= input('post.');
-        $order_sn = base64_decode($post['order_sn']);;
-        $payment=$post['payment'];
-        $contribution_price=$post['contribution_price'];
-
-        if(empty($post['payment'])){
-            $this->error('請選擇支付方式！');
-        }
-
-        $order_info= Db::name('order')
-            ->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))
-            ->find();
-        $order_payableprice = sum_order_payableprice($order_sn);
-        $mastercard_session = Session::get('mastercard_session');
-        if(empty($mastercard_session)){
-            $mastercard_session = $this->mastercard_session();
-        }
-
-        $this->assign('order_payableprice',$order_payableprice + $contribution_price);
-        $this->assign('contribution_price',$contribution_price);
-        $this->assign('mastercard_session',$mastercard_session);
-        $this->assign('payment',$payment);
-        $this->assign('order_info',$order_info);
-        $this->assign('order_sn',$order_sn);
-        $this->assign('title','支付中...');
-        return $this->fetch();
+        $order_sn= base64_decode(input('order_sn'));
+        $EFTPayment = new EFTPayment;
+        $data = $EFTPayment->transaction($order_sn,'0.01','无','无');
+        return $data;
     }
+
+
+    //接收通知
+    public function return_url(){
+        $data = input();
+        if($data['trans_status'] == 'TRADE_FINISHED' && !empty($data['merch_ref_no']) && !empty($data['trade_no'])){
+            $info = Db::name('order')->where(array('order_sn'=>$data['merch_ref_no']))->update(
+                array(
+                    'pay_time'=>$data['trans_return_time'],
+                    'pay_status'=>2,
+                    'trade_no'=>$data['trade_no'],
+                )
+            );
+            $this->order_payment_success($data['merch_ref_no'],'2','0.00');
+            $this->redirect(url('payment/payment_done',array('order_sn'=>base64_encode($data['merch_ref_no']))));
+        }
+    }
+
     //支付成功处理
     public function order_payment_success($order_sn,$payment,$contribution_price = '0.00'){
         $order_info = Db::name('order')->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))->find();

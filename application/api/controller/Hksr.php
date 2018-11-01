@@ -8,28 +8,54 @@ use think\Db;
 class Hksr extends Api
 {
 
-    protected $noNeedLogin = ['index','Member_GetInfo','Product_GetList','Product_GetFullStockListByBC','Product_GetInfo','Member_GetList','member_user_add','test','Member_ModifyBPT'];
+    protected $noNeedLogin = ['system_login','system_logout','index','Member_GetInfo','Product_GetList','Product_GetFullStockListByBC','Product_GetInfo','Member_GetList','member_user_add','test','Member_ModifyBPT'];
 
-    public function index()
+    public function system_login()
     {
-        $url='http://103.254.210.215/hksrapisttest/api.asmx/System_Login';
+        $url='http://103.254.210.215//hksrapisttest/api.asmx/System_Login';
         $post_data=array(
             'sUsername'=>101,
             'sPassword'=>101,
         );
+
         $cookies = dirname(__FILE__).'/cookie.txt';
         $res=$this->curl_post($url,$post_data,$cookies);
-
-        dump($res);
         print_r($res);die;
-        
     }
+
+
+    public function System_Polling()
+    {
+        $url='http://103.254.210.215//hksrapisttest/api.asmx/System_Polling';
+        $post_data=array(
+            'sUsername'=>101,
+            'sPassword'=>101,
+        );
+
+        $cookies = dirname(__FILE__).'/cookie.txt';
+        $res=$this->curl_post($url,$post_data,$cookies);
+        print_r($res);die;
+    }
+
+
+    public function system_logout()
+    {
+        $url='http://103.254.210.215//hksrapisttest/api.asmx/System_Logout';
+        $post_data=array(
+            'sUsername'=>101,
+            'sPassword'=>100,
+        );
+        $cookies = dirname(__FILE__).'/cookie.txt';
+        $res=$this->curl_post($url,$post_data,$cookies);
+        print_r($res);die;
+    }
+
+
     /***
      * 获取商品列表
      */
 
     public function Product_GetList(){
-
         $url='http://103.254.210.215//hksrapisttest/api.asmx/Product_GetList';
         $post_data=array(
             'iC1'=>-1,
@@ -40,8 +66,8 @@ class Hksr extends Api
             'bAscend'=>'true',
             'iRecFrom'=>0,
             'iRecTo'=>0
-
         );
+
         $cookies = dirname(__FILE__).'/cookie.txt';
         $res=$this->curl_post($url,$post_data,$cookies);
         $objectxml = simplexml_load_string($res);
@@ -70,9 +96,6 @@ dump($new_array);
         $cookies = dirname(__FILE__).'/cookie.txt';
         $res=$this->curl_post($url,$post_data,$cookies);
         print_r($res);die;
-
-
-
     }
 
     /**
@@ -288,8 +311,6 @@ dump($new_array);
 
         $cookie = dirname(__FILE__).'/cookie.txt';
         $res=$this->curl_post($url,$post_data,$cookie);
-
-
         dump($res);exit;
         $arr="SN|PNxL|BC|UBC|UNxL|ST|DLU";
         $xmlarray = $this->xml_array_list($res,$arr);
@@ -385,13 +406,12 @@ dump($new_array);
         return $res_r;
     }
 
-
     public  function curl_post($url,$post_data,$cookies){
 
 
+        dump($cookies);
             $curl = curl_init();
             //$header[] = "Content-type: text/xml";//定义content-type为xml
-
             $header[]='Content-Type: application/x-www-form-urlencoded';
             //设置提交的url
             curl_setopt($curl, CURLOPT_URL, $url);
@@ -413,10 +433,9 @@ dump($new_array);
 
         //关闭URL请求
             curl_close($curl);
-        header('Content-type:text/html;charset=utf8');
+            header('Content-type:text/html;charset=utf8');
             //获得数据并返回
-            return $data;
-        //print_r($data);
+        return $data;
     }
 
 

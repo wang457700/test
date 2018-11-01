@@ -42,6 +42,7 @@ class User extends Api
     {
         $account = $this->request->request('account');
         $password = $this->request->request('password');
+
         if (!$account || !$password)
         {
             $this->error(__('Invalid parameters'));

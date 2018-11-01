@@ -9,6 +9,7 @@ use think\Db;
 use think\Hook;
 use think\Session;
 use think\Lang;
+use app\api\Controller\Hksr;
 
 /**
  * 前台控制器基类
@@ -45,6 +46,14 @@ class Frontend extends Controller
 
     public function _initialize()
     {
+
+        /***
+         * 获取第三方接口数据
+         */
+
+      //  $hksr = new Hksr;
+        //$hksr->system_login();
+
         //移除HTML标签
         $this->request->filter('strip_tags');
         $modulename = $this->request->module();

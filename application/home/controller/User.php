@@ -37,6 +37,8 @@ class User extends Frontend
     {
     	parent::_initialize();
 
+
+
     	$user_id = Session::get('user_id');
     	if($user_id){
 			$user = Db::name('user')->where(array('id'=>$user_id))->find();
@@ -67,6 +69,7 @@ class User extends Frontend
 
 	    	Session::set("user_id", $user['id']);
 	    	Session::set("user", $user);
+
 	    	$this->success('登入成功！',url('user/center'));
 		}
 
@@ -846,7 +849,6 @@ class User extends Frontend
 	 		if(empty($id)){
 	 			$this->error('非法操作！');
 	 		}
-
 
 	 		$user_id = Session::get('user_id');
 	 		$where = array('id'=>$id,'user_id'=>$user_id);

@@ -439,6 +439,7 @@ class Product extends Backend
         $add = [];
         foreach ($insert as $k => $vo){
             $goods = Db::name('goods')->where(array('freight_num'=>$vo['ProductCode']))->find();
+            dump($goods);
             $category = Db::name('category')->where(array('id'=>$vo['CatID']))->find();
             if(empty($goods) && !empty($category)){
                 $vo['discount_type'] = 1;
