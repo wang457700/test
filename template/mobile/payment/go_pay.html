@@ -36,8 +36,8 @@
 				<li style="padding:10px 0 ;">
 					<div class="mui-input-row mui-checkbox mui-left  contribution">
 						<label>捐款支持香港復康會</label>
-						<input name="checkbox" value="Item 1" type="checkbox" class="NumDecText">
-						<span class="mui-pull-right s_right">HKD$ <input name="contribution_price" value="0.00" type="text" class="NumDecText"></span>
+						<input  value="contribution" type="checkbox" class="NumDecText" id="contribution">
+						<span class="mui-pull-right s_right">HKD$ <input name="contribution_price" value="0.00" type="text" class="NumDecText" id="contribution_price" readonly style="color: #eee;"></span>
 					</div>
 
 				</li>
@@ -73,9 +73,9 @@
 		</div>
 		<div id="loading"><img src="__TMPL_PUBLIC__/img/loading.gif" alt=""></div>
 		<script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
-		<script src="https://ap-gateway.mastercard.com/checkout/version/48/checkout.js"
-				data-cancel="cancelCallback"  data-error="errorCallback" data-complete="completeCallback" > // data-complete="completeCallback"
-		</script>
+		<!--<script src="https://ap-gateway.mastercard.com/checkout/version/48/checkout.js"-->
+				<!--data-cancel="cancelCallback"  data-error="errorCallback" data-complete="completeCallback" > // data-complete="completeCallback"-->
+		<!--</script>-->
 		{include file="common/script" /}
 		<script>
             //loading加载中
@@ -93,16 +93,27 @@
                 mui('#topPopover').popover('toggle');
             });
 
+            $("#contribution").click(function(){
+				if($(this).is(":checked")){
+                    $('#contribution_price').css('color','#ffa800');
+                    $('#contribution_price').removeAttr('readonly');
+				}else{
+                    $('#contribution_price').css('color','#eee');
+                    $('#contribution_price').attr('readonly','readonly');
+                    $('#contribution_price').val('0.00');
+				}
+            });
+
             var info = document.getElementById("info");
             function payform(){
                 // jquery 表单提交
-                $.message({message:'正在支付 <img src="__TMPL_PUBLIC__/img/loading.gif" style="width: 10px;margin-left: 10px;" />',type:'success',time:'5000'});
-                var payment = $(".mui-selected a").data('value');
-                $('#payment').val(payment);
-                if(payment == 3 ||payment == 4){
-                    Checkout.showLightbox();
-                    return false;
-                }
+                // $.message({message:'正在支付 <img src="__TMPL_PUBLIC__/img/loading.gif" style="width: 10px;margin-left: 10px;" />',type:'success',time:'5000'});
+                // var payment = $(".mui-selected a").data('value');
+                // $('#payment').val(payment);
+                // if(payment == 3 ||payment == 4){
+                //     Checkout.showLightbox();
+                //     return false;
+                // }
                 $("#pay-form").ajaxSubmit(function(data) {
                     if(data.code == 0){
                         $.message({message:data.msg,type:'warning',time:'3000'});
@@ -113,57 +124,6 @@
 
                 return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
             }
-		</script>
-		<script type="text/javascript">
-            function errorCallback(error) {
-                $.message({message:'支付失敗，請選擇其它支付方式',type:'error',time:'3000'});
-                $.ajax({
-                    type : "GET",
-                    url  : '{:url("payment/mastercard_session")}',
-                    success: function(v) {
-                        window.location.reload();
-                    }
-                });
-
-            }
-            function cancelCallback() {
-                console.log('Payment cancelled');
-                confirm('Are you sure you want to cancel?');
-            }
-            function completeCallback(resultIndicator, sessionVersion) {
-                $.message({message:'支付成功，正在査詢 <img src="__TMPL_PUBLIC__/img/loading.gif" style="width: 10px;margin-left: 10px;" />',type:'success',time:'70000'});
-                var payment = $("input[name=payment]").val();
-                var contribution_price = $("input[name=contribution_price]").val();
-                // alert(sessionVersion);
-                window.location.href = "{:url('payment/go_pay')}?order_sn={$order_sn}&session={$mastercard_session}&sessionVersion="+sessionVersion+"&payment=" + payment + "/contribution_price/" + contribution_price;
-            }
-
-            Checkout.configure({
-                merchant: 'TEST936666007',
-                order: {
-                    amount: function() {
-                        //Dynamic calculation of amount
-                        return {:number_format(sum_order_payableprice($order_info['order_sn']),2)};
-                        //return 0.01;
-                    },
-                    currency: 'HKD',
-                    description: 'Ordered goods',
-                    id: "{$order_info['order_sn']}"
-                },
-                session:{
-                    id:'{$mastercard_session}',
-                    //version: '7c08beb008'
-                },
-                interaction: {
-                    merchant: {
-                        name: 'Your merchant name',
-                        address: {
-                            line1: '200 Sample St',
-                            line2: '1234 Example Town'
-                        }
-                    }
-                }
-            });
 		</script>
 	</body>
 

@@ -76,7 +76,7 @@
 				<h4>支付方式</h4>
 				<div class="col-md-2 col-sm-2">
 					<div class="radio radio-danger">
-						<input type="radio" name="payment" id="radio1" value="2">
+						<input type="radio" name="payment" id="radio1" value="2" checked>
 						<label for="radio1">
 							<img src="__TMPL_PUBLIC__/img/payment2_type_1.jpg" />
 						</label>
@@ -92,7 +92,7 @@
 				</div>
 				<div class="col-md-2 col-sm-2">
 					<div class="radio radio-danger">
-						<input type="radio" name="payment" id="radio3" value="3" {:input('payment')== 3?'checked':''}>
+						<input type="radio" name="payment" id="radio3" value="3">
 						<label for="radio3">
 							<img src="__TMPL_PUBLIC__/img/payment2_type_3.jpg" />
 						</label>
@@ -100,7 +100,7 @@
 				</div>
 				<div class="col-md-2 col-sm-2">
 					<div class="radio radio-danger">
-						<input type="radio" name="payment" id="radio4" value="4" {:input('payment')}>
+						<input type="radio" name="payment" id="radio4" value="4">
 						<label for="radio4">
 							<img src="__TMPL_PUBLIC__/img/payment2_type_4.jpg" />
 						</label>
@@ -141,6 +141,9 @@
 	</form>
 		</div>
 	</div>
+	 <div style="width: 100%;position:  fixed;top: 0;z-index: 99999;height: 100%;text-align:  center;background: rgba(0, 0, 0, 0.05);display: none" id="loading">
+		 <img src="__TMPL_PUBLIC__/img/loading.gif" style="width: 50px;position:  absolute;top: 50%;margin-top: -25px;margin-left: -25px;">
+	 </div>
 	 {include file="common/footer" /}
 	 <script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
 	 <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
@@ -148,19 +151,12 @@
 
 	 <script type="text/javascript">
          function payform(){
-             // jquery 表单提交
-             $.message({message:'正在支付 <img src="__TMPL_PUBLIC__/img/loading.gif" style="width: 20px;margin-left: 10px;" />',type:'success',time:'5000'});
-             var payment = $("input[name=payment]:checked").val();
-             if(payment == 3 ||payment == 4){
-                 Checkout.showLightbox();
-                 return false;
-			 }
+
              $("#pay-form").ajaxSubmit(function(data) {
-                 console.log(data);
+                 $('#loading').show();
                  if(data.code == 0){
                      $.message({message:data.msg,type:'warning',time:'3000'});
                  }else{
-                     
                      if (data.url){
                      	window.location = data.url;
                      }
@@ -170,64 +166,8 @@
                      // },1500);
                  }
              });
-
              return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
          }
-	 </script>
-
-	 <script src="https://ap-gateway.mastercard.com/checkout/version/48/checkout.js"
-			 data-cancel="cancelCallback"  data-error="errorCallback" data-complete="completeCallback" > // data-complete="completeCallback"
-	 </script>
-
-	 <script type="text/javascript">
-         function errorCallback(error) {
-             console.log(JSON.stringify(error));
-             $.message({message:'支付失敗，請選擇其它支付方式',type:'error',time:'3000'});
-             $.ajax({
-                 type : "GET",
-                 url  : '{:url("payment/mastercard_session")}',
-                 success: function(v) {
-                     window.location.reload();
-                 }
-             });
-         }
-         function cancelCallback() {
-             console.log('Payment cancelled');
-             confirm('Are you sure you want to cancel?');
-         }
-         function completeCallback(resultIndicator, sessionVersion) {
-             $.message({message:'支付成功，正在査詢 <img src="__TMPL_PUBLIC__/img/loading.gif" style="width: 20px;margin-left: 10px;" />',type:'success',time:'70000'});
-             var payment = $("input[name=payment]:checked").val();
-             var contribution_price = $("input[name=contribution_price]").val();
-             window.location.href = "{:url('payment/go_pay')}?order_sn={$order_sn}&session={$mastercard_session}&sessionVersion="+sessionVersion+"&payment=" + payment + "/contribution_price/" + contribution_price;
-         }
-
-         Checkout.configure({
-             merchant: 'TEST936666007',
-             order: {
-                 amount: function() {
-                     //Dynamic calculation of amount
-                     return {:number_format(sum_order_payableprice($order_info['order_sn']),2)};
-                     //return 0.01;
-                 },
-                 currency: 'HKD',
-                 description: 'Ordered goods',
-                 id: "{$order_info['order_sn']}"
-             },
-             session:{
-                 id:'{$mastercard_session}',
-                 //version: '7c08beb008'
-             },
-             interaction: {
-                 merchant: {
-                     name: 'Your merchant name',
-                     address: {
-                         line1: '200 Sample St',
-                         line2: '1234 Example Town'
-                     }
-                 }
-             }
-         });
 	 </script>
 	</body>
 </html>

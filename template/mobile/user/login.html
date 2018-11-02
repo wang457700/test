@@ -34,12 +34,14 @@
 			</form>
 			<img src="__TMPL_PUBLIC__/img/logo_info.jpg" style="width: 100%;margin: 20px 0;" />
 			<div style="padding: 0 20px">
+				{if condition="empty(sp_ip_ischina())"}
 				<button type="button" class="mui-btn mui-btn-outlined btn-outlined-edit"  id="customBtn" >
 					<img src="__TMPL_PUBLIC__/img/logo-google.png" class="google_img" />Login with Google
 				</button>
 				<button type="button" class="mui-btn mui-btn-outlined btn-outlined-edit"  id="facebook">
 					<img src="__TMPL_PUBLIC__/img/facebook.png" class="facebook_img" />Login with Facebook
 				</button>
+				{/if}
 				<button type="button" class="mui-btn mui-btn-outlined btn-outlined-edit" id="weixin">
 					<img src="__TMPL_PUBLIC__/img/wei_xing.png" class="weixin_img" />Login with Wechat
 				</button>
@@ -66,7 +68,7 @@
                         $.message(data.msg);
                         setTimeout(function () {
                             window.location = data.url
-                        },1500);
+                        },500);
                     }
                 });
 
@@ -76,6 +78,8 @@
                 window.location = '{$weixin_url}';
             });
 		</script>
+
+		{if condition="empty(sp_ip_ischina())"}
 		<script>
             // facebook登录
             $('#facebook').click(function () {
@@ -207,6 +211,9 @@
                 });
             }
 		</script>
+	{/if}
+
+
 
 	</body>
 

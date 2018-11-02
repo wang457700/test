@@ -562,6 +562,7 @@ function sp_user_vipupgrade($userid){
             $level = $key;
         }
     }
+
     $res = Db::name('user')
         ->where(array('id'=>$userid))
         ->update(array('level'=>$levels[$level]));
@@ -619,8 +620,8 @@ function sp_ip_ischina()
     $data['time'] = time();
     if($data['time']<= time()){
         $data['status'] = 0;
-          $url = 'http://ip-api.com/json/'.request()->ip();
-        // $url = 'http://ip-api.com/json/14.127.80.57'; //模拟深圳ip
+        //$url = 'http://ip-api.com/json/'.request()->ip();
+         $url = 'http://ip-api.com/json/14.127.80.57'; //模拟深圳ip
         // $url = 'http://ip-api.com/json/47.91.226.24'; //模拟香港ip
         $json = request_post($url,$data = 'null');
         $data = json_decode($json,true);
@@ -719,7 +720,7 @@ function curl_post_https($url,$data){ // 模拟提交数据函数
     curl_setopt($curl, CURLOPT_AUTOREFERER, 1); // 自动设置Referer
     curl_setopt($curl, CURLOPT_POST, 1); // 发送一个常规的Post请求
     curl_setopt($curl, CURLOPT_POSTFIELDS, $data); // Post提交的数据包
-    curl_setopt($curl, CURLOPT_TIMEOUT, 30); // 设置超时限制防止死循环
+    curl_setopt($curl, CURLOPT_TIMEOUT, 40); // 设置超时限制防止死循环
     curl_setopt($curl, CURLOPT_HEADER, 0); // 显示返回的Header区域内容
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1); // 获取的信息以文件流的形式返回
     $tmpInfo = curl_exec($curl); // 执行操作
