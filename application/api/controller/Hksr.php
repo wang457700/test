@@ -12,6 +12,7 @@ class Hksr extends Api
 
     public function system_login()
     {
+
         $url='http://103.254.210.215//hksrapisttest/api.asmx/System_Login';
         $post_data=array(
             'sUsername'=>101,
@@ -75,8 +76,7 @@ class Hksr extends Api
         $xmlarray=json_decode($xmljson,true);
         $new_arr= implode(" ",$xmlarray);
         $new_array= json_decode($new_arr,true);
-dump($new_array);
-
+        dump($new_array);
 
         //print_r($xmlarray);die;
     }
@@ -88,7 +88,6 @@ dump($new_array);
 
     public function Member_GetIDByEMail(){
 
-
         $url='http://103.254.210.215//hksrapisttest/api.asmx/Member_GetIDByEmail';
         $post_data=array(
             'sEmail'=>'457700516@qq.com'
@@ -99,7 +98,7 @@ dump($new_array);
     }
 
     /**
-     * 不知道是很么鬼
+     * 不知道是很么鬼 ，这是创建订单
      */
     public function Task_CreateSalesOrder(){
 
@@ -129,9 +128,7 @@ dump($new_array);
      $arr="SN|PNxL|BC|UBC|UNxL|ST|DLU";
      $xmlarray = $this->xml_array_list($res,$arr);
 
-
      dump($xmlarray);
-
  }
 
     /***
@@ -408,8 +405,6 @@ dump($new_array);
 
     public  function curl_post($url,$post_data,$cookies){
 
-
-        dump($cookies);
             $curl = curl_init();
             //$header[] = "Content-type: text/xml";//定义content-type为xml
             $header[]='Content-Type: application/x-www-form-urlencoded';
@@ -435,7 +430,7 @@ dump($new_array);
             curl_close($curl);
             header('Content-type:text/html;charset=utf8');
             //获得数据并返回
-        return $data;
+            return $data;
     }
 
 

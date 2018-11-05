@@ -43,16 +43,18 @@ class Auth extends \fast\Auth
             $this->setError('Username is incorrect');
             return false;
         }
-        if (Config::get('fastadmin.login_failure_retry') && $admin->loginfailure >= 10 && time() - $admin->updatetime < 86400) {
-            $this->setError('Please try again after 1 day');
-            return false;
-        }
+//        if (Config::get('fastadmin.login_failure_retry') && $admin->loginfailure >= 10 && time() - $admin->updatetime < 86400) {
+//            $this->setError('Please try again after 1 day');
+//            return false;
+//        }
+
         if ($admin->password != md5(md5($password) . $admin->salt)) {
             $admin->loginfailure++;
             $admin->save();
             $this->setError('Password is incorrect');
             return false;
         }
+
         $admin->loginfailure = 0;
         $admin->logintime = time();
         $admin->token = Random::uuid();

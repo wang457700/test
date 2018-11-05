@@ -49,11 +49,6 @@ function StranBody(fobj)
         if(OO.nodeType==3){OO.data=StranText(OO.data)}
         else StranBody(OO)
     }
-
-
-
-
-    console.log(2222);
 }
 function JTPYStr()
 {

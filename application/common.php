@@ -382,7 +382,7 @@ function sp_product_info($product_id)
  */
 function count_cart_num($user_id)
 {
-    $num =  Db::name('cart_order')->where(array('user_id'=>$user_id))->count();
+    $num =  Db::name('cart_order')->where(array('user_id'=>$user_id))->sum('number');
     return $num;
 }
 
@@ -542,6 +542,7 @@ function sp_user_buygoods($userid = '0',$num = 5){
         ->where(array('user_id'=>$userid))
         ->limit(1,$num)
         ->select();
+
     return $goods;
 }
 
@@ -566,6 +567,7 @@ function sp_user_vipupgrade($userid){
     $res = Db::name('user')
         ->where(array('id'=>$userid))
         ->update(array('level'=>$levels[$level]));
+
     return true;
 }
 
@@ -616,26 +618,32 @@ function sp_user_default_address()
  */
 function sp_ip_ischina()
 {
-    $data = Session::get('ip_info');
-    $data['time'] = time();
-    if($data['time']<= time()){
-        $data['status'] = 0;
-        //$url = 'http://ip-api.com/json/'.request()->ip();
-         $url = 'http://ip-api.com/json/14.127.80.57'; //模拟深圳ip
-        // $url = 'http://ip-api.com/json/47.91.226.24'; //模拟香港ip
-        $json = request_post($url,$data = 'null');
-        $data = json_decode($json,true);
-        $data['time'] = time() + 7200;
-        Session::set('ip_info',$data);
-    }
-    $echo = false;
-//    $data['status'] = 'success';
-//    $data['countryCode'] = 'hk';
-    if($data['status'] == 'success' && $data['countryCode'] == 'CN'){
-        $echo = true;
-    }
+//    $echo = false;
+//    $ip_info = Session::get('ip_info');
+//    if(empty($ip_info['countryCode'])){
+//        //$url = 'http://ip-api.com/json/'.request()->ip();
+//        $url = 'http://ip-api.com/json/14.127.80.57'; //模拟深圳ip
+//        //$url = 'http://ip-api.com/json/127.0.0.1'; //模拟香港ip
+//        $json = request_post($url,$data = 'null');
+//        $data = json_decode($json,true);
+//        if($data['status'] == 'success' && $data['countryCode'] =='CN'){
+//            $ip_info['countryCode'] = $data['countryCode'];
+//            $ip_info['time'] = time();
+//            Session::set('ip_info',$ip_info);
+//            $echo = true;
+//        }
+//    }
+//    if ($ip_info['countryCode'] =='CN'){
+//        $echo = true;
+//    }
+
+//    $url = 'http://ip-api.com/json/14.127.80.57'; //模拟深圳ip
+//    $json = request_post($url,$data = 'null');
+//    dump($json);
+    $echo = true;
     return $echo;
 }
+
 
 //将数字转成汉字对应的数
 function str_num($str1){

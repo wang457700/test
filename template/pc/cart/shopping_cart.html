@@ -79,7 +79,7 @@
 							<div class="row number">
 							  <div class="col-md-12" style="">
 								<input id="min_{$key}" name="" type="button" value="-" class="reduce" onclick="on_number({$key},'min')">
-								<input id="number_{$key}" name="goods_num[]" type="number" value="{$vo.total}" style="width:50px;text-align: center"  class="color_75" data-key="{$key}">
+								<input id="number_{$key}" name="goods_num[]" type="number" value="{$vo.total}" style="width:50px;text-align: center"  class="color_75" data-key="{$key}" data-productid="{$vo.product_id}">
 								<input id="add_{$key}" name="" type="button" value="+" class="add" onclick="on_number({$key},'add')">
 							  </div>
 							</div>
@@ -167,20 +167,23 @@
 				//初始化数量为1,并失效减
 				//$('#min' + id).attr('disabled',true);
 				//获得文本框对象
-				var t = $("#number_" + id); 
-				 
+				var t = $("#number_" + id);
+                var productid = t.data('productid');
+
 				if(type=='add'){
 					// 给获取的val加上绝对值，避免出现负数
 					t.val(Math.abs(parseInt(t.val()))+1);
 					  if (parseInt(t.val())!=1){
 					  $('#min_' + id).attr('disabled',false);
-					}; 
+					};
+                    good_cart_number(t.val(),productid);
 				}
 				if(type=='min'){
 					t.val(Math.abs(parseInt(t.val()))-1);
 					  if (parseInt(t.val())==1){
 					  $('#min_' + id).attr('disabled',true);
 					};
+                    good_cart_number(t.val(),productid);
 				}
                 total_price(id);
 				total();
@@ -233,6 +236,20 @@
 				}
             });
 
+			 
+
+			 function good_cart_number(number,productid) {
+                 $.ajax({
+                     type: "post",
+                     url: "{:url('cart/good_cart_number')}",
+                     dataType: 'json',
+                     data:{productid:productid,number:number},
+                     success: function(data) {
+
+                     }
+                 });
+             }
+			 
             function cartform(){
                 var data = $('#cart-form').serializeArray();
 

@@ -84,7 +84,7 @@
                           <div class="col-md-12" style="">
                              数量：
                             <input id="min" name="" type="button" value="-" class="reduce" />
-                            <input id="text_box" name="goods_num[] " type="number" value="1" style="width:60px;text-align: center" class="NumText" required min="1" maxlength="{$goods['pre_order']?'10000000000':$goods['stock']+1}"/>
+                            <input id="text_box" name="goods_num[] " type="number" value="1" style="width:60px;text-align: center" class="NumText" required min="1" maxlength="{$goods['pre_order']?'10000000000':$goods['stock']+1}" id="goods_num"/>
                             <input id="add" name="" type="button" value="+" class="add" />
                           </div>
                         </div>
@@ -93,7 +93,7 @@
                                 <button type="submit" class="btn btn-default btn-default-edit" style="margin-bottom: 1em">{$user_id?'快速購買':'遊客購買'}</button>
                             </div>
                              <div class="col-md-5 col-xs-6" style="">
-                                <button type="button" class="btn btn-warning btn-warning-edit" id="adds" data-productid="{$goods.product_id}"><img src="__TMPL_PUBLIC__/img/invest_detail_addshop.png" style="width:  20px;margin-right:  10px;">加入購物車</button>
+                                <button type="button" class="btn btn-warning btn-warning-edit" id="adds" data-productid="{$goods.product_id}" data-number="1"><img src="__TMPL_PUBLIC__/img/invest_detail_addshop.png" style="width:  20px;margin-right:  10px;">加入購物車</button>
                             </div>
                         </div>
                         <input type="hidden" name="goods_id[]" value="{$goods.product_id}">
@@ -250,26 +250,27 @@
     </script>
    <script>
       $(document).ready(function(){
-      //获得文本框对象
-      var t = $("#text_box");
-      //初始化数量为1,并失效减
-      $('#min').attr('disabled',true);
-          //数量增加操作
-          $("#add").click(function(){    
-              // 给获取的val加上绝对值，避免出现负数
-              t.val(Math.abs(parseInt(t.val()))+1);
-              if (parseInt(t.val())!=1){
-              $('#min').attr('disabled',false);
-              };
-          }) 
-          //数量减少操作
-          $("#min").click(function(){
-          t.val(Math.abs(parseInt(t.val()))-1);
-          if (parseInt(t.val())==1){
+          //获得文本框对象
+          var t = $("#text_box");
+          //初始化数量为1,并失效减
           $('#min').attr('disabled',true);
-          };
-          })
-       
+              //数量增加操作
+              $("#add").click(function() {
+                  // 给获取的val加上绝对值，避免出现负数
+                  t.val(Math.abs(parseInt(t.val())) + 1);
+                  if (parseInt(t.val()) != 1) {
+                      $('#min').attr('disabled', false);
+                  };
+                  $('#adds').data('number',t.val());
+              });
+            //数量减少操作
+              $("#min").click(function() {
+                  t.val(Math.abs(parseInt(t.val())) - 1);
+                  if (parseInt(t.val()) == 1) {
+                      $('#min').attr('disabled', true);
+                      $('#adds').data('number',t.val());
+                  };
+              })
       });
 
       $(function() {
@@ -288,6 +289,7 @@
           }
           tabs(".investment_title", "on", ".investment_con");
       });
+
 
       function cartform(){
           //console.log($('#cart-form').serializeArray());
@@ -326,7 +328,6 @@
         if(comment != 0){
             $('html,body').animate({scrollTop:$('.investment_f').position().top},'slow');
         }
-
     </script>
     {include file="common/footer"/}
 

@@ -59,6 +59,10 @@ class Profile extends Backend
             unset($v);
             if (isset($params['password']))
             {
+                if(!preg_match("/^[\S]{6,16}$/",$params['password'],$match) && !empty($params['password'])){
+                    $this->error('請填寫6-16位字符，不能包含空格');
+                }
+
                 $params['salt'] = Random::alnum();
                 $params['password'] = md5(md5($params['password']) . $params['salt']);
             }

@@ -51,20 +51,34 @@ class Product extends Frontend
         if($sort){
             $order=implode(" ",explode("-",$sort));
         }
+
         $product_list =  Db::name('goods')
             ->alias('a')
-            ->field('a.product_id,a.product_name,a.cover,a.discount_type,a.price,(select count(*) from fa_goods_comment where product_id=a.product_id) as comment_count,(select count(*) from fa_order where goods_id=a.product_id and pay_status=2) as order_count')
+            ->field('a.product_id,a.product_name,a.cover,a.discount_type,a.price,(select count(*) from fa_goods_comment where product_id=a.product_id) as comment_count,(select count(*) from fa_order where goods_id=a.product_id and (pay_status=2 or pay_status=3 or pay_status=5)) as order_count')
             ->where($where)
             ->order($order)
             ->paginate(10);
 
-        $sort_array = array('order_count'=>'銷量','price'=>'價格','comment_count'=>'評論','add_time'=>'新品');
+//        $product_list1 = $product_list->all();
+//        foreach ($product_list1 as $index => $item){
+//            //临时处理
+//            $item['price'] = product_price($item['product_id']);
+//            $price[] = $item['price'] ;
+//            $product_list1[$index] = $item;
+//        }
 
+//      array_multisort($price, SORT_DESC, $product_list1);
+//        dump($sort);
+//        dump($product_list1);
+
+        $sort_array = array('order_count'=>'銷量','price'=>'價格','comment_count'=>'評論','add_time'=>'新品');
         //手机端ajax数据
         if ($this->request->isPost() && input('search',false) ==false) {
             $this->success('发布成功',url('user/share_success'),$product_list);
         }
 
+
+       // dump($product_list);
         $this->view->assign("product_list", $product_list);
         $this->view->assign("getparents",$getParents);
         $this->view->assign("getchild",$tree->getChild(14));//mobile
@@ -73,11 +87,6 @@ class Product extends Frontend
         $this->view->assign("sort_array",$sort_array);
         $this->view->assign("title",$getParents[count($getParents)-1]['name']);
         return $this->view->fetch();
-        if(input('style') == 'grid'){
-
-        }else{
-
-        }
     }
 
     public function search()

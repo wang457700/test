@@ -65,16 +65,23 @@ class Index extends Frontend
         $product_history_list = Session::get('product_history');
 
         if($product_history_list){
-        foreach ($product_history_list as $k => $v) {
-            $time[] = $v['time'];
-            $product_history_list[$k]  = Db::name('goods')
-                ->field('product_name,product_id,product_name,cover')
-                ->where('product_id',$v['product_history'])
-                ->find();
-            $product_history_list[$k]['time'] = $v['time'];
+            foreach ($product_history_list as $k => $v) {
+                $find = Db::name('goods')->field('product_name,product_id,product_name,cover,is_on_sale')->where(array('product_id'=>$v['product_history']))->find();
+                if($find['is_on_sale'] !=1){
+                    unset($product_history_list[$k]);
+                }
+
+                $product_history_list[$k] = $find;
+                $product_history_list[$k]['time'] = $v['time'];
+                if($find['is_on_sale'] !=1){
+                    unset($product_history_list[$k]);
+                }else{
+                    $time[] = $v['time'];
+                }
+            }
+            array_multisort($time, SORT_DESC, $product_history_list);
         }
-        array_multisort($time, SORT_DESC, $product_history_list);
-        }
+
 
         $share= Db::name('user_share')->limit(4)->select();
         $this->view->assign("top_ten", $top_ten);   //Top Ten
@@ -91,11 +98,13 @@ class Index extends Frontend
     }
 
     public function language(){
-        if(Session::get('language') == 't'){
-            Session::set('language','s');
-        }else{
+        $language = Session::get('language');
+        if($language == 's'){
             Session::set('language','t');
+        }else{
+            Session::set('language','s');
         }
+        echo Session::get('language');
     }
     //单页面
     public function page()

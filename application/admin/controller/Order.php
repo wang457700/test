@@ -104,9 +104,9 @@ class Order extends Backend
 
             $excel = new PHPExcel();
             $excel->getProperties()
-                ->setCreator("FastAdmin")
-                ->setLastModifiedBy("FastAdmin")
-                ->setTitle("标题")
+                ->setCreator("export")
+                ->setLastModifiedBy("export")
+                ->setTitle("export")
                 ->setSubject("Subject");
             $excel->getDefaultStyle()->getFont()->setName('Microsoft Yahei');
             $excel->getDefaultStyle()->getFont()->setSize(15);
@@ -132,7 +132,7 @@ class Order extends Backend
                 ));
 
             $worksheet = $excel->setActiveSheetIndex(0);
-            $worksheet->setTitle('标题');
+            $worksheet->setTitle('export title');
 
             $whereIds = $ids == 'all' ? '1=1' : ['order_id' => ['in', explode(',', $ids)]];
            // $this->request->get(['search' => $search, 'ids' => $ids, 'filter' => $filter, 'op' => $op]);
@@ -173,6 +173,7 @@ class Order extends Backend
                         $item['payment'] = $payment[$item['payment']];
                         $item['pay_status'] = $paystatus[$item['pay_status']];
                         $item['order_sn'] = $item['order_sn'].' ';
+                        $item['user_id'] = Db::name('user')->where(array('id'=>$item['user_id']))->value('nickname');
                         $line++;
                         $col = 0;
                         foreach ($item as $field => $value) {
@@ -183,9 +184,13 @@ class Order extends Backend
                         }
                     }
                 });
+
+
             $first = array_keys($list[0]);
+            $cn = array('order_id'=>'ID','order_sn'=>'訂單ID','user_id'=>'用戶名','contribution_price'=>'捐款金額','freight'=>'運費','addtime'=>'下單日期','address'=>'送貨地址','payment'=>'支付方式','pay_time'=>'支付日期','pay_status'=>'狀態','money_total'=>'總金額');
+
             foreach ($first as $index => $item) {
-                $worksheet->setCellValueByColumnAndRow($index, 1, __($item));
+                $worksheet->setCellValueByColumnAndRow($index, 1, $cn[$item]);
             }
 
             $excel->createSheet();

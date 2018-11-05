@@ -34,7 +34,12 @@
                 <input type="hidden" name="search" value="true">
                 <div class="product-top-item col-md-6">
                     {foreach name="$sort_array" item="vo"}
-                      <a href="javascript:;"  data-sort="{$key}-{if condition="strpos($sort,'desc') !== false"}asc{else/}desc{/if}" class="{if condition="strpos($sort,$key) !== false"}active{/if}">{$vo}</a>
+                      <a href="javascript:;"  data-sort="{$key}-{if condition="strpos($sort,'desc') !== false"}asc{else/}desc{/if}" class="{if condition="strpos($sort,$key) !== false"}active{/if}">
+                        {$vo}
+                    {if condition="strpos($sort,$key) !== false"}
+                        {if condition="strpos($sort,'desc') !== false"} ↓{else/} ↑{/if}
+                    {/if}
+                      </a>
                     {/foreach}
                 </div>
                 <div class="product-top-right col-md-6">
@@ -94,6 +99,9 @@
                           <a href="{:url('product/detail',array('id'=>$vo['product_id']))}"/>
                               <p>{$vo.product_name}</p>
                           </a>
+
+                          comment_count:{$vo.comment_count}
+                          order_count:{$vo.order_count}
                           {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
                           {if condition="$vo['discount_type'] eq 2"}<p class="color_ro">特惠全民享</p>{/if}
                           {if condition="$vo['discount_type'] eq 3"}<p class="color_ro">优惠全民享</p>{/if}

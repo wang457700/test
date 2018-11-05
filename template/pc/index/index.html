@@ -54,7 +54,7 @@
 
     <div class="position_ads" style="">
           <div class="ads_left" style="width:13%;z-index: 9999;">
-              <a class="close" href="javascript:$('.ads_left').hide()" style="color: #fff;opacity:1">×</a>
+              <a class="close" href="javascript:$('.ads_left').hide();" style="color: #fff;opacity:1">×</a>
               {foreach name="slide" item="vo"}
                 {eq name="vo['slide_type']" value="float_left_banner"}
                      <a href="{$vo.slide_url}" target="_blank"><img src="{:fa_get_image_url($vo['slide_pic'])}"></a>
@@ -65,7 +65,7 @@
 
     <div class="container">
         <div class="ads_right" style="">
-            <a class="close" href="javascript:$('.ads_right').hide()" style="opacity:1;margin-right: 10px;">×</a>
+            <a class="close" href="javascript:$('.ads_right').hide();" style="opacity:1;margin-right: 10px;">×</a>
             <div class="index_news" style="">
                 <div class="title" style=""></div>
                 <ul style="">

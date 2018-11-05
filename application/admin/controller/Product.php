@@ -178,17 +178,20 @@ class Product extends Backend
         $request = input('request.');
         $request['is_on_sale'] = input('is_on_sale','all');
         $request['cat_id'] = input('cat_id',14);
-        if (!empty($request['cat_id'])) {
+        if (!empty($request['cat_id'])){
             $where['cat_id'] = array('in',$tree->getChildrenIds(input('categoryid',$request['cat_id']),true));
         }
         if ($request['is_on_sale'] !='all') {
             $where['is_on_sale'] = $request['is_on_sale'];
+        }else{
+            $where['is_on_sale'] = array('in','0,1');
         }
         $keywordComplex = [];
         if (!empty($request['keyword'])) {
             $keyword = $request['keyword'];
             $keywordComplex['product_name|freight_num'] = ['like', "%$keyword%"];
         }
+
         $list=Db::name('goods')
         ->whereOr($keywordComplex)
         ->where($where)
@@ -196,12 +199,14 @@ class Product extends Backend
         ->paginate(10,false,array('query'=>$request));
         $is_on_sale=array(
             '0'=>'下架',
-            '1'=>'上架'
+            '1'=>'上架',
+            '2'=>'删除',
         );
 
         $is_on=array(
             '0'=>'上架',
-            '1'=>'下架'
+            '1'=>'下架',
+            '2'=>'删除',
         );
 
         $page = $list->render();
@@ -238,11 +243,11 @@ class Product extends Backend
     public function del($ids =null){
         if ($this->request->isPost()) {
             $product_id = input('product_id');
-            $res = Db::name('goods')->where('product_id', $product_id)->delete();
+            $res = Db::name('goods')->where('product_id', $product_id)->update(array('is_on_sale'=>2));
             if ($res) {
-                $this->success();
+                $this->success('删除成功');
             } else {
-                $this->error();
+                $this->error('删除失败');
             }
         }
     }
@@ -306,6 +311,7 @@ class Product extends Backend
         }
     }
 
+
     /**
      * 修改三级分类
      */
@@ -350,6 +356,8 @@ class Product extends Backend
 
         }
     }
+
+
     /**
      * 修改三级分类
      */
@@ -383,6 +391,8 @@ class Product extends Backend
         return $this->view->fetch();
     }
 
+
+    //导入产品
     public function import(){
         $file = $this->request->request('file');
         if (!$file) {
@@ -439,7 +449,6 @@ class Product extends Backend
         $add = [];
         foreach ($insert as $k => $vo){
             $goods = Db::name('goods')->where(array('freight_num'=>$vo['ProductCode']))->find();
-            dump($goods);
             $category = Db::name('category')->where(array('id'=>$vo['CatID']))->find();
             if(empty($goods) && !empty($category)){
                 $vo['discount_type'] = 1;

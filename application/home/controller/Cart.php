@@ -8,6 +8,7 @@
 
 namespace app\home\controller;
 use app\common\controller\Frontend;
+use fast\Arr;
 use think\Db;
 use fast\Tree;
 use think\Session;
@@ -16,10 +17,14 @@ class Cart extends Frontend
     protected $noNeedLogin = ['checkin_cart','order_ok'];
     public function checkin_cart()
     {
+        //创建游客
         if(empty(is_login())){
             $tourist = create_tourist();
         }
+
         $data['product_id'] = input('product_id');
+        $user_id = Session::get('user_id');
+        $data['number'] = input('number',1);
         $goods = Db::name('goods')->where('product_id',$data['product_id'])->find();
 
         $tree = Tree::instance();
@@ -44,6 +49,7 @@ class Cart extends Frontend
                 $this->ajaxReturn($data);
             }
         }
+
         if($goods['stock'] <= 0 && $goods['pre_order'] == 0){
             $data = array(
                 'code' => 0,
@@ -54,8 +60,14 @@ class Cart extends Frontend
 
         $data['user_id'] = Session::get('user_id');
         $data['add_time'] = date('Y-m-d H:i:s');
-        $res = Db::name('cart_order')->insertGetId($data);
-        $total = Db::name('cart_order')->where('user_id',Session::get('user_id'))->count();
+
+        $cart_order = Db::name('cart_order')->where(array('user_id'=>$user_id,'product_id'=>$data['product_id']))->find();
+        if(empty($cart_order)){
+            $res = Db::name('cart_order')->insertGetId($data);
+        }else{
+            $res = Db::name('cart_order')->where(array('user_id'=>$user_id,'product_id'=>$data['product_id']))->setInc('number',$data['number']);
+        }
+        $total = Db::name('cart_order')->where('user_id',Session::get('user_id'))->sum('number');
         if ($res) {
             $data = array(
                 'code' => 1,
@@ -75,13 +87,23 @@ class Cart extends Frontend
     }
 
 
-    public function order_ok(){
+    public function good_cart_number(){
+        $data['product_id'] = input('productid');
+        $user_id = Session::get('user_id');
+        $data['number'] = input('number',1);
+        $cart_order = Db::name('cart_order')->where(array('user_id'=>$user_id,'product_id'=>$data['product_id']))->update(array('number'=>$data['number']));
+        if ($cart_order){
+            $this->success('成功！'.$data['number']);
+        }
+    }
 
+
+
+    public function order_ok(){
             $user_id = Session::get('user_id');
             if(empty($user_id)){
                 $tourist = create_tourist();
             }
-
             $product_id = input('goods_id/a');
             $goods_num = input('goods_num/a');
             $count = count($product_id);
@@ -279,7 +301,6 @@ class Cart extends Frontend
     }
 
 
-
     public function shopping_cart(){
 
         $user_id=  Session::get('user_id');
@@ -287,7 +308,7 @@ class Cart extends Frontend
         $sum=0;
         $goods_sum=0;
         foreach ($list as $key=>$item){
-                $total=Db::name('cart_order')->where(array('user_id'=>$user_id,'product_id'=>$item['product_id']))->count();
+               $total=Db::name('cart_order')->where(array('user_id'=>$user_id,'product_id'=>$item['product_id']))->sum('number');
                $list[$key]['total']=$total;
                $list[$key]['total_price']=$total*product_price($item['product_id']);
                $list[$key]['price']= product_price($item['product_id']);

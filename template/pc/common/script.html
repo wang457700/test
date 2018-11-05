@@ -5,20 +5,33 @@
 <script src="__CDN__/assets/js/language_plus.js"></script>
 <script>
 
+
+    zh_tran('{$language|default="t"}');
     /* 第一次加载 */
     $(document).ready(function() {
         auto_img();
+        if($('#language_plus').data('language') == 's'){
+            setTimeout(function () {
+                $('#language_plus').text('繁體中文');
+            },1000);
+        }else{
+            setTimeout(function () {
+                $('#language_plus').text('简体中文');
+            },1000);
+        }
+
     });
-    zh_tran('{$language|default="t"}');
+
     /* 窗口移动 */
     $(window).resize(function (){
         auto_img();
     });
+
     $("#language_plus").click(function(){
             if($(this).data('language') == 't'){
                 zh_tran('s');
                 $(this).data('language','s');
-                $(this).text('繁体中文');
+                $(this).text('繁體中文');
             }else{
                 zh_tran('t');
                 $(this).data('language','t');
@@ -34,7 +47,6 @@
             });
     });
 
-
     function auto_img(){
         $('.auto_img').each(function() {
            //
@@ -47,31 +59,30 @@
            //
            //
            //
-
             var width = $(this).width();    // 图片实际宽度
             $(this).css('height',parseInt(width));    // 图片实际宽度
-
-
         });
  
     }
     /* 加入购物车 */
     $(".adds,#adds").click(function(){
             var product_id = $(this).data('productid');
+            var number = $(this).data('number');
             var name = $(this).data('name');
             var flyimg = $(this).data('flyimg');
             var img = $('#img_' + product_id);
-
+            if(number == '' ){var number = 1;}else{ var number = $("#text_box").val();}
             $.ajax({
                 type: "POST",
                 url: "{:url('cart/checkin_cart')}",
                 dataType: 'json',
-                data:{product_id:product_id},
+                data:{product_id:product_id,number:number},
                 success: function(data) {
                     if (data.code) {
                         $.message(data.msg);
                         $('.shopping span').text(Number(data.total));
 
+                        // 飞入效果
                         if(flyimg){
                             var flyElm = img.clone().css('opacity','0.7');
                             flyElm.css({
@@ -93,6 +104,7 @@
                                 opacity:0,
                             },'slow');
                         }
+
                     }else{
                         $.message({message:data.msg,type:'warning',time:'3000'});
                     }
