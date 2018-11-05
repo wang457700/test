@@ -54,7 +54,7 @@ class Product extends Frontend
 
         $product_list =  Db::name('goods')
             ->alias('a')
-            ->field('a.product_id,a.product_name,a.cover,a.discount_type,a.price,(select count(*) from fa_goods_comment where product_id=a.product_id) as comment_count,(select count(*) from fa_order where goods_id=a.product_id and (pay_status=2 or pay_status=3 or pay_status=5)) as order_count')
+            ->field('a.product_id,a.product_name,a.cover,a.discount_type,a.price,(select count(*) from fa_goods_comment where product_id=a.product_id) as comment_count,(select count(*) from fa_order where goods_id=a.product_id and (pay_status=2 or pay_status=3 or pay_status=5)) as order_count,if(a.discount_type = 2,a.pricevip,a.price) as price,if(a.discount_type = 3,a.discount_price,a.price) as price')
             ->where($where)
             ->order($order)
             ->paginate(10);

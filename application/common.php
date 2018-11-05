@@ -640,7 +640,7 @@ function sp_ip_ischina()
 //    $url = 'http://ip-api.com/json/14.127.80.57'; //模拟深圳ip
 //    $json = request_post($url,$data = 'null');
 //    dump($json);
-    $echo = true;
+    $echo = false;
     return $echo;
 }
 

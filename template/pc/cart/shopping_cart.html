@@ -236,8 +236,7 @@
 				}
             });
 
-			 
-
+			 //购物加减
 			 function good_cart_number(number,productid) {
                  $.ajax({
                      type: "post",
@@ -245,11 +244,14 @@
                      dataType: 'json',
                      data:{productid:productid,number:number},
                      success: function(data) {
-
+						if(data.code){
+                            $('.shopping span').text(Number(data.data.total));
+						}
                      }
                  });
              }
-			 
+
+
             function cartform(){
                 var data = $('#cart-form').serializeArray();
 

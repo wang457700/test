@@ -93,7 +93,8 @@ class Cart extends Frontend
         $data['number'] = input('number',1);
         $cart_order = Db::name('cart_order')->where(array('user_id'=>$user_id,'product_id'=>$data['product_id']))->update(array('number'=>$data['number']));
         if ($cart_order){
-            $this->success('成功！'.$data['number']);
+            $total = Db::name('cart_order')->where('user_id',Session::get('user_id'))->sum('number');
+            $this->success('成功！','',array('total'=>$total));
         }
     }
 
