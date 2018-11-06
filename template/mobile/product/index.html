@@ -1,22 +1,34 @@
 {include file="layout/public_head" /}
 	<style>
-		.mui-card .mui-control-content {padding: 10px;}
-		.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{border-bottom: 2px solid #FFAA00;color: #FFAA00;}
 		.mui-btn-success{border: 1px solid #7ac141;background-color: #7ac141;padding: 5px}
-		.mui-segmented-control.mui-segmented-control-inverted{display: -webkit-box;overflow-x: scroll;}
-		.mui-segmented-control .mui-control-item {padding: 0 10px;}
+		.inc-scroll-landscape-container {width:100%;overflow:hidden;background-color:#FFF;font-size: 15px;}
+		.inc-scroll-landscape-container > .inc-scroll-landscape-content {white-space:nowrap;overflow:hidden;overflow-x:scroll;-webkit-backface-visibility:hidden;-webkit-perspective:1000;-webkit-overflow-scrolling:touch;text-align:justify;}
+		.inc-scroll-landscape-container > .inc-scroll-landscape-content > ul {margin: 0;}
+		.inc-scroll-landscape-container > .inc-scroll-landscape-content > ul li {padding: 0 10px;line-height:38px;position:relative;display:inline-block;text-align:center;color:#000}
+		.inc-scroll-landscape-container > .inc-scroll-landscape-content > ul li.mui-active {border-bottom: 2px solid #FFAA00;color: #FFAA00;}
+
 	</style>
 	<body style="background:#fff">
 		{include file="common/header" /}
+		{include file="common/btn" /}
+
 		<div class="mui-content" style="background: #fff;">
-			<div>
-				<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary my_order_segmented" style="background:#fff">
-					<a class="mui-control-item {$input['categoryid']=='14'?'mui-active':''}" href="{:url('product/index',array('categoryid'=>14))}">全部</a>
-					{foreach name="getchild" item="vo"}
-						<a class="mui-control-item {$input['categoryid']==$vo['id']?'mui-active':''}" data-catid="{}" href="{:url('product/index',array('categoryid'=>$vo['id']))}">{$vo.name}</a>
-					{/foreach}
+
+			<div class="inc-scroll-landscape-container">
+				<div class="inc-scroll-landscape-content">
+					<ul>
+						<a href="{:url('product/index',array('categoryid'=>14))}">
+							<li class="mui-control-item {$input['categoryid']=='14'?'mui-active':''}" >全部</li>
+						</a>
+						{foreach name="getchild" item="vo"}
+							<a data-catid="{}" href="{:url('product/index',array('categoryid'=>$vo['id']))}">
+								<li  class="{$input['categoryid']==$vo['id']?'mui-active':''}" >{$vo.name}</li>
+							</a>
+						{/foreach}
+					</ul>
 				</div>
 			</div>
+
 			<form method="get" action="{:url('product/index',array('categoryid'=>$input['categoryid']))}" id="search">
 				<div class="row" style="padding: 20px;padding-bottom: 2px;border-bottom: 1px solid #eee;">
 					<div class="product-top-item col-md-6">
@@ -42,26 +54,25 @@
 				</div>
 			</form>
 			<!--下拉刷新容器-->
-			<div id="pullrefresh" class="mui-scroll-wrapper {$input['style']=='list'?'product_list2':'product_list'}" style="top: 145px;">
+			<div id="pullrefresh" class="mui-scroll-wrapper {$input['style']=='list'?'product_list2':'product_list'}" style="top:140px;">
 				<div class="mui-scroll">
 					<!--数据列表-->
 					<ul class="mui-table-view mui-table-view-chevron mui-row" data-page_count="1" data-last_page="0">
-						
+
 					</ul>
 				</div>
 			</div>
 		</div>
-
 		{include file="common/script" /}
 		<script>
+            $('.inc-scroll-landscape-content').scrollLeft($('.mui-active').offset().left-200);
+
             mui('#search .product-top-item').on('tap','a' ,function(){
                 var sort = $(this).data('sort');
                 if(sort){
                     $('input[name=sort]').val(sort);
                     $('#search').submit();
                 }
-
-                console.log(sort);
                 return false;
             });
 
@@ -75,8 +86,6 @@
                 console.log(sort);
                 return false;
             });
-
-
 
 			mui('.mui-scroll-wrapper').scroll();
 
@@ -84,12 +93,11 @@
 				pullRefresh: {
 					container: '#pullrefresh',
 					up: {
-						contentrefresh: '正在加载...',
+						contentrefresh: '',
 						callback: pullupRefresh
 					}
 				}
 			});
-			 
 			var count =  1;
 			/**
 			 * 上拉加载具体业务实现
@@ -101,7 +109,7 @@
 					var cells = document.body.querySelectorAll('.mui-table-view-cell');
                     var page_count = $(".mui-table-view-chevron").data('page_count');
                     product_list(page_count);
-				}, 1500);
+				}, 500);
 			}
 			if (mui.os.plus) {
 				mui.plusReady(function() {
@@ -139,7 +147,6 @@
                             if(value.st){
                                 news = '<a class="news"></a>';
                             }
-
 
                             {if condition="$input['style'] eq 'grid'"}
                             li += '<li class="swiper-slide mui-col-sm-6 mui-col-xs-6 list">'+news+'<a href="'+ url + value.product_id +'" style="display: inline-block;"><img src="'+ public_url + value.cover + '" class="auto_img"><p class="p2">'+ value.product_name +'</p></a><span class="color_ro">$</span><span class="color_ro font18">'+ value.price +'</span>  <span class="price">$'+ value.price +'</span></p></li>';

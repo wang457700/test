@@ -14,7 +14,7 @@
                        <input type="password" class="form-control" id="password" placeholder="密碼"  data-toggle="tooltip" name="password" title="請輸入您的密碼" required>
                     </div>
 				  <div class="form-group" style="border: 0;">
-				     <label style="width: 40%;"><input type="checkbox" style="width: 20%;">記住密碼</label>
+				     <label style="width: 40%;"><input type="checkbox" style="width: 20%;" id="ck_rmbuser">記住密碼</label>
 				     <a href="{:url('user/forgetpwd')}" class="color_ro" style="float: right">忘記密碼 找回？</a>
 				  </div>
 					<div class="form-group" style="border: 0;">
@@ -35,6 +35,15 @@
 		<script src="__TMPL_PUBLIC__/js/scripts.js"></script>
 		 {include file="common/script" /}
 		<script type="text/javascript">
+
+            $(document).ready(function () {
+                if ($.cookie("rmbuser") == "true") {
+                    $("#ck_rmbuser").attr("checked", true);
+                    $("#email").val($.cookie("email"));
+                    $("#password").val($.cookie("password"));
+                }
+            });
+
 			function loginform(){
 				var email = $('#email');
 				var reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/; //定义一个正则表达式
@@ -49,7 +58,8 @@
 					console.log(data);
 					if(data.code == 0){
 						$.message({message:data.msg,type:'warning',time:'3000'});
-					}else{ 
+					}else{
+                        save();
 						$.message(data.msg);
 						setTimeout(function () {
 						  	window.location = data.url
@@ -60,6 +70,21 @@
 				return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
 			}
 
+            //记住用户名密码
+            function save() {
+                if ($("#ck_rmbuser").is(':checked')) {
+                    var email = $("#email").val();
+                    var password = $("#password").val();
+                    $.cookie("rmbuser", "true", { expires: 7 }); //存储一个带7天期限的cookie
+                    $.cookie("email", email, { expires: 7 });
+                    $.cookie("password", password, { expires: 7 });
+                }
+                else {
+                    $.cookie("rmbuser", "false", { expire: -1 });
+                    $.cookie("email", "", { expires: -1 });
+                    $.cookie("password", "", { expires: -1 });
+                }
+            };
             $('#weixin').click(function () {
                 window.location = '{$weixin_url}';
             });

@@ -20,6 +20,7 @@ ul{padding:0;}
 .brcolor_gr {border:1px solid #7ac141;}
 .clear{clear: both;}
 .none{display:none;}
+.auto_img{opacity: 0}
 /*.mui-bar .mui-title {right: 80px;}*/
 .mui-scroll{  position: initial;max-width: 450px;margin: 0 auto;}
 .btn-success-edit{width: 100%;border: 1px solid #7AC142;padding: 10px 0;margin: 10px 0;background-color:#7AC142 !important;}
@@ -36,7 +37,7 @@ ul{padding:0;}
 
 .index-hd-left{background:#fff url(../img/cebian.png) no-repeat center;background-size: 20px;width: 44px;height: 44px;}
 .index-hd-right{background:#fff url(../img/denglu.png) no-repeat center;background-size: 15px;width: 30px;height: 44px;position: relative;}
-.index-hd-right2{background:#fff url(../img/gouwuche.png) no-repeat center;background-size: 20px;width: 44px;height: 44px;}
+.index-hd-right2{background:#fff url(../img/gouwuche.png) no-repeat center;background-size: 20px;width: 44px;height: 44px;position: relative;}
 .index_banner .swiper-slide img{width: 100%;object-fit: contain;}
 .index-left-logo {padding:  20px;}
 .index-left-logo a{color:#000}
@@ -116,7 +117,9 @@ ul{padding:0;}
 .product_list2 li .mui-pull-left{padding-right: 10px;margin: 0;}
 .product_list2 li .right_bottom{line-height: 35px;}
 .product_list2 li .right_bottom .mui-pull-left{width: 60%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
-.product_list2 li .right_bottom .mui-pull-right{width: 40%;}
+.product_list2 li .right_bottom .mui-pull-right{width: 40%;line-height: 20px;}
+
+.search_page_empty{min-height: 500px;background: url(../img/search_page_empty.jpg) no-repeat;background-position: center;background-size: 300px;}
 
 .search-input{width: 83% !important;border-radius: 50px !important;margin: 5px 0;height: 30px !important;font-size: 14px;border: 1px solid #efefef !important;}
 .search-btn{background:#fff url(../img/search-btn.png) no-repeat center;background-size: 15px;}

@@ -3,6 +3,7 @@
 <script src='__PUBLIC__/assets/js/message/message.js'></script>
 <script src='__PUBLIC__/assets/js/message/messageIE.js'></script>
 <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
+<script src="__TMPL_PUBLIC__/js/jquery.cookie.min.js"></script>
 <script src="__CDN__/assets/js/language_plus.js"></script>
 <script>
     mui.init({
@@ -14,8 +15,6 @@
     });
 
     zh_tran('{$language|default="t"}');
-
-
     /**
  * 图片自动获取宽度高度一致。
  * 在图片上加class="auto_img"
@@ -24,7 +23,7 @@
     function auto_img(){
         $('.auto_img').each(function() {
             var width = $(this).width();    // 图片实际宽度
-            $(this).css('height',parseInt(width));    // 图片实际宽度
+            $(this).css('height',parseInt(width)).css('opacity',1);    // 图片实际宽度
             console.log(width);
         });
     }

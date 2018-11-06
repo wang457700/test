@@ -80,6 +80,7 @@
 					  $('#min_' + id).attr('disabled',false);
 					};
 				}
+
 				if(type=='min'){
 					t.val(Math.abs(parseInt(t.val()))-1);
 					  if (parseInt(t.val())==1){
@@ -102,19 +103,23 @@
             $("input[name='goods_num[]']").focusout(function() {
                 var productid =$(this).data('productid');
                 var number =$(this).val();
+                if(number <= 0){
+                    $(this).val('1');
+                    good_cart_number(1,productid);
+                    return false
+				}
                 good_cart_number(number,productid);
                 var key = $(this).data('key');
                 total_price(key)
                 total();
             });
-
             //计算单条总价格
             function  total_price(id){
                 var t = $("#number_" + id);
-                var unit_price = $('#unit_price_' + id).val();
+                var price = $('#price_' + id).data('price');
                 var number = t.val();
-                var subtotal_price = Number(unit_price)*Number(number);
-                $('#subtotal_' + id).val(subtotal_price.toFixed(2)).data('subtotal',subtotal_price.toFixed(2));;
+                var subtotal_price = Number(price)*Number(number);
+                $('#subtotal_' + id).val(subtotal_price.toFixed(2)).data('subtotal',subtotal_price);;
             }
 
             //购物加减
@@ -129,6 +134,7 @@
                     }
                 });
             }
+
             //单选
             $(".js-check").on('click',function(){
                 var key =  $(this).data('key');
@@ -141,6 +147,7 @@
                 }
                 total();
             });
+
 
 			//全选或不选
 			$("#checked").on('click',function(){
@@ -182,6 +189,11 @@
                 $("input[class^='goods_num']").each(function(){
                     total_sum+= Number($(this).val());
                 });
+
+
+                console.log(goods_price);
+                console.log(total_sum);
+
                 $('#total_sum').text(Number(total_sum));
                 $('#total').text(goods_price.toFixed(2));
                // $('#total_no_yunxfei').text('$ '+ sum.toFixed(2));

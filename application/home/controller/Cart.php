@@ -91,6 +91,10 @@ class Cart extends Frontend
         $data['product_id'] = input('productid');
         $user_id = Session::get('user_id');
         $data['number'] = input('number',1);
+
+        if($data['number'] <= 0){
+            $this->error('数量必须大于0');
+        }
         $cart_order = Db::name('cart_order')->where(array('user_id'=>$user_id,'product_id'=>$data['product_id']))->update(array('number'=>$data['number']));
         if ($cart_order){
             $total = Db::name('cart_order')->where('user_id',Session::get('user_id'))->sum('number');

@@ -4,7 +4,7 @@
 		.mui-segmented-control .mui-control-item {padding: 0 10px;}
 </style>
 	<body style="background:#fff">
-
+	{include file="common/btn" /}
 	<form action="{:url('product/search')}" method="get">
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #7ac141;"></a>
@@ -21,19 +21,23 @@
 					{/foreach}
 				</div>
 			</div>
-
 			{if condition="$keyword"}
-				<div>
-					<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary my_order_segmented" style="background:#fff">
-						<a class="mui-control-item mui-active" href="#item1">全部</a>
-						<a class="mui-control-item" href="#item2">赫曼</a>
-						<a class="mui-control-item" href="#item3">調理寶</a>
-						<a class="mui-control-item" href="#item3">護雅</a>
-						<a class="mui-control-item" href="#item3">藍鵲</a>
-						<a class="mui-control-item" href="#item3">片芯及其他</a>
-					</div>
-				</div>
+				<!--<div>-->
+					<!--<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary my_order_segmented" style="background:#fff">-->
+						<!--<a class="mui-control-item mui-active" href="#item1">全部</a>-->
+						<!--<a class="mui-control-item" href="#item2">赫曼</a>-->
+						<!--<a class="mui-control-item" href="#item3">調理寶</a>-->
+						<!--<a class="mui-control-item" href="#item3">護雅</a>-->
+						<!--<a class="mui-control-item" href="#item3">藍鵲</a>-->
+						<!--<a class="mui-control-item" href="#item3">片芯及其他</a>-->
+					<!--</div>-->
+				<!--</div>-->
 				<div class="search_page">
+
+
+					{if condition="!$product_list"}
+						<div class="search_page_empty"></div>
+					{/if}
 					<div class="product_list">
 						<ul class="swiper-wrapper mui-row">
 
@@ -43,7 +47,7 @@
 
 								<a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
 									{if condition="$vo['cover']"}
-									<img src="{:cdnurl($vo['cover'])}"/>
+									<img src="{:cdnurl($vo['cover'])}" class="auto_img"/>
 									{else/}
 									<img src="__TMPL_PUBLIC__/img/default.jpg">
 									{/if}
@@ -52,13 +56,16 @@
 								<p><span class="color_ro">$</span><span class="color_ro font18">{:product_price($vo['product_id'])}</span>  <span class="price">${$vo.price}</span></p>
 							</li>
 							{/foreach}
-
 						</ul>
 					</div>
 
 					<div class="Info_list">
 						<div style="padding: 10px;border-bottom: 10px solid #efefef;">相關資訊</div>
 						<ul class="mui-table-view">
+
+							{if condition="!$product_list"}
+								<p style="text-align:center;padding: 20px;">没有相關資訊</p>
+							{/if}
 							{foreach name="new_list" item="vo"}
 								<li class="mui-table-view-cell">
 									<img src="{:fa_get_image_url($vo['smeta'])}"  class="img_left">
