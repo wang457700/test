@@ -604,18 +604,15 @@ function auto_height(){
     $('.swiper-container2 .swiper-slide').each(function(i){
         $(this).css('height',f1_height);
     });
-    console.log(f1_height);
-
 
     $('.row .n1').each(function(i){
-        $(this).css('height',f3_height);
+        var height =  $('.index_right').eq(i).height();
+        if(Number(height) > 300){
+            $(this).css('height',height);
+        }
     });
 
     var ads_right =  $('.ads_right').width();
-
-    {if condition="empty(sp_ip_ischina())"}
-    $('.ads_right iframe').attr('src','https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Flivesmart.hksr&tabs=timeline&width=' + parseInt(ads_right)+ '&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=278986015538188')
-    {/if}
     var container_width =  $(document.body).width();
     if(container_width <=1366 && container_width >=1024){
         $('.container').each(function(i){
@@ -636,6 +633,12 @@ function auto_height(){
     $('.swiper-container2 .list').each(function(i){
         //  $(this).css('margin-right',swiper2_width / 60);
     });
+
+
+
+    {if condition="empty(sp_ip_ischina())"}
+    $('.ads_right iframe').attr('src','https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Flivesmart.hksr&tabs=timeline&width=' + parseInt(ads_right)+ '&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=278986015538188')
+    {/if}
 }
 </script>
 

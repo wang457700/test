@@ -73,6 +73,12 @@ class Common
                     config('template.view_path',$template_url.'//pc//');
                     Config::set('view_replace_str.__TMPL_PUBLIC__', preg_replace("/\/public\/$/", '', $url . '/').'/template/pc/common');
             }
+
+            //微信浏览器
+            if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) {
+                config('template.view_path',$template_url.'//mobile//');
+                Config::set('view_replace_str.__TMPL_PUBLIC__', preg_replace("/\/public\/$/", '', $url . '/').'/template/mobile/common');
+            }
         }
     }
 

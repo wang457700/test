@@ -39,7 +39,7 @@
 										<p class="mui-pull-left" style="margin:  0;line-height: 40px;"><span class="color_ro">$</span><span class="color_ro font18" data-price='{$vo.price}' id="price_{$key}">{$vo.price}</span></p>
 										<div class="col-md-12 mui-pull-right number" style="">
 											<input id="min_{$key}" name="" type="button" value="-" class="reduce" {$vo['total']==1?'disabled="disabled"':''} onclick="on_number({$key},'min')">
-											<input id="number_{$key}" name="goods_num[]" type="text" value="{$vo.total}" style="width:40px;text-align: center;border: 0;height: 20px;" class="goods_num" data-key="{$key}">
+											<input id="number_{$key}" name="goods_num[]" type="text" value="{$vo.total}" style="width:40px;text-align: center;border: 0;height: 20px;padding: 0;" class="goods_num" data-key="{$key}" data-productid="{$vo.product_id}">
 											<input id="add_{$key}" name="" type="button" value="+" class="add" onclick="on_number({$key},'add')">
 										  </div>
 									</div>
@@ -58,8 +58,9 @@
 			</div>
 		</div>
 	</form>
-		{include file="common/script" /}
+	{include file="common/script" /}
 		<script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
+
 		<script>
 			mui('.mui-scroll-wrapper').scroll();
 
@@ -70,13 +71,14 @@
 				var t = $("#number_" + id);
                 var price = $('#price_' + id).data('price');
                 var goods = $('#goods_' + id).is(':checked');
+                var productid =t.data('productid');
 
 				if(type=='add'){
 					// 给获取的val加上绝对值，避免出现负数
 					t.val(Math.abs(parseInt(t.val()))+1);
 					  if (parseInt(t.val())!=1){
 					  $('#min_' + id).attr('disabled',false);
-					}; 
+					};
 				}
 				if(type=='min'){
 					t.val(Math.abs(parseInt(t.val()))-1);
@@ -92,16 +94,41 @@
 				if(goods == true){
 					total();
 				}
+                good_cart_number(number,productid);
 			}
 
             total();
 			//输入
             $("input[name='goods_num[]']").focusout(function() {
+                var productid =$(this).data('productid');
+                var number =$(this).val();
+                good_cart_number(number,productid);
                 var key = $(this).data('key');
-                total_price(key);
+                total_price(key)
                 total();
             });
 
+            //计算单条总价格
+            function  total_price(id){
+                var t = $("#number_" + id);
+                var unit_price = $('#unit_price_' + id).val();
+                var number = t.val();
+                var subtotal_price = Number(unit_price)*Number(number);
+                $('#subtotal_' + id).val(subtotal_price.toFixed(2)).data('subtotal',subtotal_price.toFixed(2));;
+            }
+
+            //购物加减
+            function good_cart_number(number,productid) {
+                $.ajax({
+                    type: "post",
+                    url: "{:url('cart/good_cart_number')}",
+                    dataType: 'json',
+                    data:{productid:productid,number:number},
+                    success: function(data) {
+
+                    }
+                });
+            }
             //单选
             $(".js-check").on('click',function(){
                 var key =  $(this).data('key');
@@ -159,6 +186,7 @@
                 $('#total').text(goods_price.toFixed(2));
                // $('#total_no_yunxfei').text('$ '+ sum.toFixed(2));
             }
+
 
             function cartform(){
                 var data = $('#cart-form').serializeArray();

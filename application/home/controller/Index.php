@@ -8,6 +8,7 @@ use app\common\library\Token;
 use app\common\model\Category as CategoryModel;
 use fast\Tree;
 use think\Session;
+use think\Request;
 
 
 class Index extends Frontend
@@ -63,7 +64,6 @@ class Index extends Frontend
 
         //浏览记录排序
         $product_history_list = Session::get('product_history');
-
         if($product_history_list){
             foreach ($product_history_list as $k => $v) {
                 $find = Db::name('goods')->field('product_name,product_id,product_name,cover,is_on_sale')->where(array('product_id'=>$v['product_history']))->find();

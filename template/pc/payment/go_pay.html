@@ -130,7 +130,9 @@
                	<div class="col-md-4" style="">
                		<div class="row btn-row">
 		               	<div class="col-md-6" style="">
-		                    <button type="button" class="btn btn-default btn-default-edit" style="margin-bottom: 1em;color: #333;">返回購物車</button>
+							<a href="{:url('cart/shopping_cart')}">
+		                    	<button type="button" class="btn btn-default btn-default-edit" style="margin-bottom: 1em;color: #333;">返回購物車</button>
+							</a>
 		                </div>
 		                 <div class="col-md-6" style="">
 							<button type="submit" class="btn btn-success btn-success-edit">支付訂單</button>
@@ -151,10 +153,10 @@
 
 	 <script type="text/javascript">
          function payform(){
-
+             $('#loading').show();
              $("#pay-form").ajaxSubmit(function(data) {
-                 $('#loading').show();
                  if(data.code == 0){
+                     $('#loading').hide();
                      $.message({message:data.msg,type:'warning',time:'3000'});
                  }else{
                      if (data.url){
