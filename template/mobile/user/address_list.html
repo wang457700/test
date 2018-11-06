@@ -4,7 +4,7 @@
 		.mui-input-group:after{height: 0}
 		.mui-button-row{padding:20px}
 		.mui-table-view{margin-top: 10px;}
-		.select_e{width:21%!important;font-size:12px!important}
+		.select_e{width:32%!important;font-size: 14px !important;}
 	</style>
 	<body>
 		{if condition="$row['id'] || input('add') == 'add'"}
@@ -28,24 +28,28 @@
 					</div>
 					<div class="mui-input-row">
 						<label>所在地區</label>
-						<select onchange="" class="select_e" id="district" name="district"  title="请选择所在区域" >
-							<option value="">选择区域</option>
-							{volist name="district" id="vo"}
-							<option value="{$vo['id']}" {if condition="$vo['id'] eq $row['district']"} selected="selected"{/if}  >{$vo['name']}</option>
-							{/volist}
-						</select>
-						<select onchange="get_area(this)" class="select_e" id="city" name="city"  title="请选择所在城市" required oninvalid="setCustomValidity('请选择城市！')" oninput="setCustomValidity('')">
-							<option value="">选择城市</option>
-							{volist name="city" id="vo"}
-							<option value="{$vo['id']}" {if condition="$vo['id'] eq $row['city']"} selected="selected"{/if}  >{$vo['name']}</option>
-							{/volist}
-						</select>
-						<select onchange="get_city(this)" class="select_e" id="province" name="province"  title="请选择所在省份" required oninvalid="setCustomValidity('请选择省份！')" oninput="setCustomValidity('')">
-							<option value="">选择省份</option>
-							{volist name="province" id="vo"}
-							<option value="{$vo['id']}" {if condition="$vo['id'] eq $row['province']"} selected="selected"{/if}  >{$vo['name']}</option>
-							{/volist}
-						</select>
+						<div style="width: 65%;float: right;">
+
+
+							<select onchange="get_city(this)" class="select_e" id="province" name="province"  title="请选择所在省份" required oninvalid="setCustomValidity('请选择省份！')" oninput="setCustomValidity('')">
+								<option value="">选择省份</option>
+								{volist name="province" id="vo"}
+								<option value="{$vo['id']}" {if condition="$vo['id'] eq $row['province']"} selected="selected"{/if}  >{$vo['name']}</option>
+								{/volist}
+							</select>
+							<select onchange="get_area(this)" class="select_e" id="city" name="city"  title="请选择所在城市" required oninvalid="setCustomValidity('请选择城市！')" oninput="setCustomValidity('')">
+								<option value="">选择城市</option>
+								{volist name="city" id="vo"}
+								<option value="{$vo['id']}" {if condition="$vo['id'] eq $row['city']"} selected="selected"{/if}  >{$vo['name']}</option>
+								{/volist}
+							</select>
+							<select onchange="" class="select_e" id="district" name="district"  title="请选择所在区域" >
+								<option value="">选择区域</option>
+								{volist name="district" id="vo"}
+								<option value="{$vo['id']}" {if condition="$vo['id'] eq $row['district']"} selected="selected"{/if}  >{$vo['name']}</option>
+								{/volist}
+							</select>
+						</div>
 					</div>
 					<div class="mui-input-row" style="height: 75px;">
 						<label>詳細地址</label>

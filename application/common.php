@@ -618,29 +618,21 @@ function sp_user_default_address()
  */
 function sp_ip_ischina()
 {
-//    $echo = false;
-//    $ip_info = Session::get('ip_info');
-//    if(empty($ip_info['countryCode'])){
-//        //$url = 'http://ip-api.com/json/'.request()->ip();
-//        $url = 'http://ip-api.com/json/14.127.80.57'; //模拟深圳ip
-//        //$url = 'http://ip-api.com/json/127.0.0.1'; //模拟香港ip
-//        $json = request_post($url,$data = 'null');
-//        $data = json_decode($json,true);
-//        if($data['status'] == 'success' && $data['countryCode'] =='CN'){
-//            $ip_info['countryCode'] = $data['countryCode'];
-//            $ip_info['time'] = time();
-//            Session::set('ip_info',$ip_info);
-//            $echo = true;
-//        }
-//    }
-//    if ($ip_info['countryCode'] =='CN'){
-//        $echo = true;
-//    }
-
-//    $url = 'http://ip-api.com/json/14.127.80.57'; //模拟深圳ip
-//    $json = request_post($url,$data = 'null');
-//    dump($json);
     $echo = false;
+    $ip_info = Session::get('ip_info');
+    if(empty($ip_info)){
+        // $url = 'http://ip.taobao.com/service/getIpInfo.php?ip=14.127.80.57'; //模拟深圳ip
+        // $url = 'http://ip.taobao.com/service/getIpInfo.php?ip=219.78.113.243'; //模拟香港ip
+        $url = 'http://ip.taobao.com/service/getIpInfo.php?ip='.request()->ip();
+        $json = request_post($url,$data = 'null');
+        $data = json_decode($json,true);
+        Session::set('ip_info',$data);
+    }else{
+        $data = $ip_info;
+    }
+    if($data['data']['country_id'] == 'CN'){
+        $echo = true;
+    }
     return $echo;
 }
 

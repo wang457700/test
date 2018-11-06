@@ -36,27 +36,6 @@
 
         var flyimg = $(this).data('flyimg');
         var img = $('#img_' + product_id);
-        if(flyimg){
-            var flyElm = img.clone().css('opacity','0.7');
-            flyElm.css({
-                'z-index': 9000,
-                'display': 'block',
-                'position': 'absolute',
-                'b': 'absolute',
-                'top': img.offset().top +'px',
-                'left': img.offset().left +'px',
-                'width':img.width() +'px',
-                'height':img.height() +'px'
-            });
-            $('body').append(flyElm);
-            flyElm.animate({
-                top:$('.shopping').offset().top,
-                left:$('.shopping').offset().left,
-                width:0,
-                height:0,
-                opacity:0,
-            },'slow');
-        }
         $.ajax({
             type: "POST",
             url: "{:url('cart/checkin_cart')}",
@@ -64,6 +43,27 @@
             data:{product_id:product_id},
             success: function(data) {
                 if (data.code) {
+                    if(flyimg){
+                        var flyElm = img.clone().css('opacity','0.7');
+                        flyElm.css({
+                            'z-index': 9000,
+                            'display': 'block',
+                            'position': 'absolute',
+                            'b': 'absolute',
+                            'top': img.offset().top +'px',
+                            'left': img.offset().left +'px',
+                            'width':img.width() +'px',
+                            'height':img.height() +'px'
+                        });
+                        $('body').append(flyElm);
+                        flyElm.animate({
+                            top:$('.shopping').offset().top,
+                            left:$('.shopping').offset().left,
+                            width:0,
+                            height:0,
+                            opacity:0,
+                        },'slow');
+                    }
                     $.message(data.msg);
                     $('#shopping_total').text(Number(data.total));
                 }else{

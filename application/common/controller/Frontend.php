@@ -46,9 +46,6 @@ class Frontend extends Controller
 
     public function _initialize()
     {
-
-
-//        dump(sp_ip_ischina());
         /***
          * 获取第三方接口数据
          */

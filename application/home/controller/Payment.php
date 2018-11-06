@@ -113,18 +113,21 @@ class Payment extends  Frontend
             if(empty($mastercard_session)){
                 $mastercard_session = $this->mastercard_session();
             }
-
             //回调查询订单是否支付
             if($session){
                 $sessionVersion = input('sessionVersion');
                 Db::name('payment')->insert(array('order_sn'=>$order_sn,'payment_type'=>$order_info['payment'],'time'=>date('Y-m-d H:i:s'),'sessionVersion'=>$sessionVersion,'session'=>$session));
                 $res = $this->pageState($session);
+
+                dump(sum_order_payableprice($res['order_sn']));
                 if($res){
                     if($res['order_sn'] == $order_sn && $res['amount'] == sum_order_payableprice($res['order_sn'])){
                         Session::set('mastercard_session',null);
                         $this->order_payment_success($order_sn,$order_info['payment']);
                         $this->redirect(url('payment/payment_done',array('order_sn'=>base64_encode($order_sn))));
                     }
+                }else{
+
                 }
             }
 
@@ -308,11 +311,10 @@ class Payment extends  Frontend
         $order = [];
         if( $data['success'] == 'true'){
             $order['order_sn'] =$data['receiptNumber'];
-            $order['amount'] = $data['displayData']['order']['amount'];
+            $order['amount'] = $data['displayData']['order']['amountDecimal'];
         }
         return $order;
     }
-
 
     public function resultIndicator(){
         $url = 'https://test-gateway.mastercard.com/api/rest/version/49';

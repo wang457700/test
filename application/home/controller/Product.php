@@ -54,10 +54,15 @@ class Product extends Frontend
 
         $product_list =  Db::name('goods')
             ->alias('a')
-            ->field('a.product_id,a.product_name,a.cover,a.discount_type,a.price,(select count(*) from fa_goods_comment where product_id=a.product_id) as comment_count,(select count(*) from fa_order where goods_id=a.product_id and (pay_status=2 or pay_status=3 or pay_status=5)) as order_count,if(a.discount_type = 2,a.pricevip,a.price) as price,if(a.discount_type = 3,a.discount_price,a.price) as price')
+            ->field('a.product_id,a.product_name,a.cover,a.discount_type,a.price,a.add_time,(select count(*) from fa_goods_comment where product_id=a.product_id) as comment_count,(select count(*) from fa_order where goods_id=a.product_id and (pay_status=2 or pay_status=3 or pay_status=5)) as order_count,if(a.discount_type = 2,a.pricevip,a.price) as price,if(a.discount_type = 3,a.discount_price,a.price) as price')
             ->where($where)
             ->order($order)
             ->paginate(10);
+
+        foreach ($product_list as $index => $item){
+            $item['price'] = product_price($item['product_id']);
+            $product_list[$index] = $item;
+        }
 
 //        $product_list1 = $product_list->all();
 //        foreach ($product_list1 as $index => $item){
@@ -74,6 +79,12 @@ class Product extends Frontend
         $sort_array = array('order_count'=>'銷量','price'=>'價格','comment_count'=>'評論','add_time'=>'新品');
         //手机端ajax数据
         if ($this->request->isPost() && input('search',false) ==false) {
+            foreach ($product_list as $index => $item){
+                if(strtotime($item['add_time'])+700000 > time()){
+                    $item['st'] = 'news';
+                };
+                $product_list[$index] = $item;
+            }
             $this->success('发布成功',url('user/share_success'),$product_list);
         }
 

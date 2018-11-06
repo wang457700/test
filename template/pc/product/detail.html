@@ -4,7 +4,7 @@
 <!--头部 end-->
 {include file="common/nav"/}
   <style type="text/css">
-      .product li {border-top:0;}
+      .product_detail .product li {border-top:0;margin-top: 10px;padding: 0;}
       input::-webkit-inner-spin-button,input::-webkit-outer-spin-button{-webkit-appearance:none}
       input[type=number]{-moz-appearance:textfield}
   </style>
@@ -105,13 +105,12 @@
             </div>
           </div>
 
-
           <div> 
               <div  class="xg-title">
                   相關產品
               </div>
-              <div class="product">
-                    <ul class="row" style="border-top: 1px solid #e5e5e5;margin: 0;">
+              <div class="product" >
+                    <ul class="row" style="border-top: 1px solid #e5e5e5;margin: 0;padding-top: 10px;">
                         {foreach name="goods_list" item="vo"}
                         {if condition="$key lt 5"}
                             <li class="col-md-2 col-xs-3">
