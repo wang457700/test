@@ -87,7 +87,7 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 .nav .list a:hover,.nav .list .now , .nav .list .active{color:#fff;background:#ffa800;}
 .nav .box {position:absolute;left:-5px;top: 35px;width:1170px;background:#FFF;overflow:hidden;height:0;filter:alpha(opacity=0);opacity:0;z-index: 9999;}
 .nav .cont {position:relative;padding:0px 0 0px 24px;}
-/* sublist */.sublist li {float:left;width:168px;padding-right:24px;padding-bottom:24px;}
+/* sublist */.sublist li {float:left;width:168px;padding-right:24px;padding-bottom:24px;height: 240px;overflow:  hidden;}
 .sublist li h3.mcate-item-hd {padding-left:2px;font-size:18px;height:26px;line-height:26px;font-weight:bold;}
 .sublist li p.mcate-item-bd {padding-left:2px;}
 .sublist li p.mcate-item-bd a {height:26px;line-height:26px;margin-right:5px;font-size: 14px;color:#666666;text-decoration:none;display:block;}
@@ -439,7 +439,7 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 
 
 
-/** å°ºå¯¸å…¼å®¹ **/
+/** Ã¥Â°ÂºÃ¥Â¯Â¸Ã¥â€¦Â¼Ã¥Â®Â¹ **/
 @media (max-width: 1366px){
 	.font24{font-size:18px;}
 	.f3 .n2 img{/* width:100%; *//* height: auto; */}
