@@ -85,9 +85,9 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 .nav .list a {display:block;text-align:center;font:bold 14px/36px "Helvetica Neue",Helvetica,Arial,sans-serif;color:#fff;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;background: url(../img/nav-right.png) no-repeat right;}
 .nav .list a:hover {color:#FFA304;}
 .nav .list a:hover,.nav .list .now , .nav .list .active{color:#fff;background:#ffa800;}
-.nav .box {position:absolute;left:-5px;top: 35px;width:1170px;background:#FFF;overflow:hidden;height:0;filter:alpha(opacity=0);opacity:0;z-index: 9999;}
+.nav .box {position:absolute;left:-5px;top: 35px;width: 100%;background:#FFF;overflow:hidden;height:0;filter:alpha(opacity=0);opacity:0;z-index: 9999;}
 .nav .cont {position:relative;padding:0px 0 0px 24px;}
-/* sublist */.sublist li {float:left;width:168px;padding-right:24px;padding-bottom:24px;height: 240px;overflow:  hidden;}
+/* sublist */.sublist li {float:left;width: 20%;padding-right:24px;padding-bottom:24px;height: 240px;overflow:  hidden;}
 .sublist li h3.mcate-item-hd {padding-left:2px;font-size:18px;height:26px;line-height:26px;font-weight:bold;}
 .sublist li p.mcate-item-bd {padding-left:2px;}
 .sublist li p.mcate-item-bd a {height:26px;line-height:26px;margin-right:5px;font-size: 14px;color:#666666;text-decoration:none;display:block;}
@@ -111,7 +111,7 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 .index_title {background: url(../img/title_ico.png) no-repeat;padding-left:30px;background-size: 25px;height:  25px;line-height: 25px;font-weight:  bold;font-size:  16px;}
 
 .advert{text-align: center;}
-.advert img{width: 98%;border-radius: 10px;}
+.advert img{width: 100%;border-radius: 10px;}
 
 .f3 .n1{background: #fff;padding: 0;border-radius: 0 0 0 10px;border-right: 1px solid #eee;overflow: hidden;}
 .f3 .n1 .adds{padding: 0.2em 0.6em;background: #fff;color: #00896f;border-radius: 2em;font-size: 1.9em;float: right;line-height: 0.8em;}
@@ -439,7 +439,7 @@ body{background: url(../img/index_bg.jpg) repeat-y;background-size: contain !imp
 
 
 
-/** Ã¥Â°ÂºÃ¥Â¯Â¸Ã¥â€¦Â¼Ã¥Â®Â¹ **/
+/** ÃƒÂ¥Ã‚Â°Ã‚ÂºÃƒÂ¥Ã‚Â¯Ã‚Â¸ÃƒÂ¥Ã¢â‚¬Â¦Ã‚Â¼ÃƒÂ¥Ã‚Â®Ã‚Â¹ **/
 @media (max-width: 1366px){
 	.font24{font-size:18px;}
 	.f3 .n2 img{/* width:100%; *//* height: auto; */}

@@ -445,10 +445,9 @@ class Product extends Backend
             $this->error(__('No rows were updated'));
         }
 
-
         $add = [];
         foreach ($insert as $k => $vo){
-            $goods = Db::name('goods')->where(array('freight_num'=>$vo['ProductCode']))->find();
+            $goods = Db::name('goods')->where(array('freight_num'=>$vo['ProductCode'],'is_on_sale'=>array('neq',2)))->find();
             $category = Db::name('category')->where(array('id'=>$vo['CatID']))->find();
             if(empty($goods) && !empty($category)){
                 $vo['discount_type'] = 1;

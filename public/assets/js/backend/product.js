@@ -358,6 +358,44 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
     });
 
 
+    $(document).on("click", ".btn-delone", function (e) {
+
+        var url = $(this).data('url');
+        e.stopPropagation();
+        e.preventDefault();
+        var that = this;
+
+        var top = $(that).offset().top - $(window).scrollTop();
+        var left = $(that).offset().left - $(window).scrollLeft() - 260;
+        if (top + 154 > $(window).height()) {
+            top = top - 154;
+        }
+        if ($(window).width() < 480) {
+            top = left = undefined;
+        }
+        Layer.confirm(
+            '你确定產品吗?',
+            {icon: 3, title: '温馨提示', offset: [top, left], shadeClose: true},
+            function (index) {
+                var table = $(that).closest('table');
+                var options = table.bootstrapTable('getOptions');
+
+                var options = {url: url};
+                Fast.api.ajax(options, function (data, ret) {
+                    // Fast.events.onAjaxSuccess(ret.msg);
+                    window.location.reload();
+                }, function (data, ret) {
+                    var error = $(element).data("error") || $.noop;
+                    if (typeof error === 'function') {
+                        if (false === error.call(element, data, ret)) {
+                            return false;
+                        }
+                    }
+                });
+                Layer.close(index);
+            }
+        );
+    });
 /**
  * 获取多级联动的商品分类
  */
