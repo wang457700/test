@@ -315,6 +315,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'jstree'], function (
                 Form.api.bindevent($("form[role=form]"), null, null, function () {
                     if ($("#treeview").size() > 0) {
                         var r = $("#treeview").jstree("get_all_checked");
+
                         $("input[name='row[no_product_categoryids]']").val(r.join(','));
                     }
                     return true;
@@ -341,6 +342,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'jstree'], function (
                                     //销毁已有的节点树
                                     $("#treeview").jstree("destroy");
                                     Controller.api.rendertree(data);
+
+                                    console.log(data);
                                 } else {
                                     Backend.api.toastr.error(ret.data);
                                 }

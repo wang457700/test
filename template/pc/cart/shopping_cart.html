@@ -78,7 +78,7 @@
 					{if condition="!$vo['checkbox']"}
 							<div class="row number">
 							  <div class="col-md-12" style="">
-								<input id="min_{$key}" name="" type="button" value="-" class="reduce" onclick="on_number({$key},'min')">
+								<input id="min_{$key}" name="" type="button" value="-" class="reduce" onclick="on_number({$key},'min')" {$vo['total']==1?'disabled':''}>
 								<input id="number_{$key}" name="goods_num[]" type="number" value="{$vo.total}" style="width:50px;text-align: center"  class="color_75" data-key="{$key}" data-productid="{$vo.product_id}">
 								<input id="add_{$key}" name="" type="button" value="+" class="add" onclick="on_number({$key},'add')">
 							  </div>
@@ -163,43 +163,62 @@
                  total();
              });
 
-			function on_number(id,type){
+			function on_number(key,type){
 				//初始化数量为1,并失效减
 				//$('#min' + id).attr('disabled',true);
 				//获得文本框对象
-				var t = $("#number_" + id);
+				var t = $("#number_" + key);
                 var productid = t.data('productid');
-
 				if(type=='add'){
+
 					// 给获取的val加上绝对值，避免出现负数
 					t.val(Math.abs(parseInt(t.val()))+1);
 					  if (parseInt(t.val())!=1){
-					  $('#min_' + id).attr('disabled',false);
+					  $('#min_' + key).attr('disabled',false);
 					};
-                    good_cart_number(t.val(),productid);
+                    good_cart_number(key,t.val(),productid,type);
 				}
 				if(type=='min'){
+
 					t.val(Math.abs(parseInt(t.val()))-1);
-					  if (parseInt(t.val())==1){
-					  $('#min_' + id).attr('disabled',true);
+					if (parseInt(t.val())==1){
+					  $('#min_' + key).attr('disabled',true);
 					};
-                    good_cart_number(t.val(),productid);
+                    good_cart_number(key,t.val(),productid,type);
 				}
-                total_price(id);
+                total_price(key);
 				total();
 			}
 
-             $("input[name='goods_num[]']").focusout(function() {
-                 var key = $(this).data('key');
-                 total_price(key);
-                 total();
-			 });
+			//购物加减
+			function good_cart_number(key,number,productid,type){
+                var t = $("#number_" + key);
+				$.ajax({
+					type: "post",
+					url: "{:url('cart/good_cart_number')}",
+					dataType: 'json',
+					data:{productid:productid,number:number},
+					success: function(data) {
+						if(data.code){
+							$('.shopping span').text(Number(data.data.total));
+						}else{
+							$.message({message:data.msg,type:'warning',time:'3000'});
+                            $("#number_" + key).val(data.data.number);
+						}
+                        total_price(key);
+                        total();
+                    }
+				});
+			}
 
-             $("input[name='goods_num[]']").focusout(function() {
+        	$("input[name='goods_num[]']").focusout(function() {
                  var key = $(this).data('key');
+                 var productid = $(this).data('productid');
+                 var number = $(this).val();
+                 good_cart_number(key,number,productid,'add');
                  total_price(key);
                  total();
-			 });
+			});
 
              //计算单条总价格
 			 function  total_price(id){
@@ -217,18 +236,14 @@
 				var total_sum=0;
 				$("input[class^='subtotal']").each(function(){
 						sum+= Number($(this).val());
-						console.log($(this).val());
 				});
                 $("input[name^='goods_num[]']").each(function(){
                     total_sum+= Number($(this).val());
                 });
 				$('#total_sum').text(Number(total_sum));
-
-				console.log(total_sum);
 				$('#total').text('$ '+ sum.toFixed(2));
 				$('#total_no_yunxfei').text('$ '+ sum.toFixed(2));
 			}
-
 
             $("input[name^='goods_id[]']").each(function(){
                 if(!$(this).attr('disabled')){
@@ -236,36 +251,19 @@
 				}
             });
 
-			 //购物加减
-			 function good_cart_number(number,productid) {
-                 $.ajax({
-                     type: "post",
-                     url: "{:url('cart/good_cart_number')}",
-                     dataType: 'json',
-                     data:{productid:productid,number:number},
-                     success: function(data) {
-						if(data.code){
-                            $('.shopping span').text(Number(data.data.total));
-						}
-                     }
-                 });
-             }
-
             function cartform(){
                 var data = $('#cart-form').serializeArray();
 
                 $.each(data, function(i, field){
-                    console.log(field.name);
                     if(field.name == 'goods_id[]'){
-                        console.log(1);
+
 					}else {
-                        console.log(0);
+
 					}
                 });
 
                 // jquery 表单提交
                 $("#cart-form").ajaxSubmit(function(data){
-                    console.log(data);
                     if(data.code == 0){
                         $.message({message:data.msg,type:'warning',time:'3000'});
                     }else{

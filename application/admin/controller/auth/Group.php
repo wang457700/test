@@ -145,13 +145,17 @@ class Group extends Backend
             }
             $params['rules'] = explode(',', $params['rules']);
 
+
+
             $parentmodel = model("AuthGroup")->get($params['pid']);
             if (!$parentmodel)
             {
                 $this->error(__('The parent group can not found'));
             }
+
             // 父级别的规则节点
             $parentrules = explode(',', $parentmodel->rules);
+
             // 当前组别的规则节点
             $currentrules = $this->auth->getRuleIds();
             $rules = $params['rules'];
@@ -160,6 +164,9 @@ class Group extends Backend
             // 如果当前组别不是超级管理员则需要过滤规则节点,不能超当前组别的权限
             $rules = in_array('*', $currentrules) ? $rules : array_intersect($currentrules, $rules);
             $params['rules'] = implode(',', $rules);
+
+            dump($params);
+            dump($currentrules);
             if ($params)
             {
                 $row->save($params);

@@ -75,7 +75,7 @@
                         郵寄重量：{$goods.weight_ioc}克（g）
                     </div>
                     <div class="col-md-6" style="">
-                        可售庫存：{$goods.stock}件
+                        可售庫存：{$goods.stock|default='0'}件
                     </div>
                 </div>
                 {if condition="!$tip"}

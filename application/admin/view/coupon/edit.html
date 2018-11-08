@@ -1,8 +1,8 @@
 <style type="text/css">
     .form-group label{padding: 5px;font-weight: 500;color: #000;}
-
     .danxuan .fa-circle{color: #eee;}
     .danxuan.on .fa-circle{display: inline-block;color: #18bc9b;}
+    #treeview .jstree-leaf {width: auto;}
 </style>
 
 <form id="edit-form" class="form-horizontal form-ajax" role="form" data-toggle="validator" method="POST" action="" style="min-height: 450px;">
@@ -46,7 +46,7 @@
     </div>
 
     <div class="form-group">
-        <input type="hidden" name="row[no_product_categoryids]" value="{$row.no_product_categoryids}"/>
+        <input type="hidden" name="row[no_product_categoryids]" value=""/>
         <label class="control-label col-xs-12 col-sm-2">不可用分類</label>
         <div class="col-xs-12 col-sm-8">
             <span class="text-muted"><input type="checkbox" name="" id="checkall" /> <label for="checkall"><small>{:__('Check all')}</small></label></span>

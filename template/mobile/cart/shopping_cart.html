@@ -95,22 +95,30 @@
 				if(goods == true){
 					total();
 				}
-                good_cart_number(number,productid);
+                good_cart_number(id,t.val(),productid,type);
 			}
 
             total();
 			//输入
             $("input[name='goods_num[]']").focusout(function() {
-                var productid =$(this).data('productid');
-                var number =$(this).val();
-                if(number <= 0){
-                    $(this).val('1');
-                    good_cart_number(1,productid);
-                    return false
-				}
-                good_cart_number(number,productid);
+                // var productid =$(this).data('productid');
+                // var number =$(this).val();
+				//
+                // if(number <= 0){
+                //     $(this).val('1');
+                //     good_cart_number(1,productid);
+                //     return false
+				// }
+				//
+                // good_cart_number(number,productid);
+                // var key = $(this).data('key');
+                // total_price(key)
+                // total();
                 var key = $(this).data('key');
-                total_price(key)
+                var productid = $(this).data('productid');
+                var number = $(this).val();
+                good_cart_number(key,number,productid,'add');
+                total_price(key);
                 total();
             });
             //计算单条总价格
@@ -123,14 +131,21 @@
             }
 
             //购物加减
-            function good_cart_number(number,productid) {
+            function good_cart_number(key,number,productid,type){
                 $.ajax({
                     type: "post",
                     url: "{:url('cart/good_cart_number')}",
                     dataType: 'json',
                     data:{productid:productid,number:number},
                     success: function(data) {
-
+                        if(data.code){
+                            $('.shopping span').text(Number(data.data.total));
+                        }else{
+                            $.message({message:data.msg,type:'warning',time:'3000'});
+                            $("#number_" + key).val(data.data.number);
+                        }
+                        total_price(key);
+                        total();
                     }
                 });
             }

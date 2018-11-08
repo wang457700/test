@@ -4,6 +4,7 @@ namespace app\api\controller;
 
 use app\common\controller\Api;
 use think\Db;
+use think\Session;
 
 class Hksr extends Api
 {
@@ -12,16 +13,16 @@ class Hksr extends Api
 
     public function system_login()
     {
-
         $url='http://103.254.210.215//hksrapisttest/api.asmx/System_Login';
         $post_data=array(
             'sUsername'=>101,
             'sPassword'=>101,
         );
-
         $cookies = dirname(__FILE__).'/cookie.txt';
         $res=$this->curl_post($url,$post_data,$cookies);
-        print_r($res);die;
+        $objectxml = simplexml_load_string($res);
+        $cookie=json_decode($objectxml,true);
+        return $cookie;
     }
 
 
@@ -32,7 +33,6 @@ class Hksr extends Api
             'sUsername'=>101,
             'sPassword'=>101,
         );
-
         $cookies = dirname(__FILE__).'/cookie.txt';
         $res=$this->curl_post($url,$post_data,$cookies);
         print_r($res);die;
@@ -52,12 +52,26 @@ class Hksr extends Api
     }
 
 
+
+    /**
+     * 获取当前商店ID
+     **/
+    public function shop_getid(){
+        $post_data=array();
+        $url="http://103.254.210.215/hksrapisttest/api.asmx/Shop_GetID";
+        $cookie = dirname(__FILE__).'/cookie.txt';
+        $res=$this->curl_post($url,$post_data,$cookie);
+        $objectxml = simplexml_load_string($res);
+        $shopid=json_decode($objectxml,true);
+        return $shopid;
+    }
+
     /***
      * 获取商品列表
      */
 
     public function Product_GetList(){
-        $url='http://103.254.210.215//hksrapisttest/api.asmx/Product_GetList';
+        $url='http://103.254.210.215/hksrapisttest/api.asmx/Product_GetList';
         $post_data=array(
             'iC1'=>-1,
             'iC1S1'=>-1,
@@ -66,7 +80,7 @@ class Hksr extends Api
             'sOrderBy'=>'BC',
             'bAscend'=>'true',
             'iRecFrom'=>0,
-            'iRecTo'=>0
+            'iRecTo'=>20
         );
 
         $cookies = dirname(__FILE__).'/cookie.txt';
@@ -108,6 +122,7 @@ class Hksr extends Api
 
     /***
      *   查询库存商品信息
+     *  $sBC = 商品条码
      * return
      * SN：Shop number
      * PNxL：Product name according to login user langID
@@ -117,18 +132,18 @@ class Hksr extends Api
      * ST：Stock level
      * DLU
     */
- public function Product_GetFullStockListByBC(){
+ public function Product_GetFullStockListByBC($sBC){
 
+     $shop_getid = Session::get('shop_getid');
      $url='http://103.254.210.215//hksrapisttest/api.asmx/Product_GetFullStockListByBC';
      $post_data=array(
-         'sBC'=>'0100317518055010'  //填写商品码
+         'sBC'=>$sBC  //填写商品码
      );
      $cookies = dirname(__FILE__).'/cookie.txt';
      $res=$this->curl_post($url,$post_data,$cookies);
      $arr="SN|PNxL|BC|UBC|UNxL|ST|DLU";
      $xmlarray = $this->xml_array_list($res,$arr);
-
-     dump($xmlarray);
+     return $xmlarray[$shop_getid]['ST'];
  }
 
     /***
@@ -255,8 +270,6 @@ class Hksr extends Api
         $res=$this->curl_post($url,$post_data,$cookie);
         print_r($res);
 
-
-
     }
 
     /**
@@ -316,18 +329,6 @@ class Hksr extends Api
     }
 
 
-
-    /**
-     * 获取当前商店ID
-     **/
-    public function shop_getid(){
-        $url="http://103.254.210.215/hksrapisttest/api.asmx/Shop_GetID";
-        $cookie = dirname(__FILE__).'/cookie.txt';
-        $res=$this->curl_post($url,$post_data,$cookie);
-        $arr="SN";
-        $xmlarray = $this->xml_array_find($res,$arr);
-        return $xmlarray['SN'];
-    }
 
 
 //    public static function curl_get($url){

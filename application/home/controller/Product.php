@@ -8,6 +8,7 @@ use app\common\library\Token;
 use app\common\model\Category as CategoryModel;
 use fast\Tree;
 use think\Session;
+use app\api\controller\Hksr;
 
 
 class Product extends Frontend
@@ -174,6 +175,11 @@ class Product extends Frontend
             ->paginate(5);
 
 
+//        erun 接口
+//        $hksr = new Hksr;
+//        $sBC = $goods['freight_num'];
+//        $goods['stock'] = $hksr->Product_GetFullStockListByBC($sBC);
+
         //判断ip
         //香港
         $from_bow = 0;
@@ -196,10 +202,10 @@ class Product extends Frontend
             $tip = '内地用户可以到内地专区购买  <a href="'.url('product/index',array('categoryid'=>72)).'" style="color: #ffa800;">立即跳转</a>';
         }
 
-
         $tree = Tree::instance();
         $level = array('1'=>'普通会员','2'=>'白金会员','3'=>'金牌会员','4'=>'商业会员');
         $getparents = $tree->getParents($goods['cat_id'],true);
+
         $img_url=explode(',',$goods['img_url']);
         $this->view->assign("comment_list",$comment_list);
         $this->view->assign("level",$level);

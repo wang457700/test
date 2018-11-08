@@ -12,9 +12,14 @@ use fast\Arr;
 use think\Db;
 use fast\Tree;
 use think\Session;
+use app\api\controller\Hksr;
+
 class Cart extends Frontend
 {
     protected $noNeedLogin = ['checkin_cart','order_ok'];
+
+
+
     public function checkin_cart()
     {
         //创建游客
@@ -26,6 +31,20 @@ class Cart extends Frontend
         $user_id = Session::get('user_id');
         $data['number'] = input('number',1);
         $goods = Db::name('goods')->where('product_id',$data['product_id'])->find();
+        $cart_order = Db::name('cart_order')->where(array('user_id'=>$user_id,'product_id'=>$data['product_id']))->find();
+
+
+        if(empty($data['number'])){
+            $data = array(
+                'code' => 0,
+                'msg' => '加入購物車失敗！',
+            );
+            $this->ajaxReturn($data);
+        }
+//        erun 接口
+//        $hksr = new Hksr;
+//        $sBC = $goods['freight_num'];
+//        $goods['stock'] = $hksr->Product_GetFullStockListByBC($sBC);
 
         $tree = Tree::instance();
         $china_categoryids = $tree->getChildrenIds(input('categoryid',72),true);
@@ -50,7 +69,8 @@ class Cart extends Frontend
             }
         }
 
-        if($goods['stock'] <= 0 && $goods['pre_order'] == 0){
+
+        if(($goods['stock'] <= 0 || $goods['stock'] < $cart_order['number'] + $data['number']) && $goods['pre_order'] == 0){
             $data = array(
                 'code' => 0,
                 'msg' => '庫存不足！',
@@ -60,14 +80,13 @@ class Cart extends Frontend
 
         $data['user_id'] = Session::get('user_id');
         $data['add_time'] = date('Y-m-d H:i:s');
-
         $cart_order = Db::name('cart_order')->where(array('user_id'=>$user_id,'product_id'=>$data['product_id']))->find();
         if(empty($cart_order)){
             $res = Db::name('cart_order')->insertGetId($data);
         }else{
             $res = Db::name('cart_order')->where(array('user_id'=>$user_id,'product_id'=>$data['product_id']))->setInc('number',$data['number']);
         }
-        $total = Db::name('cart_order')->where('user_id',Session::get('user_id'))->sum('number');
+        $total =count_cart_num($user_id);
         if ($res) {
             $data = array(
                 'code' => 1,
@@ -91,13 +110,21 @@ class Cart extends Frontend
         $data['product_id'] = input('productid');
         $user_id = Session::get('user_id');
         $data['number'] = input('number',1);
+        $goods = Db::name('goods')->where('product_id',$data['product_id'])->find();
+        $cart_order = Db::name('cart_order')->where(array('user_id'=>$user_id,'product_id'=>$data['product_id']))->find();
 
         if($data['number'] <= 0){
-            $this->error('数量必须大于0');
+            $this->error('数量必须大于0','',array('number'=>1));
+        }
+
+        if($goods['pre_order'] != 1){
+            if($goods['stock'] <= 0 || $goods['stock'] < $data['number']){
+                $this->error('庫存不足！','',array('number'=>$cart_order['number']));
+            }
         }
         $cart_order = Db::name('cart_order')->where(array('user_id'=>$user_id,'product_id'=>$data['product_id']))->update(array('number'=>$data['number']));
         if ($cart_order){
-            $total = Db::name('cart_order')->where('user_id',Session::get('user_id'))->sum('number');
+            $total =count_cart_num($user_id);
             $this->success('成功！','',array('total'=>$total));
         }
     }
@@ -140,6 +167,8 @@ class Cart extends Frontend
                         $total+=($goods['price']*$v['goods_num']);
                         $num+=$v['goods_num'];
                 }
+
+
                 $address_list=Db::name('user_address')->where(array('user_id'=>$user_id,'status'=>1))->select();
                 $address_default=Db::name('user_address')->where(array('user_id'=>$user_id,'status'=>1,'default'=>1))->find();
                 /*运费*/
@@ -164,7 +193,6 @@ class Cart extends Frontend
 
             }else{
                 $this->error('請選擇商品！',url('cart/shopping_cart'));
-
             }
 
         $this->assign('title','確認訂單');
@@ -216,8 +244,11 @@ class Cart extends Frontend
                         'discount_type'=>$goods['discount_type'],
                         'price'=>$goods['price']
                 );
-                if($goods['stock'] <= 0 && $goods['pre_order'] == 0){
-                    $this->error('當前有商品"'.$goods['product_name'].'"庫存不足！',url('cart/shopping_cart'));
+
+                if($goods['pre_order'] != 1){
+                    if($goods['stock'] <= 0 || $goods['stock'] < $v['goods_num']){
+                        $this->error('提交失败，當前有商品"'.$goods['product_name'].'"庫存不足，最多可购买數量'.$goods['stock'].'！',url('cart/shopping_cart'));
+                    }
                 }
             }
 
@@ -309,7 +340,12 @@ class Cart extends Frontend
     public function shopping_cart(){
 
         $user_id=  Session::get('user_id');
-        $list= Db::name('cart_order')->alias('a')->field('c.*,a.product_id as goods_id,a.user_id,a.cart_id')->join('__GOODS__ c','a.product_id=c.product_id','RIGHT')->where('user_id', $user_id)->group('c.product_id')->select();
+        $list= Db::name('cart_order')->alias('a')
+            ->field('c.*,a.product_id as goods_id,a.user_id,a.cart_id')
+            ->join('__GOODS__ c','a.product_id=c.product_id','RIGHT')
+            ->where('user_id', $user_id)
+            ->where('is_on_sale', 1)
+            ->group('c.product_id')->select();
         $sum=0;
         $goods_sum=0;
         foreach ($list as $key=>$item){

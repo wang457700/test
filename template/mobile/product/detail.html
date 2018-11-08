@@ -37,6 +37,7 @@
 								  <img src="__PUBLIC__/{$goods.cover}" id="img_{$goods.product_id}" class="auto_img">
 							  </a>
 						  </div>
+						 {if condition="!empty($goods['img_url'])"}
 						  {foreach name="img_url" item="vo"}
 				            <div class="swiper-slide"> 
 				              <a href="#"  target="_bank">
@@ -44,6 +45,7 @@
 				              </a>
 				            </div>
 						  {/foreach}
+						  {/if}
 				      </div>
 				      <!-- 如果需要分页器 -->
 				      <div class="swiper-pagination"></div>

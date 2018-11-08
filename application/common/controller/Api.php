@@ -114,9 +114,9 @@ class Api
             //初始化
             $this->auth->init($token);
             //检测是否登录
-            if (!Session::get('user_id')) {
-                $this->error(__('Please login first'), null, 401);
-            }
+//            if (!Session::get('user_id')) {
+//                $this->error(__('Please login first'), null, 401);
+//            }
 
 //            // 判断是否需要验证权限
 //            if (!$this->auth->match($this->noNeedRight))
