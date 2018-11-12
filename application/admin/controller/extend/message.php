@@ -63,7 +63,7 @@ class Message extends Backend
 
 
     /**
-     * 搜索产品为空，提交货品详情
+     * 搜索产品为空，提交货品詳情
      */
     public function searchindex(){
         if ($this->request->isAjax()) {

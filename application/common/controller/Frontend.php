@@ -24,13 +24,13 @@ class Frontend extends Controller
     protected $layout = '';
 
     /**
-     * 无需登录的方法,同时也就不需要鉴权了
+     * 無需登录的方法,同时也就不需要鉴权了
      * @var array
      */
     protected $noNeedLogin = [];
 
     /**
-     * 无需鉴权的方法,但需要登录
+     * 無需鉴权的方法,但需要登录
      * @var array
      */
     protected $noNeedRight = [];
@@ -112,12 +112,14 @@ class Frontend extends Controller
             $this->auth->init($token);
             //检测是否登录
             if (!Session::get('user_id')) {
-                $this->error(__('Please login first'), 'user/login');
+              //  $this->error(__('Please login first'), 'user/login');
+                $this->redirect(url('home/user/login'));
             }
 
             // 检测游客权限
             if ($this->auth->match($this->noTouristAuthority) && $user['user_type'] == 3) {
-                $this->error(__('游客没有权限访问'), 'user/center');
+                //$this->error(__('遊客沒有权限訪問'), 'user/center');
+                $this->redirect(url('home/user/center'));
             }
 
 
@@ -171,7 +173,7 @@ class Frontend extends Controller
 
         $upload = \app\common\model\Config::upload();
 
-        // 上传信息配置后
+        // 上傳信息配置后
         Hook::listen("upload_config_init", $upload);
 
         // 配置信息

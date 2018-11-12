@@ -151,7 +151,7 @@ define(['jquery', 'bootstrap', 'toastr', 'layer', 'lang'], function ($, undefine
                                 // Firefox和Chrome早期版本中带有前缀
                                 var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
                                 if (MutationObserver) {
-                                    // 选择目标节点
+                                    // 選擇目标节点
                                     var target = layerfooter[0];
                                     // 创建观察者对象
                                     var observer = new MutationObserver(function (mutations) {
@@ -185,11 +185,11 @@ define(['jquery', 'bootstrap', 'toastr', 'layer', 'lang'], function ($, undefine
                 }
                 return Layer.open(options);
             },
-            //关闭窗口并回传数据
+            //關閉窗口并回传数据
             close: function (data) {
                 var index = parent.Layer.getFrameIndex(window.name);
                 var callback = parent.$("#layui-layer" + index).data("callback");
-                //再执行关闭
+                //再执行關閉
                 parent.Layer.close(index);
                 //再调用回传函数
                 if (typeof callback === 'function') {
@@ -220,7 +220,7 @@ define(['jquery', 'bootstrap', 'toastr', 'layer', 'lang'], function ($, undefine
                     //重设iframe高度
                     $("iframe", layero).height(layero.height() - titHeight - btnHeight);
                 }
-                //修复iOS下弹出窗口的高度和iOS下iframe无法滚动的BUG
+                //修复iOS下弹出窗口的高度和iOS下iframe無法滚动的BUG
                 if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
                     var titHeight = layero.find('.layui-layer-title').outerHeight() || 0;
                     var btnHeight = layero.find('.layui-layer-btn').outerHeight() || 0;
@@ -304,7 +304,7 @@ define(['jquery', 'bootstrap', 'toastr', 'layer', 'lang'], function ($, undefine
             Layer.config({
                 skin: 'layui-layer-fast'
             });
-            // 绑定ESC关闭窗口事件
+            // 绑定ESC關閉窗口事件
             $(window).keyup(function (e) {
                 if (e.keyCode == 27) {
                     if ($(".layui-layer").size() > 0) {

@@ -59,7 +59,7 @@ class Index extends Uc
 
     public function index()
     {
-        $this->error("当前插件暂无前台页面");
+        $this->error("当前插件暂無前台页面");
         return;
     }
 
@@ -202,7 +202,7 @@ class Index extends Uc
     }
 
     /**
-     * 更新用户信息,包含用户名,密码,邮箱,手机号和其它扩展信息
+     * 更新用户信息,包含用戶名,密码,邮箱,手机号和其它扩展信息
      */
     protected function updateinfo()
     {

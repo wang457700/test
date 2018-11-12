@@ -8,7 +8,7 @@ use app\common\controller\Backend;
  * 附件管理
  *
  * @icon fa fa-circle-o
- * @remark 主要用于管理上传到又拍云的数据或上传至本服务的上传数据
+ * @remark 主要用于管理上傳到又拍云的数据或上傳至本服务的上傳数据
  */
 class Attachment extends Backend
 {
@@ -55,7 +55,7 @@ class Attachment extends Backend
     }
 
     /**
-     * 选择附件
+     * 選擇附件
      */
     public function select()
     {

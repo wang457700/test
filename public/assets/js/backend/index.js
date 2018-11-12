@@ -22,7 +22,7 @@ define(['jquery', 'bootstrap', 'backend', 'addtabs', 'adminlte', 'form'], functi
                 e.stopPropagation();
             });*/
 
-            //修复在移除窗口时下拉框不隐藏的BUG
+            //修复在移除窗口时下拉框不隱藏的BUG
             $(window).on("blur", function () {
                 $("[data-toggle='dropdown']").parent().removeClass("open");
                 if ($("body").hasClass("sidebar-open")) {
@@ -170,10 +170,10 @@ define(['jquery', 'bootstrap', 'backend', 'addtabs', 'adminlte', 'form'], functi
                 checkupdate('', true);
             });
 
-            //切换左侧sidebar显示隐藏
+            //切换左侧sidebar显示隱藏
             $(document).on("click fa.event.toggleitem", ".sidebar-menu li > a", function (e) {
                 $(".sidebar-menu li").removeClass("active");
-                //当外部触发隐藏的a时,触发父辈a的事件
+                //当外部触发隱藏的a时,触发父辈a的事件
                 if (!$(this).closest("ul").is(":visible")) {
                     //如果不需要左侧的菜单栏联动可以注释下面一行即可
                     $(this).closest("ul").prev().trigger("click");
@@ -278,6 +278,11 @@ define(['jquery', 'bootstrap', 'backend', 'addtabs', 'adminlte', 'form'], functi
                     } else {
 
                     }
+
+                    StranBody();
+                    setInterval(function() {
+                        StranBody();
+                    }, 5000);
                 });
 
                 //点击左侧菜单栏
@@ -295,6 +300,11 @@ define(['jquery', 'bootstrap', 'backend', 'addtabs', 'adminlte', 'form'], functi
                             }
                         }
                     }
+
+
+
+
+
                 });
 
                 var mobilenav = $(".mobilenav");
@@ -498,6 +508,5 @@ define(['jquery', 'bootstrap', 'backend', 'addtabs', 'adminlte', 'form'], functi
             });
         }
     };
-
     return Controller;
 });

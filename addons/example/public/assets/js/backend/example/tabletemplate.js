@@ -45,7 +45,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template'], function
                 search: false,
                 //启用普通表单搜索
                 commonSearch: false,
-                //可以控制是否默认显示搜索单表,false则隐藏,默认为false
+                //可以控制是否默认显示搜索单表,false则隱藏,默认为false
                 searchFormVisible: false,
                 //分页大小
                 pageSize: 12
@@ -60,7 +60,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template'], function
                 table.bootstrapTable('refreshOptions', {templateView: !options.templateView});
             });
 
-            //点击详情
+            //点击詳情
             $(document).on("click", ".btn-detail[data-id]", function () {
                 Backend.api.open('example/bootstraptable/detail/ids/' + $(this).data('id'), __('Detail'));
             });

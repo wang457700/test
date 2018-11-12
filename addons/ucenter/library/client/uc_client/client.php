@@ -527,7 +527,7 @@ function uc_user_synlogout()
 /**
  * 修改用户信息
  * @param int $uid 会员ID
- * @param string $username 用户名
+ * @param string $username 用戶名
  * @param string $password 密码
  * @param string $email 邮箱
  * @param string $mobile 手机号

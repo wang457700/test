@@ -40,8 +40,8 @@
                         <div class="form-group">
                           <label class="col-sm-2 control-label"><span class="color_ro">＊</span>所在地區</label>
                             <div class="col-sm-3">
-                                <select onchange="get_city(this)" class="form-control select_e" id="province" name="province"  title="请选择所在省份">
-                                    <option value="">选择省份</option>
+                                <select onchange="get_city(this)" class="form-control select_e" id="province" name="province"  title="请選擇所在省份">
+                                    <option value="">選擇省份</option>
 
                                     {volist name="province" id="vo"}
                                     <option value="{$vo['id']}" {if condition="$vo['id'] eq $row['province']"} selected="selected"{/if}  >{$vo['name']}</option>
@@ -49,8 +49,8 @@
                                 </select>
                             </div>
                             <div class="col-sm-3">
-                                <select onchange="get_area(this)" id="city" class="form-control select_e" name="city" title="请选择所在城市">
-                                    <option value="" >选择城市</option>
+                                <select onchange="get_area(this)" id="city" class="form-control select_e" name="city" title="请選擇所在城市">
+                                    <option value="" >選擇城市</option>
                                     {volist name="city" id="vo"}
                                     <option value="{$vo['id']}" {if condition="$vo['id'] eq $row['city']"} selected="selected"{/if}  >{$vo['name']}</option>
                                     {/volist}
@@ -58,7 +58,7 @@
                             </div>
                             <div class="col-sm-3">
                                 <select id="district" class="form-control select_e" name="district">
-                                    <option value="0">选择区域</option>
+                                    <option value="0">選擇区域</option>
 
                                     {volist name="district" id="vo"}
                                     <option value="{$vo['id']}" {if condition="$vo['id'] eq $row['district']"} selected="selected"{/if}  >{$vo['name']}</option>
@@ -92,7 +92,7 @@
                           </div>
                         </div>
                         <div class="form-group" id="card_div" style="display:{$row['province']==47494?'none':''}{$row['province']==47506?'none':''}">
-                          <label for="" class="col-sm-2 control-label"><span class="color_ro">*</span>上传身份证</label>
+                          <label for="" class="col-sm-2 control-label"><span class="color_ro">*</span>上傳身份证</label>
                           <div class="col-sm-10" >
                               <div id="preview_z" style="">
                                      <img id="card1"  class="upload_image col-sm-6" src="__PUBLIC__{$row['cards'][0]}" onclick="$('#image').click();$('#imagetype').val('card1')" >
@@ -236,7 +236,7 @@
                   return;
               },
               success: function(v) {
-                  v = '<option value="0">选择省份</option>'+ v;
+                  v = '<option value="0">選擇省份</option>'+ v;
                   $('#province').empty().html(v);
               }
           });
@@ -272,7 +272,7 @@
                   return;
               },
               success: function(v) {
-                  v = '<option value="0">选择城市</option>'+ v;
+                  v = '<option value="0">選擇城市</option>'+ v;
                   $('#city').empty().html(v);
               }
           });
@@ -300,7 +300,7 @@
                   return;
               },
               success: function(v) {
-                  v = '<option>选择区域</option>'+ v;
+                  v = '<option>選擇区域</option>'+ v;
                   $('#district').empty().html(v);
               }
           });

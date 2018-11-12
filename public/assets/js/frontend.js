@@ -9,15 +9,15 @@ define(['fast', 'template', 'moment'], function (Fast, Template, Moment) {
                 var element = $(this).data("input-id") ? $("#" + $(this).data("input-id")) : $("input[name='" + type + "']", $(this).closest("form"));
                 var text = type === 'email' ? '邮箱' : '手机号码';
                 if (element.val() === "") {
-                    Layer.msg(text + "不能为空！");
+                    Layer.msg(text + "不能為空！");
                     element.focus();
                     return false;
                 } else if (type === 'mobile' && !element.val().match(/^1[3-9]\d{9}$/)) {
-                    Layer.msg("请输入正确的" + text + "！");
+                    Layer.msg("请输入正確的" + text + "！");
                     element.focus();
                     return false;
                 } else if (type === 'email' && !element.val().match(/^[\w\+\-]+(\.[\w\+\-]+)*@[a-z\d\-]+(\.[a-z\d\-]+)*\.([a-z]{2,4})$/)) {
-                    Layer.msg("请输入正确的" + text + "！");
+                    Layer.msg("请输入正確的" + text + "！");
                     element.focus();
                     return false;
                 }
@@ -43,7 +43,7 @@ define(['fast', 'template', 'moment'], function (Fast, Template, Moment) {
                             $(that).removeClass("disabled").text('发送验证码');
                         });
                     } else {
-                        Layer.msg("请确认已经输入了正确的" + text + "！");
+                        Layer.msg("请確认已经输入了正確的" + text + "！");
                     }
                 });
 

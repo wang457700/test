@@ -26,17 +26,17 @@ class File extends SplFileObject
     protected $filename;
 
     /**
-     * @var string 上传文件名
+     * @var string 上傳文件名
      */
     protected $saveName;
 
     /**
-     * @var string 文件上传命名规则
+     * @var string 文件上傳命名规则
      */
     protected $rule = 'date';
 
     /**
-     * @var array 文件上传验证规则
+     * @var array 文件上傳验证规则
      */
     protected $validate = [];
 
@@ -46,7 +46,7 @@ class File extends SplFileObject
     protected $isTest;
 
     /**
-     * @var array 上传文件信息
+     * @var array 上傳文件信息
      */
     protected $info;
 
@@ -81,9 +81,9 @@ class File extends SplFileObject
     }
 
     /**
-     * 设置上传信息
+     * 设置上傳信息
      * @access public
-     * @param  array $info 上传文件信息
+     * @param  array $info 上傳文件信息
      * @return $this
      */
     public function setUploadInfo($info)
@@ -94,7 +94,7 @@ class File extends SplFileObject
     }
 
     /**
-     * 获取上传文件的信息
+     * 获取上傳文件的信息
      * @access public
      * @param  string $name 信息名称
      * @return array|string
@@ -105,7 +105,7 @@ class File extends SplFileObject
     }
 
     /**
-     * 获取上传文件的文件名
+     * 获取上傳文件的文件名
      * @access public
      * @return string
      */
@@ -115,7 +115,7 @@ class File extends SplFileObject
     }
 
     /**
-     * 设置上传文件的保存文件名
+     * 设置上傳文件的保存文件名
      * @access public
      * @param  string $saveName 保存名称
      * @return $this
@@ -185,7 +185,7 @@ class File extends SplFileObject
     }
 
     /**
-     * 设置上传文件的验证规则
+     * 设置上傳文件的验证规则
      * @access public
      * @param  array $rule 验证规则
      * @return $this
@@ -198,7 +198,7 @@ class File extends SplFileObject
     }
 
     /**
-     * 检测是否合法的上传文件
+     * 检测是否合法的上傳文件
      * @access public
      * @return bool
      */
@@ -208,7 +208,7 @@ class File extends SplFileObject
     }
 
     /**
-     * 检测上传文件
+     * 检测上傳文件
      * @access public
      * @param  array $rule 验证规则
      * @return bool
@@ -245,7 +245,7 @@ class File extends SplFileObject
     }
 
     /**
-     * 检测上传文件后缀
+     * 检测上傳文件后缀
      * @access public
      * @param  array|string $ext 允许后缀
      * @return bool
@@ -270,7 +270,7 @@ class File extends SplFileObject
     {
         $extension = strtolower(pathinfo($this->getInfo('name'), PATHINFO_EXTENSION));
 
-        // 如果上传的不是图片，或者是图片而且后缀确实符合图片类型则返回 true
+        // 如果上傳的不是图片，或者是图片而且后缀確实符合图片类型则返回 true
         return !in_array($extension, ['gif', 'jpg', 'jpeg', 'bmp', 'png', 'swf']) || in_array($this->getImageType($this->filename), [1, 2, 3, 4, 6, 13]);
     }
 
@@ -295,7 +295,7 @@ class File extends SplFileObject
     }
 
     /**
-     * 检测上传文件大小
+     * 检测上傳文件大小
      * @access public
      * @param  integer $size 最大大小
      * @return bool
@@ -306,7 +306,7 @@ class File extends SplFileObject
     }
 
     /**
-     * 检测上传文件类型
+     * 检测上傳文件类型
      * @access public
      * @param  array|string $mime 允许类型
      * @return bool
@@ -328,7 +328,7 @@ class File extends SplFileObject
      */
     public function move($path, $savename = true, $replace = true)
     {
-        // 文件上传失败，捕获错误代码
+        // 文件上傳失败，捕获错误代码
         if (!empty($this->info['error'])) {
             $this->error($this->info['error']);
             return false;
@@ -340,7 +340,7 @@ class File extends SplFileObject
             return false;
         }
 
-        // 验证上传
+        // 验证上傳
         if (!$this->check()) {
             return false;
         }

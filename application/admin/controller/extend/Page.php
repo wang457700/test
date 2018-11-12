@@ -39,7 +39,7 @@ class Page extends Backend
                 ->select(); 
             
 
-             $status =array('0'=>'隐藏','1'=>'顯示');
+             $status =array('0'=>'隱藏','1'=>'顯示');
             foreach ($list as $k => &$v)
             {
                 $v['url'] = url('home/index/page',array('id'=>$v['id']));

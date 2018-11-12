@@ -189,7 +189,7 @@ abstract class Addons
         if (!is_file($template)) {
             $template = '/' . $template;
         }
-        // 关闭模板布局
+        // 關閉模板布局
         $this->view->engine->layout(false);
 
         echo $this->view->fetch($template, $vars, $replace, $config);
@@ -206,7 +206,7 @@ abstract class Addons
      */
     public function display($content, $vars = [], $replace = [], $config = [])
     {
-        // 关闭模板布局
+        // 關閉模板布局
         $this->view->engine->layout(false);
 
         echo $this->view->display($content, $vars, $replace, $config);
@@ -221,7 +221,7 @@ abstract class Addons
      */
     public function show($content, $vars = [])
     {
-        // 关闭模板布局
+        // 關閉模板布局
         $this->view->engine->layout(false);
 
         echo $this->view->fetch($content, $vars, [], [], true);

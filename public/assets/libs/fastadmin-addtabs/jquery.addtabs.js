@@ -10,7 +10,7 @@
         var obj = $(this);
         options = $.extend({
             content: '', //直接指定所有页面TABS内容
-            close: true, //是否可以关闭
+            close: true, //是否可以關閉
             monitor: 'body', //监视的区域
             nav: '.nav-addtabs',
             tab: '.tab-addtabs',
@@ -18,7 +18,7 @@
             iframeHeight: $(window).height() - 50, //固定TAB中IFRAME高度,根据需要自己修改
             iframeForceRefresh: false, //点击后强制刷新对应的iframe
             callback: function () {
-                //关闭后回调函数
+                //關閉后回调函数
             }
         }, options || {});
         var navobj = $(options.nav);
@@ -109,7 +109,7 @@
             if (tabitem.size() === 0) {
                 //创建新TAB的title
                 tabitem = $('<li role="presentation" id="' + tabid + '"><a href="#' + conid + '" node-id="' + opts.id + '" aria-controls="' + id + '" role="tab" data-toggle="tab">' + opts.title + '</a></li>');
-                //是否允许关闭
+                //是否允许關閉
                 if (options.close && $("li", navobj).size() > 0) {
                     tabitem.append(' <i class="close-tab fa fa-remove"></i>');
                 }
@@ -153,7 +153,7 @@
             var conid = 'con_' + id;
             var tabitem = $('#' + tabid, navobj);
             var conitem = $('#' + conid, tabobj);
-            //如果关闭的是当前激活的TAB，激活他的前一个TAB
+            //如果關閉的是当前激活的TAB，激活他的前一个TAB
             if (obj.find("li.active").not('.tabdrop').attr('id') === tabid) {
                 var prev = tabitem.prev().not(".tabdrop");
                 var next = tabitem.next().not(".tabdrop");
@@ -165,7 +165,7 @@
                     $(">li:not(.tabdrop):last > a", navobj).trigger('click');
                 }
             }
-            //关闭TAB
+            //關閉TAB
             tabitem.remove();
             conitem.remove();
             _drop();

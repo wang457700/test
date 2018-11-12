@@ -1,9 +1,9 @@
 <?php
 
-//上传配置
+//上傳配置
 return [
     /**
-     * 上传地址,默认是本地上传
+     * 上傳地址,默认是本地上傳
      */
     'uploadurl' => 'ajax/upload',
     /**
@@ -15,15 +15,15 @@ return [
      */
     'savekey'   => '/uploads/{year}{mon}{day}/{filemd5}{.suffix}',
     /**
-     * 最大可上传大小
+     * 最大可上傳大小
      */
     'maxsize'   => '10mb',
     /**
-     * 可上传的文件类型
+     * 可上傳的文件類型
      */
     'mimetype'  => 'jpg,png,bmp,jpeg,gif,zip,rar,xls,xlsx',
     /**
-     * 是否支持批量上传
+     * 是否支持批量上傳
      */
     'multiple'  => false,
 ];

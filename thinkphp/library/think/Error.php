@@ -94,7 +94,7 @@ class Error
     }
 
     /**
-     * 确定错误类型是否致命
+     * 確定错误类型是否致命
      * @access protected
      * @param  int $type 错误类型
      * @return bool

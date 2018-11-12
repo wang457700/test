@@ -15,7 +15,7 @@ Pinyin
   </a>
 </p>
 
-:cn: 基于 [CC-CEDICT](http://cc-cedict.org/wiki/) 词典的中文转拼音工具，更准确的支持多音字的汉字转拼音解决方案。
+:cn: 基于 [CC-CEDICT](http://cc-cedict.org/wiki/) 词典的中文转拼音工具，更准確的支持多音字的汉字转拼音解决方案。
 
 
 ## 安装

@@ -53,7 +53,7 @@
                   <img src="__TMPL_PUBLIC__/control/images/add_img.png"  onclick="$('#previewImg').click();" id="add_img"  style="display: none">
                   <img src="__TMPL_PUBLIC__/control/images/edit_img.png"  onclick="$('#previewImg').click();" id="edit_img">
                   <script>
-                      //图片上传预览    IE是用了滤镜。
+                      //图片上傳预览    IE是用了滤镜。
                       function previewImage(file)
                       {
                           var MAXWIDTH  = 90;
@@ -163,7 +163,7 @@
         return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转 
       }
 
-      //选择分类
+      //選擇分类
       var cat_id_01 = {$info.product_category[1]};
       var cat_id_02 = {$info.product_category[2]?$info.product_category[2]:0};
       var cat_id_03 = {$info.product_category[3]?$info.product_category[3]:0};
@@ -177,12 +177,12 @@
 
       $(document).on("change",'#cat_id',function(){
           get_category($(this).val(),'cat_id_2','0');
-          $('#cat_id_2').empty().html("<option value='0'>请选择商品分类</option>");
+          $('#cat_id_2').empty().html("<option value='0'>請選擇商品分類</option>");
       });
 
       $(document).on("change",'#cat_id_2',function(){
           get_category($(this).val(),'cat_id_3','0');
-          $('#cat_id_3').empty().html("<option value='0'>请选择商品分类</option>");
+          $('#cat_id_3').empty().html("<option value='0'>請選擇商品分類</option>");
       })
       /**
        * 获取多级联动的商品分类
@@ -199,7 +199,7 @@
               dataType:'json',
               success: function(data) {
                   if(data.status == 1){
-                      var html = "<option value='0'>请选择商品分类</option>";
+                      var html = "<option value='0'>請選擇商品分類</option>";
                       $.each(data.result,function(index, value) {
                           if(value.id == select_id){
                               var selected = 'selected';

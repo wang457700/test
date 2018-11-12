@@ -61,11 +61,11 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template'], function
 
             //当内容渲染完成后
             table.on('post-body.bs.table', function (e, settings, json, xhr) {
-                //默认隐藏所有子节点
+                //默认隱藏所有子节点
                 //$("a.btn[data-id][data-pid][data-pid!=0]").closest("tr").hide();
                 $(".btn-node-sub.disabled").closest("tr").hide();
 
-                //显示隐藏子节点
+                //显示隱藏子节点
                 $(".btn-node-sub").off("click").on("click", function (e) {
                     var status = $(this).data("shown") ? true : false;
                     $("a.btn[data-pid='" + $(this).data("id") + "']").each(function () {
@@ -83,7 +83,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template'], function
             $(".toolbar > .btn-del,.toolbar .btn-more~ul>li>a").data("success", function (e) {
                 Fast.api.refreshmenu();
             });
-            //展开隐藏一级
+            //展开隱藏一级
             $(document.body).on("click", ".btn-toggle", function (e) {
                 $("a.btn[data-id][data-pid][data-pid!=0].disabled").closest("tr").hide();
                 var that = this;
@@ -93,7 +93,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template'], function
                 $("a.btn[data-id][data-pid][data-pid!=0]").not('.disabled').closest("tr").toggle(show);
                 $(".btn-node-sub[data-pid=0]").data("shown", show);
             });
-            //展开隐藏全部
+            //展开隱藏全部
             $(document.body).on("click", ".btn-toggle-all", function (e) {
                 var that = this;
                 var show = $("i", that).hasClass("fa-plus");

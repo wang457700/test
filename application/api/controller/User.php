@@ -106,7 +106,7 @@ class User extends Api
     /**
      * 注册会员
      * 
-     * @param string $username 用户名
+     * @param string $username 用戶名
      * @param string $password 密码
      * @param string $email 邮箱
      * @param string $mobile 手机号
@@ -154,7 +154,7 @@ class User extends Api
      * 修改会员个人信息
      * 
      * @param string $avatar 头像地址
-     * @param string $username 用户名
+     * @param string $username 用戶名
      * @param string $nickname 昵称
      * @param string $bio 个人简介
      */
@@ -394,19 +394,19 @@ class User extends Api
     }
 
     public function upload(){
-        // 获取表单上传文件 例如上传了001.jpg
+        // 获取表单上傳文件 例如上傳了001.jpg
         $file = request()->file('image');
         // 移动到框架应用根目录/uploads/ 目录下
         $path = 'uploads/cards';
         $info = $file->validate(['size'=>1000000,'ext'=>'jpg,png,gif'])->move($path);
         if($info){
-            // 成功上传后 获取上传信息
+            // 成功上傳后 获取上傳信息
             // 输出 jpg
 
             // 输出 20160820/42a79759f284b767dfcb2a0197904287.jpg
             $this->success('上傳成功',$path.'/'.$info->getSaveName());
         }else{
-            // 上传失败获取错误信息
+            // 上傳失败获取错误信息
             $this->error('上傳失敗');
         }
     }

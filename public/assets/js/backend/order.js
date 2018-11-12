@@ -49,10 +49,10 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 });
                 var page = $('#page').val();
                 var all = table.bootstrapTable('getOptions').totalRows;
-                Layer.confirm("请选择导出的选项<form action='" + Fast.api.fixurl("order/export") + "' method='post' target='_blank'>" +
+                Layer.confirm("請選擇導出的選項<form action='" + Fast.api.fixurl("order/export") + "' method='post' target='_blank'>" +
                     "<input type='hidden' name='keyword' value='' /><input type='hidden' name='payment' value='' /><input type='hidden' name='pay_status' value='' /><input type='hidden' name='ids' value='' /><input type='hidden' name='filter' ><input type='hidden' name='op'><input type='hidden' name='search'><input type='hidden' name='columns'></form>", {
-                    title: '导出数据',
-                    btn: ["本页(" + page + "条)", "全部"],
+                    title: '導出數據',
+                    btn: ["本頁(" + page + "條)", "全部"],
                     success: function (layero, index) {
                         $(".layui-layer-btn a", layero).addClass("layui-layer-btn0");
                     }
@@ -84,7 +84,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                     top = left = undefined;
                 }
                 Layer.confirm(
-                    '你确定删除订单吗?',
+                    '你確定删除訂單吗?',
                     {icon: 3, title: '温馨提示', offset: [top, left], shadeClose: true},
                     function (index) {
                         var table = $(that).closest('table');
@@ -253,7 +253,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                 $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12">CatID:'+value.id+'<input type="text" class="form-control" id="slide_name" name="row[data]['+value.id+']" value="'+value.name+'" data-rule=""/>');
                             });
                             }else{
-                                $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12">没有找到匹配的记录</div></div>');
+                                $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12">沒有找到匹配的記錄</div></div>');
                             }
                       }
                 });
@@ -279,7 +279,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                 $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12"><input type="text" class="form-control" id="slide_name" name="row[data]['+value.id+']" value="'+value.name+'" data-rule=""/>');
                             });
                             }else{
-                                $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12">没有找到匹配的记录</div></div>');
+                                $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12">沒有找到匹配的記錄</div></div>');
                             }
                       }
                 });
@@ -292,7 +292,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                     $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12"><input type="text" class="form-control" id="slide_name" name="row[new][]" value="" data-rule=""/></div></div>');
                 }else{
 
-                    alert('请选择二级分类!');
+                    alert('請選擇二級分類!');
                 }
             });
             $('.columns,.search').hide();
@@ -308,22 +308,22 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 }
             });
 
-            //选择分类
+            //選擇分类
             $(function(){
 
                 get_category(14,'cat_id','0');  // 14：产品分类
-                //一级选择
+                //一级選擇
                 $(document).on("change",'#cat_id',function(){
                     var idname = 'cat_id_2';
                     get_category($(this).val(),idname,'0');
-                    $('#' + idname).empty().html("<option value='0'>请选择商品分类</option>");
+                    $('#' + idname).empty().html("<option value='0'>請選擇商品分類</option>");
                 });
 
-                //二级选择
+                //二级選擇
                 $(document).on("change",'#cat_id_2',function(){
                     var idname = 'cat_id_3';
                     get_category($(this).val(),idname,'0');
-                    $('#' + idname).empty().html("<option value='0'>请选择商品分类</option>");
+                    $('#' + idname).empty().html("<option value='0'>請選擇商品分類</option>");
                 })
             });
         },
@@ -343,7 +343,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                  });
             });
 
-            //选择分类
+            //選擇分类
             $(function(){
                 var cat_id_01 = $('#cat_id_01').val();
                 var cat_id_02 = $('#cat_id_02').val();
@@ -357,12 +357,12 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
 
                 $(document).on("change",'#cat_id',function(){
                     get_category($(this).val(),'cat_id_2','0');
-                    $('#cat_id_2').empty().html("<option value='0'>请选择商品分类</option>");
+                    $('#cat_id_2').empty().html("<option value='0'>請選擇商品分類</option>");
                 });
 
                 $(document).on("change",'#cat_id_2',function(){
                     get_category($(this).val(),'cat_id_3','0');
-                    $('#cat_id_3').empty().html("<option value='0'>请选择商品分类</option>");
+                    $('#cat_id_3').empty().html("<option value='0'>請選擇商品分類</option>");
                 })
             });
 
@@ -430,7 +430,7 @@ function get_category(id,next,select_id){
         dataType:'json',
         success: function(data) {
             if(data.status == 1){
-                var html = "<option value='0'>请选择商品分类</option>";
+                var html = "<option value='0'>請選擇商品分類</option>";
                 $.each(data.result,function(index, value) {
                     if(value.id == select_id){
                         var selected = 'selected';

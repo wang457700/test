@@ -835,7 +835,7 @@ class Route
      */
     public static function check($request, $url, $depr = '/', $checkDomain = false)
     {
-        // 分隔符替换 确保路由定义使用统一的分隔符
+        // 分隔符替换 確保路由定义使用统一的分隔符
         $url = str_replace($depr, '|', $url);
 
         if (isset(self::$rules['alias'][$url]) || isset(self::$rules['alias'][strstr($url, '|', true)])) {
@@ -1274,7 +1274,7 @@ class Route
      */
     private static function parseUrlPath($url)
     {
-        // 分隔符替换 确保路由定义使用统一的分隔符
+        // 分隔符替换 確保路由定义使用统一的分隔符
         $url = str_replace('|', '/', $url);
         $url = trim($url, '/');
         $var = [];

@@ -5,8 +5,8 @@ return [
         //配置唯一标识
         'name'    => 'usernmae',
         //显示的标题
-        'title'   => '用户名',
-        //类型
+        'title'   => '用戶名',
+        //類型
         'type'    => 'string',
         //数据字典
         'content' => [

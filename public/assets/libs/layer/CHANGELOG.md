@@ -1,7 +1,7 @@
 ﻿
 # v3.1.1 2017.12.05
 
-* 优化自动获取路径代码，以解决部分浏览器下的某些场景无法自动加载样式问题
+* 优化自动获取路径代码，以解决部分浏览器下的某些场景無法自动加载样式问题
 
 ---
 
@@ -11,7 +11,7 @@
 * 修复 layer.js 未设置btnAlign时，包裹按钮的 div.layui-layer-btn 出现一多余 class
 * 对默认按钮颜色、Tips层、Prompt层、Tab层等进行了样式调整，以便更显大气，且更符合layui风格
 * 增加maxHeight参数，用于设定弹层的最大高度 
-* 去除 type:2 时如果content未填写而弹出 layer 官网的默认设置
+* 去除 type:2 时如果content未填寫而弹出 layer 官网的默认设置
 
 
 ---
@@ -19,11 +19,11 @@
 
 # v3.0.3 2017.03.06
 
-* 增加参数 isOutAnim，用于控制是否显示关闭动画，true 或者 false
+* 增加参数 isOutAnim，用于控制是否显示關閉动画，true 或者 false
 * 撤销自动ready处理机制，因为在初始时与Ajax同步等使用场景存在耦合等问题
 * 修复Firefox下对默认层设置了高度，按钮被溢出的bug
 * photos层的出场动画不再是随机，而是采用默认动画（也可以通过参数 anim 来自定义）
-* 去除photos层的默认关闭动画（觉得觉得不闪眼的话，也可以通过参数isOutAnim开启）
+* 去除photos层的默认關閉动画（觉得觉得不闪眼的话，也可以通过参数isOutAnim开启）
 
 
 ---
@@ -32,7 +32,7 @@
 # v3.0.2 2017.02.25
 
 * 新增 resizing 回调，用于监听窗口的调整大小
-* 增加自动ready处理机制，即如果你页面一打开就执行弹层，无需放入layer.ready中
+* 增加自动ready处理机制，即如果你页面一打开就执行弹层，無需放入layer.ready中
 * 对moveEnd回调返回一个参数为当前容器的DOM对象
 * 添加一个amd条件,避免 define出错（Merge pull request #42 from wangyateng/master）
 * 修复tab,photos,prompt弹层默认success回调被覆盖导致功能不正常的问题（来自github用户 @waychan23 的友情提醒）
@@ -47,19 +47,19 @@
 
 # v3.0 2016.11.07
 
-* 新增拖动弹层右下角可调节弹层尺寸的功能，由参数resize控制，默认开启。对loading、tips层无效
+* 新增拖动弹层右下角可调节弹层尺寸的功能，由参数resize控制，默认开启。对loading、tips层無效
 * offset参数新增 t、r、b、l、lt、lb、rt、rb、的赋值，可快捷实现上、右、下、左、左上角、左下角、右上角、右下角的边缘定位
 * 新增btnAlign参数，支持三个参数：l/c/r，分别用于控制按钮居左、居中、居右的快捷设置（默认r，即居右）
 * 点击最小化时，自动定位到页面左下角，在出现多个最小化时，会依次排列，这是一次较为重大的完善。
-* 新增关闭层的过度动画（可通过 anim: -1 统一取消动画）
+* 新增關閉层的过度动画（可通过 anim: -1 统一取消动画）
 
 * 重写拖拽核心代码，性能大幅度提升
 * layer.config核心调整
 * layer.config中的extend参数只提供加载一个css皮肤文件（详见文档）
-* 处理在head标签中执行layer弹层无效的情况
+* 处理在head标签中执行layer弹层無效的情况
 * 瘦身layer.ready方法
 * 修改iframe层的loading动画
-* 捕获页类型的弹层在关闭时，会根据所捕获元素的初始display值，进行不同处理，即不再强制隐藏。
+* 捕获页类型的弹层在關閉时，会根据所捕获元素的初始display值，进行不同处理，即不再强制隱藏。
 
 * 剔除moveType参数，只提供默认的一种拖拽风格
 * 剔除语义欠佳的fix参数，改为fixed取代
@@ -72,7 +72,7 @@
 * 降解IE6的fixed支持，不过仍然对ie6兼容（话说现在全浏览器兼容的组件已经不多了，layer后续会整理出不兼容ie6/7的版本）
 
 * 修改图片超出屏幕后，重新计算大小的算法（Merge pull request from 390029659/master）
-* 修复iframe层在用于iPhone设备时，无法触发滚动的Bug
+* 修复iframe层在用于iPhone设备时，無法触发滚动的Bug
 
 
 ---
@@ -83,12 +83,12 @@
 * 兼容jQuery3.0
 * 优化tips，可支持配置参数fix（之前是强制fix: false），用于决定是固定的tips还是非固定的。
 * min回调可通过return false来设定不执行默认最小化。
-* 修复在移动端使用iframe，IOS下无法滑动的bug。
+* 修复在移动端使用iframe，IOS下無法滑动的bug。
 * 细节优化及样式微调
 
 # 【v2.3】2016.05.18
 * 通过对使用频率的调查，将layer.ext.js（拓展模块）合并到了layer.js，即不用再通过layer.config来加载调用。
-* cancel回调不再对第二个按钮有效，只作为右上角关闭按钮触发。并且除yes回调外，所以按钮的回调都可以通过return false来设定不默认关闭。
+* cancel回调不再对第二个按钮有效，只作为右上角關閉按钮触发。并且除yes回调外，所以按钮的回调都可以通过return false来设定不默认關閉。
 * 修复相册层，点击任意图片查看，弹出的并非当前图片的bug。
 * 修复相册层在移动端显示不佳的bug。
 * 修复msg、alert等对话框类型的弹层，在手机使用时未水平居中的bug。
@@ -96,7 +96,7 @@
 # 【v2.2】2016.03.18
 * 增加参数id，用于控制弹层唯一标识。如不想重复弹出，可设置该值。
 * layer.tips允许出现遮罩，即不对shade参数做限制。
-* 对layer.photos方法直接弹出页面图片进行了事件委托，修复了之前由于动态插入的img而无法执行弹出的bug，并且修复了当图片信息改变时，仍然弹出了之前的图片的bug
+* 对layer.photos方法直接弹出页面图片进行了事件委托，修复了之前由于动态插入的img而無法执行弹出的bug，并且修复了当图片信息改变时，仍然弹出了之前的图片的bug
 * layer.photos方法多处代码进行了优化
 * 对layer.tab方法新增回调函数change，用于监听选项卡的切换事件，返回一个选项卡索引参数。
 * 样式微调
@@ -104,20 +104,20 @@
 
 # 【v2.1】2015.11.04
 * 修复在使用seajs或者requirejs后，layer.ext.js报layer未定义的错误。
-* 修复弹出层后，回车键无效的bug。
-* 修复iframe层的success回调在ie8以下浏览器无效的bug
+* 修复弹出层后，回车键無效的bug。
+* 修复iframe层的success回调在ie8以下浏览器無效的bug
 * 修复只有一张图片时，并且该图片地址异常，不断弹出提示的bug。
-* 修复当设定moveEnd回调，即便层关闭，仍然触发该回调的bug
+* 修复当设定moveEnd回调，即便层關閉，仍然触发该回调的bug
 * 即便采用模块加载，layer对象仍然保留全局，原因是layer自有模块需要。
-* 优化图标锯齿消的回调除了yes和cancel外，还可用btn1/btn2。 btn2可解决取消遇右上角关闭共用cancel回调的问题。即如果你只需要接受取消的回调，可以使用 btn2: function(){}
+* 优化图标锯齿消的回调除了yes和cancel外，还可用btn1/btn2。 btn2可解决取消遇右上角關閉共用cancel回调的问题。即如果你只需要接受取消的回调，可以使用 btn2: function(){}
 
 
 # 【v2.0】2015.09.01
 * 全新的默认皮肤
 * 修复按住Enter键时，出现不断弹层的bug。
 * 修复模块加载时，layer仍然暴露给了全局的bug。
-* 修复拖拽完毕回调moveEnd，在层关闭后拖拽鼠标仍然触发该回调的bug。
-* 确认和取消的回调除了yes和cancel外，还可用btn1/btn2。 btn2可解决取消遇右上角关闭共用cancel回调的问题。即如果你只需要接受取消的回调，可以使用 btn2: function(){}
+* 修复拖拽完毕回调moveEnd，在层關閉后拖拽鼠标仍然触发该回调的bug。
+* 確认和取消的回调除了yes和cancel外，还可用btn1/btn2。 btn2可解决取消遇右上角關閉共用cancel回调的问题。即如果你只需要接受取消的回调，可以使用 btn2: function(){}
 
 ### 拓展模块
 * 修复通过script标签引入layer.ext.js时，出现Cannot read property 'skin' of undefined的报错问题。（虽然我们更推荐用layer.config()方式加载layer.ext.js）。
@@ -137,21 +137,21 @@
 
 
 # 【v1.9.2】2015.05.08
-* 增加关闭动画样式：layui-layer-close
+* 增加關閉动画样式：layui-layer-close
 * 优化默认弹出动画
 * 优化默认图标，默认的icon支持缩减到0-6（拓展皮肤可自己任意设定支持的数目）
 * 优化部分样式
-* 机智地修复了一个隐藏得非常深的但是不是太重要的bug。
+* 机智地修复了一个隱藏得非常深的但是不是太重要的bug。
 * 剔除了一些图片。
 
 # 【v1.9.1】2015.04.29
 * btn设定多个按钮时，新增对应的回调（支持只有yes和cancel回调）,如btn: ['按钮一','按钮二','按钮三']，按钮一和按钮二还是之前的yes和cancel，按钮三，则回调为 btn3: function(){}，以此类推。
-* 对cancel回调进行了微完善，如果不想关闭，return false即可，如cancel: function(){return false}，取消则不会关闭。
-* 修复当设置了fix:false时,offset的设置无效的bug
-* 为低版本IE回收iframe占用的内存，从而修复偶尔无法获焦的bug
+* 对cancel回调进行了微完善，如果不想關閉，return false即可，如cancel: function(){return false}，取消则不会關閉。
+* 修复当设置了fix:false时,offset的设置無效的bug
+* 为低版本IE回收iframe占用的内存，从而修复偶尔無法获焦的bug
 * 修复当设置了btn时，最小化不能愉快地呈现的bug。
 * 修复全局设置skin时，某些层类型出现样式异常的bug。
-* 修复area设置了百分比时，maxmin参数无效的bug。
+* 修复area设置了百分比时，maxmin参数無效的bug。
 * 完善当采用script标签合并路径的方式引入layer，加载了错误的css路径的问题。这种情况需在script标签上加一个自定义属性merge="true",然后通过layer.config({path: 'layer所在目录'})来完成初始化的配置
 * 样式微调
 
@@ -171,7 +171,7 @@
 * 完善自适应，只要设定了固定高度，任何层都会自适应出现滚动条
 * 完善shift，全新的CSS3动画模式，支持传入0-6。
 * 完善area，支持传入宽度、[宽，高],默认'auto'，表示自适应
-* 完善time，传入值改为毫秒，比如2秒关闭，time: 2000
+* 完善time，传入值改为毫秒，比如2秒關閉，time: 2000
 * 完善use方法，修复之前初始调用时部分浏览器一些不稳定因素
 * 完善layer.full/layer.min方法，只要传入index即可，不用跟之前一样还要传入area和offset。。。
 * layer.alert/confirm/msg/load/tips五种快捷引用重写，更灵活，更易使用。
@@ -181,7 +181,7 @@
 * 剔除dialog和loading的type，统一采用icon
 * 剔除dialog中用于配置按钮数的btns，因为可直接通过btn本身来获取。
 * 剔除no和close回调，统一采用cancel取代，不过仍然对前两者兼容。
-* 剔除layer.closeLoad()、layer.closeTips()方法，统一用layer.closeAll('loading/tips')来对指定类型层进行关闭
+* 剔除layer.closeLoad()、layer.closeTips()方法，统一用layer.closeAll('loading/tips')来对指定类型层进行關閉
 * 剔除bgcolor参数，因为自定义的样式一律采用skin参数控制
 * 剔除tips一些列子元素，只保留自身，并且支持number和object形，用于设定方向和显示箭头。
 * 剔除layer.getIndex方法，获取索引统一用返回值
@@ -205,7 +205,7 @@
 
 # 【v1.8.5】
 * 新增对title样式的自定义控制
-* 修复layer.prompt多行文本，设置默认值无效的bug
+* 修复layer.prompt多行文本，设置默认值無效的bug
 
 # 【v1.8.4】
 * 新增浏览器窗口尺寸改变时的自适应定位

@@ -29,7 +29,7 @@ class Example extends Addons
                         'icon'    => 'fa fa-table',
                         'sublist' => [
                             ['name' => 'example/bootstraptable/index', 'title' => '查看'],
-                            ['name' => 'example/bootstraptable/detail', 'title' => '详情'],
+                            ['name' => 'example/bootstraptable/detail', 'title' => '詳情'],
                             ['name' => 'example/bootstraptable/change', 'title' => '变更'],
                             ['name' => 'example/bootstraptable/del', 'title' => '刪除'],
                             ['name' => 'example/bootstraptable/multi', 'title' => '批量更新'],
@@ -101,7 +101,7 @@ class Example extends Addons
                         'icon'    => 'fa fa-table',
                         'sublist' => [
                             ['name' => 'example/tabletemplate/index', 'title' => '查看'],
-                            ['name' => 'example/tabletemplate/detail', 'title' => '详情'],
+                            ['name' => 'example/tabletemplate/detail', 'title' => '詳情'],
                             ['name' => 'example/tabletemplate/del', 'title' => '刪除'],
                             ['name' => 'example/tabletemplate/multi', 'title' => '批量更新'],
                         ]
@@ -112,7 +112,7 @@ class Example extends Addons
                         'icon'    => 'fa fa-map-pin',
                         'sublist' => [
                             ['name' => 'example/baidumap/index', 'title' => '查看'],
-                            ['name' => 'example/baidumap/map', 'title' => '详情'],
+                            ['name' => 'example/baidumap/map', 'title' => '詳情'],
                             ['name' => 'example/baidumap/del', 'title' => '刪除'],
                         ]
                     ],

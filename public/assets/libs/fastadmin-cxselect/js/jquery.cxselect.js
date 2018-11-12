@@ -136,7 +136,7 @@
       $.extend(self.settings, opts);
     };
 
-    // 初次或重设选择器组
+    // 初次或重设選擇器组
     if (!$.isArray(self.selectArray) || !self.selectArray.length || (opts && opts.selects)) {
       self.selectArray = [];
 
@@ -314,7 +314,7 @@
 
     // 区分标题、值的数据
     if (typeof _jsonName === 'string' && _jsonName.length) {
-      // 无值字段时使用标题作为值
+      // 無值字段时使用标题作为值
       if (typeof _jsonValue !== 'string' || !_jsonValue.length) {
         _jsonValue = _jsonName;
       };
@@ -350,7 +350,7 @@
 
   };
 
-  // 改变选择时的处理
+  // 改变選擇时的处理
   cxSelect.selectChange = function(name) {
     var self = this;
 
@@ -384,9 +384,9 @@
     selects: [],            // 下拉选框组
     url: null,              // 列表数据文件路径（URL）或数组数据
     data: null,             // 自定义数据
-    emptyStyle: null,       // 无数据状态显示方式
+    emptyStyle: null,       // 無数据状态显示方式
     required: false,        // 是否为必选
-    firstTitle: '请选择',    // 第一个选项的标题
+    firstTitle: '请選擇',    // 第一个选项的标题
     firstValue: '',         // 第一个选项的值
     jsonSpace: '',          // 数据命名空间
     jsonName: 'n',          // 数据标题字段名称

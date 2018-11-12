@@ -48,7 +48,7 @@
 				var email = $('#email');
 				var reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/; //定义一个正则表达式
 				if(!reg.test(email.val())){
-					$.message({message:'電郵格式不正确！',type:'warning'});
+					$.message({message:'電郵格式不正確！',type:'warning'});
 					email.focus();
 					return false;
 				} 
@@ -70,7 +70,7 @@
 				return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
 			}
 
-            //记住用户名密码
+            //记住用戶名密码
             function save() {
                 if ($("#ck_rmbuser").is(':checked')) {
                     var email = $("#email").val();
@@ -212,7 +212,7 @@
                      contentType: "application/json",
                      dataType: 'json',
                      success: function(nullResponse) {
-                         // 成功以后隐藏登录信息
+                         // 成功以后隱藏登录信息
                          alert("退出成功！");
                      },
                      error: function(e) {

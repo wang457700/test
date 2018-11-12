@@ -635,7 +635,7 @@ class Request
             $this->param = array_merge($this->get(false), $vars, $this->route(false));
         }
         if (true === $name) {
-            // 获取包含文件上传信息的数组
+            // 获取包含文件上傳信息的数组
             $file = $this->file();
             $data = is_array($file) ? array_merge($this->param, $file) : $this->param;
             return $this->input($data, '', $default, $filter);
@@ -848,7 +848,7 @@ class Request
     }
 
     /**
-     * 获取上传的文件信息
+     * 获取上傳的文件信息
      * @access public
      * @param string|array $name 名称
      * @return null|array|\think\File
@@ -863,7 +863,7 @@ class Request
         }
         $files = $this->file;
         if (!empty($files)) {
-            // 处理上传文件
+            // 处理上傳文件
             $array = [];
             foreach ($files as $key => $file) {
                 if (is_array($file['name'])) {
@@ -992,7 +992,7 @@ class Request
                 if (isset($data[$val])) {
                     $data = $data[$val];
                 } else {
-                    // 无输入数据，返回默认值
+                    // 無输入数据，返回默认值
                     return $default;
                 }
             }
@@ -1560,7 +1560,7 @@ class Request
             // 标记请求缓存检查
             $this->isCheckCache = true;
             if (false === $expire) {
-                // 关闭当前缓存
+                // 關閉当前缓存
                 return;
             }
             if ($key instanceof \Closure) {

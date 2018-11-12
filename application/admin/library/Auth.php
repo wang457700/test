@@ -31,7 +31,7 @@ class Auth extends \fast\Auth
     /**
      * 管理员登录
      *
-     * @param   string $username 用户名
+     * @param   string $username 用戶名
      * @param   string $password 密码
      * @param   int $keeptime 有效时长
      * @return  boolean

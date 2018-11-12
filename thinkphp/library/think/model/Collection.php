@@ -30,7 +30,7 @@ class Collection extends BaseCollection
     }
 
     /**
-     * 设置需要隐藏的输出属性
+     * 设置需要隱藏的输出属性
      * @access public
      * @param array $hidden   属性列表
      * @param bool  $override 是否覆盖

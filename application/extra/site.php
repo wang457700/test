@@ -1,7 +1,7 @@
 <?php
 
 return array (
-  'name' => '營康薈後臺',
+  'name' => '營康會後台',
   'beian' => '',
   'cdnurl' => '',
   'version' => '1.0.1',
@@ -40,15 +40,15 @@ return array (
   'mail_from' => '457700516@qq.com',
   'integral' => 
   array (
-    'obtain' => '10',
+    'obtain' => '1',
     'use' => '100',
   ),
   'user_upgrade' => 
   array (
-    'level1' => '300',
+    'level1' => '200',
     'level2' => '400',
-    'level3' => '8000',
-    'level4' => '10000',
+    'level3' => '1000',
+    'level4' => '2000',
   ),
   'index_seo' => 
   array (
@@ -70,8 +70,8 @@ return array (
   ),
   'freight' => 
   array (
-    'freight' => '100',
-    'no_freight' => '10000',
+    'freight' => '1',
+    'no_freight' => '10',
     'remote_area' => '200',
   ),
   'exchangerate' => 

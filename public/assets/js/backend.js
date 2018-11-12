@@ -246,7 +246,7 @@ define(['fast', 'template', 'moment'], function (Fast, Template, Moment) {
             if ($(".fixed-footer").size() > 0) {
                 $(document.body).css("padding-bottom", $(".fixed-footer").outerHeight());
             }
-            //修复不在iframe时layer-footer隐藏的问题
+            //修复不在iframe时layer-footer隱藏的问题
             if ($(".layer-footer").size() > 0 && self === top) {
                 $(".layer-footer").show();
             }

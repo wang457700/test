@@ -31,7 +31,7 @@ class Ajax extends Frontend
     }
     
     /**
-     * 上传文件
+     * 上傳文件
      */
     public function upload()
     {

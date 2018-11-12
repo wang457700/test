@@ -65,7 +65,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     protected $readonly = [];
     // 显示属性
     protected $visible = [];
-    // 隐藏属性
+    // 隱藏属性
     protected $hidden = [];
     // 追加属性
     protected $append = [];
@@ -210,7 +210,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
         }
 
         $con = Db::connect($connection);
-        // 设置当前模型 确保查询返回模型对象
+        // 设置当前模型 確保查询返回模型对象
         $queryClass = $this->query ?: $con->getConfig('query');
         $query      = new $queryClass($con, $this);
 
@@ -768,7 +768,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     }
 
     /**
-     * 设置需要隐藏的输出属性
+     * 设置需要隱藏的输出属性
      * @access public
      * @param array $hidden   属性列表
      * @param bool  $override 是否覆盖
@@ -794,7 +794,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     }
 
     /**
-     * 解析隐藏及显示属性
+     * 解析隱藏及显示属性
      * @access protected
      * @param array $attrs  属性
      * @param array $result 结果集
@@ -1669,7 +1669,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     }
 
     /**
-     * 查找单条记录
+     * 查找单條記錄
      * @access public
      * @param mixed        $data  主键值或者查询条件（闭包）
      * @param array|string $with  关联预查询

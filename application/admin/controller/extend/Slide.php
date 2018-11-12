@@ -40,7 +40,7 @@ class Slide extends Backend
                 array('id'=>2,'name'=>'banner2','url'=>'http://baidu.com','finite_period'=>'2018/01/01-2018/07/30','img'=>'/uploads/20180807/1f80094b66870d833a6073d2fbee9116.jpg','status'=>'顯示'),
             );*/
 
-            $status =array('0'=>'隐藏','1'=>'顯示');
+            $status =array('0'=>'隱藏','1'=>'顯示');
             foreach ($list as $k => &$v)
             {
                 $v['slide_status'] = $status[$v['slide_status']];

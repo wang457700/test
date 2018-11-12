@@ -354,28 +354,28 @@
                     add_title: '添加区域',
                     del_btn: '删除按钮',
                     del_title: '删除区域',
-                    next: '下一页',
+                    next: '下一頁',
                     next_title: '下' + p.pageSize + ' (→)',
-                    prev: '上一页',
+                    prev: '上一頁',
                     prev_title: '上' + p.pageSize + ' (←)',
                     first_title: '首页 (Shift + ←)',
                     last_title: '尾页 (Shift + →)',
                     get_all_btn: '获得全部 (↓)',
                     get_all_alt: '(按钮)',
-                    close_btn: '关闭 (Tab键)',
+                    close_btn: '關閉 (Tab键)',
                     close_alt: '(按钮)',
                     loading: '读取中...',
                     loading_alt: '(读取中)',
                     page_info: '第 page_num 页(共page_count页)',
-                    select_ng: '请注意：请从列表中选择.',
-                    select_ok: 'OK : 已经选择.',
-                    not_found: '无查询结果',
+                    select_ng: '请注意：请从列表中選擇.',
+                    select_ok: 'OK : 已经選擇.',
+                    not_found: '無查询结果',
                     ajax_error: '连接到服务器时发生错误！',
                     clear: '清除内容',
-                    select_all: '选择当前页项目',
-                    unselect_all: '取消选择当前页项目',
-                    clear_all: '清除全部已选择项目',
-                    max_selected: '最多只能选择 max_selected_limit 个项目'
+                    select_all: '選擇当前页项目',
+                    unselect_all: '取消選擇当前页项目',
+                    clear_all: '清除全部已選擇项目',
+                    max_selected: '最多只能選擇 max_selected_limit 个项目'
                 };
                 break;
         }
@@ -618,7 +618,7 @@
          if (this.option.selectOnly) {
          if ($(this.elem.combo_input).val() !== '') {
          if ($(this.elem.hidden).val() !== '') {
-         //选择条件
+         //選擇条件
          $(this.elem.combo_input).attr('title', this.message.select_ok).removeClass(this.css_class.select_ng).addClass(this.css_class.select_ok);
          } else {
          //输入方式
@@ -1621,7 +1621,7 @@
                     try {
                         itemText = p.formatItem(json.originalResult[i]);
                     } catch (e) {
-                        console.error('formatItem内容格式化函数内容设置不正确！');
+                        console.error('formatItem内容格式化函数内容设置不正確！');
                         itemText = arr_candidate[i];
                     }
                 } else

@@ -79,7 +79,7 @@
      <fieldset>
          <div class="row">
              <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                 <label for="ip" class="control-label col-xs-4">关键词</label>
+                 <label for="ip" class="control-label col-xs-4">關鍵詞</label>
                  <div class="col-xs-8">
                     <input type="text" class="form-control" name="keyword" value="{$request['keyword']|default=''}" placeholder="输入訂單ID" data-index="6" id="keyword">
                  </div>
@@ -216,10 +216,10 @@
                             <td style="text-align: center; vertical-align: middle; ">{$pay_status[$vo['pay_status']]}</td>
                             <td style="text-align: center; vertical-align: middle; ">
 
-                                 <a href="{:url('order/detail',array('order_sn'=>$vo['order_sn']))}" class="btn btn-xs btn-detail btn-dialog" title="修改" data-table-id="table" data-field-index="11" data-row-index="0" data-button-index="0">
-                                  <i class=""></i>详情</a>
+                                 <a href="{:url('order/detail',array('order_sn'=>$vo['order_sn']))}" class="btn btn-xs btn-detail btn-dialog" title="詳情" data-table-id="table" data-field-index="11" data-row-index="0" data-button-index="0">
+                                  <i class=""></i>詳情</a>
 
-                                <a href="javascript:;" class="btn btn-xs btn-detail btn-magic btn-delone" title="刪除订单"  data-url="{:url('order/del',array('order_sn'=>$vo['order_sn']))}" data-table-id="table" data-field-index="11" data-row-index="0" data-button-index="1">
+                                <a href="javascript:;" class="btn btn-xs btn-detail btn-magic btn-delone" title="刪除訂單"  data-url="{:url('order/del',array('order_sn'=>$vo['order_sn']))}" data-table-id="table" data-field-index="11" data-row-index="0" data-button-index="1">
                                     <i class=""></i>刪除</a>
 
                             </td>

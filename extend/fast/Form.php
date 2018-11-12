@@ -9,7 +9,7 @@ use ArrayAccess;
  * @class Form
  * @package fast
  * @method mixed token() static token
- * @method mixed close() static 关闭一个HTML表单
+ * @method mixed close() static 關閉一个HTML表单
  * @method mixed setModel(mixed $model) static 设置HTML表单模型
  * @method mixed open(array $options) static 打开一个新的HTML表单
  * @method mixed file(string $name, array $options = array()) static 表单file

@@ -36,7 +36,7 @@
 
 ### 遍历表达式
 
-无论数组或者对象都可以用 each 进行遍历。
+無论数组或者对象都可以用 each 进行遍历。
 
     {{each list as value index}}
         <li>{{index}} - {{value.user}}</li>

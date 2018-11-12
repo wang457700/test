@@ -52,7 +52,7 @@ class Common
             // 如果是开发模式那么将异常模板修改成官方的
             Config::set('exception_tmpl', THINK_PATH . 'tpl' . DS . 'think_exception.tpl');
         }
-        // 如果是trace模式且Ajax的情况下关闭trace
+        // 如果是trace模式且Ajax的情况下關閉trace
         if (Config::get('app_trace') && $request->isAjax())
         {
             Config::set('app_trace', false);

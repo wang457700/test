@@ -5,7 +5,7 @@
  * 浏览器环境占用命名空间 baidu.template ，nodejs环境直接安装 npm install baidutemplate
  * @param str{String} dom结点ID，或者模板string
  * @param data{Object} 需要渲染的json对象，可以为空。当data为{}时，仍然返回html。
- * @return 如果无data，直接返回编译后的函数；如果有data，返回html。
+ * @return 如果無data，直接返回编译后的函数；如果有data，返回html。
  * @author wangxiao 
  * @email 1988wangxiao@gmail.com
 */

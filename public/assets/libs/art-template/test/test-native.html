@@ -147,7 +147,7 @@ test('配置功能', function () {
 	template.defaults.closeTag = '}}';
 	var data = {value: 'hello <em>world</em>'};
 	equal(template.compile('{{=value}}')(data), 'hello <em>world</em>', '自定义界定符');
-	equal(template.compile('{{=value}}')(data), 'hello <em>world</em>', '关闭默认编码输出');
+	equal(template.compile('{{=value}}')(data), 'hello <em>world</em>', '關閉默认编码输出');
 
 	template.defaults.escape = true;
 	template.defaults.openTag = '<%';

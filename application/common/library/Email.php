@@ -186,7 +186,7 @@ class Email
                 $this->setError($result ? '' : error_get_last()['message']);
                 break;
             default:
-                //邮件功能已关闭
+                //邮件功能已關閉
                 $this->setError(__('Mail already closed'));
                 break;
         }

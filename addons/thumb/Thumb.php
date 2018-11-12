@@ -53,7 +53,7 @@ class Thumb extends Addons
         if ($quality > 100 || $quality < 10) {
             $quality = 100;
         }
-        if (1 == $config['replace'])//如果是选择替换原文件
+        if (1 == $config['replace'])//如果是選擇替换原文件
         {
             //打开文件
             $image = \think\Image::open(ROOT_PATH . '/public' . $data['url']);
@@ -102,7 +102,7 @@ class Thumb extends Addons
 
         // 当前插件的配置信息，配置信息存在当前目录的config.php文件中，见下方
         //print_r($this->getConfig());
-        // 可以返回模板，模板文件默认读取的为插件目录中的文件。模板名不能为空！
+        // 可以返回模板，模板文件默认读取的为插件目录中的文件。模板名不能為空！
         //return $this->fetch('view/info');
     }
 

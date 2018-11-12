@@ -433,8 +433,8 @@ div.sp_container input.sp_input.input-block-level{
 
 div.sp_container_open .sp_input::-ms-clear{display:none;}
 /* 移除微软浏览器，在输入框输入文本后，会出现X的问题，but is look like not working */
-input::-ms-clear{display:none;}/*隐藏文本框叉子*/
-input::-ms-reveal{display:none;}/*隐藏密码框小眼睛*/
+input::-ms-clear{display:none;}/*隱藏文本框叉子*/
+input::-ms-reveal{display:none;}/*隱藏密码框小眼睛*/
 
 div.sp_navi > p {
     font-size: 12px;

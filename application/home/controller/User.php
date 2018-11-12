@@ -203,10 +203,11 @@ class User extends Frontend
             $gender = array('0'=>'NA','1'=>'F','2'=>'M');
             $data = array('nickname'=>$user['nickname'],'username'=>$user['username'],'email'=>$user['email'],'gender'=>$gender[$user['gender']]);
             $info = $hksr->member_user_add($data);
+
             if($info){
-                dump($info);
+                // dump($info);
             }
-           // $this->success('驗證成功！',url('user/center'));
+            $this->success('驗證成功！',url('user/center'));
 
         }else{
             $this->error('驗證失敗！');
@@ -866,7 +867,7 @@ class User extends Frontend
     	}
     }
 
-    /******************************       my_order 我的订单  ************************************/
+    /******************************       my_order 我的訂單  ************************************/
 
     public function order_detail(){
         $user_id = Session::get('user_id');
@@ -905,7 +906,7 @@ class User extends Frontend
         return $this->view->fetch();
     }
 
-    //取消订单
+    //取消訂單
     public  function order_cancel(){
             $order_sn=base64_decode(input('order_sn'));
             $user_id = Session::get('user_id');
@@ -940,7 +941,7 @@ class User extends Frontend
         curl_setopt($curl_obj,CURLOPT_TIMEOUT,8);
         //执行
         $result=curl_exec($curl_obj);
-        //关闭curl回话
+        //關閉curl回话
         curl_close($curl_obj);
         return $result;
     }

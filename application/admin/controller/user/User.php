@@ -86,7 +86,7 @@ class User extends Backend
     }
 
     /**
-     * 冻结解冻
+     * 凍結解凍
      */
     public function status($ids = NULL){
         if ($this->request->isPost())

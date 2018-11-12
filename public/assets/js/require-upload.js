@@ -33,25 +33,25 @@ define(['jquery', 'bootstrap', 'plupload', 'template'], function ($, undefined, 
                         }
                     }
                 }
-                //添加后立即上传
+                //添加后立即上傳
                 setTimeout(function () {
                     up.start();
                 }, 1);
             },
-            //上传进行中的回调
+            //上傳进行中的回调
             onUploadProgress: function (up, file) {
 
             },
-            //上传之前的回调
+            //上傳之前的回调
             onBeforeUpload: function (up, file) {
 
             },
-            //上传成功的回调
+            //上傳成功的回调
             onUploadSuccess: function (up, ret) {
                 var button = up.settings.button;
                 var onUploadSuccess = up.settings.onUploadSuccess;
                 var data = typeof ret.data !== 'undefined' ? ret.data : null;
-                //上传成功后回调
+                //上傳成功后回调
                 if (button) {
                     //如果有文本框则填充
                     var input_id = $(button).data("input-id") ? $(button).data("input-id") : "";
@@ -84,7 +84,7 @@ define(['jquery', 'bootstrap', 'plupload', 'template'], function ($, undefined, 
                         return;
                 }
             },
-            //上传错误的回调
+            //上傳错误的回调
             onUploadError: function (up, ret) {
                 var button = up.settings.button;
                 var onUploadError = up.settings.onUploadError;
@@ -123,7 +123,7 @@ define(['jquery', 'bootstrap', 'plupload', 'template'], function ($, undefined, 
                 }
                 return ret;
             },
-            //上传全部结束后
+            //上傳全部结束后
             onUploadComplete: function (up, files) {
                 var button = up.settings.button;
                 var onUploadComplete = up.settings.onUploadComplete;
@@ -150,7 +150,7 @@ define(['jquery', 'bootstrap', 'plupload', 'template'], function ($, undefined, 
             }
         },
         api: {
-            //Plupload上传
+            //Plupload上傳
             plupload: function (element, onUploadSuccess, onUploadError, onUploadComplete) {
                 element = typeof element === 'undefined' ? Upload.config.classname : element;
                 $(element, Upload.config.container).each(function () {
@@ -171,16 +171,16 @@ define(['jquery', 'bootstrap', 'plupload', 'template'], function ($, undefined, 
                     //预览ID
                     var preview_id = $(that).data("preview-id") ? $(that).data("preview-id") : "";
 
-                    //上传URL
+                    //上傳URL
                     url = url ? url : Config.upload.uploadurl;
                     url = Fast.api.fixurl(url);
-                    //最大可上传文件大小
+                    //最大可上傳文件大小
                     maxsize = typeof maxsize !== "undefined" ? maxsize : Config.upload.maxsize;
                     //文件类型
                     mimetype = typeof mimetype !== "undefined" ? mimetype : Config.upload.mimetype;
                     //请求的表单参数
                     multipart = typeof multipart !== "undefined" ? multipart : Config.upload.multipart;
-                    //是否支持批量上传
+                    //是否支持批量上傳
                     multiple = typeof multiple !== "undefined" ? multiple : Config.upload.multiple;
                     var mimetypeArr = new Array();
                     //支持后缀和Mimetype格式,以,分隔
@@ -196,7 +196,7 @@ define(['jquery', 'bootstrap', 'plupload', 'template'], function ($, undefined, 
                     //生成Plupload实例
                     Upload.list[id] = new Plupload.Uploader({
                         runtimes: 'html5,flash,silverlight,html4',
-                        multi_selection: multiple, //是否允许多选批量上传
+                        multi_selection: multiple, //是否允许多选批量上傳
                         browse_button: id, // 浏览按钮的ID
                         container: $(this).parent().get(0), //取按钮的上级元素
                         flash_swf_url: '/assets/libs/plupload/js/Moxie.swf',
@@ -291,13 +291,13 @@ define(['jquery', 'bootstrap', 'plupload', 'template'], function ($, undefined, 
                     Upload.list[id].init();
                 });
             },
-            // AJAX异步上传
+            // AJAX异步上傳
             send: function (file, onUploadSuccess, onUploadError, onUploadComplete) {
                 var index = Layer.msg(__('Uploading'), {offset: 't', time: 0});
                 var id = Plupload.guid();
                 var _onPostInit = Upload.events.onPostInit;
                 Upload.events.onPostInit = function () {
-                    // 当加载完成后添加文件并上传
+                    // 当加载完成后添加文件并上傳
                     Upload.list[id].addFile(file);
                     //Upload.list[id].start();
                 };
@@ -309,7 +309,7 @@ define(['jquery', 'bootstrap', 'plupload', 'template'], function ($, undefined, 
                 Upload.api.plupload("#" + id, onUploadSuccess, onUploadError, onUploadComplete);
             },
             custom: {
-                //自定义上传完成回调
+                //自定义上傳完成回调
                 afteruploadcallback: function (response) {
                     console.log(this, response);
                     alert("Custom Callback,Response URL:" + response.url);

@@ -119,14 +119,14 @@ Layer.prototype.view = function(){
 Layer.prototype.action = function(config, elem){
   var that = this;
   
-  //自动关闭
+  //自动關閉
   if(config.time){
     ready.timer[that.index] = setTimeout(function(){
       layer.close(that.index);
     }, config.time*1000);
   }
   
-  //确认取消
+  //確认取消
   var btn = function(){
     var type = this.getAttribute('type');
     if(type == 0){
@@ -143,7 +143,7 @@ Layer.prototype.action = function(config, elem){
     }
   }
   
-  //点遮罩关闭
+  //点遮罩關閉
   if(config.shade && config.shadeClose){
     var shade = elem[claname]('layui-m-layershade')[0];
     ready.touch(shade, function(){
@@ -175,7 +175,7 @@ win.layer = {
     delete ready.end[index];
   },
   
-  //关闭所有layer层
+  //關閉所有layer层
   closeAll: function(){
     var boxs = doc[claname](classs[0]);
     for(var i = 0, len = boxs.length; i < len; i++){

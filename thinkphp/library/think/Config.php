@@ -121,7 +121,7 @@ class Config
     {
         $range = $range ?: self::$range;
 
-        // 无参数时获取所有
+        // 無参数时获取所有
         if (empty($name) && isset(self::$config[$range])) {
             return self::$config[$range];
         }

@@ -25,9 +25,9 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 columns: [
                     [
                         {checkbox: true},
-                        {field: 'product_name', title: __('title'), operate: 'LIKE %...%', placeholder: '模糊搜索，*表示任意字符'},
-                        {field: 'category_name', title: __('分类'), operate: false},
-                        {field: 'product_pic', title: __('封面图'), formatter: Table.api.formatter.image, operate: false},
+                        {field: 'product_name', title: __('標題'), operate: 'LIKE %...%', placeholder: '模糊搜索，*表示任意字元'},
+                        {field: 'category_name', title: __('分類'), operate: false},
+                        {field: 'product_pic', title: __('封面圖'), formatter: Table.api.formatter.image, operate: false},
                         {field: 'user_name', title: __('用戶名'), operate: false},
                         {field: 'user_id', title: __('用戶ID'), operate: false},
                         {field: 'status_text', title: __('狀態'), operate: false},
@@ -35,9 +35,9 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                             buttons: [
                                 {
                                     name: 'ajax',
-                                    title: __('通过'),
+                                    title: __('通過'),
                                     classname: 'btn btn-xs btn-success btn-magic btn-ajax',
-                                    text: __('通过'),
+                                    text: __('通過'),
                                     icon: '',
                                     url: 'user/shared/status',
                                     success: function (data, ret) {
@@ -53,7 +53,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                     }
                                 },{
                                     name: 'detail',
-                                    title: __('查看详细信息'),
+                                    title: __('查看詳細信息'),
                                     classname: 'btn btn-xs btn-primary btn-dialog',
                                     icon: 'fa fa-list',
                                     url: 'user/shared/detail',

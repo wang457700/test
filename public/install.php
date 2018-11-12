@@ -66,17 +66,17 @@ if (is_file($lockFile)) {
 } else if (version_compare(PHP_VERSION, '5.5.0', '<')) {
     $errInfo = "当前版本(" . PHP_VERSION . ")过低，请使用PHP5.5以上版本";
 } else if (!extension_loaded("PDO")) {
-    $errInfo = "当前未开启PDO，无法进行安装";
+    $errInfo = "当前未开启PDO，無法进行安装";
 } else if (!is_really_writable($dbConfigFile)) {
     $open_basedir = ini_get('open_basedir');
     if ($open_basedir) {
         $dirArr = explode(PATH_SEPARATOR, $open_basedir);
         if ($dirArr && in_array(__DIR__, $dirArr)) {
-            $errInfo = '当前服务器因配置了open_basedir，导致无法读取父目录<br><a href="https://forum.fastadmin.net/thread/1145?ref=install" target="_blank">点击查看解决办法</a>';
+            $errInfo = '当前服务器因配置了open_basedir，导致無法读取父目录<br><a href="https://forum.fastadmin.net/thread/1145?ref=install" target="_blank">点击查看解决办法</a>';
         }
     }
     if (!$errInfo) {
-        $errInfo = '当前权限不足，无法写入配置文件application/database.php<br><a href="https://forum.fastadmin.net/thread/1145?ref=install" target="_blank">点击查看解决办法</a>';
+        $errInfo = '当前权限不足，無法写入配置文件application/database.php<br><a href="https://forum.fastadmin.net/thread/1145?ref=install" target="_blank">点击查看解决办法</a>';
     }
 } else {
     $dirArr = [];
@@ -114,13 +114,13 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "两次输入的密码不一致";
         exit;
     } else if (!preg_match("/^\w+$/", $adminUsername)) {
-        echo "用户名只能输入字母、数字、下划线";
+        echo "用戶名只能输入字母、数字、下划线";
         exit;
     } else if (!preg_match("/^[\S]+$/", $adminPassword)) {
         echo "密码不能包含空格";
         exit;
     } else if (strlen($adminUsername) < 3 || strlen($adminUsername) > 12) {
-        echo "用户名请输入3~12位字符";
+        echo "用戶名请输入3~12位字符";
         exit;
     } else if (strlen($adminPassword) < 6 || strlen($adminPassword) > 16) {
         echo "密码请输入6~16位字符";
@@ -130,7 +130,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
         //检测能否读取安装文件
         $sql = @file_get_contents(INSTALL_PATH . 'fastadmin.sql');
         if (!$sql) {
-            throw new Exception("无法读取application/admin/command/Install/fastadmin.sql文件，请检查是否有读权限");
+            throw new Exception("無法读取application/admin/command/Install/fastadmin.sql文件，请检查是否有读权限");
         }
         $sql = str_replace("`fa_", "`{$mysqlPrefix}", $sql);
         $pdo = new PDO("mysql:host={$mysqlHostname};port={$mysqlHostport}", $mysqlUsername, $mysqlPassword, array(
@@ -165,13 +165,13 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
         //检测能否成功写入数据库配置
         $result = @file_put_contents($dbConfigFile, $config);
         if (!$result) {
-            throw new Exception("无法写入数据库信息到application/database.php文件，请检查是否有写权限");
+            throw new Exception("無法写入数据库信息到application/database.php文件，请检查是否有写权限");
         }
 
         //检测能否成功写入lock文件
         $result = @file_put_contents($lockFile, 1);
         if (!$result) {
-            throw new Exception("无法写入安装锁定到application/admin/command/Install/install.lock文件，请检查是否有写权限");
+            throw new Exception("無法写入安装锁定到application/admin/command/Install/install.lock文件，请检查是否有写权限");
         }
 
         $newSalt = substr(md5(uniqid(true)), 0, 6);
@@ -361,7 +361,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
 
                 <div class="form-field">
-                    <label>MySQL 用户名</label>
+                    <label>MySQL 用戶名</label>
                     <input type="text" name="mysqlUsername" value="root" required="">
                 </div>
 
@@ -378,7 +378,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <div class="form-group">
                 <div class="form-field">
-                    <label>管理者用户名</label>
+                    <label>管理者用戶名</label>
                     <input name="adminUsername" value="admin" required=""/>
                 </div>
 

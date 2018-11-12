@@ -50,7 +50,7 @@ class Service
             $third->save($values);
             return $auth->direct($user->id);
         } else {
-            // 先随机一个用户名,随后再变更为u+数字id
+            // 先随机一个用戶名,随后再变更为u+数字id
             $username = Random::alnum(20);
             $password = Random::alnum(6);
             Db::startTrans();

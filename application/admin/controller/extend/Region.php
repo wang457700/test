@@ -114,7 +114,7 @@ class Region extends Backend
 
 
     /**
-     * 隐藏
+     * 隱藏
      */
     public function status_hide($ids = NULL)
     {

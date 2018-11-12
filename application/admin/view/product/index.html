@@ -11,13 +11,13 @@
                             <fieldset>
                                 <div class="row">
                                     <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                                        <label for="ip" class="control-label col-xs-4">关键词</label>
+                                        <label for="ip" class="control-label col-xs-4">關鍵詞</label>
                                         <div class="col-xs-8">
                                             <input type="hidden" class="form-control operate" name="ip-operate" data-name="ip" value="=" readonly=""><input type="text" class="form-control" name="keyword" value="{$request['keyword']|default=''}" placeholder="输入產品名稱|貨品ID" data-index="6">
                                         </div>
                                     </div>
                                     <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                                        <label for="admin_id" class="control-label col-xs-2">分类</label>
+                                        <label for="admin_id" class="control-label col-xs-2">分類</label>
                                         <div class="col-xs-10">
                                             <div class="row">
                                                 <div class="col-xs-12">
@@ -63,7 +63,7 @@
                 <div class="widget-body no-padding">
                     <div id="toolbar" class="toolbar">
 
-                        <p>*导入提示：请清除xlsx格式，确保CatID输入正确或产品不重复！</p>
+                        <p>*導入提示：請清除xlsx格式，確保CatID輸入正確或產品不重復！</p>
                         <a href="javascript:window.location.reload()" class="btn btn-primary btn-refresh" title="刷新"><i class="fa fa-refresh"></i> </a>
                         <a href="javascript:;" class="btn btn-danger btn-import {:$auth->check('test/import')?'':'hide'}" title="{:__('Import')}" id="btn-import-file" data-url="ajax/upload" data-mimetype="csv,xls,xlsx" data-multiple="false"><i class="fa fa-upload"></i> {:__('Import')}</a>
 
@@ -109,10 +109,10 @@
                                 <div class="th-inner ">SKU</div>
                                 <div class="fht-cell"></div>
                             </th>
-                            <th style="text-align: center; vertical-align: middle; " data-field="stock">
-                                <div class="th-inner ">庫存</div>
-                                <div class="fht-cell"></div>
-                            </th>
+                            <!--<th style="text-align: center; vertical-align: middle; " data-field="stock">-->
+                                <!--<div class="th-inner ">庫存</div>-->
+                                <!--<div class="fht-cell"></div>-->
+                            <!--</th>-->
                             <th style="text-align: center; vertical-align: middle; " data-field="freight_num">
                                 <div class="th-inner ">貨品ID</div>
                                 <div class="fht-cell"></div>
@@ -142,7 +142,7 @@
                                     <img class="img-sm img-center" src="__PUBLIC__/{$vo.cover}"></a>
                             </td>
                             <td style="text-align: center; vertical-align: middle; ">{$vo.sku}</td>
-                            <td style="text-align: center; vertical-align: middle; ">{$vo.stock}</td>
+                            <!--<td style="text-align: center; vertical-align: middle; ">{$vo.stock}</td>-->
                             <td style="text-align: center; vertical-align: middle; ">{$vo.freight_num}</td>
                             <td style="text-align: center; vertical-align: middle; ">{$is_on_sale[$vo['is_on_sale']]}</td>
                             <td style="text-align: center; vertical-align: middle; ">
@@ -152,7 +152,6 @@
                                     <i class=""></i>刪除</a>
                                 <a href="{:url('Product/is_on_sale',array('product_id'=>$vo['product_id'],'is_on_sale'=>$vo['is_on_sale']))}" class="btn btn-xs btn-detail btn-magic btn-ajax-xs" title="点击{$is_on[$vo['is_on_sale']]}" data-table-id="table" data-field-index="11" data-row-index="0" data-button-index="2">
                                     <i class=""></i>{$is_on[$vo['is_on_sale']]}</a>
-
                             </td>
                         </tr>
                         {/foreach}

@@ -57,7 +57,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template'], function
                         {field: 'state', checkbox: true,},
                         //sortable为是否排序,operate为搜索时的操作符,visible表示是否可见
                         {field: 'id', title: 'ID', sortable: false, operate: false},
-                        //默认隐藏该列
+                        //默认隱藏该列
                         {field: 'slide_name', title: __('banner名稱'), operate: 'LIKE %...%', placeholder: '模糊搜索，*表示任意字符'},
                         //直接响应搜索
                         {field: 'slide_url', title: __('链接'), operate: false},
@@ -82,7 +82,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template'], function
                 search: false,
                 //启用普通表单搜索
                 commonSearch: true,
-                //可以控制是否默认显示搜索单表,false则隐藏,默认为false
+                //可以控制是否默认显示搜索单表,false则隱藏,默认为false
                 searchFormVisible: true,
                 queryParams: function (params) {
                     //这里可以追加搜索条件
@@ -107,7 +107,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template'], function
                 var queryParams = options.queryParams;
                 options.pageNumber = 1;
                 options.queryParams = function (params) {
-                    //这一行必须要存在,否则在点击下一页时会丢失搜索栏数据
+                    //这一行必须要存在,否则在点击下一頁时会丢失搜索栏数据
                     params = queryParams(params);
 
                     //如果希望追加搜索条件,可使用

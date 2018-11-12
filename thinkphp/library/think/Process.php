@@ -1099,7 +1099,7 @@ class Process
     }
 
     /**
-     * 关闭资源
+     * 關閉资源
      * @return int 退出码
      */
     private function close()
@@ -1182,7 +1182,7 @@ class Process
     }
 
     /**
-     * 确保进程已经开启
+     * 確保进程已经开启
      * @param string $functionName
      */
     private function requireProcessIsStarted($functionName)
@@ -1193,7 +1193,7 @@ class Process
     }
 
     /**
-     * 确保进程已经终止
+     * 確保进程已经终止
      * @param string $functionName
      */
     private function requireProcessIsTerminated($functionName)

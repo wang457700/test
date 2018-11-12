@@ -34,7 +34,7 @@ class Category Extends Model
     }
 
     /**
-     * 读取分类类型
+     * 读取分类類型
      * @return array
      */
     public static function getTypeList()
@@ -69,7 +69,7 @@ class Category Extends Model
 
     /**
      * 读取分类列表
-     * @param string $type      指定类型
+     * @param string $type      指定類型
      * @param string $status    指定状态
      * @return array
      */

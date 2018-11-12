@@ -9,7 +9,7 @@ var data = {
 	time: (new Date).toString(),
 	list: [
 		{
-			title: '<油价>调整周期缩至10个工作日 无4%幅度限制',
+			title: '<油价>调整周期缩至10个工作日 無4%幅度限制',
 			url: 'http://finance.qq.com/zt2013/2013yj/index.htm'
 		},
 		{

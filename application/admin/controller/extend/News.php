@@ -39,7 +39,7 @@ class News extends Backend
             ->select(); 
             
 
-             $status =array('0'=>'隐藏','1'=>'顯示');
+             $status =array('0'=>'隱藏','1'=>'顯示');
             foreach ($list as $k => &$v)
             {
                 $v['post_status'] = $status[$v['post_status']];
@@ -123,7 +123,7 @@ class News extends Backend
 
 
     /**
-     * 隐藏
+     * 隱藏
      */
     public function status_hide($ids = NULL)
     {

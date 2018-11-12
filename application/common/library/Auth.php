@@ -125,7 +125,7 @@ class Auth
     /**
      * 注册用户
      *
-     * @param string $username  用户名
+     * @param string $username  用戶名
      * @param string $password  密码
      * @param string $email     邮箱
      * @param string $mobile    手机号
@@ -134,7 +134,7 @@ class Auth
      */
     public function register($username, $password, $email = '', $mobile = '', $extend = [])
     {
-        // 检测用户名或邮箱、手机号是否存在
+        // 检测用戶名或邮箱、手机号是否存在
         if (User::getByUsername($username))
         {
             $this->setError('Username already exist');
@@ -225,7 +225,7 @@ class Auth
     /**
      * 用户登录
      *
-     * @param string    $account    账号,用户名、邮箱、手机号
+     * @param string    $account    账号,用戶名、邮箱、手机号
      * @param string    $password   密码
      * @return boolean
      */
@@ -291,7 +291,7 @@ class Auth
             $this->setError('You are not logged in');
             return false;
         }
-        //判断旧密码是否正确
+        //判断旧密码是否正確
         if ($this->_user->password == $this->getEncryptPassword($oldpassword, $this->_user->salt) || $ignoreoldpassword)
         {
             $salt = Random::alnum();

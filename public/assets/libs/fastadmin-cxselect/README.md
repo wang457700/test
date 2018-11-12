@@ -99,9 +99,9 @@ cxSelectApi.setOptions();
 selects|[]|下拉选框组。<br>输入 select 的 className
 url|null|整合数据接口地址（URL）；<br>每个选框的内容使用各自的接口地址，详见 [DEMO](http://code.ciaoca.com/jquery/cxselect/demo/oneself.html)
 data|null|自定义数据，类型为数组，使用 JSON 格式。[DEMO](http://code.ciaoca.com/jquery/cxselect/demo/custom.html)
-emptyStyle|null|子集无数据时 select 元素的显示状态。<br>可设置为：**"none"**(display:none), **"hidden"**(visibility:hidden)
+emptyStyle|null|子集無数据时 select 元素的显示状态。<br>可设置为：**"none"**(display:none), **"hidden"**(visibility:hidden)
 required|false|是否为必选。<br>设为 `false` 时，会在列表头部添加 `<option value="firstValue">firstTitle</option>` 选项。
-firstTitle|'请选择'|选框第一个项目的标题（仅在 `required` 为 `false` 时有效）
+firstTitle|'请選擇'|选框第一个项目的标题（仅在 `required` 为 `false` 时有效）
 firstValue|''|选框第一个项目的值（仅在 `required` 为 `false` 时有效）
 jsonSpace|''|数据命名空间
 jsonName|'n'|数据标题字段名称（用于 option 的标题）
@@ -119,7 +119,7 @@ jsonSub|'s'|子集数据字段名称
 ---|---
 data-selects|下拉选框组。<br>输入 select 的 className，使用英文逗号分隔的字符串
 data-url|列表数据接口地址
-data-empty-style|子集无数据时 select 的显示状态
+data-empty-style|子集無数据时 select 的显示状态
 data-required|是否为必选
 data-first-title|选框第一个项目的标题
 data-first-value|选框第一个项目的值
@@ -130,7 +130,7 @@ data-json-sub|子集数据字段名称
 
 ### select 元素的 data- 属性
 ```html
-<select class="province" data-value="浙江省" data-first-title="选择省"></select>
+<select class="province" data-value="浙江省" data-first-title="選擇省"></select>
 ```
 
 名称|说明

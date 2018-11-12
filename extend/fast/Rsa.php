@@ -168,7 +168,7 @@ class Rsa
      * 验证签名
      * @param string $dataString 被签名数据
      * @param string $signString 已经签名的字符串
-     * @return number 1签名正确 0签名错误
+     * @return number 1签名正確 0签名错误
      */
     public function verify($dataString, $signString)
     {

@@ -66,7 +66,7 @@ abstract class Connection
         'hostname'        => '',
         // 数据库名
         'database'        => '',
-        // 用户名
+        // 用戶名
         'username'        => '',
         // 密码
         'password'        => '',
@@ -794,7 +794,7 @@ abstract class Connection
     }
 
     /**
-     * 关闭数据库（或者重新连接）
+     * 關閉数据库（或者重新连接）
      * @access public
      * @return $this
      */
@@ -1064,7 +1064,7 @@ abstract class Connection
         if ($this->PDOStatement) {
             $this->free();
         }
-        // 关闭连接
+        // 關閉连接
         $this->close();
     }
 }

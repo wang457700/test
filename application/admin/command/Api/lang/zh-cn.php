@@ -8,7 +8,7 @@ return [
     'Parameters'       => '参数',
     'Body'             => '正文',
     'Name'             => '名称',
-    'Type'             => '类型',
+    'Type'             => '類型',
     'Required'         => '必选',
     'Description'      => '描述',
     'Send'             => '提交',

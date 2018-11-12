@@ -92,7 +92,7 @@ class Command extends Backend
     }
 
     /**
-     * 详情
+     * 詳情
      */
     public function detail($ids)
     {

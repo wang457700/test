@@ -2,7 +2,7 @@
 
 return [
     'Id'            => 'ID',
-    'Type'          => '类型',
+    'Type'          => '類型',
     'Params'        => '参数',
     'Command'       => '命令',
     'Content'       => '返回结果',

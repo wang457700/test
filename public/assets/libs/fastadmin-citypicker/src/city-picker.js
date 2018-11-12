@@ -541,7 +541,7 @@
     CityPicker.DEFAULTS = {
         simple: false,
         responsive: false,
-        placeholder: '请选择省/市/区',
+        placeholder: '请選擇省/市/区',
         level: 'district',
         province: '',
         city: '',

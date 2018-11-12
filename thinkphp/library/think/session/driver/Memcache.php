@@ -61,7 +61,7 @@ class Memcache extends SessionHandler
     }
 
     /**
-     * 关闭Session
+     * 關閉Session
      * @access public
      */
     public function close()

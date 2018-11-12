@@ -37,11 +37,11 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'upload'], function (
             // 为表格绑定事件
             Table.api.bindevent(table);//当内容渲染完成后
 
-            // 给上传按钮添加上传成功事件
+            // 给上傳按钮添加上傳成功事件
             $("#plupload-avatar").data("upload-success", function (data) {
                 var url = Backend.api.cdnurl(data.url);
                 $(".profile-user-img").prop("src", url);
-                Toastr.success("上传成功！");
+                Toastr.success("上傳成功！");
             });
             
             // 给表单绑定事件

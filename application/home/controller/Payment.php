@@ -44,7 +44,7 @@ class Payment extends  Frontend
 
             $res = $this->order_payment_success($order_sn,$post['payment'],$post['contribution_price']);
             if($res){
-                $this->success('订单已成功支付！',url('payment/payment_done',array('order_sn'=>base64_encode($order_sn))));
+                $this->success('訂單已成功支付！',url('payment/payment_done',array('order_sn'=>base64_encode($order_sn))));
             }else{
                 $this->error('支付失败！');
             }
@@ -58,7 +58,7 @@ class Payment extends  Frontend
         ->find();
 
         if($order_info['pay_status']!=0 && $order_info['pay_status']!=1){
-          $this->success('订单已成功支付！',url('user/center'));
+          $this->success('訂單已成功支付！',url('user/center'));
         }
         $address_info= Db::name('user_address')
         ->where(array('user_id'=>Session::get('user_id'),'id'=>$order_info['address_id']))
@@ -72,7 +72,7 @@ class Payment extends  Frontend
         $this->assign('all_total',$all_total);
         $this->assign('order_info',$order_info);
         $this->assign('order_sn',base64_encode($order_sn));
-        $this->assign('title','支付订单');
+        $this->assign('title','支付訂單');
        return $this->fetch();
     }
 
@@ -86,7 +86,7 @@ class Payment extends  Frontend
         $order_info= Db::name('order')->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))->find();
         $this->assign('data',$data = '');
         $this->assign('order_info',$order_info);
-        $this->assign('title','支付订单');
+        $this->assign('title','支付訂單');
 
         // 支付宝
         if($order_info['payment'] == 2){
@@ -96,7 +96,7 @@ class Payment extends  Frontend
             }else{
                 $trans_amount = '0.01';
                 $EFTPayment = new \app\api\controller\Eftpayment;
-                $data = $EFTPayment->transaction($order_sn,$trans_amount,'无','无');
+                $data = $EFTPayment->transaction($order_sn,$trans_amount,'無','無');
                 $signature = $EFTPayment->signature($order_sn,'ALIPAY',$trans_amount);
                 if(empty($res)){
                     //保存第一次返回的html代码
@@ -113,7 +113,7 @@ class Payment extends  Frontend
             if(empty($mastercard_session)){
                 $mastercard_session = $this->mastercard_session();
             }
-            //回调查询订单是否支付
+            //回调查询訂單是否支付
             if($session){
                 $sessionVersion = input('sessionVersion');
                 Db::name('payment')->insert(array('order_sn'=>$order_sn,'payment_type'=>$order_info['payment'],'time'=>date('Y-m-d H:i:s'),'sessionVersion'=>$sessionVersion,'session'=>$session));
@@ -150,7 +150,7 @@ class Payment extends  Frontend
             ->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$data['merch_ref_no']))
             ->find();
         if($order_info['pay_status'] != 0){
-            $this->success('订单已成功支付！',url('user/center'));
+            $this->success('訂單已成功支付！',url('user/center'));
         }
 
         $payment =  Db::name('payment')->where(array('order_sn'=>$data['merch_ref_no']))->find();
@@ -182,7 +182,7 @@ class Payment extends  Frontend
         $order_info = Db::name('order')->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))->find();
 
         if($order_info['pay_status']){
-            $this->success('订单已经支付了！',url('payment/payment_done',array('order_sn'=>base64_encode($order_sn))));
+            $this->success('訂單已经支付了！',url('payment/payment_done',array('order_sn'=>base64_encode($order_sn))));
         }
         if(empty($payment)){
             $this->error('請選擇支付方式！');
@@ -302,7 +302,7 @@ class Payment extends  Frontend
     }
 
 
-    //查看mastercard订单信息
+    //查看mastercard訂單信息
     public function pageState($session){
         $url = 'https://ap-gateway.mastercard.com/checkout/api/pageState/'.$session;
         $data = array();

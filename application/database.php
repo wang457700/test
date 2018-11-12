@@ -13,13 +13,13 @@
 use think\Env;
 
 return [
-    // 数据库类型
+    // 数据库類型
     'type'            => Env::get('database.type', 'mysql'),
     // 服务器地址
     'hostname'        => Env::get('database.hostname', '127.0.0.1'),
     // 数据库名
     'database'        => Env::get('database.database', 'yingkanghuishop'),
-    // 用户名
+    // 用戶名
     'username'        => Env::get('database.username', 'root'),
     // 密码
     'password'        => Env::get('database.password', 'root'),
@@ -45,7 +45,7 @@ return [
     'slave_no'        => '',
     // 是否严格检查字段是否存在
     'fields_strict'   => true,
-    // 数据集返回类型
+    // 数据集返回類型
     'resultset_type'  => 'array',
     // 自动写入时间戳字段
     'auto_timestamp'  => false,

@@ -459,7 +459,7 @@ class Card extends AbstractAPI
     }
 
     /**
-     * 查看卡券详情.
+     * 查看卡券詳情.
      *
      * @param string $cardId
      *

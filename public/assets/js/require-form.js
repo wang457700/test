@@ -53,7 +53,7 @@ define(['jquery', 'bootstrap', 'upload', 'validator'], function ($, undefined, U
                                     return false;
                                 }
                             }
-                            //提示及关闭当前窗口
+                            //提示及關閉当前窗口
                             var msg = ret.hasOwnProperty("msg") && ret.msg !== "" ? ret.msg : __('Operation completed');
                             parent.Toastr.success(msg);
                             parent.$(".btn-refresh").trigger("click");
@@ -104,7 +104,7 @@ define(['jquery', 'bootstrap', 'upload', 'validator'], function ($, undefined, U
                             }
                         });
                     });
-                    //给隐藏的元素添加上validate验证触发事件
+                    //给隱藏的元素添加上validate验证触发事件
                     $(document).on("change", ".sp_hidden", function () {
                         $(this).trigger("validate");
                     });
@@ -204,13 +204,13 @@ define(['jquery', 'bootstrap', 'upload', 'validator'], function ($, undefined, U
                 }
             },
             plupload: function (form) {
-                //绑定plupload上传元素事件
+                //绑定plupload上傳元素事件
                 if ($(".plupload", form).size() > 0) {
                     Upload.api.plupload($(".plupload", form));
                 }
             },
             faselect: function (form) {
-                //绑定fachoose选择附件事件
+                //绑定fachoose選擇附件事件
                 if ($(".fachoose", form).size() > 0) {
                     $(".fachoose", form).on('click', function () {
                         var that = this;
@@ -254,7 +254,7 @@ define(['jquery', 'bootstrap', 'upload', 'validator'], function ($, undefined, U
                 //绑定fieldlist
                 if ($(".fieldlist", form).size() > 0) {
                     require(['dragsort', 'template'], function (undefined, Template) {
-                        //刷新隐藏textarea的值
+                        //刷新隱藏textarea的值
                         var refresh = function (name) {
                             var data = {};
                             var textarea = $("textarea[name='" + name + "']", form);
@@ -349,7 +349,7 @@ define(['jquery', 'bootstrap', 'upload', 'validator'], function ($, undefined, U
         api: {
             submit: function (form, success, error, submit) {
                 if (form.size() === 0) {
-                    Toastr.error("表单未初始化完成,无法提交");
+                    Toastr.error("表单未初始化完成,無法提交");
                     return false;
                 }
                 if (typeof submit === 'function') {

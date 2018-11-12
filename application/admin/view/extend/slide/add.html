@@ -1,13 +1,13 @@
 <form id="edit-form" class="form-horizontal form-ajax" role="form" data-toggle="validator" method="POST" action="" style="min-height: 450px;">
     <div class="form-group">
-        <label for="c-type" class="control-label col-xs-12 col-sm-2">类型:</label>
+        <label for="c-type" class="control-label col-xs-12 col-sm-2">類型:</label>
         <div class="col-xs-12 col-sm-8">
 
             <select id="c-type" data-rule="required" class="form-control selectpicker" name="row[slide_type]">
-                <option value="index_banner" >首页轮播_banner 1920px*420px</option>
-                <option value="float_left_banner" >左边浮动_banner 255px*255px</option>
-                <option value="center_lefe_banner" >首页固定_左边_banner 390px*360px</option>
-                <option value="center_right_banner" >首页固定_右边(最多两个)_banner 790px*170px</option>
+                <option value="index_banner" >首頁輪播_banner 1920px*420px</option>
+                <option value="float_left_banner" >左邊浮動_banner 255px*255px</option>
+                <option value="center_lefe_banner" >首頁固定_左邊_banner 390px*360px</option>
+                <option value="center_right_banner" >首頁固定_右邊（最多兩個）_banner 790px*170px</option>
             </select>
 
         </div>
@@ -20,7 +20,7 @@
     </div>
 
     <div class="form-group">
-        <label for="username" class="control-label col-xs-12 col-sm-2">链接</label>
+        <label for="username" class="control-label col-xs-12 col-sm-2">鏈結</label>
         <div class="col-xs-12 col-sm-8">
             <input type="text" class="form-control" id="url" name="row[slide_url]" value="" data-rule="slide_url" />
         </div>
@@ -37,7 +37,7 @@
     <div class="form-group">
         <label class="control-label col-xs-12 col-sm-2">狀態</label>
         <div class="col-xs-12 col-sm-8">
-            {:build_radios('row[slide_status]', ['1'=>'顯示', '0'=>'隐藏'], 1)}
+            {:build_radios('row[slide_status]', ['1'=>'顯示', '0'=>'隱藏'], 1)}
         </div>
     </div>
     <div class="form-group hidden layer-footer">
@@ -59,8 +59,8 @@
             <div class="input-group">
                 <input id="c-image" class="form-control" size="50" name="row[slide_pic]" type="text" value="">
                 <div class="input-group-addon no-border no-padding">
-                    <span><button type="button" id="plupload-image" class="btn btn-danger plupload" data-input-id="c-image" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image"><i class="fa fa-upload"></i> 上传</button></span>
-                    <span><button type="button" id="fachoose-image" class="btn btn-primary fachoose" data-input-id="c-image" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> 选择</button></span>
+                    <span><button type="button" id="plupload-image" class="btn btn-danger plupload" data-input-id="c-image" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image"><i class="fa fa-upload"></i> 上傳</button></span>
+                    <span><button type="button" id="fachoose-image" class="btn btn-primary fachoose" data-input-id="c-image" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> 選擇</button></span>
                 </div>
                 <span class="msg-box n-right"></span>
             </div>

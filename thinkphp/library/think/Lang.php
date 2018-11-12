@@ -184,7 +184,7 @@ class Lang
     }
 
     /**
-     * 自动侦测设置获取语言选择
+     * 自动侦测设置获取语言選擇
      * @access public
      * @return string
      */

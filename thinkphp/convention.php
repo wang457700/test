@@ -202,7 +202,7 @@ return [
 
     'session'                => [
         'id'             => '',
-        // SESSION_ID的提交变量,解决flash上传跨域
+        // SESSION_ID的提交变量,解决flash上傳跨域
         'var_session_id' => '',
         // SESSION 前缀
         'prefix'         => 'think',
@@ -247,7 +247,7 @@ return [
         'hostname'        => '127.0.0.1',
         // 数据库名
         'database'        => '',
-        // 数据库用户名
+        // 数据库用戶名
         'username'        => 'root',
         // 数据库密码
         'password'        => '',

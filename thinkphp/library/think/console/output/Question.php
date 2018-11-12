@@ -53,7 +53,7 @@ class Question
     }
 
     /**
-     * 是否隐藏答案
+     * 是否隱藏答案
      * @return bool
      */
     public function isHidden()
@@ -62,7 +62,7 @@ class Question
     }
 
     /**
-     * 隐藏答案
+     * 隱藏答案
      * @param bool $hidden
      * @return Question
      */
@@ -78,7 +78,7 @@ class Question
     }
 
     /**
-     * 不能被隐藏是否撤销
+     * 不能被隱藏是否撤销
      * @return bool
      */
     public function isHiddenFallback()
@@ -87,7 +87,7 @@ class Question
     }
 
     /**
-     * 设置不能被隐藏的时候的操作
+     * 设置不能被隱藏的时候的操作
      * @param bool $fallback
      * @return Question
      */

@@ -40,11 +40,11 @@ $.extend({
       $message.css({
           'margin-left':'-'+$message.width()/2+'px'
       })
-      //点击关闭
+      //点击關閉
       $body.on('click','.c-message--close',function(e){
           removeFn();
       });
-      //自动关闭
+      //自动關閉
       if(defaults.autoClose){
           timer=setTimeout(function(){
               removeFn();

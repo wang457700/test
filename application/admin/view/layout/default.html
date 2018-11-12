@@ -19,9 +19,9 @@
                             {if !IS_DIALOG && !$config.fastadmin.multiplenav}
                             <!-- RIBBON -->
                             <div id="ribbon">
-                                <ol class="breadcrumb pull-left">
-                                    <li><a href="order" class="addtabsit"><i class="fa fa-dashboard"></i>{:__('Dashboard')}</a></li>
-                                </ol>
+                                <!--<ol class="breadcrumb pull-left">-->
+                                    <!--<li><a href="order" class="addtabsit"><i class="fa fa-dashboard"></i>{:__('Dashboard')}</a></li>-->
+                                <!--</ol>-->
                                 <ol class="breadcrumb pull-right">
                                     {foreach $breadcrumb as $vo}
                                     <li><a href="javascript:;" data-url="{$vo.url}">{$vo.title}</a></li>
@@ -39,5 +39,12 @@
             </div>
         </div>
         {include file="common/script" /}
+        <script type="text/javascript" src="__CDN__/assets/js/language.js"></script>
+        <script type="text/javascript">
+            StranBody();
+            setInterval(function() {
+                StranBody();
+            }, 5000);
+        </script>
     </body>
 </html>

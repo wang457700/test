@@ -176,10 +176,11 @@ class Product extends Frontend
 
 
 //        erun 接口
-//        $hksr = new Hksr;
-//        $sBC = $goods['freight_num'];
-//        $goods['stock'] = $hksr->Product_GetFullStockListByBC($sBC);
+        $hksr = new Hksr;
+        $sBC = $goods['freight_num'];
+        $goods['stock'] = $hksr->Product_GetFullStockListByBC($sBC);
 
+       // dump($goods);
         //判断ip
         //香港
         $from_bow = 0;
@@ -199,7 +200,7 @@ class Product extends Frontend
             $buy = true;
         }else{
             $buy = false;
-            $tip = '内地用户可以到内地专区购买  <a href="'.url('product/index',array('categoryid'=>72)).'" style="color: #ffa800;">立即跳转</a>';
+            $tip = '内地用户可以到内地专区购买  <a href="'.url('product/index',array('categoryid'=>72)).'" style="color: #ffa800;">立即跳轉</a>';
         }
 
         $tree = Tree::instance();
@@ -233,13 +234,13 @@ class Product extends Frontend
         $data['product_id'] =  $data['goods_id'];
 
         if(empty($user_id)){
-            $this->error('请登录后再操作！');
+            $this->error('請登入後再操作！');
         }
         if(empty($data['content'])){
-            $this->error('请填写您想发表的评论！');
+            $this->error('請填寫您想发表的评论！');
         }
         if(empty($data['score'])){
-            $this->error('请选择星级评分！');
+            $this->error('请選擇星级评分！');
         }
         unset($data['goods_id']);
         $res = Db::name('goods_comment')->insert($data);

@@ -31,7 +31,7 @@ return [
     'root_namespace'         => [],
     // 扩展函数文件
     'extra_file_list'        => [THINK_PATH . 'helper' . EXT],
-    // 默认输出类型
+    // 默认输出類型
     'default_return_type'    => 'html',
     // 默认AJAX 数据返回格式,可选json xml ...
     'default_ajax_return'    => 'json',
@@ -101,7 +101,7 @@ return [
     'url_convert'            => true,
     // 默认的访问控制器层
     'url_controller_layer'   => 'controller',
-    // 表单请求类型伪装变量
+    // 表单请求類型伪装变量
     'var_method'             => '_method',
     // 表单ajax伪装变量
     'var_ajax'               => '_ajax',
@@ -115,7 +115,7 @@ return [
     // | 模板设置
     // +----------------------------------------------------------------------
     'template'               => [
-        // 模板引擎类型 支持 php think 支持扩展
+        // 模板引擎類型 支持 php think 支持扩展
         'type'         => 'Think',
         // 模板路径
         'view_path'    => '',
@@ -148,7 +148,7 @@ return [
     // 异常页面的模板文件
     'exception_tmpl'         => APP_PATH . 'common' . DS . 'view' . DS . 'tpl' . DS . 'think_exception.tpl',
     // 错误显示信息,非调试模式有效
-    'error_message'          => '你所浏览的页面暂时无法访问',
+    'error_message'          => '你所浏览的页面暂时無法访问',
     // 显示错误信息
     'show_error_msg'         => false,
     // 异常处理handle类 留空使用 \think\exception\Handle
@@ -189,7 +189,7 @@ return [
     // +----------------------------------------------------------------------
     'session'                => [
         'id'             => '',
-        // SESSION_ID的提交变量,解决flash上传跨域
+        // SESSION_ID的提交变量,解决flash上傳跨域
         'var_session_id' => '',
         // SESSION 前缀
         'prefix'         => 'think',

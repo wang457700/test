@@ -39,9 +39,9 @@ class Validate extends Api
     }
 
     /**
-     * 检测用户名
+     * 检测用戶名
      * 
-     * @param string $username 用户名
+     * @param string $username 用戶名
      * @param string $id 排除会员ID
      */
     public function check_username_available()
@@ -51,7 +51,7 @@ class Validate extends Api
         $count = User::where('username', '=', $email)->where('id', '<>', $id)->count();
         if ($count > 0)
         {
-            $this->error(__('用户名已经被占用'));
+            $this->error(__('用戶名已经被占用'));
         }
         $this->success();
     }
@@ -120,7 +120,7 @@ class Validate extends Api
         $event = $this->request->request('event');
         if (!\app\common\library\Sms::check($mobile, $captcha, $event))
         {
-            $this->error(__('验证码不正确'));
+            $this->error(__('验证码不正確'));
         }
         $this->success();
     }
@@ -139,7 +139,7 @@ class Validate extends Api
         $event = $this->request->request('event');
         if (!\app\common\library\Ems::check($email, $captcha, $event))
         {
-            $this->error(__('验证码不正确'));
+            $this->error(__('验证码不正確'));
         }
         $this->success();
     }

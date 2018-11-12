@@ -42,7 +42,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                 },
                                 {
                                     name: 'dongjie',
-                                    title: __('冻结'),
+                                    title: __('凍結'),
                                     text:'凍結',
                                     classname: 'btn btn-xs btn-detail btn-magic btn-ajax',
                                     url: 'user/user/status/is/hidden',
@@ -59,8 +59,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                     }
                                 },{
                                     name: 'jiedong',
-                                    title: __('解冻'),
-                                    text:'解冻',
+                                    title: __('解凍'),
+                                    text:'解凍',
                                     classname: 'btn btn-xs btn-detail btn-magic btn-ajax',
                                     url: 'user/user/status/is/normal',
                                     success: function (data, ret) {

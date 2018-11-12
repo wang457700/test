@@ -31,20 +31,20 @@
 						<div style="width: 65%;float: right;">
 
 
-							<select onchange="get_city(this)" class="select_e" id="province" name="province"  title="请选择所在省份" required oninvalid="setCustomValidity('请选择省份！')" oninput="setCustomValidity('')">
-								<option value="">选择省份</option>
+							<select onchange="get_city(this)" class="select_e" id="province" name="province"  title="请選擇所在省份" required oninvalid="setCustomValidity('请選擇省份！')" oninput="setCustomValidity('')">
+								<option value="">選擇省份</option>
 								{volist name="province" id="vo"}
 								<option value="{$vo['id']}" {if condition="$vo['id'] eq $row['province']"} selected="selected"{/if}  >{$vo['name']}</option>
 								{/volist}
 							</select>
-							<select onchange="get_area(this)" class="select_e" id="city" name="city"  title="请选择所在城市" required oninvalid="setCustomValidity('请选择城市！')" oninput="setCustomValidity('')">
-								<option value="">选择城市</option>
+							<select onchange="get_area(this)" class="select_e" id="city" name="city"  title="请選擇所在城市" required oninvalid="setCustomValidity('请選擇城市！')" oninput="setCustomValidity('')">
+								<option value="">選擇城市</option>
 								{volist name="city" id="vo"}
 								<option value="{$vo['id']}" {if condition="$vo['id'] eq $row['city']"} selected="selected"{/if}  >{$vo['name']}</option>
 								{/volist}
 							</select>
-							<select onchange="" class="select_e" id="district" name="district"  title="请选择所在区域" >
-								<option value="">选择区域</option>
+							<select onchange="" class="select_e" id="district" name="district"  title="请選擇所在区域" >
+								<option value="">選擇区域</option>
 								{volist name="district" id="vo"}
 								<option value="{$vo['id']}" {if condition="$vo['id'] eq $row['district']"} selected="selected"{/if}  >{$vo['name']}</option>
 								{/volist}
@@ -108,7 +108,7 @@
 					<a href="{:url('user/address_list',array('add'=>'add'))}" class="color_gr">
 					<li class="mui-table-view" style="text-align: center;padding: 10px;">
 
-							添加收货地址
+							添加收貨地址
 
 					</li>
 					</a>
@@ -159,7 +159,7 @@
 						return;
 					},
 					success: function(v) {
-						v = '<option value="0">选择省份</option>'+ v;
+						v = '<option value="0">選擇省份</option>'+ v;
 						$('#province').empty().html(v);
 					}
 				});
@@ -188,7 +188,7 @@
 						return;
 					},
 					success: function(v) {
-						v = '<option value="0">选择城市</option>'+ v;
+						v = '<option value="0">選擇城市</option>'+ v;
 						$('#city').empty().html(v);
 					}
 				});
@@ -216,7 +216,7 @@
 						return;
 					},
 					success: function(v) {
-						v = '<option>选择区域</option>'+ v;
+						v = '<option>選擇区域</option>'+ v;
 						$('#district').empty().html(v);
 					}
 				});

@@ -1192,7 +1192,7 @@ build time: Feb 8 17:28
     }
 
     function compareObjects(a, b, mismatchKeys, mismatchValues) {
-        // 两个比较过了，无需再比较，防止循环比较
+        // 两个比较过了，無需再比较，防止循环比较
         if (a[COMPARE_MARKER] === b && b[COMPARE_MARKER] === a) {
             return TRUE;
         }
@@ -1961,7 +1961,7 @@ build time: Feb 8 17:28
         return;
     }
     S.mix(loader, {
-        //ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
+        //ie 特有，找到当前正在交互的脚本，根据脚本名確定模块名
         // 如果找不到，返回发送前那个脚本
         __findModuleNameByInteractive:function () {
             var self = this,
@@ -2304,7 +2304,7 @@ build time: Feb 8 17:28
                 mods = self.Env.mods,
                 mod = mods[name] || {};
 
-            // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，
+            // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，無论是页面中的代码，
             // 还是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
             mix(mod, { name: name, status: LOADED });
 
@@ -3147,12 +3147,12 @@ KISSY.add('ua/base', function() {
  * NOTES:
  *
  * 2011.11.08
- *  - ie < 10 使用条件注释判断内核，更精确 by gonghaocn@gmail.com
+ *  - ie < 10 使用条件注释判断内核，更精確 by gonghaocn@gmail.com
  *
  * 2010.03
  *  - jQuery, YUI 等类库都推荐用特性探测替代浏览器嗅探。特性探测的好处是能自动适应未来设备和未知设备，比如
  *    if(document.addEventListener) 假设 IE9 支持标准事件，则代码不用修改，就自适应了“未来浏览器”。
- *    对于未知浏览器也是如此。但是，这并不意味着浏览器嗅探就得彻底抛弃。当代码很明确就是针对已知特定浏览器的，
+ *    对于未知浏览器也是如此。但是，这并不意味着浏览器嗅探就得彻底抛弃。当代码很明確就是针对已知特定浏览器的，
  *    同时并非是某个特性探测可以解决时，用浏览器嗅探反而能带来代码的简洁，同时也也不会有什么后患。总之，一切
  *    皆权衡。
  *  - UA.ie && UA.ie < 8 并不意味着浏览器就不是 IE8, 有可能是 IE8 的兼容模式。进一步的判断需要使用 documentMode.
@@ -3178,7 +3178,7 @@ KISSY.add('ua/extra', function(S, UA) {
      * @子涯总结的各国产浏览器的判断依据: http://spreadsheets0.google.com/ccc?key=tluod2VGe60_ceDrAaMrfMw&hl=zh_CN#gid=0
      * 根据 CNZZ 2009 年度浏览器占用率报告，优化了判断顺序：http://www.tanmi360.com/post/230.htm
      * 如果检测出浏览器，但是具体版本号未知用 0.1 作为标识
-     * 世界之窗 & 360 浏览器，在 3.x 以下的版本都无法通过 UA 或者特性检测进行判断，所以目前只要检测到 UA 关键字就认为起版本号为 3
+     * 世界之窗 & 360 浏览器，在 3.x 以下的版本都無法通过 UA 或者特性检测进行判断，所以目前只要检测到 UA 关键字就认为起版本号为 3
      */
 
     // 360Browser
@@ -3913,7 +3913,7 @@ KISSY.add('dom/attr', function(S, DOM, UA, undefined) {
  * 2010.03
  *  - 在 jquery/support.js 中，special attrs 里还有 maxlength, cellspacing,
  *    rowspan, colspan, useap, frameboder, 但测试发现，在 Grade-A 级浏览器中
- *    并无兼容性问题。
+ *    并無兼容性问题。
  *  - 当 colspan/rowspan 属性值设置有误时，ie7- 会自动纠正，和 href 一样，需要传递
  *    第 2 个参数来解决。jQuery 未考虑，存在兼容性 bug.
  *  - jQuery 考虑了未显式设定 tabindex 时引发的兼容问题，kissy 里忽略（太不常用了）
@@ -4273,7 +4273,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
             /**
              * Remove the set of matched elements from the DOM.
              * 不要使用 innerHTML='' 来清除元素，可能会造成内存泄露，要使用 DOM.remove()
-             * @param selector 选择器或元素集合
+             * @param selector 選擇器或元素集合
              * @param {Boolean} keepData 删除元素时是否保留其上的数据，用于离线操作，提高性能
              */
             remove: function(selector, keepData) {
@@ -4293,7 +4293,7 @@ KISSY.add('dom/create', function(S, DOM, UA, undefined) {
 
             /**
              * clone node across browsers for the first node in selector
-             * @param selector 选择器或单个元素
+             * @param selector 選擇器或单个元素
              * @param {Boolean} withDataAndEvent 复制节点是否包括和源节点同样的数据和事件
              * @param {Boolean} deepWithDataAndEvent 复制节点的子孙节点是否包括和源节点子孙节点同样的数据和事件
              * @refer https://developer.mozilla.org/En/DOM/Node.cloneNode
@@ -4727,7 +4727,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
 
             /**
              * whether any node has data
-             * @param {HTMLElement[]|String} selector 选择器或节点数组
+             * @param {HTMLElement[]|String} selector 選擇器或节点数组
              * @param {String} name 数据键名
              * @returns {boolean} 节点是否有关联数据键名的值
              */
@@ -4749,7 +4749,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
 
             /**
              * Store arbitrary data associated with the matched elements.
-             * @param {HTMLElement[]|String} selector 选择器或节点数组
+             * @param {HTMLElement[]|String} selector 選擇器或节点数组
              * @param {String} [name] 数据键名
              * @param {String} [data] 数据键值
              * @returns 当不设置 data，设置 name 那么返回： 节点是否有关联数据键名的值
@@ -4789,7 +4789,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
 
             /**
              * Remove a previously-stored piece of data.
-             * @param {HTMLElement[]|String} selector 选择器或节点数组
+             * @param {HTMLElement[]|String} selector 選擇器或节点数组
              * @param {String} [name] 数据键名，不设置时删除关联节点的所有键值对
              */
             removeData:function (selector, name) {
@@ -5335,7 +5335,7 @@ KISSY.add('dom/offset', function(S, DOM, UA, undefined) {
             box = elem[GET_BOUNDING_CLIENT_RECT]();
 
             // 注：jQuery 还考虑减去 docElem.clientLeft/clientTop
-            // 但测试发现，这样反而会导致当 html 和 body 有边距/边框样式时，获取的值不正确
+            // 但测试发现，这样反而会导致当 html 和 body 有边距/边框样式时，获取的值不正確
             // 此外，ie6 会忽略 html 的 margin 值，幸运地是没有谁会去设置 html 的 margin
 
             x = box[LEFT];
@@ -5546,7 +5546,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                         defaultDisplayDetectIframeDoc.close();
                     } catch(e) {
                         // ie6 need a breath , such as alert(8) or setTimeout;
-                        // 同时需要同步，所以无解，勉强返回
+                        // 同时需要同步，所以無解，勉强返回
                         return "block";
                     }
                 }
@@ -5659,7 +5659,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
 
                 elem[STYLE][DISPLAY] = DOM.data(elem, OLD_DISPLAY) || EMPTY;
 
-                // 可能元素还处于隐藏状态，比如 css 里设置了 display: none
+                // 可能元素还处于隱藏状态，比如 css 里设置了 display: none
                 if (DOM.css(elem, DISPLAY) === NONE) {
                     var tagName = elem.tagName.toLowerCase(),
                         old = getDefaultDisplay(tagName);
@@ -5916,7 +5916,7 @@ KISSY.add('dom/style', function(S, DOM, UA, undefined) {
                 val = hook.set(elem, val);
             }
             if (val !== undefined) {
-                // ie 无效值报错
+                // ie 無效值报错
                 try {
                     elem[STYLE][name] = val;
                 } catch(e) {
@@ -6102,10 +6102,10 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
             isSelectorString = typeof selector === 'string';
         if (isSelectorString && selector.match(REG_QUERY) ||
             !isSelectorString) {
-            // 简单选择器自己处理
+            // 简单選擇器自己处理
             ret = queryBySimple(selector, context);
         }
-        // 如果选择器有 , 分开递归一部分一部分来
+        // 如果選擇器有 , 分开递归一部分一部分来
         else if (isSelectorString && selector.indexOf(COMMA) > -1) {
             ret = queryBySelectors(selector, context);
         }
@@ -6137,7 +6137,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         for (i = 0; i < selectors.length; i++) {
             push.apply(ret, queryByContexts(selectors[i], context));
         }
-        // 多部分选择器可能得到重复结果
+        // 多部分選擇器可能得到重复结果
         return ret;
     }
 
@@ -6147,7 +6147,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         if (REG_ID.test(selector)) {
             t = getElementById(selector.slice(1), context);
             if (t) {
-                // #id 无效时，返回空数组
+                // #id 無效时，返回空数组
                 ret = [t];
             } else {
                 ret = [];
@@ -6188,7 +6188,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
         return ret;
     }
 
-    // 最简单情况了，单个选择器部分，单个上下文
+    // 最简单情况了，单个選擇器部分，单个上下文
     function queryBySimple(selector, context) {
         var ret,
             isSelectorString = typeof selector === 'string';
@@ -6474,7 +6474,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
             if (S.isFunction(filter)) {
                 ret = S.filter(elems, filter);
             }
-            // 其它复杂 filter, 采用外部选择器
+            // 其它复杂 filter, 采用外部選擇器
             else if (filter && sizzle) {
                 ret = sizzle.matches(filter, elems);
             }
@@ -6503,12 +6503,12 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
  * NOTES:
  *
  * 2011.08.02
- *  - 利用 sizzle 重构选择器
+ *  - 利用 sizzle 重构選擇器
  *  - 1.1.6 修正，原来 context 只支持 #id 以及 document
  *    1.2 context 支持任意，和 selector 格式一致
- *  - 简单选择器也和 jquery 保持一致 DOM.query("xx","yy") 支持
+ *  - 简单選擇器也和 jquery 保持一致 DOM.query("xx","yy") 支持
  *    - context 不提供则为当前 document ，否则通过 query 递归取得
- *    - 保证选择出来的节点（除了 document window）都是位于 context 范围内
+ *    - 保证選擇出来的节点（除了 document window）都是位于 context 范围内
  *
  *
  * 2010.01
@@ -6516,7 +6516,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
  *  - getElementById 使用频率最高，使用直达通道优化。
  *  - getElementsByClassName 性能优于 querySelectorAll, 但 IE 系列不支持。
  *  - instanceof 对性能有影响。
- *  - 内部方法的参数，比如 cls, context 等的异常情况，已经在 query 方法中有保证，无需冗余“防卫”。
+ *  - 内部方法的参数，比如 cls, context 等的异常情况，已经在 query 方法中有保证，無需冗余“防卫”。
  *  - query 方法中的条件判断考虑了“频率优先”原则。最有可能出现的情况放在前面。
  *  - Array 的 push 方法可以用 j++ 来替代，性能有提升。
  *  - 返回值策略和 Sizzle 一致，正常时，返回数组；其它所有情况，返回空数组。
@@ -6527,7 +6527,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
  *  - 调整 getElementsByClassName 的降级写法，性能最差的放最后。
  *
  * 2010.02
- *  - 添加对分组选择器的支持（主要参考 Sizzle 的代码，代去除了对非 Grade A 级浏览器的支持）
+ *  - 添加对分组選擇器的支持（主要参考 Sizzle 的代码，代去除了对非 Grade A 级浏览器的支持）
  *
  * 2010.03
  *  - 基于原生 dom 的两个 api: S.query 返回数组; S.get 返回第一个。
@@ -6552,7 +6552,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
  *  - 承玉：恢复对简单分组支持
  *
  * Ref: http://ejohn.org/blog/selectors-that-people-actually-use/
- * 考虑 2/8 原则，仅支持以下选择器：
+ * 考虑 2/8 原则，仅支持以下選擇器：
  * #id
  * tag
  * .cls
@@ -6566,7 +6566,7 @@ KISSY.add('dom/selector', function(S, DOM, undefined) {
  *
  *
  * Bugs:
- *  - S.query('#test-data *') 等带 * 号的选择器，在 IE6 下返回的值不对。jQuery 等类库也有此 bug, 诡异。
+ *  - S.query('#test-data *') 等带 * 号的選擇器，在 IE6 下返回的值不对。jQuery 等类库也有此 bug, 诡异。
  *
  * References:
  *  - http://ejohn.org/blog/selectors-that-people-actually-use/
@@ -6690,7 +6690,7 @@ KISSY.add('dom/style-ie', function(S, DOM, UA, Style) {
                         current = currentStyle && String(currentStyle[name]) || undefined;
                     // look up keywords if a border exists
                     if (current && current.indexOf("px") < 0) {
-                        // 边框没有隐藏
+                        // 边框没有隱藏
                         if (BORDER_MAP[current] && currentStyle[styleName] !== "none") {
                             current = BORDER_MAP[current];
                         } else {
@@ -8602,7 +8602,7 @@ KISSY.add("event/delegate", function(S, DOM, Event, Utils) {
             relatedTarget = event.relatedTarget;
         // 恢复为用户想要的 mouseenter/leave 类型
         event.type = data.preType;
-        // mouseenter/leave 不会冒泡，只选择最近一个
+        // mouseenter/leave 不会冒泡，只選擇最近一个
         target = DOM.closest(target, data.selector, delegateTarget);
         if (target) {
             if (target !== relatedTarget &&
@@ -9194,8 +9194,8 @@ KISSY.add("node/base", function(S, DOM, undefined) {
 
     S.mix(NodeList, {
         /**
-         * 查找位于上下文中并且符合选择器定义的节点列表或根据 html 生成新节点
-         * @param {String|HTMLElement[]|NodeList} selector html 字符串或<a href='http://docs.kissyui.com/docs/html/api/core/dom/selector.html'>选择器</a>或节点列表
+         * 查找位于上下文中并且符合選擇器定义的节点列表或根据 html 生成新节点
+         * @param {String|HTMLElement[]|NodeList} selector html 字符串或<a href='http://docs.kissyui.com/docs/html/api/core/dom/selector.html'>選擇器</a>或节点列表
          * @param {String|Array<HTMLElement>|NodeList|HTMLElement|Document} [context] 上下文定义
          * @returns {NodeList} 节点列表对象
          */
@@ -9404,7 +9404,7 @@ KISSY.add('node/attach', function(S, DOM, Event, NodeList, undefined) {
  *  - 承玉：
  *  - 将 DOM 中的方法包装成 NodeList 方法
  *  - Node 方法调用参数中的 KISSY NodeList 要转换成第一个 HTML Node
- *  - 要注意链式调用，如果 DOM 方法返回 undefined （无返回值），则 NodeList 对应方法返回 this
+ *  - 要注意链式调用，如果 DOM 方法返回 undefined （無返回值），则 NodeList 对应方法返回 this
  *  - 实际上可以完全使用 NodeList 来代替 DOM，不和节点关联的方法如：viewportHeight 等，在 window，document 上调用
  *  - 存在 window/document 虚节点，通过 S.one(window)/new Node(window) ,S.one(document)/new NodeList(document) 获得
  */
@@ -9445,7 +9445,7 @@ KISSY.add("node/override", function(S, DOM, Event, NodeList) {
  * 2011-05-24
  * - 承玉：
  * - 重写 NodeList 的某些方法
- * - 添加 one ,all ，从当前 NodeList 往下开始选择节点
+ * - 添加 one ,all ，从当前 NodeList 往下开始選擇节点
  * - 处理 append ,prepend 和 DOM 的参数实际上是反过来的
  * - append/prepend 参数是节点时，如果当前 NodeList 数量 > 1 需要经过 clone，因为同一节点不可能被添加到多个节点中去（NodeList）
  */
@@ -9643,7 +9643,7 @@ KISSY.add('anim/easing', function() {
         //  1. http://www.w3.org/TR/css3-transitions/#transition-timing-function_tag
         //  2. http://www.robertpenner.com/easing/easing_demo.html
         //  3. assets/cubic-bezier-timing-function.html
-        // 注：是模拟值，非精确推导值
+        // 注：是模拟值，非精確推导值
         easeInStrong: 'cubic-bezier(0.9, 0.0, 0.9, 0.5)',
         easeOutStrong: 'cubic-bezier(0.1, 0.5, 0.1, 1.0)',
         easeBothStrong: 'cubic-bezier(0.9, 0.0, 0.1, 1.0)'
@@ -10212,7 +10212,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
                 if (val == "hide") {
                     to = 0;
                     from = fx.cur();
-                    // 执行完后隐藏
+                    // 执行完后隱藏
                     _backupProps.display = 'none';
                 } else {
                     from = 0;
@@ -10484,7 +10484,7 @@ KISSY.add('anim/base', function(S, DOM, Event, Easing, UA, AM, Fx, Q) {
  *  - 实现 jQuery Effects 的 queue / specialEasing / += / 等特性
  *
  * NOTES:
- *  - 与 emile 相比，增加了 borderStyle, 使得 border: 5px solid #ccc 能从无到有，正确显示
+ *  - 与 emile 相比，增加了 borderStyle, 使得 border: 5px solid #ccc 能从無到有，正確显示
  *  - api 借鉴了 YUI, jQuery 以及 http://www.w3.org/TR/css3-transitions/
  *  - 代码实现了借鉴了 Emile.js: http://github.com/madrobby/emile *
  */
@@ -11314,7 +11314,7 @@ KISSY.add("ajax/form-serializer", function(S, DOM) {
                     // 不被禁用
                     !el.disabled &&
                     (
-                        // radio,checkbox 被选择了
+                        // radio,checkbox 被選擇了
                         el.checked ||
                             // select 或者 textarea
                             rselectTextarea.test(el.nodeName) ||
@@ -11373,7 +11373,7 @@ KISSY.add("ajax/xhrobject", function(S, Event) {
 
             var contentType = xhr.mimeType || xhr.getResponseHeader("Content-Type");
 
-            // 去除无用的通用格式
+            // 去除無用的通用格式
             while (dataType[0] == "*") {
                 dataType.shift();
             }
@@ -12391,7 +12391,7 @@ KISSY.add("ajax/script", function(S, io) {
 
                 // Remove the script
                 if (head && script.parentNode) {
-                    // ie 报错载入无效 js
+                    // ie 报错载入無效 js
                     // 怎么 abort ??
                     // script.src = "#";
                     head.removeChild(script);
@@ -12509,7 +12509,7 @@ KISSY.add("ajax/form", function(S, io, DOM, FormSerializer) {
         if (c.form) {
             var form = DOM.get(c.form),
                 enctype = form['encoding'] || form.enctype;
-            // 上传有其他方法
+            // 上傳有其他方法
             if (enctype.toLowerCase() != "multipart/form-data") {
                 // when get need encode
                 var formParam = FormSerializer.serialize(form);

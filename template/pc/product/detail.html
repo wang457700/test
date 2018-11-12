@@ -158,7 +158,7 @@
                       <form action="{:url('product/comment')}" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return commentform()" id="comment-form">
                           <input type="hidden" name="goods_id" value="{$goods.product_id}">
                           <div class="row" style="">
-                              <textarea rows="3" cols="20" style="height:100px;margin: 0 auto;border:  1px solid #eee;padding: 10px;" class="col-md-12" placeholder="请填写您想发表的评论" name="content"></textarea>
+                              <textarea rows="3" cols="20" style="height:100px;margin: 0 auto;border:  1px solid #eee;padding: 10px;" class="col-md-12" placeholder="請填寫您想发表的评论" name="content"></textarea>
                           </div>
                           <br>
                           星级评分：
@@ -227,7 +227,7 @@
 
             star= '#' + star;
             result= '#' + result;
-            $(result).hide();//将结果DIV隐藏
+            $(result).hide();//将结果DIV隱藏
 
             $(star).raty({
                 hints: ['1', '2', '3', '4', '5'],
@@ -239,7 +239,7 @@
                 start: 3,
                 showHalf: true,
                 //target: result,
-                //targetKeep : false,//targetKeep 属性设置为true，用户的选择值才会被保持在目标DIV中，否则只是鼠标悬停时有值，而鼠标离开后这个值就会消失
+                //targetKeep : false,//targetKeep 属性设置为true，用户的選擇值才会被保持在目标DIV中，否则只是鼠标悬停时有值，而鼠标离开后这个值就会消失
                 click: function (score, evt){
                     //第一种方式：直接取值
 

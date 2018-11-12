@@ -17,7 +17,7 @@ class Bootstrap extends Paginator
 {
 
     /**
-     * 上一页按钮
+     * 上一頁按钮
      * @param string $text
      * @return string
      */
@@ -36,7 +36,7 @@ class Bootstrap extends Paginator
     }
 
     /**
-     * 下一页按钮
+     * 下一頁按钮
      * @param string $text
      * @return string
      */

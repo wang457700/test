@@ -55,7 +55,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form','template'], function 
                 location.reload();
             });
 
-            //切换显示隐藏变量字典列表
+            //切换显示隱藏变量字典列表
             $(document).on("change", "form#add-form select[name='row[type]']", function (e) {
                 $("#add-content-container").toggleClass("hide", ['select', 'selects', 'checkbox', 'radio'].indexOf($(this).val()) > -1 ? false : true);
             });
@@ -94,7 +94,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form','template'], function 
             Form.api.bindevent($("form.edit-form"));
 
             $(document).on("click", "#fastadmin", function () {
-                Fast.api.open($.fn.bootstrapTable.defaults.extend.eidt_url, "修改免服务费地区", {
+                Fast.api.open($.fn.bootstrapTable.defaults.extend.eidt_url, "修改免費服務地區", {
                     callback:function(value){
 
                     }
@@ -120,11 +120,11 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form','template'], function 
                 commonSearch: false,
                 columns: [
                     [
-                        {field: 'name', title:'地区',addclass:'aaaaaa',data:'1',align: 'left',formatter: function (value, row, index){
+                        {field: 'name', title:'地區',addclass:'aaaaaa',data:'1',align: 'left',formatter: function (value, row, index){
                                 return '<span data-id="' + row.id + '">' + value + '</span>';
                             }
                         },
-                        {field: 'custom', title:'是否免服务费', operate: false, formatter: Controller.api.formatter.custom},
+                        {field: 'custom', title:'是否免服務費', operate: false, formatter: Controller.api.formatter.custom},
                     ]
                 ],
             };

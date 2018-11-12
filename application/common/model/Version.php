@@ -12,7 +12,7 @@ class Version extends Model
     // 定义时间戳字段名
     protected $createTime = 'createtime';
     protected $updateTime = 'updatetime';
-    // 定义字段类型
+    // 定义字段類型
     protected $type = [
     ];
 

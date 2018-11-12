@@ -7,7 +7,7 @@
     h4{font-weight: bold;}
 
 </style>
-<a href="javascript:history.back(-1);" class="btn btn-primary" style="margin-bottom: 10px;"><i class="fa fa-mail-reply"></i> 返回上一页</a><br>
+<a href="javascript:history.back(-1);" class="btn btn-primary" style="margin-bottom: 10px;"><i class="fa fa-mail-reply"></i> 返回上一頁</a><br>
 <div class="bg_fff">
     <h4>用戶信息</h4>
     <table class="table table-striped col-sm-4 notable">
@@ -37,7 +37,7 @@
             </tr> 
             <tr class="col-xs-4 col-sm-4">
                 <th>手機號碼：</th>
-                <td>{$row.mobile|default='未填写'}</td>
+                <td>{$row.mobile|default='未填寫'}</td>
             </tr> 
             <tr class="col-xs-4 col-sm-4">
                 <th>用戶類型：</th>
@@ -54,7 +54,7 @@
         </tbody>
     </table>
     <div style="clear:both"></div>
-    <h4 >收货地址</h4>
+    <h4 >收貨地址</h4>
     <table class="table table-striped notable">
         <thead>
            
@@ -100,8 +100,8 @@
                 <td>{:sp_payment($vo['payment'])}</td>
                 <td>{:sp_paystatus($vo['pay_status'])}</td>
                  <td>
-                     <a href="{:url('order/detail',array('order_sn'=>$vo['order_sn']))}" class="btn btn-xs btn-detail btn-dialog" title="查看详情" data-table-id="table" data-field-index="11" data-row-index="0" data-button-index="0">
-                     <i class=""></i>查看详情</a>
+                     <a href="{:url('order/detail',array('order_sn'=>$vo['order_sn']))}" class="btn btn-xs btn-detail btn-dialog" title="查看詳情" data-table-id="table" data-field-index="11" data-row-index="0" data-button-index="0">
+                     <i class=""></i>查看詳情</a>
                  </td>
             </tr>
         {/foreach}

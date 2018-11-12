@@ -6,8 +6,8 @@
             <div class="input-group">
                 <input id="c-image" class="form-control" size="50" name="row[smeta]" type="text" value="{$row.smeta}">
                 <div class="input-group-addon no-border no-padding">
-                    <span><button type="button" id="plupload-image" class="btn btn-danger plupload" data-input-id="c-image" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image"><i class="fa fa-upload"></i> 上传</button></span>
-                    <span><button type="button" id="fachoose-image" class="btn btn-primary fachoose" data-input-id="c-image" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> 选择</button></span>
+                    <span><button type="button" id="plupload-image" class="btn btn-danger plupload" data-input-id="c-image" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image"><i class="fa fa-upload"></i> 上傳</button></span>
+                    <span><button type="button" id="fachoose-image" class="btn btn-primary fachoose" data-input-id="c-image" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> 選擇</button></span>
                 </div>
                 <span class="msg-box n-right"></span>
             </div>
@@ -16,11 +16,11 @@
     </div>
 
     <div class="form-group">
-        <label for="c-type" class="control-label col-xs-12 col-sm-2">类型:</label>
+        <label for="c-type" class="control-label col-xs-12 col-sm-2">類型:</label>
         <div class="col-xs-12 col-sm-8">
 
             <select id="c-type" data-rule="required" class="form-control selectpicker" name="row[post_term_id]">
-                <option >选择类型</option>
+                <option >選擇類型</option>
                 {foreach name="newscategory" item="vo"}
                 <option value="{$vo.id}" {$vo['id'] == $row['post_term_id']?'selected':''}>{$vo.name}</option>
                 {/foreach}
@@ -29,7 +29,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="post_title" class="control-label col-xs-12 col-sm-2">新闻标题</label>
+        <label for="post_title" class="control-label col-xs-12 col-sm-2">新聞標題</label>
         <div class="col-xs-12 col-sm-8">
             <input type="text" class="form-control" id="post_title" name="row[post_title]" value="{$row.post_title}" data-rule="required;post_title" />
         </div>
@@ -42,7 +42,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="post_date" class="control-label col-xs-12 col-sm-2">发布时间</label>
+        <label for="post_date" class="control-label col-xs-12 col-sm-2">發布時間</label>
         <div class="col-xs-12 col-sm-8">
             <input id="c-starttime" class="form-control datetimepicker " data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[post_date]" type="text" value="{$row['post_date']}" style="width: 40%">
         </div>
@@ -50,7 +50,7 @@
     <div class="form-group">
         <label class="control-label col-xs-12 col-sm-2">狀態</label>
         <div class="col-xs-12 col-sm-8">
-            {:build_radios('row[post_status]', [ '1'=>'顯示','0'=>'隐藏'], $row['post_status'])}
+            {:build_radios('row[post_status]', [ '1'=>'顯示','0'=>'隱藏'], $row['post_status'])}
         </div>
     </div>
    <div class="form-group">

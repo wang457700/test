@@ -62,7 +62,7 @@ class Coupon extends Backend
 
 
     /**
-     * 详情
+     * 詳情
      */
     public function detail()
     {
@@ -199,7 +199,7 @@ class Coupon extends Backend
         $tree->init(collection($this->model->order('weigh desc,id desc')->select())->toArray(), 'pid');
         $getTreeList = $tree->getTreeList($tree->getTreeArray(14), 'name');
 
-        $roletree[] = array('id' => '14', 'parent' => '#', 'text' =>'全部分类', 'type' => 'menu','state'=>array('selected' => false));
+        $roletree[] = array('id' => '14', 'parent' => '#', 'text' =>'全部分類', 'type' => 'menu','state'=>array('selected' => false));
         $getChildrenIds = $tree->getChildrenIds(14);
 
         foreach ($getTreeList as $key => $v){

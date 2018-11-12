@@ -10,8 +10,8 @@
  *  message:' 操作成功',    //提示信息
     time:'2000',           //显示时间（默认：2s）
     type:'success',        //显示类型，包括4种：success.error,info,warning
-    showClose:false,       //显示关闭按钮（默认：否）
-    autoClose:true,        //是否自动关闭（默认：是）
+    showClose:false,       //显示關閉按钮（默认：否）
+    autoClose:true,        //是否自动關閉（默认：是）
  * 
  * type:success,error,info,warning
  */
@@ -47,7 +47,7 @@ $.extend({
       var $message=$(template);
       var timer;
       var closeFn,removeFn;
-      //关闭
+      //關閉
       closeFn=function(){
           $message.addClass('messageFadeOutUp');
           $message.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',function(){
@@ -71,11 +71,11 @@ $.extend({
       $message.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',function(){
           $message.removeClass('messageFadeInDown');
       });
-      //点击关闭
+      //点击關閉
       $body.on('click','.c-message--close',function(e){
           closeFn();
       });
-      //自动关闭
+      //自动關閉
       if(defaults.autoClose){
           timer=setTimeout(function(){
               closeFn();

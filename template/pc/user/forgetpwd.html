@@ -32,7 +32,7 @@
 				var email = $('#email');
 				var reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/; //定义一个正则表达式
 				if(!reg.test(email.val())){
-					$.message({message:'電郵格式不正确！',type:'warning'});
+					$.message({message:'電郵格式不正確！',type:'warning'});
 					email.focus();
 					return false;
 				} 

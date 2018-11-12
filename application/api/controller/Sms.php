@@ -33,7 +33,7 @@ class Sms extends Api
         $event = $event ? $event : 'register';
 
         if (!$mobile || !\think\Validate::regex($mobile, "^1\d{10}$")) {
-            $this->error(__('手机号不正确'));
+            $this->error(__('手机号不正確'));
         }
         $last = Smslib::get($mobile, $event);
         if ($last && time() - $last['createtime'] < 60) {
@@ -79,7 +79,7 @@ class Sms extends Api
         $captcha = $this->request->request("captcha");
 
         if (!$mobile || !\think\Validate::regex($mobile, "^1\d{10}$")) {
-            $this->error(__('手机号不正确'));
+            $this->error(__('手机号不正確'));
         }
         if ($event) {
             $userinfo = User::getByMobile($mobile);
@@ -98,7 +98,7 @@ class Sms extends Api
         if ($ret) {
             $this->success(__('成功'));
         } else {
-            $this->error(__('验证码不正确'));
+            $this->error(__('验证码不正確'));
         }
     }
 

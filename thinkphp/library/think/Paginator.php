@@ -38,7 +38,7 @@ abstract class Paginator implements ArrayAccess, Countable, IteratorAggregate, J
     /** @var  integer 每页的数量 */
     protected $listRows;
 
-    /** @var bool 是否有下一页 */
+    /** @var bool 是否有下一頁 */
     protected $hasMore;
 
     /** @var array 一些配置 */

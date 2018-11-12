@@ -71,7 +71,7 @@ define(['jquery', 'bootstrap', 'frontend', 'form', 'template'], function ($, und
             });
         },
         profile: function () {
-            // 给上传按钮添加上传成功事件
+            // 给上傳按钮添加上傳成功事件
             $("#plupload-avatar").data("upload-success", function (data) {
                 var url = Fast.api.cdnurl(data.url);
                 $(".profile-user-img").prop("src", url);

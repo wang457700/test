@@ -26,17 +26,17 @@ class Crud extends Command
     ];
 
     /**
-     * Enum类型识别为单选框的结尾字符,默认会识别为单选下拉列表
+     * Enum類型识别为单选框的结尾字符,默认会识别为单选下拉列表
      */
     protected $enumRadioSuffix = ['data', 'state', 'status'];
 
     /**
-     * Set类型识别为复选框的结尾字符,默认会识别为多选下拉列表
+     * Set類型识别为复选框的结尾字符,默认会识别为多选下拉列表
      */
     protected $setCheckboxSuffix = ['data', 'state', 'status'];
 
     /**
-     * Int类型识别为日期时间的结尾字符,默认会识别为日期文本框
+     * Int類型识别为日期时间的结尾字符,默认会识别为日期文本框
      */
     protected $intDateSuffix = ['time'];
 
@@ -272,9 +272,9 @@ class Crud extends Command
                     'relationTableName'     => $relationTableName,
                     //关联表信息
                     'relationTableInfo'     => $relationTableInfo,
-                    //关联模型表类型(name或table)
+                    //关联模型表類型(name或table)
                     'relationTableType'     => $relationTableType,
-                    //关联模型表类型名称
+                    //关联模型表類型名称
                     'relationTableTypeName' => $relationTableTypeName,
                     //关联模式
                     'relationFields'        => isset($relationFields[$index]) ? explode(',', $relationFields[$index]) : [],
@@ -455,12 +455,12 @@ class Crud extends Command
             foreach ($columnList as $k => $v) {
                 $field = $v['COLUMN_NAME'];
                 $itemArr = [];
-                // 这里构建Enum和Set类型的列表数据
+                // 这里构建Enum和Set類型的列表数据
                 if (in_array($v['DATA_TYPE'], ['enum', 'set', 'tinyint'])) {
                     $itemArr = substr($v['COLUMN_TYPE'], strlen($v['DATA_TYPE']) + 1, -1);
                     $itemArr = explode(',', str_replace("'", '', $itemArr));
                     $itemArr = $this->getItemArray($itemArr, $field, $v['COLUMN_COMMENT']);
-                    //如果类型为tinyint且有使用备注数据
+                    //如果類型为tinyint且有使用备注数据
                     if ($itemArr && $v['DATA_TYPE'] == 'tinyint') {
                         $v['DATA_TYPE'] = 'enum';
                     }
@@ -474,7 +474,7 @@ class Crud extends Command
                 if ($v['COLUMN_KEY'] != 'PRI' && !in_array($field, $this->reservedField) && !in_array($field, $this->ignoreFields)) {
                     $inputType = $this->getFieldType($v);
 
-                    // 如果是number类型时增加一个步长
+                    // 如果是number類型时增加一个步长
                     $step = $inputType == 'number' && $v['NUMERIC_SCALE'] > 0 ? "0." . str_repeat(0, $v['NUMERIC_SCALE'] - 1) . "1" : 0;
 
                     $attrArr = ['id' => "c-{$field}"];
@@ -597,7 +597,7 @@ class Crud extends Command
                             $cssClassArr[] = 'selectpage';
                             $selectpageController = str_replace('_', '/', substr($field, 0, strripos($field, '_')));
                             $attrArr['data-source'] = $selectpageController . "/index";
-                            //如果是类型表需要特殊处理下
+                            //如果是類型表需要特殊处理下
                             if ($selectpageController == 'category') {
                                 $attrArr['data-source'] = 'category/selectpage';
                                 $attrArr['data-params'] = '##replacetext##';
@@ -647,7 +647,7 @@ class Crud extends Command
                     $editList[] = $this->getFormGroup($field, $formEditElement);
                 }
 
-                //过滤text类型字段
+                //过滤text類型字段
                 if ($v['DATA_TYPE'] != 'text') {
                     //主键
                     if ($v['COLUMN_KEY'] == 'PRI' && !$priDefined) {
@@ -677,7 +677,7 @@ class Crud extends Command
                         $langList[] = $this->getLangItem($relationField, $v['COLUMN_COMMENT']);
                     }
 
-                    //过滤text类型字段
+                    //过滤text類型字段
                     if ($v['DATA_TYPE'] != 'text') {
                         //构造JS列信息
                         $javascriptList[] = $this->getJsColumn($relationField, $v['DATA_TYPE']);
@@ -1090,19 +1090,19 @@ EOD;
         if ($this->isMatchSuffix($fieldsName, $this->intDateSuffix)) {
             $inputType = 'datetime';
         }
-        // 指定后缀结尾且类型为enum,说明是个单选框
+        // 指定后缀结尾且類型为enum,说明是个单选框
         if ($this->isMatchSuffix($fieldsName, $this->enumRadioSuffix) && $v['DATA_TYPE'] == 'enum') {
             $inputType = "radio";
         }
-        // 指定后缀结尾且类型为set,说明是个复选框
+        // 指定后缀结尾且類型为set,说明是个复选框
         if ($this->isMatchSuffix($fieldsName, $this->setCheckboxSuffix) && $v['DATA_TYPE'] == 'set') {
             $inputType = "checkbox";
         }
-        // 指定后缀结尾且类型为char或tinyint且长度为1,说明是个Switch复选框
+        // 指定后缀结尾且類型为char或tinyint且长度为1,说明是个Switch复选框
         if ($this->isMatchSuffix($fieldsName, $this->switchSuffix) && ($v['COLUMN_TYPE'] == 'tinyint(1)' || $v['COLUMN_TYPE'] == 'char(1)') && $v['COLUMN_DEFAULT'] !== '' && $v['COLUMN_DEFAULT'] !== null) {
             $inputType = "switch";
         }
-        // 指定后缀结尾城市选择框
+        // 指定后缀结尾城市選擇框
         if ($this->isMatchSuffix($fieldsName, $this->citySuffix) && ($v['DATA_TYPE'] == 'varchar' || $v['DATA_TYPE'] == 'char')) {
             $inputType = "citypicker";
         }

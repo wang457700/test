@@ -38,7 +38,7 @@ class Merge extends Model
     }
 
     /**
-     * 查找单条记录
+     * 查找单條記錄
      * @access public
      * @param mixed        $data  主键值或者查询条件（闭包）
      * @param string|array $with  关联预查询

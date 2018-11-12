@@ -83,7 +83,7 @@ if (!function_exists('human_date')) {
 if (!function_exists('cdnurl')) {
 
     /**
-     * 获取上传资源的CDN的地址
+     * 获取上傳资源的CDN的地址
      * @param string $url 资源相对地址
      * @param boolean $domain 是否显示域名 或者直接传入域名
      * @return string
@@ -393,7 +393,7 @@ function count_cart_num($user_id)
 /**
  * 匯率
  * $price 金额
- * $type 类型  HKD,RMB
+ * $type 類型  HKD,RMB
  */
 function sp_exchangerate($type = 'RMB',$price)
 {
@@ -407,8 +407,8 @@ function sp_exchangerate($type = 'RMB',$price)
 
 
 /**
-* 计算一个订单总金额
-* $order_sn 订单号
+* 计算一个訂單总金额
+* $order_sn 訂單号
 */
 function sum_order_price($order_sn)
 {
@@ -450,8 +450,8 @@ function sp_paystatus_array()
 }
 
 /**
- * 统计订单应付金额
- * $order_sn 订单号
+ * 统计訂單应付金额
+ * $order_sn 訂單号
 */
 function sum_order_payableprice($order_sn)
 {
@@ -637,6 +637,8 @@ function sp_ip_ischina()
     if($data['data']['country_id'] == 'CN'){
         $echo = true;
     }
+
+    $echo = false;
     return $echo;
 }
 
@@ -731,7 +733,7 @@ function curl_post_https($url,$data){ // 模拟提交数据函数
     if (curl_errno($curl)) {
         echo 'Errno'.curl_error($curl);//捕抓异常
     }
-    curl_close($curl); // 关闭CURL会话
+    curl_close($curl); // 關閉CURL会话
     return $tmpInfo; // 返回数据，json格式
 }
 /**

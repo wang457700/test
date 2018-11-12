@@ -42,9 +42,9 @@ class Cart extends Frontend
             $this->ajaxReturn($data);
         }
 //        erun 接口
-//        $hksr = new Hksr;
-//        $sBC = $goods['freight_num'];
-//        $goods['stock'] = $hksr->Product_GetFullStockListByBC($sBC);
+        $hksr = new Hksr;
+        $sBC = $goods['freight_num'];
+        $goods['stock'] = $hksr->Product_GetFullStockListByBC($sBC);
 
         $tree = Tree::instance();
         $china_categoryids = $tree->getChildrenIds(input('categoryid',72),true);
@@ -68,7 +68,6 @@ class Cart extends Frontend
                 $this->ajaxReturn($data);
             }
         }
-
 
         if(($goods['stock'] <= 0 || $goods['stock'] < $cart_order['number'] + $data['number']) && $goods['pre_order'] == 0){
             $data = array(
@@ -116,6 +115,10 @@ class Cart extends Frontend
         if($data['number'] <= 0){
             $this->error('数量必须大于0','',array('number'=>1));
         }
+
+        $hksr = new Hksr;
+        $sBC = $goods['freight_num'];
+        $goods['stock'] = $hksr->Product_GetFullStockListByBC($sBC);
 
         if($goods['pre_order'] != 1){
             if($goods['stock'] <= 0 || $goods['stock'] < $data['number']){
@@ -244,6 +247,10 @@ class Cart extends Frontend
                         'discount_type'=>$goods['discount_type'],
                         'price'=>$goods['price']
                 );
+
+                $hksr = new Hksr;
+                $sBC = $goods['freight_num'];
+                $goods['stock'] = $hksr->Product_GetFullStockListByBC($sBC);
 
                 if($goods['pre_order'] != 1){
                     if($goods['stock'] <= 0 || $goods['stock'] < $v['goods_num']){

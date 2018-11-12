@@ -116,7 +116,7 @@ class Ems extends Api
         }
         else
         {
-            $this->error(__('验证码不正确'));
+            $this->error(__('验证码不正確'));
         }
     }
 

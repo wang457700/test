@@ -68,11 +68,11 @@ class Product extends Backend
                 $data['cat_id'] = $data['cat_id'][$cat_count-1];
             }
             if(empty($data['cat_id'])){
-                $this->error('请选择分类');
+                $this->error('請選擇分類！');
             }
 
             if(empty($data['cover'])){
-                $this->error('至少上传一张封面图！');
+                $this->error('至少上傳一张封面图！');
             }
 
             if($data['discount_type'] == 2 ){
@@ -135,10 +135,10 @@ class Product extends Backend
                 $data['cat_id'] = $data['cat_id'][$cat_count-1];
             }
             if(empty($data['cat_id'])){
-                $this->error('请选择分类');
+                $this->error('請選擇分類！');
             }
             if(empty($data['cover'])){
-                $this->error('至少上传一张封面图！');
+                $this->error('至少上傳一张封面图！');
             }
 
             $img_url=array_filter(input('img_url/a'));
@@ -325,7 +325,7 @@ class Product extends Backend
             $pid = $params['pid'];
 
             if($pid == ''){
-                $this->error('请选择分类！');
+                $this->error('請選擇分類！');
             }
 
             if($params['data']){
@@ -458,6 +458,7 @@ class Product extends Backend
                     'product_name'=>$vo['LNameL1'],
                     'stock'=>100,
                     'freight_num'=>$vo['ProductCode'],
+                    'barcode'=>$vo['Barcode'],
                     'price'=>$vo['Price1'],
                     'pricevip'=>$vo['Price2'],
                     'cat_id'=>$vo['CatID'],
@@ -465,7 +466,7 @@ class Product extends Backend
                     'cover'=>'/uploads/20181023/656b87a1328e1a24efbcca1d4b039d29.jpg',
                     'add_time'=>date('Y-m-d H:i:s',time()),
                     'seo_title'=>$vo['LNameL1'],
-                    'is_on_sale'=>$vo['Publish'],
+                    'is_on_sale'=>$vo['publish'],
                 );
             }else{
                 $vo['discount_type'] = 1;
@@ -476,11 +477,12 @@ class Product extends Backend
                     'product_name'=>$vo['LNameL1'],
                     'stock'=>100,
                     'price'=>$vo['Price1'],
+                    'barcode'=>$vo['Barcode'],
                     'pricevip'=>$vo['Price2'],
                     'cat_id'=>$vo['CatID'],
                     'discount_type'=>$vo['discount_type'],
                     'seo_title'=>$vo['LNameL1'],
-                    'is_on_sale'=>$vo['Publish'],
+                    'is_on_sale'=>$vo['publish'],
                 ));
             }
         }

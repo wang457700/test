@@ -1,13 +1,13 @@
 <form id="edit-form" class="form-horizontal form-ajax" role="form" data-toggle="validator" method="POST" action="" style="min-height: 450px;">
     <div class="form-group">
-        <label for="c-type" class="control-label col-xs-12 col-sm-2">类型:</label>
+        <label for="c-type" class="control-label col-xs-12 col-sm-2">類型:</label>
         <div class="col-xs-12 col-sm-8">
             
             <select id="c-type" data-rule="required" class="form-control selectpicker" name="row[slide_type]">
-                <option value="index_banner" {$row['slide_type']=='index_banner'?'selected':''}>首页轮播_banner 1920px*420px</option>
-                <option value="float_left_banner" {$row['slide_type']=='float_left_banner'?'selected':''}>左边浮动_banner 255px*255px</option>
-                <option value="center_lefe_banner" {$row['slide_type']=='center_lefe_banner'?'selected':''}>首页固定_左边_banner 390px*360px</option>
-                <option value="center_right_banner" {$row['slide_type']=='center_right_banner'?'selected':''}>首页固定_右边(最多两个)_banner 790px*170px</option>
+                <option value="index_banner" {$row['slide_type']=='index_banner'?'selected':''}>首頁輪播_banner 1920px*420px</option>
+                <option value="float_left_banner" {$row['slide_type']=='float_left_banner'?'selected':''}>左邊浮動_banner 255px*255px</option>
+                <option value="center_lefe_banner" {$row['slide_type']=='center_lefe_banner'?'selected':''}>首頁固定_左邊_banner 390px*360px</option>
+                <option value="center_right_banner" {$row['slide_type']=='center_right_banner'?'selected':''}>首頁固定_右邊（最多兩個）_banner 790px*170px</option>
             </select>
 
         </div>
@@ -20,7 +20,7 @@
     </div>
 
     <div class="form-group">
-        <label for="username" class="control-label col-xs-12 col-sm-2">链接</label>
+        <label for="username" class="control-label col-xs-12 col-sm-2">鏈結</label>
         <div class="col-xs-12 col-sm-8">
             <input type="text" class="form-control" id="slide_url" name="row[slide_url]" value="{$row.slide_url}" data-rule="required;slide_url" />
         </div>
@@ -37,7 +37,7 @@
     <div class="form-group">
         <label class="control-label col-xs-12 col-sm-2">狀態</label>
         <div class="col-xs-12 col-sm-8">
-            {:build_radios('row[slide_status]', ['0'=>'隐藏', '1'=>'顯示'], $row['slide_status'])}
+            {:build_radios('row[slide_status]', ['0'=>'隱藏', '1'=>'顯示'], $row['slide_status'])}
         </div>
     </div>
     <div class="form-group hidden layer-footer">

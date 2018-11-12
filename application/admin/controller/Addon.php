@@ -163,7 +163,7 @@ class Addon extends Backend
     }
 
     /**
-     * 本地上传
+     * 本地上傳
      */
     public function local()
     {
@@ -230,7 +230,7 @@ class Addon extends Backend
                 $this->error(__($e->getMessage()));
             }
         } else {
-            // 上传失败获取错误信息
+            // 上傳失败获取错误信息
             $this->error(__($file->getError()));
         }
     }

@@ -30,7 +30,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 ],
                 onLoadSuccess: function (data) {
                     // 在表格第次加载成功后,刷新左侧菜单栏彩色小角标,支持一次渲染多个
-                    // 如果需要在进入后台即显示左侧的彩色小角标,请使用服务端渲染方式,详情修改application/admin/controller/Index.php
+                    // 如果需要在进入后台即显示左侧的彩色小角标,请使用服务端渲染方式,詳情修改application/admin/controller/Index.php
                     Backend.api.sidebar({
                         'example/colorbadge': data.total
                     });

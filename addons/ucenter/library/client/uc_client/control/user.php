@@ -174,7 +174,7 @@ class usercontrol extends base
         $this->init_input();
         $username = $this->input('username');
         $password = $this->input('password');
-        $isuid = $this->input('isuid'); //0用户名 1UID 2邮箱 3手机
+        $isuid = $this->input('isuid'); //0用戶名 1UID 2邮箱 3手机
 
         if ($isuid == 1)
         {
@@ -251,7 +251,7 @@ class usercontrol extends base
     {
         $this->init_input();
         $username = $this->input('username');
-        $isuid = $this->input('isuid'); //0用户名 1UID 2邮箱 3手机
+        $isuid = $this->input('isuid'); //0用戶名 1UID 2邮箱 3手机
         if ($isuid == 1)
         {
             $member = $_ENV['user']->get_user_by_uid($username);

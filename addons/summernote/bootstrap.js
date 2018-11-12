@@ -46,7 +46,7 @@ require(['form', 'upload'], function (Form, Upload) {
                             },
                             onImageUpload: function (files) {
                                 var that = this;
-                                //依次上传图片
+                                //依次上傳图片
                                 for (var i = 0; i < files.length; i++) {
                                     Upload.api.send(files[i], function (data) {
                                         var url = Fast.api.cdnurl(data.url);

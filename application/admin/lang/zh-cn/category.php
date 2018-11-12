@@ -3,7 +3,7 @@
 return [
     'Id'          => 'ID',
     'Pid'         => '父ID',
-    'Type'        => '栏目类型',
+    'Type'        => '栏目類型',
     'All'         => '全部',
     'Image'       => '图片',
     'Keywords'    => '关键字',

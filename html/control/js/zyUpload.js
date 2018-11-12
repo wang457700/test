@@ -20,17 +20,17 @@
 					height           : "400px",  					// 宽度
 					itemWidth        : "140px",                     // 文件项的宽度
 					itemHeight       : "120px",                     // 文件项的高度
-					url              : "/upload/UploadAction",  	// 上传文件的路径
-					multiple         : true,  						// 是否可以多个文件上传
-					dragDrop         : true,  						// 是否可以拖动上传文件
+					url              : "/upload/UploadAction",  	// 上傳文件的路径
+					multiple         : true,  						// 是否可以多个文件上傳
+					dragDrop         : true,  						// 是否可以拖动上傳文件
 					del              : true,  						// 是否可以删除文件
-					finishDel        : false,  						// 是否在上传文件完成后删除预览
+					finishDel        : false,  						// 是否在上傳文件完成后删除预览
 					/* 提供给外部的接口方法 */
-					onSelect         : function(selectFiles, files){},// 选择文件的回调方法  selectFile:当前选中的文件  allFiles:还没上传的全部文件
+					onSelect         : function(selectFiles, files){},// 選擇文件的回调方法  selectFile:当前选中的文件  allFiles:还没上傳的全部文件
 					onDelete		 : function(file, files){},     // 删除一个文件的回调方法 file:当前删除的文件  files:删除之后的文件
-					onSuccess		 : function(file){},            // 文件上传成功的回调方法
-					onFailure		 : function(file){},            // 文件上传失败的回调方法
-					onComplete		 : function(responseInfo){},    // 上传完成的回调方法
+					onSuccess		 : function(file){},            // 文件上傳成功的回调方法
+					onFailure		 : function(file){},            // 文件上傳失败的回调方法
+					onComplete		 : function(responseInfo){},    // 上傳完成的回调方法
 			};
 			
 			para = $.extend(defaults,options);
@@ -41,9 +41,9 @@
 			};
 			
 			/**
-			 * 功能：创建上传所使用的html
-			 * 参数: 无
-			 * 返回: 无
+			 * 功能：创建上傳所使用的html
+			 * 参数: 無
+			 * 返回: 無
 			 */
 			this.createHtml = function(){
 				var multiple = "";  // 设置多选的参数
@@ -58,7 +58,7 @@
 					html += '			<div class="upload_choose">';
 	            	html += '				<div class="convent_choice">';
 	            	html += '					<div class="andArea">';
-	            	html += '						<div class="filePicker">点击选择文件</div>';
+	            	html += '						<div class="filePicker">点击選擇文件</div>';
 	            	html += '						<input id="fileImage" type="file" size="30" name="fileselect[]" '+multiple+'>';
 	            	html += '					</div>';
 	            	html += '				</div>';
@@ -67,14 +67,14 @@
 		            html += '			<div class="status_bar">';
 		            html += '				<div id="status_info" class="info">选中0张文件，共0B。</div>';
 		            html += '				<div class="btns">';
-		            html += '					<div class="webuploader_pick">继续选择</div>';
-		            html += '					<div class="upload_btn">开始上传</div>';
+		            html += '					<div class="webuploader_pick">继续選擇</div>';
+		            html += '					<div class="upload_btn">开始上傳</div>';
 		            html += '				</div>';
 		            html += '			</div>';
 					html += '			<div id="preview" class="upload_preview"></div>';
 					html += '		</div>';
 					html += '		<div class="upload_submit">';
-					html += '			<button type="button" id="fileSubmit" class="upload_submit_btn">确认上传文件</button>';
+					html += '			<button type="button" id="fileSubmit" class="upload_submit_btn">確认上傳文件</button>';
 					html += '		</div>';
 					html += '		<div id="uploadInf" class="upload_inf"></div>';
 					html += '	</div>';
@@ -90,8 +90,8 @@
 		            html += '				<div id="status_info" class="info">选中0张文件，共0B。</div>';
 		            html += '				<div class="btns">';
 		            html += '					<input id="fileImage" type="file" size="30" name="fileselect[]" '+multiple+'>';
-		            html += '					<div class="webuploader_pick">选择文件</div>';
-		            html += '					<div class="upload_btn">开始上传</div>';
+		            html += '					<div class="webuploader_pick">選擇文件</div>';
+		            html += '					<div class="upload_btn">开始上傳</div>';
 		            html += '				</div>';
 		            html += '			</div>';
 		            html += '			<div id="preview" class="upload_preview">';
@@ -105,7 +105,7 @@
 					html += '			</div>';
 					html += '		</div>';
 					html += '		<div class="upload_submit">';
-					html += '			<button type="button" id="fileSubmit" class="upload_submit_btn">确认上传文件</button>';
+					html += '			<button type="button" id="fileSubmit" class="upload_submit_btn">確认上傳文件</button>';
 					html += '		</div>';
 					html += '		<div id="uploadInf" class="upload_inf"></div>';
 					html += '	</div>';
@@ -119,9 +119,9 @@
 			};
 			
 			/**
-			 * 功能：显示统计信息和绑定继续上传和上传按钮的点击事件
-			 * 参数: 无
-			 * 返回: 无
+			 * 功能：显示统计信息和绑定继续上傳和上傳按钮的点击事件
+			 * 参数: 無
+			 * 返回: 無
 			 */
 			this.funSetStatusInfo = function(files){
 				var size = 0;
@@ -143,8 +143,8 @@
 			};
 			
 			/**
-			 * 功能：过滤上传的文件格式等
-			 * 参数: files 本次选择的文件
+			 * 功能：过滤上傳的文件格式等
+			 * 参数: files 本次選擇的文件
 			 * 返回: 通过的文件
 			 */
 			this.funFilterEligibleFile = function(files){
@@ -162,7 +162,7 @@
 			
 			/**
 			 * 功能： 处理参数和格式上的预览html
-			 * 参数: files 本次选择的文件
+			 * 参数: files 本次選擇的文件
 			 * 返回: 预览的html
 			 */
 			this.funDisposePreviewHtml = function(file, e){
@@ -188,7 +188,7 @@
 				}
 				
 				
-				// 图片上传的是图片还是其他类型文件
+				// 图片上傳的是图片还是其他类型文件
 				if (file.type.indexOf("image") == 0) {
 					html += '<div id="uploadList_'+ file.index +'" class="upload_append_list">';
 					html += '	<div class="file_bar">';
@@ -203,7 +203,7 @@
 					html += '		</div>';
 					html += '	</a>';
 					html += '	<p id="uploadProgress_'+file.index+'" class="file_progress"></p>';
-					html += '	<p id="uploadFailure_'+file.index+'" class="file_failure">上传失败，请重试</p>';
+					html += '	<p id="uploadFailure_'+file.index+'" class="file_failure">上傳失败，请重试</p>';
 					html += '	<p id="uploadSuccess_'+file.index+'" class="file_success"></p>';
 					html += '</div>';
                 	
@@ -221,7 +221,7 @@
 					html += '		</div>';
 					html += '	</a>';
 					html += '	<p id="uploadProgress_'+file.index+'" class="file_progress"></p>';
-					html += '	<p id="uploadFailure_'+file.index+'" class="file_failure">上传失败，请重试</p>';
+					html += '	<p id="uploadFailure_'+file.index+'" class="file_failure">上傳失败，请重试</p>';
 					html += '	<p id="uploadSuccess_'+file.index+'" class="file_success"></p>';
 					html += '</div>';
 				}
@@ -231,8 +231,8 @@
 			
 			/**
 			 * 功能：调用核心插件
-			 * 参数: 无
-			 * 返回: 无
+			 * 参数: 無
+			 * 返回: 無
 			 */
 			this.createCorePlug = function(){
 				var params = {
@@ -333,8 +333,8 @@
 					onSuccess: function(file, response) {
 						$("#uploadProgress_" + file.index).hide();
 						$("#uploadSuccess_" + file.index).show();
-						$("#uploadInf").append("<p>上传成功，文件地址是：" + response + "</p>");
-						// 根据配置参数确定隐不隐藏上传成功的文件
+						$("#uploadInf").append("<p>上傳成功，文件地址是：" + response + "</p>");
+						// 根据配置参数確定隐不隱藏上傳成功的文件
 						if(para.finishDel){
 							// 移除效果
 							$("#uploadList_" + file.index).fadeOut();
@@ -345,7 +345,7 @@
 					onFailure: function(file) {
 						$("#uploadProgress_" + file.index).hide();
 						$("#uploadSuccess_" + file.index).show();
-						$("#uploadInf").append("<p>文件" + file.name + "上传失败！</p>");	
+						$("#uploadInf").append("<p>文件" + file.name + "上傳失败！</p>");	
 						//$("#uploadImage_" + file.index).css("opacity", 0.2);
 					},
 					onComplete: function(response){
@@ -366,13 +366,13 @@
 			
 			/**
 			 * 功能：绑定事件
-			 * 参数: 无
-			 * 返回: 无
+			 * 参数: 無
+			 * 返回: 無
 			 */
 			this.addEvent = function(){
 				// 如果快捷添加文件按钮存在
 				if($(".filePicker").length > 0){
-					// 绑定选择事件
+					// 绑定選擇事件
 					$(".filePicker").bind("click", function(e){
 		            	$("#fileImage").click();
 		            });
@@ -383,13 +383,13 @@
 	            	$("#fileImage").click();
 	            });
 				
-				// 绑定上传点击事件
+				// 绑定上傳点击事件
 				$(".upload_btn").bind("click", function(e){
-					// 判断当前是否有文件需要上传
+					// 判断当前是否有文件需要上傳
 					if(ZYFILE.funReturnNeedFiles().length > 0){
 						$("#fileSubmit").click();
 					}else{
-						alert("请先选中文件再点击上传");
+						alert("请先选中文件再点击上傳");
 					}
 	            });
 				
@@ -403,7 +403,7 @@
 			};
 			
 			
-			// 初始化上传控制层插件
+			// 初始化上傳控制层插件
 			this.init();
 		});
 	};

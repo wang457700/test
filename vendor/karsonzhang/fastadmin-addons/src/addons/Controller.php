@@ -24,13 +24,13 @@ class Controller extends \think\Controller
     protected $template;
 
     /**
-     * 无需登录的方法,同时也就不需要鉴权了
+     * 無需登录的方法,同时也就不需要鉴权了
      * @var array
      */
     protected $noNeedLogin = ['*'];
 
     /**
-     * 无需鉴权的方法,但需要登录
+     * 無需鉴权的方法,但需要登录
      * @var array
      */
     protected $noNeedRight = ['*'];
@@ -161,7 +161,7 @@ class Controller extends \think\Controller
 
         $upload = \app\common\model\Config::upload();
 
-        // 上传信息配置后
+        // 上傳信息配置后
         Hook::listen("upload_config_init", $upload);
         Config::set('upload', array_merge(Config::get('upload'), $upload));
 

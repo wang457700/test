@@ -25,7 +25,7 @@ class Command extends Addons
                 'sublist' => [
                     ['name' => 'command/index', 'title' => '查看'],
                     ['name' => 'command/add', 'title' => '添加'],
-                    ['name' => 'command/detail', 'title' => '详情'],
+                    ['name' => 'command/detail', 'title' => '詳情'],
                     ['name' => 'command/execute', 'title' => '运行'],
                     ['name' => 'command/del', 'title' => '刪除'],
                     ['name' => 'command/multi', 'title' => '批量更新'],

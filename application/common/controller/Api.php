@@ -40,13 +40,13 @@ class Api
     protected $beforeActionList = [];
 
     /**
-     * 无需登录的方法,同时也就不需要鉴权了
+     * 無需登录的方法,同时也就不需要鉴权了
      * @var array
      */
     protected $noNeedLogin = [];
 
     /**
-     * 无需鉴权的方法,但需要登录
+     * 無需鉴权的方法,但需要登录
      * @var array
      */
     protected $noNeedRight = [];
@@ -58,7 +58,7 @@ class Api
     protected $auth = null;
 
     /**
-     * 默认响应输出类型,支持json/xml
+     * 默认响应输出類型,支持json/xml
      * @var string 
      */
     protected $responseType = 'json';
@@ -139,7 +139,7 @@ class Api
 
         $upload = \app\common\model\Config::upload();
 
-        // 上传信息配置后
+        // 上傳信息配置后
         Hook::listen("upload_config_init", $upload);
 
         Config::set('upload', array_merge(Config::get('upload'), $upload));
@@ -162,7 +162,7 @@ class Api
      * @param string $msg   提示信息
      * @param mixed $data   要返回的数据
      * @param int   $code   错误码，默认为1
-     * @param string $type  输出类型
+     * @param string $type  输出類型
      * @param array $header 发送的 Header 信息
      */
     protected function success($msg = '', $data = null, $code = 1, $type = null, array $header = [])
@@ -175,7 +175,7 @@ class Api
      * @param string $msg   提示信息
      * @param mixed $data   要返回的数据
      * @param int   $code   错误码，默认为0
-     * @param string $type  输出类型
+     * @param string $type  输出類型
      * @param array $header 发送的 Header 信息
      */
     protected function error($msg = '', $data = null, $code = 0, $type = null, array $header = [])
@@ -189,7 +189,7 @@ class Api
      * @param mixed  $msg    提示信息
      * @param mixed  $data   要返回的数据
      * @param int    $code   错误码，默认为0
-     * @param string $type   输出类型，支持json/xml/jsonp
+     * @param string $type   输出類型，支持json/xml/jsonp
      * @param array  $header 发送的 Header 信息
      * @return void
      * @throws HttpResponseException
@@ -202,7 +202,7 @@ class Api
             'time' => Request::instance()->server('REQUEST_TIME'),
             'data' => $data,
         ];
-        // 如果未设置类型则自动判断
+        // 如果未设置類型则自动判断
         $type = $type ? $type : ($this->request->param(config('var_jsonp_handler')) ? 'jsonp' : $this->responseType);
 
         if (isset($header['statuscode']))

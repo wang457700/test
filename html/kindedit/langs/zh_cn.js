@@ -26,7 +26,7 @@ $.trumbowyg.langs.zh_cn = {
     em:             "斜体",
     del:            "删除线",
 
-    unorderedList:  "无序列表",
+    unorderedList:  "無序列表",
     orderedList:    "有序列表",
 
     insertImage:    "网络图片",
@@ -44,12 +44,12 @@ $.trumbowyg.langs.zh_cn = {
 
     fullscreen:     "全屏",
 
-    close:          "关闭",
+    close:          "關閉",
 
-    submit:         "确定",
+    submit:         "確定",
     reset:          "取消",
 
-    invalidUrl:     "无效的 URL",
+    invalidUrl:     "無效的 URL",
     required:       "必需的",
     description:    "描述",
     title:          "标题",

@@ -85,7 +85,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                             map.centerAndZoom(point, 16);
                             map.addOverlay(new BMap.Marker(point));
                         } else {
-                            Layer.alert("您选择地址没有解析到结果!");
+                            Layer.alert("您選擇地址没有解析到结果!");
                         }
                     });
                 });

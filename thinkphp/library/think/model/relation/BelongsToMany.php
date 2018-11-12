@@ -193,7 +193,7 @@ class BelongsToMany extends Relation
     }
 
     /**
-     * 查找多条记录 如果不存在则抛出异常
+     * 查找多條記錄 如果不存在则抛出异常
      * @access public
      * @param array|string|Query|\Closure $data
      * @return array|\PDOStatement|string|Model
@@ -204,7 +204,7 @@ class BelongsToMany extends Relation
     }
 
     /**
-     * 查找单条记录 如果不存在则抛出异常
+     * 查找单條記錄 如果不存在则抛出异常
      * @access public
      * @param array|string|Query|\Closure $data
      * @return array|\PDOStatement|string|Model

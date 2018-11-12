@@ -19,7 +19,7 @@
                 file:   "Fichier"
             },
 			zh_cn:{
-				base64: "本地上传",
+				base64: "本地上傳",
                 file:   "文件"
 			}
         },

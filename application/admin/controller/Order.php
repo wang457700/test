@@ -76,7 +76,7 @@ class Order extends Backend
         $count3 = Db::name('order')->where(array('pay_status'=>array('in','6')))->alias('a')->group('a.order_sn')->count();
         $pay_sum = array('count1'=>$count1,'count2'=>$count2,'count3'=>$count3);
 
-        $pay_status = array('0'=>'未支付','2'=>'已支付','3'=>'已发货','6'=>'已取消','7'=>'到付');
+        $pay_status = array('0'=>'未支付','2'=>'已支付','3'=>'已發貨','6'=>'已取消','7'=>'到付');
         $page = $order_list->render();
         $this->assign('page', $page);
         $this->assign('order_list', $order_list);
@@ -91,7 +91,7 @@ class Order extends Backend
     }
 
 
-    //导出订单
+    //导出訂單
     public function export()
     {
         if ($this->request->isPost()) {

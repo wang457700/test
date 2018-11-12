@@ -20,7 +20,7 @@ class Group extends Backend
     protected $childrenGroupIds = [];
     //当前组别列表数据
     protected $groupdata = [];
-    //无需要权限判断的方法
+    //無需要权限判断的方法
     protected $noNeedRight = ['roletree'];
 
     public function _initialize()

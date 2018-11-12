@@ -25,10 +25,10 @@
         shapeRounded: '形状: 圆角',
         shapeCircle: '形状: 圆',
         shapeThumbnail: '形状: 缩略图',
-        shapeNone: '形状: 无',
+        shapeNone: '形状: 無',
         dragImageHere: '将图片拖拽至此处',
         dropImage: 'Drop image or Text',
-        selectFromFiles: '从本地上传',
+        selectFromFiles: '从本地上傳',
         maximumFileSize: '文件大小最大值',
         maximumFileSizeError: '文件大小超出最大值。',
         url: '图片地址',
@@ -77,7 +77,7 @@
         h6: '标题 6'
       },
       lists: {
-        unordered: '无序列表',
+        unordered: '無序列表',
         ordered: '有序列表'
       },
       options: {
@@ -106,7 +106,7 @@
       },
       shortcut: {
         shortcuts: '快捷键',
-        close: '关闭',
+        close: '關閉',
         textFormatting: '文本格式',
         action: '动作',
         paragraphFormatting: '段落格式',
@@ -128,7 +128,7 @@
         justifyCenter: '居中对齐',
         justifyRight: '右对齐',
         justifyFull: '两端对齐',
-        insertUnorderedList: '无序列表',
+        insertUnorderedList: '無序列表',
         insertOrderedList: '有序列表',
         outdent: '减少缩进',
         indent: '增加缩进',

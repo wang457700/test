@@ -722,9 +722,9 @@ class Validate
     }
 
     /**
-     * 验证上传文件后缀
+     * 验证上傳文件后缀
      * @access protected
-     * @param mixed     $file  上传文件
+     * @param mixed     $file  上傳文件
      * @param mixed     $rule  验证规则
      * @return bool
      */
@@ -745,9 +745,9 @@ class Validate
     }
 
     /**
-     * 验证上传文件类型
+     * 验证上傳文件类型
      * @access protected
-     * @param mixed     $file  上传文件
+     * @param mixed     $file  上傳文件
      * @param mixed     $rule  验证规则
      * @return bool
      */
@@ -768,9 +768,9 @@ class Validate
     }
 
     /**
-     * 验证上传文件大小
+     * 验证上傳文件大小
      * @access protected
-     * @param mixed     $file  上传文件
+     * @param mixed     $file  上傳文件
      * @param mixed     $rule  验证规则
      * @return bool
      */
@@ -793,7 +793,7 @@ class Validate
     /**
      * 验证图片的宽高及类型
      * @access protected
-     * @param mixed     $file  上传文件
+     * @param mixed     $file  上傳文件
      * @param mixed     $rule  验证规则
      * @return bool
      */
@@ -1210,7 +1210,7 @@ class Validate
     {
         $rule = !empty($rule) ? $rule : '__token__';
         if (!isset($data[$rule]) || !Session::has($rule)) {
-            // 令牌数据无效
+            // 令牌数据無效
             return false;
         }
 

@@ -112,7 +112,7 @@ class Hksr extends Api
     }
 
     /**
-     * 不知道是很么鬼 ，这是创建订单
+     * 不知道是很么鬼 ，这是创建訂單
      */
     public function Task_CreateSalesOrder(){
 
@@ -295,7 +295,7 @@ class Hksr extends Api
         $url="http://103.254.210.215/hksrapisttest/api.asmx/Member_GetList";
 
         $post_data=array(
-            'sOrderBy'=>'ID',
+            'sOrderBy'=>'SID',
             'bAscend'=>'true',
             'iRecFrom'=>'0',
             'iRecTo'=>'10000'
@@ -427,7 +427,7 @@ class Hksr extends Api
             //执行命令
             $data = curl_exec($curl);
 
-        //关闭URL请求
+        //關閉URL请求
             curl_close($curl);
             header('Content-type:text/html;charset=utf8');
             //获得数据并返回

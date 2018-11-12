@@ -32,7 +32,7 @@ use think\View;
 
 if (!function_exists('load_trait')) {
     /**
-     * 快速导入Traits PHP5.5以上无需调用
+     * 快速导入Traits PHP5.5以上無需调用
      * @param string    $class trait库
      * @param string    $ext 类库后缀
      * @return boolean
@@ -376,7 +376,7 @@ if (!function_exists('cache')) {
         } else {
             // 缓存数据
             if (is_array($options)) {
-                $expire = isset($options['expire']) ? $options['expire'] : null; //修复查询缓存无法设置过期时间
+                $expire = isset($options['expire']) ? $options['expire'] : null; //修复查询缓存無法设置过期时间
             } else {
                 $expire = is_numeric($options) ? $options : null; //默认快捷缓存设置过期时间
             }

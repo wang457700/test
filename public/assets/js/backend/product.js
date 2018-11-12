@@ -197,7 +197,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                 $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12">CatID:'+value.id+'<input type="text" class="form-control" id="slide_name" name="row[data]['+value.id+']" value="'+value.name+'" data-rule=""/>');
                             });
                             }else{
-                                $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12">没有找到匹配的记录</div></div>');
+                                $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12">沒有找到匹配的記錄</div></div>');
                             }
                       }
                 });
@@ -223,7 +223,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                 $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12"><input type="text" class="form-control" id="slide_name" name="row[data]['+value.id+']" value="'+value.name+'" data-rule=""/>');
                             });
                             }else{
-                                $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12">没有找到匹配的记录</div></div>');
+                                $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12">沒有找到匹配的記錄</div></div>');
                             }
                       }
                 });
@@ -236,7 +236,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                     $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12"><input type="text" class="form-control" id="slide_name" name="row[new][]" value="" data-rule=""/></div></div>');
                 }else{
 
-                    alert('请选择二级分类!');
+                    alert('請選擇二級分類!');
                 }
             });
             $('.columns,.search').hide();
@@ -252,22 +252,22 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 }
             });
 
-            //选择分类
+            //選擇分类
             $(function(){
 
                 get_category(14,'cat_id','0');  // 14：产品分类
-                //一级选择
+                //一级選擇
                 $(document).on("change",'#cat_id',function(){
                     var idname = 'cat_id_2';
                     get_category($(this).val(),idname,'0');
-                    $('#' + idname).empty().html("<option value='0'>请选择商品分类</option>");
+                    $('#' + idname).empty().html("<option value='0'>請選擇商品分類</option>");
                 });
 
-                //二级选择
+                //二级選擇
                 $(document).on("change",'#cat_id_2',function(){
                     var idname = 'cat_id_3';
                     get_category($(this).val(),idname,'0');
-                    $('#' + idname).empty().html("<option value='0'>请选择商品分类</option>");
+                    $('#' + idname).empty().html("<option value='0'>請選擇商品分類</option>");
                 })
             });
         },
@@ -287,7 +287,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                  });
             });
 
-            //选择分类
+            //選擇分类
             $(function(){
                 var cat_id_01 = $('#cat_id_01').val();
                 var cat_id_02 = $('#cat_id_02').val();
@@ -301,12 +301,12 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
 
                 $(document).on("change",'#cat_id',function(){
                     get_category($(this).val(),'cat_id_2','0');
-                    $('#cat_id_2').empty().html("<option value='0'>请选择商品分类</option>");
+                    $('#cat_id_2').empty().html("<option value='0'>請選擇商品分類</option>");
                 });
 
                 $(document).on("change",'#cat_id_2',function(){
                     get_category($(this).val(),'cat_id_3','0');
-                    $('#cat_id_3').empty().html("<option value='0'>请选择商品分类</option>");
+                    $('#cat_id_3').empty().html("<option value='0'>請選擇商品分類</option>");
                 })
             });
 
@@ -374,7 +374,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             top = left = undefined;
         }
         Layer.confirm(
-            '你确定產品吗?',
+            '你確定刪除產品吗?',
             {icon: 3, title: '温馨提示', offset: [top, left], shadeClose: true},
             function (index) {
                 var table = $(that).closest('table');
@@ -412,7 +412,7 @@ function get_category(id,next,select_id){
         dataType:'json',
         success: function(data) {
             if(data.status == 1){
-                var html = "<option value='0'>请选择商品分类</option>";
+                var html = "<option value='0'>請選擇商品分類</option>";
                 $.each(data.result,function(index, value) {
                     if(value.id == select_id){
                         var selected = 'selected';

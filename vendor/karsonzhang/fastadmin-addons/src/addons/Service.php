@@ -72,7 +72,7 @@ class Service
             }
             throw new Exception("没有权限写入临时文件");
         }
-        throw new Exception("无法下载远程文件");
+        throw new Exception("無法下载远程文件");
     }
 
     /**
@@ -101,7 +101,7 @@ class Service
             $zip->close();
             return $dir;
         }
-        throw new Exception("无法执行解压操作，请确保ZipArchive安装正确");
+        throw new Exception("無法执行解压操作，请確保ZipArchive安装正確");
     }
 
     /**

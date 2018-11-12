@@ -271,7 +271,7 @@ trait Backend
             }
         }
 
-        //导入文件首行类型,默认是注释,如果需要使用字段名称请使用name
+        //导入文件首行類型,默认是注释,如果需要使用字段名称请使用name
         $importHeadType = isset($this->importHeadType) ? $this->importHeadType : 'comment';
 
         $table = $this->model->getQuery()->getTable();

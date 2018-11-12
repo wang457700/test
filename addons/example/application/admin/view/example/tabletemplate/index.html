@@ -46,18 +46,18 @@
             <span class="btn btn-<%=label%>">ID:<%=item.id%></span>
             <img src="<%=image%>" class="img-responsive" alt="<%=item.title%>">
             <div class="caption">
-                <h4><%=item.title?item.title:'无'%></h4>
+                <h4><%=item.title?item.title:'無'%></h4>
                 <p class="text-muted">操作者IP:<%=item.ip%></p>
                 <p class="text-muted">操作时间:<%=Moment(item.createtime*1000).format("YYYY-MM-DD HH:mm:ss")%></p>
                 <p>
-                    <!--详情的事件需要在JS中手动绑定-->
-                    <a href="#" class="btn btn-primary btn-success btn-detail" data-id="<%=item.id%>"><i class="fa fa-camera"></i> 详情</a> 
+                    <!--詳情的事件需要在JS中手动绑定-->
+                    <a href="#" class="btn btn-primary btn-success btn-detail" data-id="<%=item.id%>"><i class="fa fa-camera"></i> 詳情</a>
 
                     <!--如果需要响应编辑或删除事件，可以给元素添加 btn-edit或btn-del的类和data-id这个属性值-->
                     <a href="#" class="btn btn-primary btn-edit" data-id="<%=item.id%>"><i class="fa fa-pencil"></i> 编辑</a> 
                     <a href="#" class="btn btn-danger btn-del" data-id="<%=item.id%>"><i class="fa fa-times"></i> 刪除</a>
                     <span class="pull-right" style="margin-top:10px;">
-                        <!--如果需要多选操作，请确保有下面的checkbox元素存在,可移除-->
+                        <!--如果需要多选操作，请確保有下面的checkbox元素存在,可移除-->
                         <input name="checkbox" data-id="<%=item.id%>" type="checkbox" />
                     </span>
                 </p>

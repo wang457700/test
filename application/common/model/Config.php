@@ -22,7 +22,7 @@ class Config extends Model
     ];
 
     /**
-     * 读取配置类型
+     * 读取配置類型
      * @return array
      */
     public static function getTypeList()
@@ -65,7 +65,7 @@ class Config extends Model
             'mobile'   => '手机号',
             'zipcode'  => '邮编',
             'chinese'  => '中文',
-            'username' => '用户名',
+            'username' => '用戶名',
             'password' => '密码'
         ];
         return $regexList;
@@ -142,7 +142,7 @@ class Config extends Model
     }
 
     /**
-     * 本地上传配置信息
+     * 本地上傳配置信息
      * @return array
      */
     public static function upload()

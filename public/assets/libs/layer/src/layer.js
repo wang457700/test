@@ -205,7 +205,7 @@ Class.pt.config = {
   offset: 'auto',
   area: 'auto',
   closeBtn: 1,
-  time: 0, //0表示不自动关闭
+  time: 0, //0表示不自动關閉
   zIndex: 19891014, 
   maxWidth: 360,
   anim: 0,
@@ -355,7 +355,7 @@ Class.pt.creat = function(){
     });
   };
   
-  //记录关闭动画
+  //记录關閉动画
   if(config.isOutAnim){
     that.layero.data('isOutAnim', true);
   }
@@ -658,10 +658,10 @@ Class.pt.callback = function(){
     close === false || layer.close(that.index);
   }
   
-  //右上角关闭回调
+  //右上角關閉回调
   layero.find('.'+ doms[7]).on('click', cancel);
   
-  //点遮罩关闭
+  //点遮罩關閉
   if(config.shadeClose){
     $('#layui-layer-shade'+ that.index).on('click', function(){
       layer.close(that.index);
@@ -702,7 +702,7 @@ ready.reselect = function(){
 }; 
 
 Class.pt.IE6 = function(layero){
-  //隐藏select
+  //隱藏select
   $('select').each(function(index , value){
     var sthis = $(this);
     if(!sthis.parents('.'+doms[0])[0]){
@@ -900,7 +900,7 @@ layer.title = function(name, index){
   title.html(name);
 };
 
-//关闭layer总方法
+//關閉layer总方法
 layer.close = function(index){
   var layero = $('#'+ doms[0] + index), type = layero.attr('type'), closeAnim = 'layer-anim-close';
   if(!layero[0]) return;
@@ -950,7 +950,7 @@ layer.close = function(index){
   }
 };
 
-//关闭所有层
+//關閉所有层
 layer.closeAll = function(type){
   $.each($('.'+doms[0]), function(){
     var othis = $(this);

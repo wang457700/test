@@ -16,13 +16,13 @@ class Backend extends Controller
 {
 
     /**
-     * 无需登录的方法,同时也就不需要鉴权了
+     * 無需登录的方法,同时也就不需要鉴权了
      * @var array
      */
     protected $noNeedLogin = [];
 
     /**
-     * 无需鉴权的方法,但需要登录
+     * 無需鉴权的方法,但需要登录
      * @var array
      */
     protected $noNeedRight = [];
@@ -94,7 +94,7 @@ class Backend extends Controller
     protected $selectpageFields = '*';
 
     /**
-     * 导入文件首行类型
+     * 导入文件首行類型
      * 支持comment/name
      * 表示注释或字段名
      */
@@ -177,7 +177,7 @@ class Backend extends Controller
 
         $upload = \app\common\model\Config::upload();
 
-        // 上传信息配置后
+        // 上傳信息配置后
         Hook::listen("upload_config_init", $upload);
 
         // 配置信息
@@ -400,7 +400,7 @@ class Backend extends Controller
         //设置过滤方法
         $this->request->filter(['strip_tags', 'htmlspecialchars']);
 
-        //搜索关键词,客户端输入以空格分开,这里接收为数组
+        //搜索關鍵詞,客户端输入以空格分开,这里接收为数组
         $word = (array)$this->request->request("q_word/a");
         //当前页
         $page = $this->request->request("pageNumber");
@@ -466,7 +466,7 @@ class Backend extends Controller
                 ];
             }
         }
-        //这里一定要返回有list这个字段,total是可选的,如果total<=list的数量,则会隐藏分页按钮
+        //这里一定要返回有list这个字段,total是可选的,如果total<=list的数量,则会隱藏分页按钮
         return json(['list' => $list, 'total' => $total]);
     }
 

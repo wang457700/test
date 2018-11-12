@@ -1,3 +1,4 @@
+
 define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template'], function ($, undefined, Backend, Table, Form, Template) {
 
     var Controller = {
@@ -32,10 +33,10 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template'], function
                 columns: [
                     [
                         {field: 'id', title: __('ID'), operate: false},
-                        {field: 'name', title: __('地区名称'), align: 'left',formatter:function (value, row, index) {
+                        {field: 'name', title: __('地區名稱'), align: 'left',formatter:function (value, row, index) {
                                 return row.name;
                             }},
-                        {field: 'custom', title:'是否免服务费', operate: false, formatter: Controller.api.formatter.custom},
+                        {field: 'custom', title:'是否免服務費', operate: false, formatter: Controller.api.formatter.custom},
                         {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate,
                             buttons: [
                                 {
@@ -49,8 +50,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template'], function
                                     }
                                 },{
                                     name: 'dongjie',
-                                    title: __('冻结'),
-                                    text:'冻结',
+                                    title: __('凍結'),
+                                    text:'凍結',
                                     classname: 'btn btn-xs btn-detail btn-magic btn-ajax',
                                     url: 'coupon/status/is/0',
                                     success: function (data, ret) {
@@ -63,8 +64,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template'], function
                                     }
                                 },{
                                     name: 'jiedong',
-                                    title: __('解冻'),
-                                    text:'解冻',
+                                    title: __('解凍'),
+                                    text:'解凍',
                                     classname: 'btn btn-xs btn-detail btn-magic btn-ajax',
                                     url: 'coupon/status/is/1',
                                     success: function (data, ret) {
@@ -114,6 +115,11 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template'], function
 
             });
 
+
+            StranBody();
+            setInterval(function() {
+                StranBody();
+            }, 5000);
 
 
         },

@@ -47,7 +47,7 @@ class Common extends Api
     }
 
     /**
-     * 上传文件
+     * 上傳文件
      *
      * @param File $file 文件流
      */
@@ -133,7 +133,7 @@ class Common extends Api
                 'url' => $uploadDir . $splInfo->getSaveName()
             ]);
         } else {
-            // 上传失败获取错误信息
+            // 上傳失败获取错误信息
             $this->error($file->getError());
         }
     }

@@ -161,7 +161,7 @@ html #layuicss-layer{display: none; position: absolute; width: 1989px;}
 .layui-layer-imgtit a:hover{color:#fff; text-decoration:underline;}
 .layui-layer-imgtit em{padding-left:10px; font-style: normal;}
 
-/* 关闭动画 */
+/* 關閉动画 */
 @-webkit-keyframes layer-bounceOut {
   100% {opacity: 0; -webkit-transform: scale(.7); transform: scale(.7)}
   30% {-webkit-transform: scale(1.05); transform: scale(1.05)}

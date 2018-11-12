@@ -42,7 +42,7 @@ class Ajax extends Backend
     }
 
     /**
-     * 上传文件
+     * 上傳文件
      */
     public function upload()
     {
@@ -127,7 +127,7 @@ class Ajax extends Backend
                 'url' => $uploadDir . $splInfo->getSaveName()
             ]);
         } else {
-            // 上传失败获取错误信息
+            // 上傳失败获取错误信息
             $this->error($file->getError());
         }
     }

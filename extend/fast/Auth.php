@@ -227,7 +227,7 @@ class Auth
         }
         foreach ($this->rules as $rule)
         {
-            //超级管理员无需验证condition
+            //超级管理员無需验证condition
             if (!empty($rule['condition']) && !in_array('*', $ids))
             {
                 //根据condition进行验证
