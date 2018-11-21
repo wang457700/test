@@ -15,18 +15,18 @@
 
 				<div class="mui-input-row">
 					<label class="login_ico"></label>
-					<input type="email" placeholder="請輸入您的電郵地址" id="email" name="email" required>
+					<input type="email" placeholder="請輸入您的電郵地址" id="email" name="email" value="{$sn.email}" required>
 				</div>
 				<div class="mui-input-row">
 					<label class="login_ico" style="background-position-x: -40px;"></label>
-					<input type="password" placeholder="請輸入6-12位數字字母組合密碼" name="password" required id="password">
+					<input type="password" placeholder="請輸入6-12位數字字母組合密碼" name="password" value="{$sn.password}" required id="password" >
 				</div>
 				<div class="mui-checkbox mui-left" style="line-height: 40px;">
 					<div class="mui-pull-left">
 						<label style="line-height: 40px;">記住密碼</label>
-						<input name="checkbox" value="true" type="checkbox" id="ck_rmbuser">
+						<input  name="sn_rmbuser" type="checkbox" id="ck_rmbuser" value="1" {$sn.sn_rmbuser?'checked':''}>
 					</div>
-					<a class="mui-pull-right color_ro">忘記密碼？</a>
+					<!--<a class="mui-pull-right color_ro">忘記密碼？</a>-->
 				</div>
 				<button type="submit" class="mui-btn mui-btn-success btn-success-edit">
 					登  錄
@@ -52,12 +52,7 @@
 		<script type="text/javascript">
 
             $(document).ready(function () {
-                if ($.cookie("rmbuser") == "true") {
-                    $("#ck_rmbuser").attr("checked", true);
-                    $("#email").val($.cookie("email"));
 
-                    $("#password").val($.cookie("password"));
-                }
             });
 
             function loginform(){
@@ -74,7 +69,6 @@
                     if(data.code == 0){
                         $.message({message:data.msg,type:'warning',time:'3000'});
                     }else{
-                        save();
                         $.message(data.msg);
                         setTimeout(function () {
                             window.location = data.url
@@ -84,22 +78,6 @@
                 return false; //必须返回false，否则表单会自己再做一次提交操作，并且页面跳转
             }
 
-
-            //记住用戶名密码
-            function save() {
-                if ($("#ck_rmbuser").is(':checked')) {
-                    var email = $("#email").val();
-                    var password = $("#password").val();
-                    $.cookie("rmbuser", "true", { expires: 7 }); //存储一个带7天期限的cookie
-                    $.cookie("email", email, { expires: 7 });
-                    $.cookie("password", password, { expires: 7 });
-                }
-                else {
-                    $.cookie("rmbuser", "false", { expire: -1 });
-                    $.cookie("email", "", { expires: -1 });
-                    $.cookie("password", "", { expires: -1 });
-                }
-            };
             $('#weixin').click(function () {
                 window.location = '{$weixin_url}';
             });

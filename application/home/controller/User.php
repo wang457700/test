@@ -3,6 +3,7 @@
 namespace app\home\controller;
 
 use app\common\controller\Frontend;
+use fast\Arr;
 use think\Config;
 use think\Controller;
 use think\Cookie;
@@ -51,12 +52,14 @@ class User extends Frontend
     	if ($this->request->isPost()) {
 	    	$password = input('post.password');
 	    	$email = input('post.email');
+	    	$sn_rmbuser = input('post.sn_rmbuser',0);
 	    	$user=Db::name('user')->where(array('email'=>$email))->find();
 	    	if(empty($user)){
 				$this->error('帳號不存在！');
 	    	}
 	    	if($user['is_eamil_status'] == 0){
-	    		$this->error('帳號還沒有激活，请到电邮激活');
+	    	    Session::set('user_id',$user['id']);
+	    		$this->error('帳號還沒有激活，请到电邮激活',url('user/user_email_activation'));
 	    	}
 
 	    	if(md5($password) !== $user['password']){
@@ -67,19 +70,24 @@ class User extends Frontend
                 $this->error('帳號已凍結，請聯系管理員！');
             }
 
+            //记住密码
+            if($sn_rmbuser){
+                Session::set("sn", array('email'=>$email,'password'=>$password,'sn_rmbuser'=>$sn_rmbuser));
+            }else{
+                Session::set("sn", array('email'=>'','password'=>'','sn_rmbuser'=>0));
+            }
+
 	    	Session::set("user_id", $user['id']);
 	    	Session::set("user", $user);
-
 	    	$this->success('登入成功！',url('user/center'));
 		}
 
-
-
+        $sn = Session::get("sn");
         $this->assign('weixin_url', $this->weixin_login());
+        $this->assign('sn', $sn);
         $this->assign('title','會員登錄');
         return $this->view->fetch();
     }
-
 
     public function weixin_login(){
         $state = md5(uniqid(rand(), TRUE));

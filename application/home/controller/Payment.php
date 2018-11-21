@@ -119,7 +119,7 @@ class Payment extends  Frontend
                 Db::name('payment')->insert(array('order_sn'=>$order_sn,'payment_type'=>$order_info['payment'],'time'=>date('Y-m-d H:i:s'),'sessionVersion'=>$sessionVersion,'session'=>$session));
                 $res = $this->pageState($session);
 
-                dump(sum_order_payableprice($res['order_sn']));
+               // dump(sum_order_payableprice($res['order_sn']));
                 if($res){
                     if($res['order_sn'] == $order_sn && $res['amount'] == sum_order_payableprice($res['order_sn'])){
                         Session::set('mastercard_session',null);
