@@ -8,7 +8,9 @@
             <li>
               <a href="{:url('index/index')}">主頁</a></li>
             {foreach name="category" item="vo"}
-              <li><a href="{:url('product/index',array('categoryid'=>$vo['id']))}" class="true">{$vo.name}</a></li>
+              {if condition ="$vo['id'] != 72"}
+                <li><a href="{:url('product/index',array('categoryid'=>$vo['id']))}" class="true">{$vo.name}</a></li>
+              {/if}
             {/foreach}
             <li>
               <a href="{:url('share/index')}">共享平台</a></li>
@@ -16,8 +18,8 @@
               <a href="{:url('news/index')}">最新消息</a></li>
             <li>
               <a href="{:url('index/page',array('id'=>108))}">關於我們</a></li>
-            <li>
-              <a href="{:url('index/page',array('id'=>110))}" style="background-image:none">會員優惠</a></li>
+            <li><a href="{:url('index/page',array('id'=>110))}">會員優惠</a></li>
+            <li><a href="{:url('product/index',array('categoryid'=>72))}" style="background-image:none" class="true">內地專區</a></li>
           </ul>
         </div>
         <div class="box" id="navbox" style="height:0px;opacity:0;overflow:hidden;">
@@ -25,15 +27,16 @@
 
           </div>
           {foreach name="category" item="vo"}
+          {if condition ="$vo['id'] != 72"}
             <div class="cont" style="display:none;">
               <ul class="sublist clearfix">
-                <?php $category_2 = model('category')->where('pid',$vo['id'])->select(); ?>
+                <?php $category_2 = model('category')->where('pid',$vo['id'])->order('weigh asc')->select(); ?>
                 {foreach name="$category_2" item="vov"}
                   <li>
                     <a href="{:url('product/index',array('categoryid'=>$vov['id']))}"><h3 class="mcate-item-hd">
                       <span>{$vov.name}</span></h3></a>
                     <p class="mcate-item-bd">
-                      <?php $category_3 = model('category')->where('pid',$vov['id'])->select(); ?>
+                      <?php $category_3 = model('category')->where('pid',$vov['id'])->order('weigh asc')->select(); ?>
                       {foreach name="$category_3" item="vovv"}
                         <a href="{:url('product/index',array('categoryid'=>$vovv['id']))}">{$vovv.name}</a>
                       {/foreach}
@@ -42,14 +45,33 @@
                 {/foreach}
               </ul>
             </div>
+          {/if}
           {/foreach}
-          <div class="" style="display:none;">4
-          </div>
+          <div class="" style="display:none;">4</div>
           <div class="" style="display:none;">5</div>
-          <div class="" style="display:none;">6
+          <div class="" style="display:none;">6</div>
+
+          {foreach name="category" item="vo"}
+          {if condition ="$vo['id'] == 72"}
+          <div class="cont" style="display:none;">
+            <ul class="sublist clearfix">
+              <?php $category_2 = model('category')->where('pid',$vo['id'])->order('weigh asc')->select(); ?>
+              {foreach name="$category_2" item="vov"}
+              <li>
+                <a href="{:url('product/index',array('categoryid'=>$vov['id']))}"><h3 class="mcate-item-hd">
+                  <span>{$vov.name}</span></h3></a>
+                <p class="mcate-item-bd">
+                  <?php $category_3 = model('category')->where('pid',$vov['id'])->order('weigh asc')->select(); ?>
+                  {foreach name="$category_3" item="vovv"}
+                  <a href="{:url('product/index',array('categoryid'=>$vovv['id']))}">{$vovv.name}</a>
+                  {/foreach}
+                </p>
+              </li>
+              {/foreach}
+            </ul>
           </div>
-          <div class="" style="display:none;">7
-          </div>
+          {/if}
+          {/foreach}
         </div>
       </div>
     </div>
@@ -86,7 +108,7 @@
         }
         var box_show = function(hei) {
           box.stop().animate({
-            height: hei,
+            height: hei-25,
             opacity: 1
           },
           400);
@@ -135,6 +157,6 @@
           lista.removeClass("now");
           lista.eq(olda).addClass("now");
         });
-      })(); 
+      })();
 
     </script>

@@ -40,7 +40,7 @@ class Index extends Frontend
     public function index()
     {
         $tree = Tree::instance();
-        $slide =  Db::name('slide')->where(array('slide_status'=>1))->select();
+        $slide =  Db::name('slide')->where(array('slide_status'=>1,'start_time'=>array('LT',time()),'end_time'=>array('GT',time())))->order('listorder asc')->select();
         $where['is_on_sale'] = 1;
         $top_ten= Db::name('goods')->where(array('is_best_status'=>0,'is_on_sale'=>1))->limit(10)->order('add_time desc')->select();
         $product_list= Db::name('goods')
@@ -60,7 +60,7 @@ class Index extends Frontend
             ->order('add_time desc')
             ->limit(9)->select();
 
-        $news= Db::name('article')->where('post_type',2)->limit(3)->select();
+        $news= Db::name('article')->where('post_type',2)->order('post_date desc')->limit(3)->select();
 
         //浏览记录排序
         $product_history_list = Session::get('product_history');

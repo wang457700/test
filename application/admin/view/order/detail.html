@@ -4,9 +4,15 @@
 </style>
 <!--<a href="javascript:history.back(-1);" class="btn btn-primary" style="margin-bottom: 10px;"><i class="fa fa-mail-reply"></i> 返回上一頁</a><br>-->
 <div class="columns columns-right btn-group pull-right">
+
     {if condition="$order['pay_status'] eq 2"}
-        <a href="{:url('order/deliver_order',array('order_sn'=>$order['order_sn']))}" class="btn btn-success btn-ajax-xs" title="點擊發貨" data-table-id="table" data-field-index="11" data-row-index="0" data-button-index="1">
-            發貨
+    <a href="{:url('order/deliver_order',array('order_sn'=>$order['order_sn']))}" class="btn btn-success btn-ajax-xs" title="點擊發貨" data-table-id="table" data-field-index="11" data-row-index="0" data-button-index="1">
+        發貨
+    </a>
+    {/if}
+    {if condition="$order['processing'] eq 0"}
+        <a href="{:url('order/processing',array('order_sn'=>$order['order_sn']))}" class="btn btn-success btn-ajax-xs" title="處理" data-table-id="table" data-field-index="11" data-row-index="0" data-button-index="1">
+            處理
         </a>
     {/if}
     {if condition="$order['pay_status'] eq 0"}
@@ -103,7 +109,17 @@
         <tr class="col-xs-12 col-sm-12">
             <th>訂單狀態：</th>
             <td>{$pay_status[$order['pay_status']]}</td>
-        </tr> 
+        </tr>
+        {if condition="count($order['address_cards']) neq 0"}
+        <tr class="col-xs-12 col-sm-12">
+            <th>身份證信息：</th>
+            <td>
+                {foreach name="$order.address_cards" item="vo"}
+                    <a href="__PUBLIC__{$vo}" title="點擊查看原圖" target="_blank"><img src="__PUBLIC__{$vo}" style="width: 200px;max-height: 170px" /></a>
+                {/foreach}
+            </td>
+        </tr>
+        {/if}
     </tbody>
 </table>
 <h3>配送信息</h3>

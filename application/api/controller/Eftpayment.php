@@ -18,7 +18,7 @@ class Eftpayment extends  Frontend
 {
 
 
-    protected $noNeedLogin = ['test','signature','check','transaction','transaction2','notify_url','return_url','check_query'];
+    protected $noNeedLogin = ['test','signature','check','','transaction2','notify_url','return_url','check_query'];
 
     //EOPG 支付平台
     const mid='852000054990012';
@@ -31,7 +31,7 @@ class Eftpayment extends  Frontend
  * $goods_body 产品詳情 $goods_subject产品描述显示在支付页面上
  **/
     public function transaction($merch_ref_no,$trans_amount = '0.01',$goods_subject = '测试',$goods_body = '测试'){
-
+        //$merch_ref_no = '10000'.rand(10,100);
         if(sp_ip_ischina()){
             $wallet = 'CN';
         }else{
@@ -55,7 +55,6 @@ class Eftpayment extends  Frontend
                 'wallet'=>$wallet,
                 'app_pay'=>'WEB',
         );
-
         $url = self::GET_AUTH_CODE_URL;
         $post = curl_post_https($url,http_build_query($data));
         return $post;
@@ -109,8 +108,8 @@ class Eftpayment extends  Frontend
 
     public function check_query(){
 
-        $merch_ref_no = '201811021541137972';  //訂單号
-        $trans_amount = '0.02'; // 金额
+        $merch_ref_no = '1000064';  //訂單号
+        $trans_amount = '0.01'; // 金额
         $return_url = url('api/payment/return_url','','',true);// 跳转地址
         $signature = $this->signature($merch_ref_no,'ALIPAY',$trans_amount);
         $data = array(
@@ -124,17 +123,19 @@ class Eftpayment extends  Frontend
 
         $url = self::GET_AUTH_CODE_URL;
         $post = curl_post_https($url,http_build_query($data));
-        print_r($post);die;
+        print_r($post);
 
         dump($data);
+        dump($url);
         dump($post);
+        die;
     }
 
     //生成签名
     public function signature($merch_ref_no,$payment_type,$trans_amount){
         $data = array(
             'merch_ref_no'=> $merch_ref_no,
-            'mid'=> '852201810240001',
+            'mid'=>self::mid,
             'payment_type'=> $payment_type,
             'service'=> 'SALE',
             'trans_amount'=>$trans_amount,

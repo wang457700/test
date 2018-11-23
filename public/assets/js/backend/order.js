@@ -1,13 +1,14 @@
 define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefined, Backend, Table, Form) {
     var Controller = {
         index: function () {
+            Controller.api.bindevent();
             // 初始化表格参数配置
             Table.api.init({
                 extend: {
-                    index_url: '',
+                    index_url: 'order/index',
                     add_url: 'product/add',
                     edit_url: '',
-                    del_url: '',
+                    del_url: 'order/del',
                     multi_url: 'order/index/multi',
                     import_url: 'product/import',
                     table: 'user',
@@ -23,6 +24,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 Form.events.cxselect(form);
                 Form.events.selectpage(form);
             });
+
+
             var submitForm = function (ids, layero) {
                 var options = table.bootstrapTable('getOptions');
                 var columns = [];
@@ -69,7 +72,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
 
 
             $(document).on("click", ".btn-delone", function (e) {
-
                 var url = $(this).data('url');
                 e.stopPropagation();
                 e.preventDefault();
@@ -109,52 +111,70 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
 
             // 初始化表格
             table.bootstrapTable({
+                pk: 'order_id',
+                sortName: 'order_id',
+                sortOrder: 'desc',
                 search:false,
                 showExport:false,
                 showToggle:false,
                 visible:false,
                 showColumns:false,
-                commonSearch:false,
+                searchFormVisible: true,
+                commonSearch:true,
                 url: $.fn.bootstrapTable.defaults.extend.index_url,
                 columns: [
                     [   {checkbox: true},
-                        {field: 'order_id', title:'', operate: false},
-                        {field: 'order_sn', title:'', operate: false},
-                        {field: 'user_id', title:'', operate: false},
-                        {field: 'contribution_price', title:'', operate: false},
-                        {field: 'freight', title:'', operate: false},
-                        {field: 'addtime', title:'', operate: false},
-                        {field: 'address', title:'', operate: false},
-                        {field: 'payment', title:'', operate: false},
-                        {field: 'pay_time', title:'', operate: false},
-                        {field: 'pay_status', title:'', operate: false},
+                        //{field: 'order_id', title:'訂單ID', operate: false},
+                        {field: 'order_sn', title:'訂單ID', operate: 'LIKE %...%', placeholder: '模糊搜索，*表示任意字符'},
+                        {field: 'addtime', title:'下單日期', sortable: true,formatter: Table.api.formatter.datetime,operate: 'RANGE',addclass: 'datetimerange'},
+                        {field: 'nickname', title:'用戶名', operate: false},
+                        {field: 'money_total', title:'總金額', operate: false},
+                        {field: 'address', title:'送貨地址', operate: false,width:200},
+                        {field: 'freight', title:'運費', operate: false},
+                        {field: 'contribution_price', title:'捐款金額', operate: false},
+                        {field: 'contribution_receipt', title:'是否需要收據',searchList: {'1':'是','0':'否'},operate: 'FIND_IN_SET', formatter: Table.api.formatter.label},
+                        {field: 'payment', title:'支付方式',searchList: {'1':'微信','2':'支付寶','3':'Mastercard','4':'Visa','5':'貨到付款'},operate: 'FIND_IN_SET', formatter: Table.api.formatter.label},
+                        {field: 'pay_status', title:'狀態',searchList: {'0':'未支付','2':'已支付','3':'已發貨','6':'已取消','7':'到付'},operate: 'FIND_IN_SET', formatter: Table.api.formatter.label},
+                        {field: 'processing', title:'是否處理',searchList: {'1':'已處理','0':'未處理'},operate: 'FIND_IN_SET', formatter: Table.api.formatter.label},
+                        //操作栏,默认有编辑、删除或排序按钮,可自定义配置buttons来扩展按钮
+                        {
+                            field: 'operate',
+                            width: "120px",
+                            title: __('Operate'),
+                            table: table,
+                            events: Table.api.events.operate,
+                            buttons: [
+                                {
+                                    name: 'detail',
+                                    title: __('詳情信息'),
+                                    classname: 'btn btn-xs btn-primary btn-dialog',
+                                    icon: '',
+                                    text:'詳情',
+                                    url: 'order/detail?order_sn={order_sn}',
+                                    callback: function (data) {
+                                        //Layer.alert("接收到回传数据：" + JSON.stringify(data), {title: "回传数据"});
+                                    }
+                                },
+                            ],
+                            formatter: Table.api.formatter.operate,formatter: function (value, row, index) {
+                                console.log(row.status);
+                                var that = $.extend({}, this);
+                                var table = $(that.table).clone(true);
+                                if (row.pay_status != '未支付'){
+                                    $(table).data("operate-del", null);
+                                }
+                                if (row.pay_status != 0){
+                                    $(table).data("operate-jiedong", null);
+                                }
+                                that.table = table;
+                                //console.log($(table).data("operate-dongjie"));
+                                return Table.api.formatter.operate.call(that, value, row, index);
+                            }
+                        },
                     ]
                 ]
             });
 
-            // ,'.btn-delone': function (e, value, row, index) {
-            //     e.stopPropagation();
-            //     e.preventDefault();
-            //     var that = this;
-            //     var top = $(that).offset().top - $(window).scrollTop();
-            //     var left = $(that).offset().left - $(window).scrollLeft() - 260;
-            //     if (top + 154 > $(window).height()) {
-            //         top = top - 154;
-            //     }
-            //     if ($(window).width() < 480) {
-            //         top = left = undefined;
-            //     }
-            //     Layer.confirm(
-            //         __('Are you sure you want to delete this item?'),
-            //         {icon: 3, title: __('Warning'), offset: [top, left], shadeClose: true},
-            //         function (index) {
-            //             var table = $(that).closest('table');
-            //             var options = table.bootstrapTable('getOptions');
-            //             Table.api.multi("del", row[options.pk], table, that);
-            //             Layer.close(index);
-            //         }
-            //     );
-            // }
             // 为表格绑定事件
             Table.api.bindevent(table);
 
@@ -173,7 +193,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                     table: 'category',
                 }
             });
-
 
             var table = $("#table");
             var tableOptions = {

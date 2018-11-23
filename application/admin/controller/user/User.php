@@ -56,7 +56,7 @@ class User extends Backend
                     ->limit($offset, $limit)
                     ->select();
 
-            $level = array('1'=>'普通会员','2'=>'白金会员','3'=>'金牌会员','4'=>'商业会员');
+            $level = array('1'=>'普通會員','2'=>'白金會員','3'=>'金牌會員','4'=>'商業會員');
             $reception_romotion_email = array('0'=>'否','1'=>'是');
             foreach ($list as $k => $v)
             {

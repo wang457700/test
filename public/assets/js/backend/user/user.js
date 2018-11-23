@@ -25,7 +25,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'nickname', title: '用戶名稱', operate: 'LIKE'},
                         {field: 'email', title:'用戶電郵', operate: 'LIKE'},
                         {field: 'mobile', title: '手機號碼', operate: 'LIKE'},
-                        {field: 'level', title:'用户类型', visible: true, searchList: {1: __('Male'), 0: __('Female')}, operate:false},
+                        {field: 'level', title:'用戶類型', visible: true, searchList: {1: '普通會員', 2: '白金會員', 3: '金牌會員', 4: '商業會員'},operate: 'FIND_IN_SET', formatter: Table.api.formatter.label},
                         {field: 'score', title: '積分', operate: false,},
                         {field: 'join_source', title:'注册類型', operate:false},
                         {field: 'reception_romotion_email', title:'是否接收推廣電郵', operate:false},

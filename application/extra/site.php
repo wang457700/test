@@ -1,7 +1,7 @@
 <?php
 
 return array (
-  'name' => '營康會後台',
+  'name' => '營康薈後台',
   'beian' => '',
   'cdnurl' => '',
   'version' => '1.0.1',
@@ -32,12 +32,12 @@ return array (
     'aaaaaa' => 'Aaaaaa',
   ),
   'mail_type' => '1',
-  'mail_smtp_host' => 'smtp.qq.com',
+  'mail_smtp_host' => 'smtp.gmail.com',
   'mail_smtp_port' => '587',
-  'mail_smtp_user' => '457700516@qq.com',
-  'mail_smtp_pass' => 'ljwszifunczgcaej',
+  'mail_smtp_user' => 'wh-smtp@rehabsociety.org.hk',
+  'mail_smtp_pass' => 'pqAD7*89',
   'mail_verify_type' => '1',
-  'mail_from' => '457700516@qq.com',
+  'mail_from' => 'wh-smtp@rehabsociety.org.hk',
   'integral' => 
   array (
     'obtain' => '1',
@@ -52,25 +52,25 @@ return array (
   ),
   'index_seo' => 
   array (
-    'title' => '主页标题',
-    'keywords' => '主页关键字',
-    'description' => '主页描述',
+    'title' => '營康薈 - 香港復康會',
+    'keywords' => '營康薈',
+    'description' => '營康薈 - 香港復康會',
   ),
   'product_seo' => 
   array (
-    'title' => '产品列表标题',
-    'keywords' => '产品列表关键字',
-    'description' => '产品列表描述',
+    'title' => '營康薈 - 香港復康會',
+    'keywords' => '營康薈',
+    'description' => '營康薈 - 香港復康會',
   ),
   'news_seo' => 
   array (
-    'title' => '社区服务资讯标题',
-    'keywords' => '社区服务资讯关键字',
-    'description' => '社区服务资讯描述',
+    'title' => '營康薈 - 香港復康會',
+    'keywords' => '營康薈',
+    'description' => '營康薈 - 香港復康會',
   ),
   'freight' => 
   array (
-    'freight' => '1',
+    'freight' => '50',
     'no_freight' => '10',
     'remote_area' => '200',
   ),

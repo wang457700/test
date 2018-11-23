@@ -41,6 +41,7 @@
 
 					//dump($vo['is_inland']);
 					//dump(sp_ip_ischina());
+
 					$vo['checkbox'] = 0;
 					if(!sp_ip_ischina()){
 						if($vo['is_inland']){
@@ -72,7 +73,7 @@
 							</p>
 						</div>
 					</div>
-					<div class="col-md-2 col-xs-2 color_ro font18" id="unit_price_span_{$key}">$ {$vo.price}</div>
+					<div class="col-md-2 col-xs-2 color_ro font18" id="unit_price_span_{$key}">{$vo['is_inland']?'￥':'$'} {$vo.price}</div>
 
 					<div class="col-md-2 col-xs-2" style="">
 					{if condition="!$vo['checkbox']"}
@@ -87,7 +88,7 @@
 						只提供給內地購買
 					{/if}
 					</div>
-					<div class="col-md-2 col-xs-2 color_ro font18" style="">$ <span id="subtotal_span_{$key}">{:number_format($vo['price']*$vo['total'],2)}</span></div>
+					<div class="col-md-2 col-xs-2 color_ro font18" style="">{$vo['is_inland']?'￥':'$'} <span id="subtotal_span_{$key}">{:number_format($vo['price']*$vo['total'],2)}</span></div>
 					<div class="col-md-1 col-xs-1 t6" style=""><a href="{:url('cart/cart_del',array('product_id'=>$vo['product_id']))}" class="js-ajax-delete" onclick="return false;"><i class="fa fa-trash-o" aria-hidden="true" style="color:#666;line-height: 110px;"></i></a></div>
 				</div>
 		 	{/foreach}
@@ -97,7 +98,7 @@
 			<div class="row" style="padding: 20px;display: {if condition="count($car_list) eq 0"}none{/if}">
 				<div class="col-md-4" style="float: right;text-align: right;">
 					<span class="color_ro" id="total_sum">{$goods_sum}</span>件商品, 總計: <span class="color_ro" id="total">$ {:number_format($all_price,2)}</span>
-					<p style="font-size:22px ">合計 (不含運費)：<span class="color_ro" id="total_no_yunxfei">$ {:number_format($all_price,2)}</span></p>
+					<p style="font-size:22px ">合計 (不含運費)：<span class="color_ro" id="total_no_yunxfei">{$vo['is_inland']?'￥':'$'} {:number_format($all_price,2)}</span></p>
 					<div class="row" style="padding:10px 0 ">
 					   <div class="col-md-6" style=""><a href="{:url('index/index')}">
 						   <button type="button" class="btn btn-default btn-default-edit" style="margin-bottom: 1em">繼續購物</button></a>
@@ -241,8 +242,8 @@
                     total_sum+= Number($(this).val());
                 });
 				$('#total_sum').text(Number(total_sum));
-				$('#total').text('$ '+ sum.toFixed(2));
-				$('#total_no_yunxfei').text('$ '+ sum.toFixed(2));
+				$('#total').text("{:sp_ip_ischina()?'￥':'$'}"+ sum.toFixed(2));
+				$('#total_no_yunxfei').text("{:sp_ip_ischina()?'￥':'$'}"+ sum.toFixed(2));
 			}
 
             $("input[name^='goods_id[]']").each(function(){

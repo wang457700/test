@@ -2,6 +2,7 @@
  <div class="user_data">
     <h4><img src="__TMPL_PUBLIC__/img/left_menu_hd.png" style="margin-right: 5px;"/>會員信息</h4>
     <p>
+        <div style="background-image: url({:fa_get_image_url($user.avatar)})" class="avatar"/></div>
         賬號:  {$user.username}<br>
         手機:  {$user.mobile|default='未綁定'}<br>
         <span class="nowrap">郵箱:{$user.email}</span>

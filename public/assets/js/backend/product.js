@@ -110,15 +110,13 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                     index_url: 'product/category',
                     sub_url: 'product/category_sub',
                     add_url: 'product/category_add',
-                    edit_url: '',
+                    edit_url: 'product/category_edit',
                     del_url: 'category/del',
                     multi_url: 'category/multi',
                     dragsort_url: '',
                     table: 'category',
                 }
             });
-
-
             var table = $("#table");
             var tableOptions = {
                 url: $.fn.bootstrapTable.defaults.extend.index_url,
@@ -129,10 +127,9 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 commonSearch: false,
                 columns: [
                     [
-                        {field: 'name', title:'',addclass:'aaaaaa',data:'1',align: 'left',formatter: function (value, row, index){
-                                return '<span data-id="' + row.id + '">' + value + '</span>';
-                            }
-                         },
+                        {field: 'id', title:'CatID', operate: false},
+                        {field: 'weigh', title: '排序', operate: false},
+                        {field: 'name', title:'',addclass:'aaaaaa',data:'1',align: 'left',formatter: false },
                          {
                             field: 'operate',
                             width: "120px",
@@ -143,7 +140,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                                  console.log(row.status);
                                  var that = $.extend({}, this);
                                  var table = $(that.table).clone(true);
-                                 if (row.id == 15 || row.id == 16|| row.id == 17|| row.id == 63){
+                                 if (row.pid == 14){
                                      $(table).data("operate-del", null);
                                  }
                                  that.table = table;
@@ -206,31 +203,30 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             });
 
             //ajax 从获取输出三级分类
-            $(document).on("click", "tr", function (){
-                var cid = $(this).find("span").data('id');
-                $(this).addClass("on").siblings().removeClass("on");
-
-                 //记录二级分类的id
-                $('#sub_pid').val(cid);
-                $('#form-group').html('');
-                $.ajax({
-                      type: "GET",
-                      url:  $.fn.bootstrapTable.defaults.extend.sub_url,
-                      data: {cid:cid},
-                      success: function(data) {
-                           if((data.rows).length !==0){
-                            $.each(data.rows,function(index, value) {
-                                $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12"><input type="text" class="form-control" id="slide_name" name="row[data]['+value.id+']" value="'+value.name+'" data-rule=""/>');
-                            });
-                            }else{
-                                $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12">沒有找到匹配的記錄</div></div>');
-                            }
-                      }
-                });
-            });
+            // $(document).on("click", "tr", function (){
+            //     var cid = $(this).find("span").data('id');
+            //     $(this).addClass("on").siblings().removeClass("on");
+            //
+            //      //记录二级分类的id
+            //     $('#sub_pid').val(cid);
+            //     $('#form-group').html('');
+            //     $.ajax({
+            //           type: "GET",
+            //           url:  $.fn.bootstrapTable.defaults.extend.sub_url,
+            //           data: {cid:cid},
+            //           success: function(data) {
+            //                if((data.rows).length !==0){
+            //                 $.each(data.rows,function(index, value) {
+            //                     $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12"><input type="text" class="form-control" id="slide_name" name="row[data]['+value.id+']" value="'+value.name+'" data-rule=""/>');
+            //                 });
+            //                 }else{
+            //                     $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12">沒有找到匹配的記錄</div></div>');
+            //                 }
+            //           }
+            //     });
+            // });
 
             $(document).on("click", "#add_sub", function (){
-
                 var sub_pid = $('#sub_pid').val();
                 if(sub_pid !==''){
                     $("#form-group").append('<div class="form-group"><div class="col-xs-12 col-sm-12"><input type="text" class="form-control" id="slide_name" name="row[new][]" value="" data-rule=""/></div></div>');
@@ -240,11 +236,16 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 }
             });
             $('.columns,.search').hide();
-            $('#table thead').hide();
+           // $('#table thead').hide();
         },
 
         add: function () {
-            Controller.api.bindevent();
+
+            Form.api.bindevent($("form#add-form"),function(data){
+                //实现跳转
+                location.reload();
+            });
+
             // 初始化表格参数配置
             Table.api.init({
                 extend: {
@@ -252,9 +253,10 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 }
             });
 
+
+
             //選擇分类
             $(function(){
-
                 get_category(14,'cat_id','0');  // 14：产品分类
                 //一级選擇
                 $(document).on("change",'#cat_id',function(){
@@ -270,9 +272,14 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                     $('#' + idname).empty().html("<option value='0'>請選擇商品分類</option>");
                 })
             });
+
+
         },
 
         category_add: function () {
+            Controller.api.bindevent();
+        },
+        category_edit: function () {
             Controller.api.bindevent();
         },
         edit: function () {

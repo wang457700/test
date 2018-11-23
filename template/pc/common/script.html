@@ -60,10 +60,11 @@
            //
            //
             var width = $(this).width();    // 图片实际宽度
-            $(this).css('height',parseInt(width));    // 图片实际宽度
+            $(this).css('height',parseInt(width)).css('opacity',1);    // 图片实际宽度
         });
  
     }
+
     /* 加入购物车 */
     $(".adds,#adds").click(function(){
             var product_id = $(this).data('productid');

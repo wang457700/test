@@ -411,6 +411,28 @@ class User extends Api
         }
     }
 
+
+    public function upload_avatar(){
+        // 获取表单上傳文件 例如上傳了001.jpg
+        $file = request()->file('image');
+        // 移动到框架应用根目录/uploads/ 目录下
+        $path = 'uploads/avatar';
+        $info = $file->validate(['size'=>1000000,'ext'=>'jpg,png,gif'])->move($path);
+
+        if($info){
+            // 成功上傳后 获取上傳信息
+            // 输出 jpg
+            // 输出 20160820/42a79759f284b767dfcb2a0197904287.jpg
+            $user_id = Session::get('user_id');
+            $avatar = $path.'/'.date('Ymd',time()).'/'.$info->getFilename();
+            Db::name('user')->where('id',$user_id)->update(array('avatar'=>$avatar));
+            $this->success('上傳成功',$path.'/'.date('Ymd',time()).'/'.$info->getFilename());
+        }else{
+            // 上傳失败获取错误信息
+            $this->error('上傳失敗');
+        }
+    }
+
     public function cx_coupon(){
         $data['coupon_price'] = [];
         $goods_json = json_decode(base64_decode(input('goods_json')),true); //商品ids

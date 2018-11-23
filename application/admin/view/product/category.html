@@ -15,13 +15,12 @@
         </ul>
     </div>
     <div class="panel-body col-sm-6">
-        <div>二級分類 <span>* 選擇左侧分類</span></div>
         <div id="myTabContent" class="tab-content">
             <div class="tab-pane fade active in" id="one">
                 <div class="widget-body no-padding">
                     <div id="toolbar" class="toolbar">
                         {:build_toolbar('refresh')}
-                        <a href="javascript:;" class="btn btn-success btn-add" title="添加"><i class="fa fa-plus"></i> 新增分類</a>
+                        <a href="javascript:;" class="btn btn-success btn-add" title="添加"><i class="fa fa-plus"></i>新增分類</a>
                     </div>
                     <table id="table" class="table table-striped table-bordered table-hover" 
                            data-operate-edit="{:$auth->check('category/edit')}" 
@@ -31,24 +30,23 @@
                 </div>
             </div>
         </div>
-
     </div>
-    <div class="panel-body col-sm-4">
-         <div  style="padding: 10px  5px;">三級分類</div>
-        <form id="edit-form" class="form-horizontal form-ajax" role="form" data-toggle="validator" method="POST" action="product/category_sub_edit" style="min-height: 450px;">
-            <input type="hidden" name="row[pid]" value="" id="sub_pid">
-            <input type="hidden" name="row[data]" value="" id="sub_pid">
-            <input type="hidden" name="row[new]" value="" id="sub_pid">
-            <div id="form-group">
-                
-            </div>
-            <div class="form-group">
-                <div class="col-xs-12 col-sm-4">
-                    <button type="text" class="btn btn-success">保存</button>
-                </div> 
-                <a href="javascript:;" class=" btn-add pull-right" title="添加" id="add_sub"><i class="fa fa-plus"></i> 新增分類</a>
-            </div>
-        </form>
-    </div>
+    <!--<div class="panel-body col-sm-4">-->
+         <!--<div  style="padding: 10px  5px;">三級分類</div>-->
+        <!--<form id="edit-form" class="form-horizontal form-ajax" role="form" data-toggle="validator" method="POST" action="product/category_sub_edit" style="min-height: 450px;">-->
+            <!--<input type="hidden" name="row[pid]" value="" id="sub_pid">-->
+            <!--<input type="hidden" name="row[data]" value="" id="sub_pid">-->
+            <!--<input type="hidden" name="row[new]" value="" id="sub_pid">-->
+            <!--<div id="form-group">-->
+                <!---->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+                <!--<div class="col-xs-12 col-sm-4">-->
+                    <!--<button type="text" class="btn btn-success">保存</button>-->
+                <!--</div> -->
+                <!--<a href="javascript:;" class=" btn-add pull-right" title="添加" id="add_sub"><i class="fa fa-plus"></i> 新增分類</a>-->
+            <!--</div>-->
+        <!--</form>-->
+    <!--</div>-->
 </div>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>

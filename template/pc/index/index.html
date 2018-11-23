@@ -23,13 +23,13 @@
 	{include file="common/nav"/}
     <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/Swiper/3.4.0/css/swiper.min.css" media="screen">
 	<script src="https://cdn.bootcss.com/Swiper/4.3.0/js/swiper.min.js"></script>
-  <div class="swiper-container" style="">
+  <div class="swiper-container" style="height: 475px;">
       <div class="swiper-wrapper">
           {foreach name="slide" item="vo"}
               {eq name="vo['slide_type']" value="index_banner"}
-                    <div class="swiper-slide">
-                      <a href="{$vo.slide_url}"  target="_bank">
-                        <img src="{:fa_get_image_url($vo['slide_pic'])}">
+                    <div class="swiper-slide" style="background: url({:fa_get_image_url($vo['slide_pic'])})  no-repeat center ;background-size: cover;">
+                      <a href="{$vo.slide_url}" target="_bank">
+                        <!--<img src="">-->
                       </a>
                     </div>
               {/eq}
@@ -39,14 +39,14 @@
       <div class="swiper-pagination"></div>
       <script language="javascript">
         var mySwiper = new Swiper('.swiper-container',{
-        pagination: {
-          el: '.swiper-pagination',
-        },
-		autoplay: {
-			delay: 2000,//1秒切换一次
-		  },
-		effect : 'fade',
-        //pagination : '#swiper-pagination1',
+            pagination: {
+              el: '.swiper-pagination',
+            },
+            autoplay: {
+                delay: 2000,//1秒切换一次
+              },
+            effect : 'fade',
+            //pagination : '#swiper-pagination1',
         })
       </script>
   </div>
@@ -148,7 +148,7 @@
                                 {:product_price($vo['product_id'])}
                           </span>
                       </a>
-                      <a class="adds" data-productid="{$vo.product_id}" data-name="{$vo.product_name}" >+</a>
+                      <a class="adds" data-productid="{$vo.product_id}" data-name="{$vo.product_name}" >+ 加入購物車</a>
                   </div>
                   {/foreach}
                 </div>
@@ -202,7 +202,7 @@
                     <p class="font12 miaosu">{$vo['summary']}</p>
                     <div class="price">
                         <span class="font24"><i class="font12">$</i>{:product_price($vo['product_id'])}</span>
-                        <a class="adds" data-productid="{$vo['product_id']}">+</a>
+                        <a class="adds" data-productid="{$vo['product_id']}">+ 加入購物車</a>
                     </div>
                 </div>
             </div>
@@ -231,7 +231,7 @@
                                             <span class="font24"><i class="font12">$</i>
                                                 {:product_price($vo['product_id'])}
                                             </span>
-                                            <a class="adds" data-productid="{$vo['product_id']}">+</a>
+                                            <a class="adds" data-productid="{$vo['product_id']}">+ 加入購物車</a>
                                         </div>
                                     </div>
                                 </div>
@@ -250,7 +250,7 @@
                                        <span class="font24"><i class="font12">$</i>
                                            {:product_price($vo['product_id'])}
                                        </span>
-                                      <a class="adds" data-productid="{$vo['product_id']}">+</a>
+                                      <a class="adds" data-productid="{$vo['product_id']}">+ 加入購物車</a>
                                   </div>
                                 </div>
                             </div>
@@ -280,7 +280,7 @@
                 <p class="font12 miaosu">{$vo['summary']}</p>
                 <div class="price">
                     <span class="font24"><i class="font12">$</i>{:product_price($vo['product_id'])}</span>
-                    <a class="adds" data-productid="{$vo['product_id']}">+</a>
+                    <a class="adds" data-productid="{$vo['product_id']}">+ 加入購物車</a>
                 </div>
               </div>
           </div>
@@ -309,7 +309,7 @@
                                             <span class="font24"><i class="font12">$</i>
                                                 {:product_price($vo['product_id'])}
                                             </span>
-                                     <a class="adds" data-productid="{$vo['product_id']}">+</a>
+                                     <a class="adds" data-productid="{$vo['product_id']}">+ 加入購物車</a>
                                  </div>
                              </div>
                          </div>
@@ -328,7 +328,7 @@
                                        <span class="font24"><i class="font12">$</i>
                                            {:product_price($vo['product_id'])}
                                        </span>
-                                     <a class="adds" data-productid="{$vo['product_id']}">+</a>
+                                     <a class="adds" data-productid="{$vo['product_id']}">+ 加入購物車</a>
                                  </div>
                              </div>
                          </div>
@@ -358,7 +358,7 @@
                     <p class="font12 miaosu">{$vo['summary']}</p>
                     <div class="price">
                         <span class="font24"><i class="font12">$</i>{:product_price($vo['product_id'])}</span>
-                        <a class="adds" data-productid="{$vo['product_id']}">+</a>
+                        <a class="adds" data-productid="{$vo['product_id']}">+ 加入購物車</a>
                     </div>
                 </div>
             </div>
@@ -383,7 +383,7 @@
                                             <span class="font24"><i class="font12">$</i>
                                                 {:product_price($vo['product_id'])}
                                             </span>
-                                        <a class="adds" data-productid="{$vo['product_id']}">+</a>
+                                        <a class="adds" data-productid="{$vo['product_id']}">+ 加入購物車</a>
                                     </div>
                                 </div>
                             </div>
@@ -402,7 +402,7 @@
                                        <span class="font24"><i class="font12">$</i>
                                            {:product_price($vo['product_id'])}
                                        </span>
-                                        <a class="adds" data-productid="{$vo['product_id']}">+</a>
+                                        <a class="adds" data-productid="{$vo['product_id']}">+ 加入購物車</a>
                                     </div>
                                 </div>
                             </div>
@@ -433,7 +433,7 @@
                     <p class="font12 miaosu">{$vo['summary']}</p>
                     <div class="price">
                         <span class="font24"><i class="font12">$</i>{:product_price($vo['product_id'])}</span>
-                        <a class="adds" data-productid="{$vo['product_id']}">+</a>
+                        <a class="adds" data-productid="{$vo['product_id']}">+ 加入購物車</a>
                     </div>
                 </div>
             </div>
@@ -462,7 +462,7 @@
                                             <span class="font24"><i class="font12">$</i>
                                                 {:product_price($vo['product_id'])}
                                             </span>
-                                        <a class="adds" data-productid="{$vo['product_id']}">+</a>
+                                        <a class="adds" data-productid="{$vo['product_id']}">+ 加入購物車</a>
                                     </div>
                                 </div>
                             </div>
@@ -481,7 +481,7 @@
                                        <span class="font24"><i class="font12">$</i>
                                            {:product_price($vo['product_id'])}
                                        </span>
-                                        <a class="adds" data-productid="{$vo['product_id']}">+</a>
+                                        <a class="adds" data-productid="{$vo['product_id']}">+ 加入購物車</a>
                                     </div>
                                 </div>
                             </div>

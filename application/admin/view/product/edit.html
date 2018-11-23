@@ -57,7 +57,7 @@
     <div class="form-group">
         <label for="username" class="control-label col-xs-12 col-sm-2">郵寄重量</label>
         <div class="col-xs-12 col-sm-8">
-            <input type="text" class="form-control NumText"  name="weight_ioc" value="{$product_list.weight_ioc}" data-rule="required;data4" />
+            <input type="text" class="form-control NumText"  name="weight_ioc" value="{$product_list.weight_ioc}" />
         </div>
     </div>
 
@@ -117,9 +117,9 @@
     <div class="form-group has-success" id="discount_time" style="display: {$product_list['discount_type'] == 3?'':'none'}">
         <label for="c-logintime" class="control-label col-xs-12 col-sm-3">开始时间:</label>
         <div class="col-xs-12 col-sm-8" style="position: relative;">
-            <input id="c-starttime" class="form-control datetimepicker " data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="discount_start_time" type="text" value="{$product_list.discount_start_time}" style="width: 40%">
+            <input id="c-starttime" class="form-control datetimepicker " data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="discount_start_time" type="text" value="{$product_list.discount_start_time?'':''}" style="width: 40%">
             结束时间：
-            <input id="c-endtime" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="discount_end_time" type="text" value="{$product_list.discount_end_time}" style="width: 40%">
+            <input id="c-endtime" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="discount_end_time" type="text" value="{$product_list.discount_end_time?'':''}" style="width: 40%">
         </div>
     </div>
 
@@ -165,11 +165,11 @@
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" style="display: none">>
         <div class="col-sm-12">
             <label for="username" class="control-label col-xs-12 col-sm-2">庫存</label>
             <div class="col-xs-12 col-sm-2">
-                <input type="text" class="form-control NumText" id="data11" name="stock" value="{$product_list.stock}" data-rule="required;data11" />
+                <input type="text" class="form-control NumText" id="data11" name="stock" value="{$product_list.stock}" />
             </div>
             <div class="col-xs-12 col-sm-4">
                 <a type="text" class="btn btn-success">獲取庫存</a>

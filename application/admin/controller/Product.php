@@ -91,12 +91,15 @@ class Product extends Backend
                 if(empty($data['discount_end_time'])){
                     $this->error('优惠结束时间不能為空！');
                 }
+
+                $data['discount_start_time'] = strtotime($data['discount_start_time']);
+                $data['discount_end_time'] = strtotime($data['discount_end_time']);
             }
 
             $data['add_time']=date('Y-m-d H:i:s',time());
             $res=Db::name('goods')->insertGetId($data);
             if($res){
-                $this->success('添加成功！'.$data['pricevip'],url('product/index'));
+                $this->success('添加成功！',url('product/index'));
             }else{
                 $this->error('添加失败');
             }
@@ -121,6 +124,13 @@ class Product extends Backend
         }
         $product_list['cat_id'] = array_values(array_filter(array($parent_thee_id==14?'':$parent_thee_id,$parent_two_id==14?'':$parent_two_id,$product_list['cat_id'])));
 
+
+
+        if($product_list['discount_start_time']){
+            $product_list['discount_start_time'] = date('Y-m-d H:i:s',$product_list['discount_start_time']);
+            $product_list['discount_end_time'] = date('Y-m-d H:i:s',$product_list['discount_end_time']);
+        }
+
         $cat_list = Db::name('category')->where("pid = 14")->select();
         if($this->request->isAjax()){
             $data=input('post.');
@@ -141,9 +151,26 @@ class Product extends Backend
                 $this->error('至少上傳一张封面图！');
             }
 
+
+            if($data['discount_type'] == 3){
+                if($data['discount_price'] =='0' || empty($data['discount_price'])){
+                    $this->error('优惠不能為零！');
+                }
+                if(empty($data['discount_start_time'])){
+                    $this->error('优惠开始时间不能為空！');
+                }
+                if(empty($data['discount_end_time'])){
+                    $this->error('优惠结束时间不能為空！');
+                }
+
+                $data['discount_start_time'] = strtotime($data['discount_start_time']);
+                $data['discount_end_time'] = strtotime($data['discount_end_time']);
+            }
+
             $img_url=array_filter(input('img_url/a'));
             $data['img_url']=implode(',',$img_url);
             $res=Db::name('goods')->where('product_id',$data['product_id'])->update($data);
+
             if($res){
                 $this->success('修改成功！');
             }else{
@@ -388,6 +415,32 @@ class Product extends Backend
             }
 
         }
+        return $this->view->fetch();
+    }
+
+
+    /**
+     * 修改三级分类
+     */
+    public function category_edit()
+    {
+        if ($this->request->isAjax()) {
+            //数据输出ajax
+            $params = $this->request->post("row/a");
+            $params['pid'] = input("row.pid",14);
+            $data =  array('name'=>$params['name'],'pid'=>$params['pid'],'weigh'=>$params['weigh']);
+            $info = Db::name('Category')->where('id',$params['cid'])->update($data);
+            if($info!==false){
+                $this->success('修改成功！');
+            }else{
+                $this->error('修改失败！');
+            }
+
+        }
+
+        $ids=input('ids');
+        $data = Db::name('Category')->where(array('id'=>$ids))->find();
+        $this->view->assign("data",$data);
         return $this->view->fetch();
     }
 

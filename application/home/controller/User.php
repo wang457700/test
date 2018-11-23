@@ -163,16 +163,15 @@ class User extends Frontend
         }
         if(input('email')==1){
             $email = new Email;
-            $encodeurl=url('User/is_email',array('token'=>base64_encode($user_id)));
+            $encodeurl=url('User/is_email',array('token'=>base64_encode($user_id)),'',true);
             $message= 'https://'.$_SERVER['SERVER_NAME'].urlencode($encodeurl);
 
             $url=self::getShort($message);
             $result = $email
                 ->to($info['email'])
                 ->subject(__("請激活你的帳號"))
-                ->message(''.$url.'')
+                ->message('<a style="color:#000;text-decoration:none" href="'.$encodeurl.'">點擊激活你的帳號</a>')
                 ->send();
-
             if($result){
                 $this->success('發送成功！');
             }else{
@@ -205,18 +204,15 @@ class User extends Frontend
                 ->message('<div style="width:950px;margin:0 auto;background:#7ac141;border-radius:20px;padding:50px;padding-bottom:1px;text-align:center"><div style="background:#fff;font-size:25px;font-weight:400;padding:30px 90px;border-radius:20px;text-align:left"><img src="http://wsstest.teamotto.me/hksr/public/assets/img/logo400.png" style="width:200px"><br><p style="color:#7ac141;font-size:30px">歡迎您的加入!</p>新會員首購，即享全單<br><span style="font-size:50px">95折</span>*<br>兼送：1 0000積分*<br><span style="padding:10px;background:red;display:inline-block;border-radius:10px;color:#fff;font-size:40px">優惠碼：EC-NJ-0001</span><br><br>立即選購〉<br><br>祝好！<br>客戶服務中心<br>營康薈Live Smart<br><br><p style="font-size:18px;font-weight:500">-首單優惠自註冊起30天內使用完畢，每位新會員限用優惠一次,必須於同一單交易內使用。<br>-若您有任何疑問和諮詢，請聯絡我們2534-3544<br>-優惠不適用於癌症，營養補給品及鴻福堂套票<br>-折贲滿$600可享免費送貨優惠，未滿$600必須附加$100送貨費或到店自取<br>-使用積分方法和條款<br>-此郵件由系統發送，請勿回覆。<br><br><span style="font-weight:600">Live Smart</span>是<span style="font-weight:600">Wah Hong Convenience Store Limited</span>的註冊商標。保留所有權利。<br>隱私與安全政策|條款和條件</p><p style="text-align:center;color:#7ac141;font-size:26px">香港復康會屬下社企"營康薈"支持殘疾人仕及長期病患者投入社會</p></div><p style="font-size:40px;color:#fff;font-weight:bold"><a style="color:#fff;text-decoration:none" href="http://hksr.com">http://hksr.com/</a></p></div>')
                 ->send();
 
-
-
             $hksr = new Hksr;
             $gender = array('0'=>'NA','1'=>'F','2'=>'M');
-            $data = array('nickname'=>$user['nickname'],'username'=>$user['username'],'email'=>$user['email'],'gender'=>$gender[$user['gender']]);
-            $info = $hksr->member_user_add($data);
-
-            if($info){
+            $data = array('id'=>$user['id'],'nickname'=>$user['nickname'],'username'=>$user['username'],'email'=>$user['email'],'gender'=>$gender[$user['gender']]);
+            $sid = $hksr->member_user_add($data);
+            $res = Db::name('user')->where(array('id'=>$user_id))->update(array('sid'=>$sid));
+            if($res){
                 // dump($info);
             }
             $this->success('驗證成功！',url('user/center'));
-
         }else{
             $this->error('驗證失敗！');
         }
@@ -767,7 +763,7 @@ class User extends Frontend
         }
         $city = 0;
         $district = 0;
-        $province = db('region')->where(array('parent_id'=>0,'level'=>1))->select();
+        $province = db('region')->where(array('parent_id'=>0,'level'=>1))->order('weigh asc')->select();
 
         $id = input('id');
         if($id){

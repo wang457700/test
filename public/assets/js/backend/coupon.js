@@ -43,6 +43,9 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'jstree'], function (
             // 初始化表格
             table.bootstrapTable({
                 //禁用默认搜索
+
+                showColumns: false,
+                showToggle: false,
                 search: false,
                 searchFormVisible: true,
                 url: $.fn.bootstrapTable.defaults.extend.index_url,
@@ -131,6 +134,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'jstree'], function (
             Table.api.bindevent(table);
         }      ,
         disposable_index: function () {
+
+
             // 初始化表格参数配置
             Table.api.init({
                 extend: {
@@ -157,6 +162,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'jstree'], function (
             // 初始化表格
             table.bootstrapTable({
                 //禁用默认搜索
+                showColumns: false,
+                showToggle: false,
                 search: false,
                 searchFormVisible: true,
                 url: $.fn.bootstrapTable.defaults.extend.index_url,

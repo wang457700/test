@@ -63,7 +63,7 @@ class Hksr extends Api
         $res=$this->curl_post($url,$post_data,$cookie);
         $objectxml = simplexml_load_string($res);
         $shopid=json_decode($objectxml,true);
-        return $shopid;
+        return 1;
     }
 
     /***
@@ -111,12 +111,69 @@ class Hksr extends Api
         print_r($res);die;
     }
 
+
+
     /**
-     * 不知道是很么鬼 ，这是创建訂單
+     * 创建訂單
      */
     public function Task_CreateSalesOrder(){
 
+        $url='http://103.254.210.215//hksrapisttest/api.asmx/Task_CreateSalesOrder';
+        $Options = array(
+            'SN'=>1,  //Shop No. of online shop
+            'BD'=>date('Y/m/d'),  //Bill Date
+            'SC'=>'0001447',  //user_id
+            'GA'=>'0.01',  //Gross Amount
+            'DP'=>'',
+            'AA'=>'',
+            'DDA'=>'',
+            'NA'=>'',
+            'Delivery'=>array(
+                'DVD'=>date('Y/m/d H:i:s'),
+                'LOC'=>'-1',
+                'AD1'=>'送货地址测试', //Address Line1
+                'AD2'=>'送货地址测试',
+                'AD3'=>'送货地址测试',
+                'TEL1'=>'13192963964', //Telephone1
+                'TEL2'=>'',
+                'RE'=>'下单测试', //Remark1
+                'RE2'=>'',
+                'RE3'=>'',
+                'RE4'=>'',
+                'Item'=>array(
+                    array(
+                        'BC'=>'3760015411501', //Barcode
+                        'UP'=>'0.01', //Unit Price
+                        'QU'=>'1', //Quantity
+                        'SEP'=>'43.00', //Selling Price
+                        'VDA'=>'1', //Selling Price
+                        'DP'=>'0', //Item Discount
+                        'REM'=>'0',
+                    ),
+                ),
+            ),
+            'Payment'=>array(
+                'PM'=>'0',//Payment Method Code 付款方法代码
+                'PA'=>'200.00',//Payment Amount in Local Currency 本币支付金额
+                'RF'=>'',
+            ),
+            'PointAdj'=>array(
+                'BPT'=>'1',
+                'ADJ'=>'1',
+            ),
+        );
 
+        $post_data=array(
+            'jSalesOrder'=>json_encode($Options,true),
+            'Options'=>json_encode($Options,true)
+        );
+
+        print_r($post_data);
+        $cookies = dirname(__FILE__).'/cookie.txt';
+        $res=$this->curl_post($url,$post_data,$cookies);
+
+        dump($res);
+        print_r($res);die;
     }
 
 
@@ -132,7 +189,7 @@ class Hksr extends Api
      * ST：Stock level
      * DLU
     */
- public function Product_GetFullStockListByBC($sBC){
+ public function Product_GetFullStockListByBC($sBC = ''){
 
      $shop_getid = Session::get('shop_getid');
      $url='http://103.254.210.215//hksrapisttest/api.asmx/Product_GetFullStockListByBC';
@@ -146,6 +203,18 @@ class Hksr extends Api
      return $xmlarray[$shop_getid]['ST'];
  }
 
+
+
+ public  function  Shop_GetList_J(){
+
+     $url='http://103.254.210.215//hksrapisttest/api.asmx/Shop_GetList_J';
+     $post_data=array();
+     $cookies = dirname(__FILE__).'/cookie.txt';
+     $res=$this->curl_post($url,$post_data,$cookies);
+
+dump($res);
+
+ }
     /***
      *   查询商品信息
      */
@@ -279,7 +348,7 @@ class Hksr extends Api
 
         $url="http://103.254.210.215/hksrapisttest/api.asmx/Member_GetInfo";
         $post_data=array(
-            'sID'=>'0001439',
+            'sID'=>'0001447',
         );
         $cookie = dirname(__FILE__).'/cookie.txt';
         $res=$this->curl_post($url,$post_data,$cookie);
@@ -296,9 +365,9 @@ class Hksr extends Api
 
         $post_data=array(
             'sOrderBy'=>'SID',
-            'bAscend'=>'true',
+            'bAscend'=>'false',
             'iRecFrom'=>'0',
-            'iRecTo'=>'10000'
+            'iRecTo'=>'100'
         );
         $cookie = dirname(__FILE__).'/cookie.txt';
         $res=$this->curl_post($url,$post_data,$cookie);

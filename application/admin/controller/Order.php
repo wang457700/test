@@ -26,6 +26,39 @@ class Order extends Backend
      */
     public function index()
     {
+
+        if ($this->request->isAjax()) {
+            list($where, $sort, $order, $offset, $limit) = $this->buildparams(NULL);
+            $total = Db::name('order')->alias('a')
+                ->where($where)
+                ->order($sort, $order)
+                ->join('__USER__ e', 'a.user_id=e.id', 'LEFT')
+                ->group('a.order_sn')
+                ->count();
+            $list = Db::name('order')->alias('a')
+                ->where($where)
+                ->order($sort, $order)
+                ->limit($offset, $limit)
+                ->field('a.*,e.nickname,(select sum(money_total) from fa_order where order_sn=a.order_sn) as money_total')
+                ->join('__USER__ e', 'a.user_id=e.id', 'LEFT')
+                ->group('a.order_sn')
+                ->select();
+            $pay_status = array('0'=>'未支付','2'=>'已支付','3'=>'已發貨','6'=>'已取消','7'=>'到付');
+            $contribution_receipt = array('0'=>'否','1'=>'是');
+            $processing= array('0'=>'未處理','1'=>'已處理');
+            foreach ($list as $key => $vo){
+                $list[$key]['pay_status'] = $pay_status[$vo['pay_status']];
+                $list[$key]['contribution_receipt'] = $contribution_receipt[$vo['contribution_receipt']];
+                $list[$key]['payment'] = sp_payment($vo['payment']);
+                $list[$key]['processing'] = $processing[$vo['processing']];
+            }
+            $result = array("total" => $total, "rows" => $list, "extend" => ['money' => mt_rand(100000,999999), 'price' => 200]);
+
+            return json($result);
+        }
+
+
+
        // sum_order_price('201809291538190190');
         $where   = [];
         $keywordComplex = [];
@@ -43,8 +76,8 @@ class Order extends Backend
         if ($request['pay_status'] !='all') {
             $where['pay_status'] = $request['pay_status'];
         }
-        $order_list = Db::name('order')->alias('a')
 
+        $order_list = Db::name('order')->alias('a')
             //->join('__GOODS__ c', 'a.goods_id=c.product_id', 'LEFT')
             ->whereOr($keywordComplex)
             ->where($where)
@@ -54,7 +87,6 @@ class Order extends Backend
             ->group('a.order_sn')
             ->order('addtime desc')
             ->paginate(10,false,array('query'=>$request));
-
 
         //统计
         $money_total_sum = 0;
@@ -77,15 +109,16 @@ class Order extends Backend
         $pay_sum = array('count1'=>$count1,'count2'=>$count2,'count3'=>$count3);
 
         $pay_status = array('0'=>'未支付','2'=>'已支付','3'=>'已發貨','6'=>'已取消','7'=>'到付');
+        $contribution_receipt = array('0'=>'否','1'=>'是');
         $page = $order_list->render();
         $this->assign('page', $page);
         $this->assign('order_list', $order_list);
         $this->assign('payment', sp_payment_array());
-
         $this->assign('request', $request);
         $this->assign('sum', $sum);
         $this->assign('pay_sum', $pay_sum);
         $this->assign('pay_status', $pay_status);
+        $this->assign('contribution_receipt', $contribution_receipt);
 
         return $this->view->fetch();
     }
@@ -216,17 +249,28 @@ class Order extends Backend
 
     public function del($ids = NULL){
         $order_sn=input('order_sn');
-        $res=Db::name('order')->where('order_sn',$order_sn)->delete();
+        $res=Db::name('order')->where('order_id',$ids)->delete();
         if($res){
             $this->success('删除成功');
         }
     }
+
 
     //发货
     public function deliver_order($ids = NULL){
 
         $order_sn=input('order_sn');
         $res=Db::name('order')->where('order_sn',$order_sn)->update(array('pay_status'=>'3'));
+        if($res){
+            $this->success('發貨成功');
+        }
+    }
+
+    //处理
+    public function processing($ids = NULL){
+
+        $order_sn=input('order_sn');
+        $res=Db::name('order')->where('order_sn',$order_sn)->update(array('processing'=>1));
         if($res){
             $this->success('發貨成功');
         }
@@ -284,8 +328,12 @@ class Order extends Backend
         $goods_list = Db::name('order')
             ->alias('a')
             ->field('a.*,(select place_origin from fa_goods where product_id=a.goods_id) as place_origin,(select product_name from fa_goods where product_id=a.goods_id) as product_name')
-
             ->where('order_sn',$order_sn)->select();
+
+
+        if(!empty($order['address_cards'])){
+            $order['address_cards'] = explode(',',$order['address_cards']);
+        }
         $this->view->assign("order", $order);
         $this->view->assign("goods_list", $goods_list);
         $this->view->assign("payment", sp_payment_array());

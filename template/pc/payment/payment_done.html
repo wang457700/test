@@ -53,15 +53,37 @@
 				</div>
 				<div class="col-md-2 col-sm-2" style=""></div>
 			</div>
-			 
-
-
 		</div>
-
 	</div>
 	 {include file="common/footer" /}
 	 <script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
 	 <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
 	 {include file="common/script" /}
+
+	 {if condition="$order_info['contribution_receipt'] neq 1 && $order_info['contribution_price'] egt 100"}
+	 <script>
+         $('#user_tip').show();
+         $('#user_tip .search-tip').css({'width':'700px','margin-left':'-350px'});
+         $('#user_tip .search-tip').html($('#contribution_text').html());
+         $('#submit').click(function () {
+             $.ajax({
+                 type: "post",
+                 url: "{:url('payment/contribution_receipt')}",
+                 dataType: 'json',
+				 data:{order_sn:'{:base64_encode($order_sn)}'},
+                 success: function(data) {
+					if(data.code == 1){
+                        $('.search-tip-bow,.search-tip').hide()
+					}else{
+                        alert(data.msg);
+					}
+                 },error:function(data) {
+                     alert('系統錯誤');
+				 }
+             });
+         });
+	 </script>
+	{/if}
+
 	</body>
 </html>

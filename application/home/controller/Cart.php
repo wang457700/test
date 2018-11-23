@@ -54,7 +54,7 @@ class Cart extends Frontend
             if(!$goods['is_inland'] || in_array($goods['cat_id'],$china_categoryids)){
                 $data = array(
                     'code' => 0,
-                    'msg' => '提示，只供內地以外購買！',
+                    'msg' => '提示，此產品不供內地用戶購買，請到內地專區選購！',
                 );
                 $this->ajaxReturn($data);
             }
@@ -63,7 +63,7 @@ class Cart extends Frontend
             if($goods['is_inland']){
                 $data = array(
                     'code' => 0,
-                    'msg' => '提示，內地專區只供內地用戶購買！',
+                    'msg' => '提示，此產品只供內地用戶購買！',
                 );
                 $this->ajaxReturn($data);
             }
@@ -161,6 +161,7 @@ class Cart extends Frontend
                         $data[$k]['freight_num'] = $goods['freight_num'];
                         $data[$k]['model'] = $goods['model'];
                         $data[$k]['price'] = $goods['price'];
+                        $data[$k]['is_inland'] = $goods['is_inland'];
                         $data[$k]['pricevip'] = $goods['pricevip'];
                         $data[$k]['discount_price'] = $goods['discount_price'];
                         $data[$k]['place_origin'] = $goods['place_origin']; //规格
@@ -205,9 +206,9 @@ class Cart extends Frontend
 
     public function action_cart(){
 
-        if(empty(is_login())){
-            $tourist = create_tourist();
-        }
+//        if(empty(is_login())){
+//            $tourist = create_tourist();
+//        }
 
         $goods_id= input('goods_id/a');
         $goods_num= input('goods_num/a');
@@ -307,6 +308,7 @@ class Cart extends Frontend
                 $fat['money_total']=$v['goods_num']*$goods['price'];
                 $fat['goods_sn'] =$goods['freight_num'];
                 $fat['address_id'] =$address_id;
+                $fat['address_cards'] =$address['cards'];
                 $fat['address'] =$address['text'];
                 $fat['integral_price'] =$score_price;
                 $fat['coupon_price'] =$coupon_price;

@@ -7,6 +7,7 @@ use app\common\library\Email;
 use app\common\model\Config as ConfigModel;
 use think\Exception;
 use think\Db;
+use think\Session;
 
 /**
  * 系统配置
@@ -271,16 +272,29 @@ class Config extends Backend
      */
     public function emailtest()
     {
+
+        $order_sn = '201811211542797686';
+        $order_info = Db::name('order')->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))->find();
+        $user= Db::name("user")->where(array('id'=>Session::get('user_id')))->find();
+        $order_list = Db::name('order')->where(array('user_id'=>Session::get('user_id'),'order_sn'=>$order_sn))->select();
+        $address_info = sp_address_info(Session::get('user_id'),$order_info['address_id'],'id,name,phone,phone_type');
+
+        foreach ($order_list as $v){
+            save_goods_stock($v['goods_id'],$v['goods_num']);
+            $product_name [] = sp_product_info($v['goods_id'])['product_name'] .' '.$v['goods_num'].'×'.$v['price'];
+        }
+
         $row = $this->request->post('row/a');
         \think\Config::set('site', array_merge(\think\Config::get('site'), $row));
         $receiver = $this->request->request("receiver");
         $email = new Email;
-
+        $url = 'https://mail.qq.com';
         $result = $email
             ->to($receiver)
             ->subject(__("This is a test mail"))
+            ->message('<div style="width:950px;margin:0 auto;background:#7ac141;border-radius:20px;padding:50px;padding-bottom:1px;text-align:center"><div style="background:#fff;font-size:20px;font-weight:400;padding:30px 90px;border-radius:20px;text-align:left"><img src="http://wsstest.teamotto.me/hksr/public/assets/img/logo400.png" style="width:200px"><br>親愛的'.$user['nickname'].',<br><br>感謝您的購買，您的預訂已確認！<br><br>您的訂單號是:<br>'.$order_info['order_sn'].'<br><br>預訂詳情<br>日期： '.week(date('w',strtotime($order_info['addtime']))).'，'.month(date('m',strtotime($order_info['addtime']))).date('Y',strtotime($order_info['addtime'])).'<br>時間： '.date('H:i',strtotime($order_info['addtime'])).'<br>購買： '.implode('，',$product_name).'<br>已付金額：$ '.sum_order_payableprice($order_info['order_sn']).'<br>您的訂單正在處理中，<br>我們將會把您的貨品派送到：<br><br>'.$address_info['name'].'<br>'.$user['email'].'<br>'.$address_info['phone_type'].' '.$address_info['phone'].' (手機）<br>'.$order_info['address'].'<br>更多關於訂單的詳細資訊和更新情況，請<a href="'.url('user/login','','',true).'">登入</a>您的帳戶查詢。<br><br>謝謝！<br>客戶服務中心<br>營康薈Live Smart<br><br><br>這是一封自動生成的電子郵件，請不要回覆。<br>如果您對您的帳戶有任何疑問，<br>請與我們聯絡dsc@wahhong.hk<br><p style="text-align:center;color:#7ac141;font-size:26px">香港復康會屬下社企"營康薈"支持殘疾人仕及長期病患者投入社會</p></div><p style="font-size:40px;color:#fff;font-weight:bold"><a style="color:#fff;text-decoration:none" href="'.$url.'">'.$url.'</a></p></div>')
             //->message('<div style="min-height:550px; padding: 100px 55px 200px;">' . __('This is a test mail content') . '</div>')
-            ->message('test')
+           // ->message('test')
             ->send();
         if ($result) {
             $this->success();

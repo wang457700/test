@@ -40,13 +40,13 @@ class Slide extends Backend
                 array('id'=>2,'name'=>'banner2','url'=>'http://baidu.com','finite_period'=>'2018/01/01-2018/07/30','img'=>'/uploads/20180807/1f80094b66870d833a6073d2fbee9116.jpg','status'=>'顯示'),
             );*/
 
+            $type = array('index_banner'=>'首頁輪播_banner 1920px*420px','float_left_banner'=>'左邊浮動_banner 255px*255px','center_lefe_banner'=>'首頁固定_左邊_banner 390px*360px','center_right_banner'=>'首頁固定_右邊（最多兩個）_banner 790px*170px');
             $status =array('0'=>'隱藏','1'=>'顯示');
             foreach ($list as $k => &$v)
             {
                 $v['slide_status'] = $status[$v['slide_status']];
                 $v['finite_period'] = date('Y/m/d',$v['start_time']).'-'.date('Y/m/d',$v['end_time']);
-
-
+                $v['slide_type'] = $type[$v['slide_type']];
                 //dump();
             }
             unset($v);

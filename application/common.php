@@ -324,9 +324,15 @@ function sp_getTreeList($cid){
  * @param string $file 文件路径，数据存储的文件相对路径 
  */
 function fa_get_image_url($file)
-{  
-    $PHP_SELF=$_SERVER['PHP_SELF'];
-    $url=substr($PHP_SELF,0,strrpos($PHP_SELF,'/')+1).$file;
+{
+    if(preg_match('/^http(s)?:\\/\\/.+/',$file))
+    {
+        $url=$file;
+    }else
+    {
+        $PHP_SELF=$_SERVER['PHP_SELF'];
+        $url=substr($PHP_SELF,0,strrpos($PHP_SELF,'/')+1).$file;
+    }
     return $url;
 }
 
@@ -356,7 +362,7 @@ function product_price($product_id)
         $price = $product['pricevip'];
     }
     if($product['discount_type'] == 3){
-        if(strtotime($product['discount_end_time']) > time() && strtotime($product['discount_start_time']) < time()){
+        if($product['discount_end_time'] > time() && $product['discount_start_time'] < time()){
             $price = $product['discount_price'];
         }else{
             $price = $product['price'];
@@ -638,10 +644,8 @@ function sp_ip_ischina()
         $echo = true;
     }
 
-    $echo = false;
     return $echo;
 }
-
 
 //将数字转成汉字对应的数
 function str_num($str1){

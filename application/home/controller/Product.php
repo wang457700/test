@@ -55,10 +55,10 @@ class Product extends Frontend
 
         $product_list =  Db::name('goods')
             ->alias('a')
-            ->field('a.product_id,a.product_name,a.cover,a.discount_type,a.price,a.add_time,(select count(*) from fa_goods_comment where product_id=a.product_id) as comment_count,(select count(*) from fa_order where goods_id=a.product_id and (pay_status=2 or pay_status=3 or pay_status=5)) as order_count,if(a.discount_type = 2,a.pricevip,a.price) as price,if(a.discount_type = 3,a.discount_price,a.price) as price')
+            ->field('a.product_id,a.product_name,a.cover,a.discount_type,a.price,a.add_time,(select count(*) from fa_goods_comment where product_id=a.product_id) as comment_count,(select count(*) from fa_order where goods_id=a.product_id and (pay_status=2 or pay_status=3 or pay_status=5)) as order_count,if(a.discount_type = 2,a.pricevip,a.price) as price,if(a.discount_type = 3 && a.discount_end_time > '.time().' && a.discount_start_time < '.time().',a.discount_price,a.price) as price')
             ->where($where)
             ->order($order)
-            ->paginate(10);
+            ->paginate(12);
 
         foreach ($product_list as $index => $item){
             $item['price'] = product_price($item['product_id']);
@@ -160,7 +160,7 @@ class Product extends Frontend
 
         //香港用户
         if(!sp_ip_ischina() && in_array($goods['cat_id'],$china_categoryids) && $goods['is_inland']){
-             $this->error('內地專區只供內地用戶購買！',url('index/index'));
+             $this->error('此產品只供內地用戶購買！',url('index/index'));
         }
 
         $this->product_history($goods_id);
@@ -200,7 +200,7 @@ class Product extends Frontend
             $buy = true;
         }else{
             $buy = false;
-            $tip = '内地用户可以到内地专区购买  <a href="'.url('product/index',array('categoryid'=>72)).'" style="color: #ffa800;">立即跳轉</a>';
+            $tip = '此產品不供內地用戶購買，請到內地專區選購<a href="'.url('product/index',array('categoryid'=>72)).'" style="color: #ffa800;">立即跳轉</a>';
         }
 
         $tree = Tree::instance();

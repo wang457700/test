@@ -8,7 +8,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template'], function
                     index_url: 'extend/slide/index',
                     add_url: 'extend/slide/add',
                     edit_url: 'extend/slide/edit',
-                    del_url: 'extend/slide/del',
+                    //del_url: 'extend/slide/del',
                     multi_url: '',
                 }
             });
@@ -49,21 +49,23 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template'], function
             // 相关文档：http://bootstrap-table.wenzhixin.net.cn/zh-cn/documentation/
             table.bootstrapTable({
                 url: $.fn.bootstrapTable.defaults.extend.index_url,
-                sortName: 'id',
+                sortName: 'listorder',
                 columns: [
                     [
                         //更多配置参数可参考http://bootstrap-table.wenzhixin.net.cn/zh-cn/documentation/#c
                         //该列为复选框字段,如果后台的返回state值将会默认选中
-                        {field: 'state', checkbox: true,},
+                       // {field: 'state', checkbox: true,},
                         //sortable为是否排序,operate为搜索时的操作符,visible表示是否可见
                         {field: 'id', title: 'ID', sortable: false, operate: false},
+                        {field: 'listorder', title: 'listorder', sortable: true,  operate: false},
                         //默认隱藏该列
                         {field: 'slide_name', title: __('banner名稱'), operate: 'LIKE %...%', placeholder: '模糊搜索，*表示任意字符'},
+                        {field: 'slide_type', title: __('類型/建議大小'), searchList: {"index_banner": '首頁輪播_banner 1920px*420px', "float_left_banner": '左邊浮動_banner 255px*255px', "center_lefe_banner": '首頁固定_左邊_banner 390px*360px', "center_right_banner": '首頁固定_右邊（最多兩個）_banner 790px*170px'}, operate: 'FIND_IN_SET', formatter: Table.api.formatter.label},
                         //直接响应搜索
                         {field: 'slide_url', title: __('链接'), operate: false},
                         {field: 'finite_period', title: __('有限期'),  operate: false},
                         {field: 'slide_pic', title: __('圖片'), formatter: Table.api.formatter.image, operate: false}, 
-                        {field: 'slide_status', title: __('顯示狀態'),  operate: false},
+                        {field: 'slide_status', title: __('顯示狀態'),  searchList: {"1": __('顯示'), "0": __('隱藏')}, formatter: Table.api.formatter.label},
                       
                         //操作栏,默认有编辑、删除或排序按钮,可自定义配置buttons来扩展按钮
                         {
@@ -84,6 +86,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template'], function
                 commonSearch: true,
                 //可以控制是否默认显示搜索单表,false则隱藏,默认为false
                 searchFormVisible: true,
+                showColumns: false,
+                showToggle: false,
                 queryParams: function (params) {
                     //这里可以追加搜索条件
                     var filter = JSON.parse(params.filter);
