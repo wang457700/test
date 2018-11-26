@@ -1,7 +1,7 @@
 <?php
 
 return array (
-  'name' => '營康薈後台',
+  'name' => '營康會後台',
   'beian' => '',
   'cdnurl' => '',
   'version' => '1.0.1',

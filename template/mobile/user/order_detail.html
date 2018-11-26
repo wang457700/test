@@ -24,19 +24,19 @@
 					<img src="{:cdnurl($vo['cover'])}" class=" mui-pull-left auto_img" />
 					<p class="p1">{$vo.product_name}</p>
 					<p>{$vo.freight_num}</p>
-					<p><span class="color_ro">$</span><span class="color_ro font18">{:number_format($vo['price'],2)}</span><span class="mui-pull-right">x{$vo['goods_num']}</span></p>
+					<p><span class="color_ro">{:currency_rmb($vo['goods_is_inland'])}</span><span class="color_ro font18">{:number_format($vo['price'],2)}</span><span class="mui-pull-right">x{$vo['goods_num']}</span></p>
 				</li>
 				{/foreach}
 				<li class="mui-table-view-cell" style="text-align:right">
 					<span class="mui-pull-right">
-							積分抵扣：$ {$order_info['integral_price']|default='0'}<br>
-							捐款：$ {$order_info['contribution_price']|default='0'}<br>
-							服務費: $ {$order_info['service_price']}<br/>
-							优惠：$ {$order_info['coupon_price']|default='0'}<br/>
+							積分抵扣：{:currency_rmb($vo['goods_is_inland'])} {$order_info['integral_price']|default='0'}<br>
+							捐款：{:currency_rmb($vo['goods_is_inland'])} {$order_info['contribution_price']|default='0'}<br>
+							服務費: {:currency_rmb($vo['goods_is_inland'])} {$order_info['service_price']}<br/>
+							优惠：{:currency_rmb($vo['goods_is_inland'])} {$order_info['coupon_price']|default='0'}<br/>
 					</span>
 				</li>
 				<li class="mui-table-view-cell" style="text-align:right">
-					共{$all_goods_num}件商品    合計 <span class="color_ro">$</span><span class="color_ro font18">{:number_format(sum_order_payableprice($order_info['order_sn']),2)}</span>(含運費${$order_info['freight']})
+					共{$all_goods_num}件商品    合計 <span class="color_ro">{:currency_rmb($vo['goods_is_inland'])}</span><span class="color_ro font18">{:number_format(sum_order_payableprice($order_info['order_sn']),2)}</span>(含運費{:currency_rmb($vo['goods_is_inland'])}{$order_info['freight']})
 				</li>
 
 			</ul>

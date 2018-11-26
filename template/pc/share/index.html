@@ -7,18 +7,16 @@
   
    <div class="row top_banner"><img src="__TMPL_PUBLIC__/img/info_top_banner.jpg" class="col-md-12" /></div>
     <div class="container bgcolor_white">
-        <div class="pr_name" style="background: url(__TMPL_PUBLIC__/img/shared_platform.png) no-repeat center;text-align:  center;">共享平台</div>
+        <div class="pr_name" style="background: url(__TMPL_PUBLIC__/img/shared_platform.png) no-repeat center;text-align:  center;position: relative;">共享平台
+            <a href="{:url('user/share_add')}" type="button" class="btn btn-warning btn-warning-edit col-md-1" style="width:120px;position: absolute;right: 0;">发布共享</a>
+        </div>
         <div class="shared_platform">
-           <?php
-
-
-?>
             <ul class="row">
             {foreach name="list" item="vo"}
                 <li class="col-md-6">
-                  <div class="d1"><img src="{:fa_get_image_url($vo['product_pic'])}" class="auto_img"/></div>
-                  <h4>{$vo.product_name}</h4>
-                  <p class="color_66 ellipsis3" style="height: 60px;">{$vo.product_content}</p>
+                    <div class="d1"><a href="{:url('share/detail',array('id'=>$vo['id']))}"><img src="{:fa_get_image_url($vo['product_pic'])}" class="auto_img"/></a></div>
+                  <h4><a href="{:url('share/detail',array('id'=>$vo['id']))}">{$vo.product_name}</a></h4>
+                  <p class="color_66 ellipsis3" style="height: 60px;">{$vo.product_excerpt}</p>
                   <p class="color_66 ">{:date('Y-m-d',$vo['add_date'])}</p>
                 </li>
             {/foreach}

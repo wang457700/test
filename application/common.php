@@ -5,6 +5,7 @@ use think\Session;
 use fast\Tree;
 use think\Request;
 use app\common\model\Category as CategoryModel;
+use app\api\controller\Hksr;
 
 // 公共助手函数
 
@@ -331,7 +332,8 @@ function fa_get_image_url($file)
     }else
     {
         $PHP_SELF=$_SERVER['PHP_SELF'];
-        $url=substr($PHP_SELF,0,strrpos($PHP_SELF,'/')+1).$file;
+        $url=substr($PHP_SELF,0,strrpos($PHP_SELF,'/')+1);
+        $url = $url.'public/'.$file;
     }
     return $url;
 }
@@ -388,11 +390,12 @@ function sp_product_info($product_id)
  */
 function count_cart_num($user_id)
 {
+    $is_inland =sp_ip_ischina()?1:0;
     $num =  Db::name('cart_order')
         ->alias('a')
         ->field('c.*,a.product_id as goods_id,a.user_id,a.cart_id')
         ->join('__GOODS__ c','a.product_id=c.product_id','RIGHT')
-        ->where(array('user_id'=>$user_id,'is_on_sale'=>1))->sum('number');
+        ->where(array('user_id'=>$user_id,'is_on_sale'=>1,'is_inland'=>$is_inland))->sum('number');
     return $num;
 }
 
@@ -486,10 +489,13 @@ function sp_user_info()
 {
     $user_id = Session('user_id');
     $user = Db::name('user')->where('id',$user_id)->find();
+    if(!empty($user['sid'])){
+     $hksr = new Hksr;
+     $user['score'] = $hksr->Member_GetInfo($user['sid'],$arra ='BPT1');
+    }
     $user['platform'] = Session('platform');
     return $user;
 }
-
 
 /**  创建游客信息  */
 function create_tourist()
@@ -509,11 +515,12 @@ function create_tourist()
     }
     return $user;
 }
+
+
 /**  查询地区信息
  *  $regionid 地区id
  *  $value  输出的字段
 */
-
 function sp_region_value($regionid,$value = 'name'){
     $region =  Db::name('region')->where('id',$regionid)->value($value);
     return $region;
@@ -623,6 +630,12 @@ function sp_user_default_address()
 }
 
 /**
+ * 查询用户积分接口
+ *
+ */
+
+
+/**
  * 是否内地ip
  *
  */
@@ -643,8 +656,20 @@ function sp_ip_ischina()
     if($data['data']['country_id'] == 'CN'){
         $echo = true;
     }
-
     return $echo;
+}
+
+/**
+ * 转换人民币，货币符号
+ * $true 1是 0不是
+ * return $|￥
+ */
+function currency_rmb($true){
+    if($true){
+        return '￥';
+    }else{
+        return '$';
+    }
 }
 
 //将数字转成汉字对应的数

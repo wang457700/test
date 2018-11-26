@@ -7,14 +7,11 @@
 
 {include file="common/nav"/}
   <style type="text/css">
-
-
 	  .cart-item-list{border: 1px solid #e5e5e5;border-top: 0;}
 	  .pr_name{padding-left: 0;}
 	  .order_address .row{}
   </style>
     <body style="background: url(__TMPL_PUBLIC__/img/index_bg.jpg) repeat-y;">
-   	
     <div class="container bgcolor_white">
       <div class="alzx-crumbs alzx-crumbs-f1"> 
           <div class="alzx-con"> 
@@ -82,28 +79,28 @@
 								</p>
 							</div> 
 						</div>
-						<div class="col-md-2 col-sm-2 col-xs-2 color_ro" style="">$ {:number_format($vo['price'],2)}</div>
+						<div class="col-md-2 col-sm-2 col-xs-2 color_ro" style="">{:currency_rmb($vo['goods_is_inland'])} {:number_format($vo['price'],2)}</div>
 						<div class="col-md-2 col-sm-2 col-xs-2" style="">
 							{$vo['goods_num']}
 						</div>
-						<div class="col-md-2 col-sm-2 col-xs-2 color_ro" style="">$ {:number_format($vo['money_total'],2)}</div>
+						<div class="col-md-2 col-sm-2 col-xs-2 color_ro" style="">{:currency_rmb($vo['goods_is_inland'])} {:number_format($vo['money_total'],2)}</div>
 					</div>
 				{/foreach}
 					<div class="row" style="margin-bottom: 10px;">
 						<div class="col-md-12 border_1" style="text-align: right;padding:20px">
-							<span class="color_ro">{$all_goods_num}</span>件商品,  總計(不含運費): <span class="color_ro">$ {:number_format($all_money_total,2)}</span><br/>
-							運費: $ {$order_info['freight']}<br/>
-							服務費: $ {$order_info['service_price']}<br/>
-							优惠: <span class="color_ro">$ {$order_info['coupon_price']|default='0'}</span><br/>
+							<span class="color_ro">{$all_goods_num}</span>件商品,  總計(不含運費): <span class="color_ro">{:currency_rmb($vo['goods_is_inland'])} {:number_format($all_money_total,2)}</span><br/>
+							運費:<span class="color_ro">{:currency_rmb($vo['goods_is_inland'])} {$order_info['freight']}</span><br/>
+							服務費: <span class="color_ro">{:currency_rmb($vo['goods_is_inland'])} {$order_info['service_price']}</span><br/>
+							优惠: <span class="color_ro">{:currency_rmb($vo['goods_is_inland'])} {$order_info['coupon_price']|default='0'}</span><br/>
 						</div>
 						<div class="col-md-12 border_1" style="padding:20px">
 							<p style="display: inline-block;">
 								<span class="color_ro">{$order_info['integral']|default='0'}</span>積分可抵扣
-								<span class="color_ro">${$order_info['integral_price']|default='0'}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-								捐款<span class="color_ro">${$order_info['contribution_price']|default='0'}</span>
+								<span class="color_ro">{:currency_rmb($vo['goods_is_inland'])}{$order_info['integral_price']|default='0'}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+								捐款<span class="color_ro">{:currency_rmb($vo['goods_is_inland'])}{$order_info['contribution_price']|default='0'}</span>
 
 							</p>
-							<p style="font-size:22px;text-align: right;display: inline-block;float:right;">合計 ：<span class="color_ro">$ {:number_format(sum_order_payableprice($order_info['order_sn']),2)}</span></p>
+							<p style="font-size:22px;text-align: right;display: inline-block;float:right;">合計 ：<span class="color_ro">{:currency_rmb($vo['goods_is_inland'])} {:number_format(sum_order_payableprice($order_info['order_sn']),2)}</span></p>
 						</div>
 					</div>
 					<!--<div class="row">-->

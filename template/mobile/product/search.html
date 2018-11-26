@@ -40,20 +40,23 @@
 					{/if}
 					<div class="product_list">
 						<ul class="swiper-wrapper mui-row">
-
 							{foreach name="product_list" item="vo"}
 							<li class="swiper-slide mui-col-sm-6 mui-col-xs-6 list">
 								<a class="news"></a>
 
 								<a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
 									{if condition="$vo['cover']"}
-									<img src="{:cdnurl($vo['cover'])}" class="auto_img"/>
+										<img src="{:cdnurl($vo['cover'])}" class="auto_img"/>
 									{else/}
-									<img src="__TMPL_PUBLIC__/img/default.jpg">
+										<img src="__TMPL_PUBLIC__/img/default.jpg">
 									{/if}
 									<p class="p2">{$vo.product_name}</p>
 								</a>
-								<p><span class="color_ro">$</span><span class="color_ro font18">{:product_price($vo['product_id'])}</span>  <span class="price">${$vo.price}</span></p>
+								<p><span class="color_ro">$</span><span class="color_ro font18">{:product_price($vo['product_id'])}</span>
+									{if condition="$vo['discount_type'] neq 1"}
+									<span class="price">${$vo.price}</span>
+									{/if}
+								</p>
 							</li>
 							{/foreach}
 						</ul>
@@ -67,6 +70,7 @@
 								<p style="text-align:center;padding: 20px;">没有相關資訊</p>
 							{/if}
 							{foreach name="new_list" item="vo"}
+							{if condition="$vo['post_endtime'] egt time() && $vo['post_starttime'] elt time()"}
 								<li class="mui-table-view-cell">
 									<img src="{:fa_get_image_url($vo['smeta'])}"  class="img_left">
 									<div class="d1">
@@ -74,6 +78,7 @@
 										<p>{$vo.post_excerpt}</p>
 									</div>
 								</li>
+							{/if}
 							{/foreach}
 						</ul>
 					</div>

@@ -58,7 +58,7 @@
                             </div>
                             <div class="col-sm-3">
                                 <select id="district" class="form-control select_e" name="district">
-                                    <option value="0">選擇区域</option>
+                                    <option value="0">選擇區域</option>
 
                                     {volist name="district" id="vo"}
                                     <option value="{$vo['id']}" {if condition="$vo['id'] eq $row['district']"} selected="selected"{/if}  >{$vo['name']}</option>
@@ -300,7 +300,7 @@
                   return;
               },
               success: function(v) {
-                  v = '<option>選擇区域</option>'+ v;
+                  v = '<option>選擇區域</option>'+ v;
                   $('#district').empty().html(v);
               }
           });

@@ -1,4 +1,5 @@
 {include file="layout/public_head" /}
+
 	<style>
 		.mui-card .mui-control-content {padding: 10px;}
 		.mui-control-content {height: 600px;}
@@ -21,15 +22,21 @@
 						<div class="mui-scroll">
 							<ul class="mui-table-view" >
 								{foreach name="list" item="vo"}
+								{if condition="$vo['post_endtime'] egt time() && $vo['post_starttime'] elt time()"}
 								 <li class="mui-table-view-cell">
 									 <a href="{:url('home/news/article',array('id'=>$vo['id']))}">
-									<img src="{:fa_get_image_url($vo['smeta'])}" class="img_left">
+										 {if condition="$vo['smeta']"}
+										 	<img src="{:fa_get_image_url($vo['smeta'])}" class="img_left">
+										 {else/}
+										 	<img src="__TMPL_PUBLIC__/img/default.jpg" class="img_left"/>
+										 {/if}
 					                <div class="d1">
 					                  <h5>{$vo.post_title}</h5>
 										<p class="mui-ellipsis" style="white-space: normal;"> {$vo.post_excerpt|msubstr=0,25}</p>
 					                </div>
 									 </a>
 								 </li>
+								{/if}
 								{/foreach}
 							</ul>
 

@@ -139,7 +139,9 @@ class Cart extends Frontend
             if(empty($user_id)){
                 $tourist = create_tourist();
             }
+
             $product_id = input('goods_id/a');
+            //$goods= Db::name('goods')->where('product_id',$product_id)->find();
             $goods_num = input('goods_num/a');
             $count = count($product_id);
             if ($count> 0) {
@@ -171,7 +173,6 @@ class Cart extends Frontend
                         $total+=($goods['price']*$v['goods_num']);
                         $num+=$v['goods_num'];
                 }
-
 
                 $address_list=Db::name('user_address')->where(array('user_id'=>$user_id,'status'=>1))->select();
                 $address_default=Db::name('user_address')->where(array('user_id'=>$user_id,'status'=>1,'default'=>1))->find();
@@ -348,22 +349,25 @@ class Cart extends Frontend
 
     public function shopping_cart(){
 
+        $is_inland =sp_ip_ischina()?1:0;
         $user_id=  Session::get('user_id');
         $list= Db::name('cart_order')->alias('a')
             ->field('c.*,a.product_id as goods_id,a.user_id,a.cart_id')
             ->join('__GOODS__ c','a.product_id=c.product_id','RIGHT')
             ->where('user_id', $user_id)
             ->where('is_on_sale', 1)
+            ->where('is_inland', $is_inland)
             ->group('c.product_id')->select();
         $sum=0;
         $goods_sum=0;
         foreach ($list as $key=>$item){
-               $total=Db::name('cart_order')->where(array('user_id'=>$user_id,'product_id'=>$item['product_id']))->sum('number');
-               $list[$key]['total']=$total;
-               $list[$key]['total_price']=$total*product_price($item['product_id']);
-               $list[$key]['price']= product_price($item['product_id']);
-               $sum+=$list[$key]['total_price'];
-               $goods_sum+=$total;
+                $total=Db::name('cart_order')->where(array('user_id'=>$user_id,'product_id'=>$item['product_id']))->sum('number');
+                $list[$key]['total']=$total;
+                $list[$key]['total_price']=$total*product_price($item['product_id']);
+                $list[$key]['price']= product_price($item['product_id']);
+                $list[$key]['currency']= currency_rmb($item['is_inland']);
+                $sum+=$list[$key]['total_price'];
+                $goods_sum+=$total;
         }
 
         $this->assign('all_price',$sum);

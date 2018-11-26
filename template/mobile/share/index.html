@@ -30,11 +30,13 @@
 							<ul class="mui-table-view" >
 								{foreach name="list" item="vo"}
 								 <li class="mui-table-view-cell">
-									<img src="{:fa_get_image_url($vo['product_pic'])}" class="img_left">
-					                <div class="d1">
-					                  <h5>{$vo.product_name}</h5>
-					                  <p>{$vo.product_content}</p>
-					                </div> 
+									 <a href="{:url('share/detail',array('id'=>$vo['id']))}">
+										<img src="{:fa_get_image_url($vo['product_pic'])}" class="img_left auto_img">
+										<div class="d1">
+										  <h5>{$vo.product_name}</h5>
+										  <p>{$vo.product_excerpt}</p>
+										</div>
+										 </a>
 								 </li>
 								{/foreach}
 								{if condition="count($list) eq 0"}

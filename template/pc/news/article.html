@@ -17,7 +17,7 @@
         <div class="info_detail"> 
               <div>
                  <h3>{$data.post_title}</h3>
-                 <p>發布時間：{$data.post_date}</p>
+                 <p>發布時間：{:date('Y-m-d H:i',$data['post_starttime'])}</p>
                   <div class="content">
                     {$data.post_content}
                   </div>

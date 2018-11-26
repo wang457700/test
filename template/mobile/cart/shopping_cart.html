@@ -15,7 +15,7 @@
 				<input name="checkbox" value="" type="checkbox" style="left: 8px;top: 5px;" id="checked" checked="checked" data-id="1">
 			<label style="line-height: 40px;padding-left: 40px;padding-right: 0;">全选</label></div>
 			<button type="type" class="mui-btn mui-btn-success mui-pull-right" style="top: 5px;">結算(<span id="total_sum">0</span>)</button>
-			<p class="mui-pull-right" style="margin: 0;line-height: 40px;margin-right: 20px;">合計：<span class="color_ro">$</span><span class="color_ro font18" id="total">0.00</span></p>
+			<p class="mui-pull-right" style="margin: 0;line-height: 40px;margin-right: 20px;">合計：<span class="color_ro">{:sp_ip_ischina()?'￥':'$'}</span><span class="color_ro font18" id="total">0.00</span></p>
 		</nav>
 		{/if}
 		<div class="mui-content">
@@ -36,7 +36,7 @@
 						            <p class="title">{$vo.product_name}</p>
 									<a href="" class="xuan">{$vo.place_origin}</a>
 									<div>
-										<p class="mui-pull-left" style="margin:  0;line-height: 40px;"><span class="color_ro">$</span><span class="color_ro font18" data-price='{$vo.price}' id="price_{$key}">{$vo.price}</span></p>
+										<p class="mui-pull-left" style="margin:  0;line-height: 40px;"><span class="color_ro">{$vo.currency}</span><span class="color_ro font18" data-price='{$vo.price}' id="price_{$key}">{$vo.price}</span></p>
 										<div class="col-md-12 mui-pull-right number" style="">
 											<input id="min_{$key}" name="" type="button" value="-" class="reduce" {$vo['total']==1?'disabled="disabled"':''} onclick="on_number({$key},'min')">
 											<input id="number_{$key}" name="goods_num[]" type="text" value="{$vo.total}" style="width:40px;text-align: center;border: 0;height: 20px;padding: 0;" class="goods_num" data-key="{$key}" data-productid="{$vo.product_id}">
@@ -152,6 +152,7 @@
 
             //单选
             $(".js-check").on('click',function(){
+                var falsenum = 0;
                 var key =  $(this).data('key');
                 if($(this).is(':checked') == true){
                     $('#subtotal_' + key).addClass('subtotal');
@@ -161,6 +162,16 @@
                     $('#number_' + key).attr('name','');
                 }
                 total();
+                $("input[name='goods_id[]']").each(function(){
+					if($(this).is(':checked') ==false){
+						falsenum++
+					}
+				});
+                if(falsenum == 0){
+                    $('#checked').data('id',1).prop('checked', true);
+				}else{
+                    $('#checked').data('id',0).prop('checked', false);
+				}
             });
 
 
@@ -204,11 +215,6 @@
                 $("input[class^='goods_num']").each(function(){
                     total_sum+= Number($(this).val());
                 });
-
-
-                console.log(goods_price);
-                console.log(total_sum);
-
                 $('#total_sum').text(Number(total_sum));
                 $('#total').text(goods_price.toFixed(2));
                // $('#total_no_yunxfei').text('$ '+ sum.toFixed(2));

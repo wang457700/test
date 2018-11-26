@@ -119,9 +119,9 @@
                                       <span class="color_ro bold">{$vv.integral|default='0'}</span>
                                   </p>
                               </td>
-                              <td class="col-md-2 color_ro"><span class="bold font16">${$vv.price}</span> </td>
+                              <td class="col-md-2 color_ro"><span class="bold font16">{:currency_rmb($vo['goods_is_inland'])}{$vv.price}</span> </td>
                               <td class="col-md-1 bold font16">{$vv.goods_num}</td>
-                              <td class="col-md-2 "><span class="bold font16 color_ro">${$vv.money_total}</span> <span class="color_75"></span></td>
+                              <td class="col-md-2 "><span class="bold font16 color_ro">{:currency_rmb($vo['goods_is_inland'])}{$vv.money_total}</span> <span class="color_75"></span></td>
                             </tr>
                           {/foreach}
                           </tbody>
@@ -131,8 +131,8 @@
                                  下單時間:{:date('H:i:s',strtotime($vo['addtime']))}
                               </div>
                               <div class="col-md-6 t2 color_75" style="">
-                                    訂單總價: <span class="bold font16 color_ro">${:number_format(sum_order_payableprice($vo['order_sn']),2)}</span>
-                                 (含運費:<span class="color_ro"> ${$vo['freight']|default='0'} </span>;偏远地区附加费：<span class="color_ro">${$vo['service_price']|default='0'} </span> )<br>
+                                    訂單總價: <span class="bold font16 color_ro">{:currency_rmb($vo['goods_is_inland'])}{:number_format(sum_order_payableprice($vo['order_sn']),2)}</span>
+                                 (含運費:<span class="color_ro"> {:currency_rmb($vo['goods_is_inland'])}{$vo['freight']|default='0'} </span>;偏远地区附加费：<span class="color_ro">{:currency_rmb($vo['goods_is_inland'])}{$vo['service_price']|default='0'} </span> )<br>
                               </div>
                               <div class="col-md-3 t2" style="">
                                   {if condition="$vo['pay_status'] neq 0"}

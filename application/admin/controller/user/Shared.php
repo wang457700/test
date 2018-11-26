@@ -61,8 +61,8 @@ class Shared extends Backend
      */
     public function detail($ids=null)
     {
-
         $row = Db::name('user_share')->where('id',$ids)->find();
+        $row['product_content'] =htmlspecialchars_decode($row['product_content']);
         $row['product_category']  = explode('-',$row['product_category']);
         foreach ($row['product_category'] as $kk => &$vv){
             $category_name[] = Db::name('category')->where('id',$vv)->value('name');

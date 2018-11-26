@@ -4,10 +4,12 @@
     <a href="{:url('cart/shopping_cart')}" class="mui-action-menu mui-pull-right index-hd-right2 shopping">
         <span class="mui-badge mui-badge-success mui-pull-right" id="shopping_total" >{:count_cart_num($user_id)}</span>
     </a>
-    {if condition="is_login()"}
-     <a href="{:url('user/logout')}" class="mui-action-menu mui-pull-right index-hd-right"></a>
-    {else/}
-     <a href="{:url('user/login')}" class="mui-action-menu mui-pull-right index-hd-right" style="background-image:url('__TMPL_PUBLIC__/img/login-in.png')"></a>
-    {/if}
+    <a href="{:url('product/search')}" class="mui-action-menu search-btn mui-pull-right index-hd-right"></a>
+    <!--{if condition="is_login()"}-->
+     <!--<a href="{:url('user/logout')}" class="mui-action-menu search-btn mui-pull-right index-hd-right"></a>-->
+    <!--{else/}-->
+     <!--<a href="{:url('user/login')}" class="mui-action-menu search-btn mui-pull-right index-hd-right" style="background-image:url('__TMPL_PUBLIC__/img/login-in.png')"></a>-->
+    <!--{/if}-->
 </header>
+<div id="loading"><img src="__TMPL_PUBLIC__/img/loading.gif" alt=""></div>
 {include file="common/btn" /}

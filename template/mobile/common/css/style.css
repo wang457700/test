@@ -2,6 +2,10 @@
 body{font-size: 14px;max-width:450px;margin: 0 auto;}
 li{list-style-type:none;}
 ul{padding:0;}
+a {
+    text-decoration: none;
+    color: #79c141;
+}
 /*font*/
 .font18{font-size: 18px;}
 .font16{font-size: 16px;}
@@ -35,15 +39,24 @@ ul{padding:0;}
 .mui-checkbox input[type=checkbox]:checked:before, .mui-radio input[type=radio]:checked:before{color:#7ac141;}
 .mui-input-row label~input{font-size: 14px !important;}
 
+.mui-table-view-radio .mui-table-view-cell .mui-navigate-right:after {
+    font-size: 30px;
+    font-weight: 600;
+    right: 9px;
+    content: '';
+    color: #79c141;
+}
+
 .index-hd-left{background:#fff url(../img/cebian.png) no-repeat center;background-size: 20px;width: 44px;height: 44px;}
 .index-hd-right{background:#fff url(../img/denglu.png) no-repeat center;background-size: 15px;width: 30px;height: 44px;position: relative;}
 .index-hd-right2{background:#fff url(../img/gouwuche.png) no-repeat center;background-size: 20px;width: 44px;height: 44px;position: relative;}
 .index_banner .swiper-slide img{width: 100%;object-fit: contain;}
-.index-left-logo {padding:  20px;}
+.index-left-logo {padding:  20px;line-height:  80px;}
+.index-left-logo .avatar{background-image: url(/public/uploads/avatar/20181122/e740dfc538a10e9d8ead0eb615373dab.jpg);width:  80px;height: 80px;background-size: cover;background-repeat:  no-repeat;border: 1px solid #7ac141;border-radius: 50%;float:  left;margin-right:  10px;}
 .index-left-logo a{color:#000}
 .index-left-logo img{width:80px;border:1px solid #7ac141;border-radius: 50%;vertical-align: middle;margin-right: 5px;}
 
-#loading{width: 100%;height: 100%;position: fixed;top: 0;background: #fff;text-align: center}
+#loading{width: 100%;height: 100%;position: fixed;top: 0;background: #fff;text-align: center;z-index: 9999999999;opacity:  0;display: none;}
 #loading img{width: 30px;margin-top: 50%;}
 
 .left_menu_ico {background: url(../img/left_menu_ico.png) no-repeat;background-size: 20px;padding-left: 20px;margin-right: 10px;height:  20px;width:  20px;display:  inline-block;vertical-align: middle;}
@@ -61,7 +74,7 @@ ul{padding:0;}
 
 
 .my_lj .list img{width: 100%;border: 1px solid #efefef;border-radius: 5px;object-fit: contain;}
-.my_lj .list .p2{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.my_lj .list .p2{overflow:hidden;text-overflow:ellipsis;font-size:  12px;line-height: 17px;-webkit-box-orient: vertical;-webkit-line-clamp:2;display: -webkit-box;margin-bottom:  5px;}
 .my_lj .list .price{color:#3F3F3F;text-decoration:line-through;margin-left: 5px;}
 .my_lj .list .news{background: url(../img/new.png) no-repeat center;background-size: 30px;width: 30px;height: 30px;display:  inline-block;position:  absolute;top: 0;}
 .index-other a{text-align: center;color: #333333;border:  1px solid #7DBF43;margin: 1%;padding:  10px;border-radius:  5px;font-size: 14px;width: 30%;}
@@ -69,19 +82,19 @@ ul{padding:0;}
 .f6 .d1{font-size: 1.2em;}
 .f6 .list{padding: 0.5em;background: #fff;}
 .f6 .d1 p{color: #888;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;}
-.f6 .d1 h4{overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.f6 .d1 h4{overflow: hidden;text-overflow: ellipsis;white-space: nowrap;color: #000;}
 .left-menu li{color:#000}
 .left_ico{width: 20px;margin-right:  10px;vertical-align: middle;}
 
 .swiper-pagination-bullet-active{background: #7ac141 !important}
 .my_order .l2 {line-height: 30px;background: #efefef;}
 .my_order .l2 img{width: 100px;margin-right:  10px;object-fit: contain;}
-.my_order .l2 .p1{color: #000}
+.my_order .l2 .p1{color: #000;overflow: hidden;text-overflow: ellipsis;line-height: 20px;-webkit-box-orient: vertical;-webkit-line-clamp: 2;display: -webkit-box;margin-bottom: 5px;}
 .my_order ul{border-top: 10px solid #efefef;}
 .contribution .s_right{border: 1px solid #efefef;padding: 5px;position: absolute;right: 5px;top: 2px;border-radius: 5px;}
 .contribution input{width: 80px;border: 0;margin: 0;padding: 2px;height: 20px;color: #ffa800;}
 
-.share_product_list ul li .img_left{float: left;margin-right: 10px;border: 1px solid #eee;border-radius: 5px;width: 105px;}
+.share_product_list ul li .img_left{float: left;margin-right: 10px;border: 1px solid #eee;border-radius: 5px;width: 105px;object-fit: contain;}
 .share_product_list ul li .d1{font-size: 1.2em;}
 .share_product_list ul li .list{padding: 0.5em;background: #fff;}
 .share_product_list ul li .d1 p{color: #888;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;font-size: 12px;}

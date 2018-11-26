@@ -1,5 +1,41 @@
-
-{include file="layout/public_head" /}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="keywords" content="{$seo_keywords}"/>
+    <meta name="description" content="{$seo_description}"/>
+    <link rel="shortcut icon" href="__PUBLIC__favicon.ico">
+    <!-- Bootstrap CSS -->
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link href="__TMPL_PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__TMPL_PUBLIC__/css/style.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script> -->
+    <script src="__TMPL_PUBLIC__/js/bootstrap.min.js"></script>
+    <title>{$seo_title?$title.' '.$seo_title:$title}</title>
+    <style>
+        *{
+            padding:0;
+            margin:0;
+        }
+        .left,.right{
+            position:absolute;
+            top:80px;
+        }
+        .left{
+            left:0;
+        }
+        .right{
+            right:0;
+        }
+    </style>
+    <style type="text/css">
+        .pagination>.active>span,.pagination>.active>span:hover{color:#ffa800;background-color: #ffffff;border-color: #ddd;}
+        .pagination>li>a{color:#000000;}
+ 	</style>
+</head>
 <!--头部 str-->
 {include file="common/header"/}
 <!--头部 end-->
@@ -40,13 +76,18 @@
                 </div>
 
               </div>
-
+            <div class="form-group form-group-e">
+                <label for="product_excerpt" class="col-sm-1 col-xs-12 control-label"><span class="color_ro">* </span>簡&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;介：</label>
+                <div class="col-md-8">
+                    <textarea name="product_excerpt" value="" class="textarea_e" style="width: 500px;height:150px;padding: 10px;" id="product_excerpt">{$info['product_excerpt']}</textarea>
+                </div>
+            </div>
               <div class="form-group form-group-e">
                 <label 
                 for="inputPassword3" class="col-sm-1 col-xs-6 control-label"><span class="color_ro">* </span>圖片上傳:</label>
                 <div class="col-sm-6">
-                  <div id="preview" style="padding: 20px;">
-                    <img id="imghead"  class="upload_image" src="__PUBLIC__{$info['product_pic']}"  style="max-width:  200px;">
+                  <div id="preview" style="padding:20px 0;">
+                    <img id="imghead"  class="upload_image" src="__PUBLIC__/{$info['product_pic']}"  style="max-width:  200px;">
                   </div>
                   <input name="pic" type="hidden"  id="pic" value=""/>
                   <input type="file" onchange="previewImage(this)" style="display: none;" id="previewImg" accept=".gif,.jpg,.jpeg,.png">
@@ -110,22 +151,29 @@
                    <!-- <div id="upload" class="upload"></div> -->
                 </div>
               </div>
+			    <script src="__TMPL_PUBLIC__/js/jquery/jquery-1.10.2.js"></script>
+                <script src="__TMPL_PUBLIC__/js/jquery/bootstrap.min.js"></script>
+				<script src="__TMPL_PUBLIC__/summernote/dist/summernote.js"></script>
+				<script src="__TMPL_PUBLIC__/summernote/dist/lang/summernote-zh-TW.js"></script>    <!-- 中文-->
+				<script>
+					$(function(){
+						$('.summernote').summernote({
+							width:'100%',
+							height: 400,
+							tabsize: 2,
+							lang: 'zh-TW'
+						});
+					});
+				</script>
+				<link href="__TMPL_PUBLIC__/summernote/dist/summernote.css" rel="stylesheet"/>
               <div class="form-group form-group-e no_border">
-                <label class="col-md-1 control-label"><span class="color_ro">* </span>簡&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;介&nbsp;:</label>
-                <div class="col-md-8">
+                  <label for="inputEmail3" class="col-sm-1 col-xs-12 control-label"><span class="color_ro">* </span>內&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;容：</label>
+				<div class="col-md-8">
+					<div class="summernote" style="width:100%">{$info.product_content}</div>
 
-                  <link rel="stylesheet" href="__TMPL_PUBLIC__/kindedit/design/css/trumbowyg.css">
-                  <script src="__TMPL_PUBLIC__/kindedit/trumbowyg.js"></script>
-                  <script src="__TMPL_PUBLIC__/kindedit/plugins/base64/trumbowyg.base64.js"></script>
-                  <style type="text/css">.trumbowyg-box, .editor{margin:0;}</style>
-                  <div id="odiv" style="display:none;position:absolute;z-index:100;">
-                     <img src="__TMPL_PUBLIC__/kindedit/pic/sx.png" title="缩小" border="0" alt="缩小" onclick="sub(-1);"/>
-                      <img src="__TMPL_PUBLIC__/kindedit/pic/fd.png" title="放大" border="0" alt="放大" onclick="sub(1)"/>
-                      <img src="__TMPL_PUBLIC__/kindedit/pic/cz.png" title="重置" border="0" alt="重置" onclick="sub(0)"/>
-                      <img src="__TMPL_PUBLIC__/kindedit/pic/sc.png" title="删除" border="0" alt="删除" onclick="del();odiv.style.display='none';"/>
-                  </div>
-                  <div  onmousedown="show_element(event)" style="clear:both" id="customized-buttonpane" class="editor">{$info.product_content}</div>
-               </div>
+					<textarea name="content" type="hidden" value="{$info.product_content}" id="content" style="display:none"></textarea>
+                    <span>提示：上傳圖片文件不能大於2MB，否則會提交失敗</span>
+				</div> 
               </div>
               <div class="form-group" style="padding-top: 20px;">
                   <div class="col-md-1"></div>
@@ -133,11 +181,8 @@
                     <button type="submit" class="btn btn-success btn-success-edit" style="border-radius: 0;">提交編輯</button>
                   </div>
               </div>
-
             </form> 
         </div>
-
-
     </div>
     {include file="common/footer"/}
     <script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.min.js"></script>
@@ -147,7 +192,7 @@
       function share(){
           var title = $('#title');
           var pic = $('#pic').val();
-          
+          var content = $('#content').val(html_encode($('.summernote').summernote('code')));
         // jquery 表单提交
         $("#share-form").ajaxSubmit(function(data) { 
           console.log(data);
@@ -215,6 +260,20 @@
               }
           });
       }
+	  
+	  function html_encode(str)
+	{
+		var s = "";
+		if (str.length == 0) return "";
+		s = str.replace(/&/g, ">");
+		s = s.replace(/</g, "<");
+		s = s.replace(/>/g, ">");
+		s = s.replace(/ /g, " ");
+		s = s.replace(/\'/g, "'");
+		s = s.replace(/\"/g, "");
+		s = s.replace(/\n/g, "<br>");
+		return s;
+	}
     </script>
 
 

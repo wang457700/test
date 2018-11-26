@@ -85,19 +85,32 @@
                     success: function(data) {
                         if (data.code == 1) {
                             $.each(data.data,function(index, value) { //遍历json数据列
+
                                 var li ='<ul class="mui-table-view">';
                                 li += '<li class="mui-table-view-cell"><i class="left_menu_ico i3"></i>健康及有機產品 <span class="color_ro mui-pull-right">'+ value.statustext+'</span></li>';
                                 $.each(value.goods_list,function(index, vv) {
-                                    li += '<li class="mui-table-view-cell l2"><img src="'+src+ vv.cover+'" class="mui-pull-left"><p class="p1">'+ vv.product_name+'</p><p></p><p><span class="color_ro">$</span><span class="color_ro font18">388</span><span class="mui-pull-right">x1</span></p></li>';
+                                    li += '<li class="mui-table-view-cell l2"><img src="'+src+ vv.cover+'" class="mui-pull-left"><p class="p1">'+ vv.product_name+'</p><p></p><p><span class="color_ro">'+value.currency+'</span><span class="color_ro font18">388</span><span class="mui-pull-right">x1</span></p></li>';
 
                                 });
 
                                 li += '<li class="mui-table-view-cell"><span class="mui-navigate-right">支付方式<span class="mui-pull-right" style="margin-right:20px">'+ value.payment+'</span></span></li>';
-                                li += '<li class="mui-table-view-cell" style="text-align:right">共1件商品 合計 <span class="color_ro">$</span><span class="color_ro font18">'+ value.price+'</span>(含運費$'+ value.freight+')</li><li class="mui-table-view-cell" style="text-align:right">'+ value.button +'</li>';
+                                li += '<li class="mui-table-view-cell" style="text-align:right">共1件商品 合計 <span class="color_ro">'+value.currency+'</span><span class="color_ro font18">'+ value.price+'</span>(含運費'+value.currency + value.freight+')</li><li class="mui-table-view-cell" style="text-align:right">'+ value.button +'</li>';
                                 li += '</ul>';
 
                                 $("#order_list").append(li);
                             });
+
+
+
+
+                            // if(data.data.length == 0){
+                            //     $("#order_list").html('<div style="\n' +
+                            //         '    background: #efeff4;\n' +
+                            //         '    text-align:  center;\n' +
+                            //         '    color: #bbb;\n' +
+                            //         '    margin-top: 10%;\n' +
+                            //         '">沒有相關訂單</div>');
+							// }
                             $("#order_list").data('page_count',Number(data.data.current_page)+1);
                             $("#order_list").data('last_page',Number(data.data.last_page));
                         }else{

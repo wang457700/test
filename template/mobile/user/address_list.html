@@ -9,7 +9,9 @@
 	<body>
 		{if condition="$row['id'] || input('add') == 'add'"}
 			<header class="mui-bar mui-bar-nav">
-				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #7ac141;"></a>
+				{if condition="!$order_list"}
+					<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #7ac141;"></a>
+				{/if}
 				<h1 class="mui-title">{$row['id']?'编辑地址':'添加地址'}</h1>
 			</header>
 			<div class="mui-content">
@@ -44,7 +46,7 @@
 								{/volist}
 							</select>
 							<select onchange="" class="select_e" id="district" name="district"  title="请選擇所在区域" >
-								<option value="">選擇区域</option>
+								<option value="">選擇區域</option>
 								{volist name="district" id="vo"}
 								<option value="{$vo['id']}" {if condition="$vo['id'] eq $row['district']"} selected="selected"{/if}  >{$vo['name']}</option>
 								{/volist}
@@ -216,7 +218,7 @@
 						return;
 					},
 					success: function(v) {
-						v = '<option>選擇区域</option>'+ v;
+						v = '<option>選擇區域</option>'+ v;
 						$('#district').empty().html(v);
 					}
 				});

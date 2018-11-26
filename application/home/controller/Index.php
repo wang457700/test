@@ -82,8 +82,7 @@ class Index extends Frontend
             array_multisort($time, SORT_DESC, $product_history_list);
         }
 
-
-        $share= Db::name('user_share')->limit(4)->select();
+        $share= Db::name('user_share')->limit(4)->order('add_date desc')->select();
         $this->view->assign("top_ten", $top_ten);   //Top Ten
         $this->view->assign("share", $share); //共享产品
         $this->view->assign("product_list", $product_list); //復康產品
@@ -110,7 +109,7 @@ class Index extends Frontend
     public function page()
     {
         $id = $this->request->param('id', 0, 'intval');
-        $page =  Db::name('article')->where(array('id'=>$id,))->find();
+        $page =  Db::name('article')->where(array('id'=>$id))->find();
         $this->view->assign("page", $page);
         $this->view->assign("title", $page['post_title']);
         return $this->view->fetch();
@@ -119,9 +118,10 @@ class Index extends Frontend
     //手机端 - contact_us
     public function contact_us()
     {
+
         $id = $this->request->param('id', 0, 'intval');
-        $page =  Db::name('article')->where(array('id'=>$id,))->find();
-        $this->view->assign("page", $page);
+        $list =  Db::name('article')->where(array('post_type'=>1))->column('id,post_title,post_content');
+        $this->view->assign("list", $list);
         $this->view->assign("title", '聯繫我們');
         return $this->view->fetch();
     }

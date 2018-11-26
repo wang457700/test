@@ -94,7 +94,7 @@ class User extends Frontend
         Session::set('state', $state);
         $queryarr = array(
             "appid"         => 'wx497d515fe92670bc',
-            "redirect_uri"  => 'https://wsstest.teamotto.me/hksr/public/third/callback/wechat',
+            "redirect_uri"  => 'https://wsstest.teamotto.me/hksr/third/callback/wechat',
             "response_type" => "code",
             "scope"         => 'snsapi_login',
             "state"         => $state,
@@ -389,12 +389,12 @@ class User extends Frontend
         $info['birthday'] = explode('-',$info['birthday']);
         $city = 0;
         $district = 0;
-        $province = db('region')->where(array('parent_id'=>0,'level'=>1))->select();
+        $province = db('region')->where(array('parent_id'=>0,'level'=>1))->order('weigh asc')->select();
         if($info['province']){
-            $city = db('region')->where(array('parent_id'=>$info['province'],'level'=>2))->select();
+            $city = db('region')->where(array('parent_id'=>$info['province'],'level'=>2))->order('weigh asc')->select();
         }
         if($info['city']){
-            $district = db('region')->where(array('parent_id'=>$info['city'],'level'=>3))->select();
+            $district = db('region')->where(array('parent_id'=>$info['city'],'level'=>3))->order('weigh asc')->select();
         }
 
         $y = [] ;
@@ -423,10 +423,13 @@ class User extends Frontend
     public function center(){
 
         $user_id = Session::get('user_id');
+
+
         $style = input('style','center');
         $status = input('status','all');
         $where = [];
         $user = Db::name('user')->where('id', $user_id)->find();
+        $lastPage = 0;
 
         if($status != 'all'){
             $where['pay_status'] = $status;
@@ -478,22 +481,24 @@ class User extends Frontend
                 $ajax[$k]['statustext']  = $pay_status[$item['pay_status']];
                 $ajax[$k]['payment']  = sp_payment($item['payment']);
                 $ajax[$k]['button'] = $html;
+                $ajax[$k]['currency'] = currency_rmb($item['goods_is_inland']);
                 foreach ($item['goods_list'] as $kk => $vv){
                     $ajax[$k]['goods_list'][$kk]['product_name'] = $vv['product_name'];
                     $ajax[$k]['goods_list'][$kk]['goods_num'] = $vv['goods_num'];
                     $ajax[$k]['goods_list'][$kk]['money_total'] = $vv['money_total'];
                     $ajax[$k]['goods_list'][$kk]['cover'] = $vv['cover'];
                 }
+
+                $lastPage += 1;
             }
             $this->success('获取成功',url('user/share_success'),$ajax);
         }
-
         $page = $order_list->render();
         $this->assign('page',$page);
         $this->assign('order_list',$result);
         $this->assign('level_text',$level_text);
         $this->assign('pay_status',sp_paystatus_array());
-        $this->assign('lastPage',$lastPage=6);
+        $this->assign('lastPage',$lastPage);
         $this->assign('payment',sp_payment_array());
         $this->assign('contribution_price',$sum_contribution_price);
         $this->assign('config_use',config('site')['integral']['use']);
@@ -549,7 +554,6 @@ class User extends Frontend
 		->order('add_date desc')
 		->paginate(10);
 
-
 		$status = array('0'=>'審核中','1'=>'展示中','2'=>'已下架');
 		$data = $share_list->all();
 		foreach ($data as $k =>  $v)
@@ -575,7 +579,8 @@ class User extends Frontend
 		if ($this->request->isPost()) {
 
 			$post = input('post.');
-			if(empty($post['customized-buttonpane'])){
+            $post['content'] = $_POST['content'];
+            if(empty($post['content'])){
 				$this->error('請輸入簡介！');
 			}
 
@@ -597,15 +602,14 @@ class User extends Frontend
 			$imgdata = substr($imgstr,strpos($imgstr,",") + 1);
 			$decodedData = base64_decode($imgdata);
 			$pic_url = 'uploads/usershare/img_'.time().'.jpg';
-			file_put_contents($pic_url,$decodedData);
-
-			$data['product_content'] =htmlspecialchars_decode($post['customized-buttonpane']);
+			file_put_contents('public/'.$pic_url,$decodedData);
+            $data['product_excerpt'] = $post['product_excerpt'];
+			$data['product_content'] =htmlspecialchars($_POST['content']);
          	$data['product_name'] = $post['title'];
          	$data['product_category'] = '0-'.implode('-',array_filter($post['cid']));
          	$data['product_pic'] = $pic_url;
          	$data['add_date'] = time();
          	$data['user_id'] = $user_id;
-
 			$info= Db::name('user_share')->insertGetId($data);
 			if($info!==false){
 				$this->success('發佈成功',url('user/share_success',array('id'=>$info)));
@@ -632,7 +636,8 @@ class User extends Frontend
         if ($this->request->isPost()) {
 
             $post = input('post.');
-            if(empty($post['customized-buttonpane'])){
+            $post['content'] = $_POST['content'];
+            if(empty($post['content'])){
                 $this->error('請輸入簡介！');
             }
 
@@ -651,12 +656,13 @@ class User extends Frontend
                 $imgdata = substr($imgstr,strpos($imgstr,",") + 1);
                 $decodedData = base64_decode($imgdata);
                 $pic_url = 'uploads/usershare/img_'.time().'.jpg';
-                file_put_contents($pic_url,$decodedData);
+                file_put_contents('public/'.$pic_url,$decodedData);
                 $data['product_pic'] = $pic_url;
             }
 
-            $data['product_content'] =htmlspecialchars_decode($post['customized-buttonpane']);
+            $data['product_content'] =htmlspecialchars($post['content']);
             $data['product_name'] = $post['title'];
+            $data['product_excerpt'] = $post['product_excerpt'];
             $data['product_category'] = '0-'.implode('-',$post['cid']);
             $data['add_date'] = time();
             $data['user_id'] = $user_id;
@@ -671,6 +677,7 @@ class User extends Frontend
 
         $id = $this->request->param('id', 0, 'intval');
         $info= Db::name('user_share')->where(array('id'=>$id,'user_id'=>$user_id))->find();
+        $info['product_content'] =htmlspecialchars_decode($info['product_content']);
         $info['product_category'] = explode('-',$info['product_category']);
         $this->assign('info',$info);
         $this->assign('title','我的共享');

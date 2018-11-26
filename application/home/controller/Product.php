@@ -61,6 +61,7 @@ class Product extends Frontend
             ->paginate(12);
 
         foreach ($product_list as $index => $item){
+            $item['original_price'] = $item['price'];
             $item['price'] = product_price($item['product_id']);
             $product_list[$index] = $item;
         }
@@ -83,17 +84,20 @@ class Product extends Frontend
             foreach ($product_list as $index => $item){
                 if(strtotime($item['add_time'])+700000 > time()){
                     $item['st'] = 'news';
+                    $item['price'] = product_price($item['product_id']);
                 };
                 $product_list[$index] = $item;
             }
             $this->success('发布成功',url('user/share_success'),$product_list);
         }
 
+        $category = model('category')->where('pid',14)->order('weigh asc')->select();//mobile
 
        // dump($product_list);
         $this->view->assign("product_list", $product_list);
         $this->view->assign("getparents",$getParents);
-        $this->view->assign("getchild",$tree->getChild(14));//mobile
+        $this->view->assign("getchild",$category);//mobile
+
         $this->view->assign("input",$input);
         $this->view->assign("sort",$sort);
         $this->view->assign("sort_array",$sort_array);
@@ -177,7 +181,7 @@ class Product extends Frontend
 
 //        erun 接口
         $hksr = new Hksr;
-        $sBC = $goods['freight_num'];
+        $sBC = $goods['barcode']?$goods['barcode']:$goods['freight_num'];
         $goods['stock'] = $hksr->Product_GetFullStockListByBC($sBC);
 
        // dump($goods);

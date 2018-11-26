@@ -25,8 +25,9 @@ class News extends Frontend
         $where['post_term_id'] = input('cid',64);
         $list = $this->article_model
         ->where($where)
-        ->order('post_date desc')
+        ->order('post_starttime desc')
         ->paginate(10);
+
         $name = Db::name('category')->where('id',input('cid',64))->value('name');
         $newscategory = sp_getTreeList(1);
         $this->view->assign("newscategory",$newscategory);
@@ -39,7 +40,6 @@ class News extends Frontend
 
     public function article()
     {
-
         $articleId = $this->request->param('id', 0, 'intval');
         $data = $this->article_model
         ->where('id',$articleId)

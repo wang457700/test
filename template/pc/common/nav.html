@@ -33,8 +33,8 @@
                 <?php $category_2 = model('category')->where('pid',$vo['id'])->order('weigh asc')->select(); ?>
                 {foreach name="$category_2" item="vov"}
                   <li>
-                    <a href="{:url('product/index',array('categoryid'=>$vov['id']))}"><h3 class="mcate-item-hd">
-                      <span>{$vov.name}</span></h3></a>
+                    <a href="{:url('product/index',array('categoryid'=>$vov['id']))}">
+                      <h3 class="mcate-item-hd"><span>{$vov.name}</span></h3></a>
                     <p class="mcate-item-bd">
                       <?php $category_3 = model('category')->where('pid',$vov['id'])->order('weigh asc')->select(); ?>
                       {foreach name="$category_3" item="vovv"}

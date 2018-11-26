@@ -62,7 +62,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template'], function
                         //直接响应搜索
                         {field: 'post_terms', title: __('類型'), operate: false},
                         {field: 'smeta', title: __('封面'), formatter: Table.api.formatter.image, operate: false}, 
-                        {field: 'post_date', title: __('發佈時間'),operate: false},
+                        {field: 'post_date', title: __('顯示時間'),operate: false},
                         {field: 'post_status', title: __('狀態'),operate: false},
                       
                         //操作栏,默认有编辑、删除或排序按钮,可自定义配置buttons来扩展按钮
@@ -73,6 +73,18 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template'], function
                             table: table,
                             events: Table.api.events.operate,
                             buttons: [
+                                {
+                                    name: 'detail',
+                                    title: __('預覽最新消息'),
+                                    classname: 'btn btn-xs btn-primary btn-dialog',
+                                    icon: '',
+                                    extend:'data-area=\'["90%","90%"]\'',
+                                    text:'預覽',
+                                    url: $('#preview_url').val() + '?id={ids}',
+                                    callback: function (data) {
+                                        //Layer.alert("接收到回传数据：" + JSON.stringify(data), {title: "回传数据"});
+                                    }
+                                },
                                 {
                                     name: 'detail',
                                     title: __('修改信息'),

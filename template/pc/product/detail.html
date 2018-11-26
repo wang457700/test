@@ -269,7 +269,19 @@
                       $('#min').attr('disabled', true);
                       $('#adds').data('number',t.val());
                   };
-              })
+              });
+
+          setInterval(function(){
+              $('#adds').data('number',t.val());
+              if (parseInt(t.val())==0 || t.val()==''){
+                  t.val(1);
+              }
+              if (parseInt(t.val())==1){
+                  $('#min').attr('disabled',true);
+              }else{
+                  $('#min').attr('disabled',false);
+              }
+          },500)
       });
 
       $(function() {

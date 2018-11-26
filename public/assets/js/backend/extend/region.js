@@ -11,7 +11,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template'], function
                     add_url: 'extend/region/add',
                     edit_url: '',
                     del_url: '',
-                    multi_url: 'order/index/multi',
+                    multi_url: '',
+                    dragsort_url: '',
                     table: 'user',
                 }
             });
@@ -27,12 +28,11 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template'], function
             // 初始化表格
             table.bootstrapTable({
                 url: $.fn.bootstrapTable.defaults.extend.index_url,
-                pk: 'id',
-                sortName: 'id',
-                sortOrder: 'desc',
+                sortName:'weigh as,id desc',
                 columns: [
                     [
                         {field: 'id', title: __('ID'), operate: false},
+                        {field: 'weigh', title: __('排序（0最前）'), operate: false,sortable:true},
                         {field: 'name', title: __('地區名稱'), align: 'left',formatter:function (value, row, index) {
                                 return row.name;
                             }},
@@ -48,35 +48,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'template'], function
                                     callback: function (data) {
                                         Layer.alert("接收到回传数据：" + JSON.stringify(data), {title: "回传数据"});
                                     }
-                                },{
-                                    name: 'dongjie',
-                                    title: __('凍結'),
-                                    text:'凍結',
-                                    classname: 'btn btn-xs btn-detail btn-magic btn-ajax',
-                                    url: 'coupon/status/is/0',
-                                    success: function (data, ret) {
-                                        $(".btn-refresh").trigger("click");
-                                    },
-                                    error: function (data, ret) {
-                                        console.log(data, ret);
-                                        //Layer.alert(ret.msg);
-                                        return false;
-                                    }
-                                },{
-                                    name: 'jiedong',
-                                    title: __('解凍'),
-                                    text:'解凍',
-                                    classname: 'btn btn-xs btn-detail btn-magic btn-ajax',
-                                    url: 'coupon/status/is/1',
-                                    success: function (data, ret) {
-                                        $(".btn-refresh").trigger("click");
-                                    },
-                                    error: function (data, ret) {
-                                        console.log(data, ret);
-                                        //Layer.alert(ret.msg);
-                                        return false;
-                                    }
-                                },
+                                }
                             ],
                             formatter: Table.api.formatter.operate,formatter: function (value, row, index) {
                                 console.log(row.status);

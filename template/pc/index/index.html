@@ -15,16 +15,15 @@
       }
   </style>
   <body style="background: url(__TMPL_PUBLIC__/img/index_bg.jpg) repeat-y;">
-
 <!--头部 str-->
    {include file="common/header"/}
 <!--头部 end-->
-
 	{include file="common/nav"/}
     <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/Swiper/3.4.0/css/swiper.min.css" media="screen">
 	<script src="https://cdn.bootcss.com/Swiper/4.3.0/js/swiper.min.js"></script>
   <div class="swiper-container" style="height: 475px;">
       <div class="swiper-wrapper">
+
           {foreach name="slide" item="vo"}
               {eq name="vo['slide_type']" value="index_banner"}
                     <div class="swiper-slide" style="background: url({:fa_get_image_url($vo['slide_pic'])})  no-repeat center ;background-size: cover;">
@@ -223,10 +222,7 @@
                                         </div>
                                     </a>
                                     <div class="d2">
-                                        <p class="nowrap">{$vo['product_name']}</p>
-                                        {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
-                                        {if condition="$vo['discount_type'] eq 2"}<p class="color_ro">特惠全民享</p>{/if}
-                                        {if condition="$vo['discount_type'] eq 3"}<p class="color_ro">优惠全民享</p>{/if}
+                                        <p class="nowrap-2">{$vo['product_name']}</p>
                                         <div>
                                             <span class="font24"><i class="font12">$</i>
                                                 {:product_price($vo['product_id'])}
@@ -242,10 +238,7 @@
                                 <img src="__PUBLIC__{$vo['cover']}" class="auto_img">
                                 </a>
                                 <div class="d2">
-                                  <p class="nowrap">{$vo['product_name']}</p>
-                                    {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
-                                    {if condition="$vo['discount_type'] eq 2"}<p class="color_ro">特惠全民享</p>{/if}
-                                    {if condition="$vo['discount_type'] eq 3"}<p class="color_ro">优惠全民享</p>{/if}
+                                  <p class="nowrap-2">{$vo['product_name']}</p>
                                   <div>
                                        <span class="font24"><i class="font12">$</i>
                                            {:product_price($vo['product_id'])}
@@ -301,10 +294,7 @@
                                 </div>
                              </a>
                              <div class="d2">
-                                 <p class="nowrap">{$vo['product_name']}</p>
-                                 {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
-                                 {if condition="$vo['discount_type'] eq 2"}<p class="color_ro">特惠全民享</p>{/if}
-                                 {if condition="$vo['discount_type'] eq 3"}<p class="color_ro">优惠全民享</p>{/if}
+                                 <p class="nowrap-2">{$vo['product_name']}</p>
                                  <div>
                                             <span class="font24"><i class="font12">$</i>
                                                 {:product_price($vo['product_id'])}
@@ -320,10 +310,7 @@
                                  <img src="__PUBLIC__{$vo['cover']}" class="auto_img">
                              </a>
                              <div class="d2">
-                                 <p class="nowrap">{$vo['product_name']}</p>
-                                 {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
-                                 {if condition="$vo['discount_type'] eq 2"}<p class="color_ro">特惠全民享</p>{/if}
-                                 {if condition="$vo['discount_type'] eq 3"}<p class="color_ro">优惠全民享</p>{/if}
+                                 <p class="nowrap-2">{$vo['product_name']}</p>
                                  <div>
                                        <span class="font24"><i class="font12">$</i>
                                            {:product_price($vo['product_id'])}
@@ -375,10 +362,7 @@
                                     <div style="text-;text-align:  center;"><img src="__PUBLIC__{$vo['cover']}" class="first auto_img" ></div>
                                 </a>
                                 <div class="d2">
-                                    <p class="nowrap">{$vo['product_name']}</p>
-                                    {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
-                                    {if condition="$vo['discount_type'] eq 2"}<p class="color_ro">特惠全民享</p>{/if}
-                                    {if condition="$vo['discount_type'] eq 3"}<p class="color_ro">优惠全民享</p>{/if}
+                                    <p class="nowrap-2">{$vo['product_name']}</p>
                                     <div>
                                             <span class="font24"><i class="font12">$</i>
                                                 {:product_price($vo['product_id'])}
@@ -394,10 +378,7 @@
                                     <img src="__PUBLIC__{$vo['cover']}" class="auto_img">
                                 </a>
                                 <div class="d2">
-                                    <p class="nowrap">{$vo['product_name']}</p>
-                                    {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
-                                    {if condition="$vo['discount_type'] eq 2"}<p class="color_ro">特惠全民享</p>{/if}
-                                    {if condition="$vo['discount_type'] eq 3"}<p class="color_ro">优惠全民享</p>{/if}
+                                    <p class="nowrap-2">{$vo['product_name']}</p>
                                     <div>
                                        <span class="font24"><i class="font12">$</i>
                                            {:product_price($vo['product_id'])}
@@ -454,10 +435,7 @@
                                     </div>
                                 </a>
                                 <div class="d2">
-                                    <p class="nowrap">{$vo['product_name']}</p>
-                                    {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
-                                    {if condition="$vo['discount_type'] eq 2"}<p class="color_ro">特惠全民享</p>{/if}
-                                    {if condition="$vo['discount_type'] eq 3"}<p class="color_ro">优惠全民享</p>{/if}
+                                    <p class="nowrap-2">{$vo['product_name']}</p>
                                     <div>
                                             <span class="font24"><i class="font12">$</i>
                                                 {:product_price($vo['product_id'])}
@@ -473,10 +451,7 @@
                                     <img src="__PUBLIC__{$vo['cover']}" class="auto_img">
                                 </a>
                                 <div class="d2">
-                                    <p class="nowrap">{$vo['product_name']}</p>
-                                    {if condition="$vo['discount_type'] eq 1"}<p class="color_ro">新品上架</p>{/if}
-                                    {if condition="$vo['discount_type'] eq 2"}<p class="color_ro">特惠全民享</p>{/if}
-                                    {if condition="$vo['discount_type'] eq 3"}<p class="color_ro">优惠全民享</p>{/if}
+                                    <p class="nowrap-2">{$vo['product_name']}</p>
                                     <div>
                                        <span class="font24"><i class="font12">$</i>
                                            {:product_price($vo['product_id'])}
@@ -504,18 +479,18 @@
 
                 {foreach name="share" item="vo"}
 			  <div class="col-md-6 col-xs-6 list">
+                  <a href="{:url('share/detail',array('id'=>$vo['id']))}">
 					<img src="__PUBLIC__/{$vo.product_pic}" class="img_left auto_img" />
 					<div class="d1">
 					  <h3>{$vo.product_name}</h3>
-					  <p class="ellipsis3">{$vo.product_content}</p>
+					  <p class="ellipsis3">{$vo.product_excerpt}</p>
 					</div>
+                  </a>
 			  </div>
                 {/foreach}
 			</div>
         </div>
   <!--- f7 end-->
-
-
     </div>
 	{include file="common/footer"/}
 

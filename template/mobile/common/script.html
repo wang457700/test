@@ -4,7 +4,7 @@
 <script src='__PUBLIC__/assets/js/message/messageIE.js'></script>
 <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
 <script src="__TMPL_PUBLIC__/js/jquery.cookie.min.js"></script>
-<script src="__CDN__/assets/js/language_plus.js"></script>
+<script src="__PUBLIC__/assets/js/language_plus.js"></script>
 <script>
     mui.init({
     });
@@ -32,14 +32,14 @@
     mui('body').on('tap','.adds,#adds' ,function(){
         var product_id = $(this).data('productid');
         var name = $(this).data('name');
-
+        var number = $(this).data('number');
         var flyimg = $(this).data('flyimg');
         var img = $('#img_' + product_id);
         $.ajax({
             type: "POST",
             url: "{:url('cart/checkin_cart')}",
             dataType: 'json',
-            data:{product_id:product_id},
+            data:{product_id:product_id,number:number},
             success: function(data) {
                 if (data.code) {
                     if(flyimg){

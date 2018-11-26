@@ -14,8 +14,9 @@
 						<div class="index-left-logo">
 
 							{if condition="is_login()"}
-								<a href="{:url('user/center')}">
-									<img src="__TMPL_PUBLIC__/img/logo1.png"/>{$user['nickname']}
+								<a href="{:url('user/center')}" >
+									<div class="avatar" style="background-image: url({:fa_get_image_url($user.avatar)})" ></div>
+									<img src="{:fa_get_image_url($user.avatar)}" style="height:80px;display: none" />{$user['nickname']}
 								</a>
 							{else/}
 								<a href="{:url('user/login')}">
@@ -30,10 +31,20 @@
 					        		<span class="mui-badge mui-badge-success">{:count_cart_num($user_id)}</span>
 					        	</a>
 						    </li>
-						    <li class="mui-table-view-cell"><a class="" href="{:url('product/index')}"><i class="left_menu_ico i2"></i>康復產品</a></li>
-						    <li class="mui-table-view-cell"><a class="" href="{:url('product/index')}"><i class="left_menu_ico i3"></i>健康及有機產品</a></li>
-						    <li class="mui-table-view-cell"><a class="" href="{:url('product/index')}"><i class="left_menu_ico i4"></i>科技復康產品</a></li>
-						    <li class="mui-table-view-cell"><a class="" href="{:url('product/index')}"><i class="left_menu_ico i5"></i>節日促銷</a></li>
+							<?php
+     			 				$category = model('category')->where('pid',14)->order('weigh asc')->select();
+							?>
+							{foreach name="category" item="vo"}
+							{if condition ="$vo['id'] != 72"}
+								<li class="mui-table-view-cell"><a class="" href="{:url('product/index',array('categoryid'=>$vo['id']))}"><i class="left_menu_ico i{$key+2}"></i>{$vo.name}</a></li>
+							{/if}
+							{/foreach}
+
+						    <!--<li class="mui-table-view-cell"><a class="" href="{:url('product/index')}"><i class="left_menu_ico i2"></i>康復產品111111</a></li>-->
+						    <!--<li class="mui-table-view-cell"><a class="" href="{:url('product/index')}"><i class="left_menu_ico i3"></i>健康及有機產品</a></li>-->
+						    <!--<li class="mui-table-view-cell"><a class="" href="{:url('product/index')}"><i class="left_menu_ico i4"></i>科技復康產品</a></li>-->
+						    <!--<li class="mui-table-view-cell"><a class="" href="{:url('product/index')}"><i class="left_menu_ico i5"></i>節日促銷</a></li>-->
+
 						    <li class="mui-table-view-cell">
 						    	<a class="" href="{:url('share/index')}">
 							    	<i class="left_menu_ico i6"></i>共享平台
@@ -46,7 +57,7 @@
 						        </a>
 						    </li>
 						    <li class="mui-table-view-cell">
-						    	<a class="" href="{:url('index/contact_us')}">
+						    	<a class="" href="{:url('index/contact_us',array('item'=>1))}">
 						    		<i class="left_menu_ico i9"></i>關於我們
 						  	  	</a>
 						    </li>
@@ -55,6 +66,8 @@
 									<i class="left_menu_ico i10"></i>會員優惠
 								</a>
 						    </li>
+							<li class="mui-table-view-cell"><a class="" href="{:url('product/index',array('categoryid'=>72))}"><i class="left_menu_ico i{$key+2}"></i>內地專區</a></li>
+
 							{if condition="is_login()"}
 						    <li class="mui-table-view-cell"><a class="" href="{:url('user/logout')}"><i class="left_menu_ico i11"></i>退出</a></li>
 							{/if}
@@ -80,13 +93,13 @@
 
 			      		<link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/Swiper/3.4.0/css/swiper.min.css" media="screen">
 						<script src="https://cdn.bootcss.com/Swiper/4.3.0/js/swiper.min.js"></script>
-				      	<div class="swiper-container index_banner" style="">
+				      	<div class="swiper-container index_banner"  style="height: 90px;">
 						      <div class="swiper-wrapper ">
 						      	 {foreach name="slide" item="vo"}
           							{eq name="vo['slide_type']" value="index_banner"}
 						            <div class="swiper-slide"> 
-						              <a href="{$vo.slide_url}"  target="_bank">
-						                <img src="{:fa_get_image_url($vo['slide_pic'])}">
+						              <a href="{$vo.slide_url}"  target="_bank" style="background: url({:fa_get_image_url($vo['slide_pic'])})  no-repeat center ;background-size: cover;display: block;height: 100%;">
+						                <!--<img src="{:fa_get_image_url($vo['slide_pic'])}">-->
 						              </a>
 						            </div>
 
@@ -111,7 +124,7 @@
 						{if condition="$product_history_list"}
 						<ul class="mui-table-view">
 							<li class="mui-table-view-cell">
-								<span class="mui-navigate-right" href="product_list.html">
+								<span class="" href="product_list.html">
 									我的記錄
 								</span>
 							</li>
@@ -120,15 +133,17 @@
 								  <div class="swiper-wrapper my_lj">
 									  {foreach  name="product_history_list" item='vo'}
 										  <div class="swiper-slide col-md-3 list">
+											  <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
 											  {if condition="$vo['cover']"}
-											  <img src="{:cdnurl($vo['cover'])}" class="auto_img">
+											  <img src="{:fa_get_image_url($vo['cover'])}" class="auto_img">
 											  {else/}
 											  <img src="__TMPL_PUBLIC__/img/default.jpg" class="auto_img">
 											  {/if}
-											  <p>{$vo.product_name}</p>
+
+											  <p style="overflow: hidden;text-overflow: ellipsis;font-size: 12px;line-height: 17px;-webkit-box-orient: vertical;-webkit-line-clamp: 2;display: -webkit-box;margin-bottom: 5px;">{$vo.product_name}</p>
+											  </a>
 										  </div>
 									  {/foreach}
-
 								    </div>
 							 	</div>
 							    <script>
@@ -158,9 +173,14 @@
 								      <div class="swiper-slide col-md-3 list">
 										  <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
 								      	  <i class="news"></i>
-								          <img src="{:cdnurl($vo['cover'])}" class="auto_img"/>
+								          <img src="__PUBLIC__/{$vo['cover']}" class="auto_img"/>
 								          <p class="p2">{$vo.product_name}</p>
-								          <p><span class="color_ro">$</span><span class="color_ro font18">{:product_price($vo['product_id'])}</span>  <span class="price">${$vo.price}</span></p>
+								          <p>
+											  <span class="color_ro">$</span><span class="color_ro font18">{:product_price($vo['product_id'])}</span>
+											  {if condition="$vo['discount_type'] neq 1"}
+											  	<span class="price">${$vo.price}</span>
+											  {/if}
+										  </p>
 								     	</a>
 								      </div>
 							      	{/foreach}
@@ -192,9 +212,14 @@
 									  <div class="swiper-slide col-md-3 list">
 										  <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
 											  <i class="news"></i>
-											  <img src="{:cdnurl($vo['cover'])}" class="auto_img"/>
+											  <img src="__PUBLIC__/{$vo['cover']}" class="auto_img"/>
 											  <p class="p2">{$vo.product_name}</p>
-											  <p><span class="color_ro">$</span><span class="color_ro font18">{:product_price($vo['product_id'])}</span>  <span class="price">${$vo.price}</span></p>
+											  <p><span class="color_ro">$</span><span class="color_ro font18">{:product_price($vo['product_id'])}</span>
+
+												  {if condition="$vo['discount_type'] neq 1"}
+												  <span class="price">${$vo.price}</span>
+												  {/if}
+											  </p>
 										  </a>
 									  </div>
 									  {/foreach}
@@ -227,9 +252,13 @@
 									  <div class="swiper-slide col-md-3 list">
 										  <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
 											  <i class="news"></i>
-											  <img src="{:cdnurl($vo['cover'])}" class="auto_img"/>
+											  <img src="__PUBLIC__/{$vo['cover']}" class="auto_img"/>
 											  <p class="p2">{$vo.product_name}</p>
-											  <p><span class="color_ro">$</span><span class="color_ro font18">{:product_price($vo['product_id'])}</span>  <span class="price">${$vo.price}</span></p>
+											  <p><span class="color_ro">$</span><span class="color_ro font18">{:product_price($vo['product_id'])}</span>
+												  {if condition="$vo['discount_type'] neq 1"}
+												  <span class="price">${$vo.price}</span>
+												  {/if}
+											  </p>
 										  </a>
 									  </div>
 									  {/foreach}
@@ -260,9 +289,13 @@
 									  <div class="swiper-slide col-md-3 list">
 										  <a href="{:url('product/detail',array('id'=>$vo['product_id']))}">
 											  <i class="news"></i>
-											  <img src="{:cdnurl($vo['cover'])}" />
+											  <img src="__PUBLIC__/{$vo['cover']}" />
 											  <p class="p2">{$vo.product_name}</p>
-											  <p><span class="color_ro">$</span><span class="color_ro font18">{:product_price($vo['product_id'])}</span>  <span class="price">${$vo.price}</span></p>
+											  <p><span class="color_ro">$</span><span class="color_ro font18">{:product_price($vo['product_id'])}</span>
+												  {if condition="$vo['discount_type'] neq 1"}
+												  <span class="price">${$vo.price}</span>
+												  {/if}
+											  </p>
 										  </a>
 									  </div>
 									  {/foreach}
@@ -289,14 +322,15 @@
 							<li class="mui-table-view-cell">
 								<div class="swiper-container6 f6swiper" style="overflow: hidden;position: relative;">
 								  <div class="swiper-wrapper f6">
-
 								        {foreach name="share" item="vo"}
-										    <div class="swiper-slide list"> 
+										    <div class="swiper-slide list">
+												<a href="{:url('share/detail',array('id'=>$vo['id']))}">
 								                <img src="__PUBLIC__/{$vo.product_pic}" class="img_left auto_img"/>
 								                <div class="d1">
 								                  <h4>{$vo.product_name}</h4>
-								                  <p>{$vo.product_content}</p>
+								                  <p>{$vo.product_excerpt}</p>
 								                </div>
+												</a>
 							       		   	</div>
 							       		{/foreach}
 								    </div>
@@ -319,22 +353,22 @@
 							</li>
 							<li class="mui-table-view-cell index-other">
 								<div class="mui-row">
-									<a class="mui-col-sm-4 mui-col-xs-4" href="{:url('index/index')}">
+									<a class="mui-col-sm-4 mui-col-xs-4" href="{:url('index/contact_us',array('item'=>1))}">
 										 關於營康薈
 									</a>
-									<a class="mui-col-sm-4 mui-col-xs-4" href="{:url('index/index')}">
+									<a class="mui-col-sm-4 mui-col-xs-4" href="{:url('index/contact_us',array('item'=>2))}">
 										營康薈門市
 									</a>
-									<a class="mui-col-sm-4 mui-col-xs-4" href="{:url('index/page',array('id'=>109))}">
+									<a class="mui-col-sm-4 mui-col-xs-4" href="{:url('index/contact_us',array('id'=>109,'item'=>4))}">
 										職位空缺
 									</a>
 									<a class="mui-col-sm-4 mui-col-xs-4" href="{:url('index/page',array('id'=>110))}">
 										會員優惠
 									</a>
-									<a class="mui-col-sm-4 mui-col-xs-4" href="{:url('index/page',array('id'=>108))}">
+									<a class="mui-col-sm-4 mui-col-xs-4" href="{:url('index/contact_us',array('id'=>108,'item'=>3))}">
 										聯絡我們
 									</a>
-									<a class="mui-col-sm-4 mui-col-xs-4" href="{:url('index/index')}">
+									<a class="mui-col-sm-4 mui-col-xs-4" href="{:url('index/contact_us',array('item'=>5))}">
 										商務合作
 									</a>
 								</div>

@@ -2,13 +2,13 @@
 
 .c-message {
     position: fixed;
-    bottom: 30px;
-    left: 50%;
-    /* transform:translateX(-50%); */
+    bottom:75px;
+    left: 95%;
+    transform:translateX(-50%);
     height: 40px;
     line-height: 40px;
     background: #fff;
-    min-width: 200px;
+    min-width: 90%;
     color: #000;
     box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
     z-index: 9999;

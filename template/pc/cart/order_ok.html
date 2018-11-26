@@ -20,8 +20,7 @@
 					<a class="crumbs-01" href="#">主頁</a> 
 		          <em>&gt;</em> 
 		          <span class="crumbs-02">購物車</span> 
-		  		</div> 
-	  		
+		  		</div>
 	  		</div>
 			<ul class="row">
 				<li class="col-md-3 col-sm-3 on0" style=""><img src="__TMPL_PUBLIC__/img/shopping_cart_top_lc1_w.png" />購物車</li>
@@ -146,6 +145,10 @@
  <script src="__TMPL_PUBLIC__/js/scripts.js"></script>
  {include file="common/script" /}
 <script type="text/javascript">
+
+
+    var currency = '{:currency_rmb(sp_ip_ischina())}';
+
 	$(function(){
 		var address_id = $('#address_id').val();
 		if(address_id){
@@ -172,29 +175,35 @@
             sum_price();
         });
 
+        $('input[name=coupon]').blur(function(){
+            alert(1);
+            $("#cx_coupon").click();
+        });
+
         $("#cx_coupon").click(function(){
-				var coupon = $('input[name=coupon]').val();
-				var all_total = '{$all_total}';
-				var goods_json = '{$goods_json}';
-				$.ajax({
-					type: "POST",
-					url:"{:url('api/user/cx_coupon')}",
-					data:{'coupon':coupon,'all_total':all_total,'goods_json':goods_json},
-					dataType:"json",
-					success: function(data){
-                        if(data.code == 0){
-                            $.message({message:data.msg,type:'warning',time:'3000'});
-                            $('#coupon_tip').text(data.msg).show().delay(2000).hide(0);
-                        }else{
-                            $.message(data.msg);
-                            $('#coupon_tip').text(data.data.coupon_name);
-                            if(data.data.coupon_price){
-                                $('#coupon_price').data("price",data.data.coupon_price).text("{:sp_ip_ischina()?'￥':'$'} " + data.data.coupon_price).show();
-							}
-                            sum_price();
-                        }
-					},
-        		});
+			var coupon = $('input[name=coupon]').val();
+			var all_total = '{$all_total}';
+			var goods_json = '{$goods_json}';
+			$.ajax({
+				type: "POST",
+				url:"{:url('api/user/cx_coupon')}",
+				data:{'coupon':coupon,'all_total':all_total,'goods_json':goods_json},
+				dataType:"json",
+				success: function(data){
+					if(data.code == 0){
+						$.message({message:data.msg,type:'warning',time:'3000'});
+						$('#coupon_tip').text(data.msg).show().delay(2000).hide(0);
+                        $('#coupon_price').data("price",0).text("{:sp_ip_ischina()?'￥':'$'} " + 0).show();
+					}else{
+						// $.message(data.msg);
+						$('#coupon_tip').text(data.data.coupon_name).show();
+						if(data.data.coupon_price){
+							$('#coupon_price').data("price",data.data.coupon_price).text("{:sp_ip_ischina()?'￥':'$'} " + data.data.coupon_price).show();
+						}
+					}
+                    sum_price();
+				},
+			});
 		});
     });
 
@@ -220,14 +229,12 @@
         var coupon_price = Number($('#coupon_price').data("price")).toFixed(2);
         var scoreprice = Number($('#score_price_text').data("price")).toFixed(2);
         var all_total = Number($('#all_total').data("alltotal")).toFixed(2); //商品总金额
-
         //應付款金额
         if (Number(scoreprice) > Number(all_total)){
             scoreprice = all_total;
             $('#score_price_text').text("{:sp_ip_ischina()?'￥':'$'} " + scoreprice).data("price",scoreprice) ;
         }
-
-        $('#all_total').text("{$vo['is_inland']?'￥':'$'} " + (Number(all_total)+Number(freight)+Number(serviceprice)-Number(scoreprice)-Number(coupon_price)).toFixed(2)) ;
+        $('#all_total').text(currency+" " + (Number(all_total)+Number(freight)+Number(serviceprice)-Number(scoreprice)-Number(coupon_price)).toFixed(2)) ;
     }
 
 

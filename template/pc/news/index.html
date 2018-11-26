@@ -27,24 +27,24 @@
                 </ol>
                 <ul>
                    {foreach name="list" item="vo"}
-                        <li class="row">
-                            <div class="col-sm-3 d1">
-                                {if condition="$vo['smeta']"}
-                                  <img src="{:fa_get_image_url($vo['smeta'])}" />
-                                {else/}
-                                    <img src="__TMPL_PUBLIC__/img/default.jpg"/>
-                                {/if}
-                            </div>
-                            <div class="col-sm-7 d2">
-                                <h4><a href="{:url('home/news/article',array('id'=>$vo['id']))}">{$vo.post_title}</a></h4>
-                                <p>
-                                    {$vo.post_excerpt}
-                                </p>
-                            </div>
-                            <div class="col-sm-2 d3">
-                                <p>{:date('m-d',strtotime($vo['post_date']))}<br><i class="fa fa-long-arrow-right" aria-hidden="true"></i></p>
-                            </div>
-                        </li>
+                        {if condition="$vo['post_endtime'] egt time() && $vo['post_starttime'] elt time()"}
+                            <li class="row">
+                                <div class="col-sm-3 d1">
+                                    {if condition="$vo['smeta']"}
+                                      <img src="{:fa_get_image_url($vo['smeta'])}" />
+                                    {else/}
+                                        <img src="__TMPL_PUBLIC__/img/default.jpg"/>
+                                    {/if}
+                                </div>
+                                <div class="col-sm-7 d2">
+                                    <h4><a href="{:url('home/news/article',array('id'=>$vo['id']))}">{$vo.post_title}</a></h4>
+                                    <p>{$vo.post_excerpt} </p>
+                                </div>
+                                <div class="col-sm-2 d3">
+                                    <p>{:date('m-d',$vo['post_starttime'])}<br><i class="fa fa-long-arrow-right" aria-hidden="true"></i></p>
+                                </div>
+                            </li>
+                        {/if}
                     {/foreach}
                    
                    <!--

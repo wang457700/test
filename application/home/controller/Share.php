@@ -47,23 +47,34 @@ class Share extends Frontend
 
         $input['categoryid'] = input('categoryid',14);
 
-
-
         $where['cat_id'] = array('in',$categoryid);
         $where['status'] =1;
         $list = $this->user_share_model
             ->where($where)
+            ->order('add_date desc')
             ->paginate(10);
-
         //手机端ajax数据
         if ($this->request->isPost() && input('search',false) ==false) {
             $this->success('发布成功',url('user/share_success'),$list);
         }
-
         $this->view->assign("input",$input);
         $this->view->assign("getchild",$tree->getChild(14));//mobile
         $this->view->assign("list", $list);
         $this->assign('title','共享平台');
+        return $this->view->fetch();
+    }
+
+
+    public function detail()
+    {
+        $id = input('id');
+        $res = $this->user_share_model->where('id',$id)->find();
+        if(empty($res) && $res['status'] !=1){
+            $this->error('非法訪問',url('share/index'));
+        }
+        $res['product_content'] =htmlspecialchars_decode($res['product_content']);
+        $this->assign('res',$res);
+        $this->assign('title','共享平台 - 详情');
         return $this->view->fetch();
     }
 

@@ -57,6 +57,7 @@
           <div class="right-list">
                 <ul>
                 {foreach name="new_list" item="vo"}
+                    {if condition="$vo['post_endtime'] egt time() && $vo['post_starttime'] elt time()"}
                    <li class="row">
                         <div class="col-sm-2 col-xs-2 d1">
                                 <img src="{:fa_get_image_url($vo['smeta'])}" />
@@ -71,6 +72,7 @@
                             <p>{:date('m-d',strtotime($vo['post_date']))}<br><i class="fa fa-long-arrow-right" aria-hidden="true"></i></p>
                         </div>
                     </li>
+                    {/if}
                 {/foreach}
                 {if condition="count($new_list) eq 0"}
                 <div style="text-align:  center;padding:  20px;">没有相關新聞</div>

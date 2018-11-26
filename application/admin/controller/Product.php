@@ -38,7 +38,6 @@ class Product extends Backend
         $this->view->assign("flagList", $this->model->getFlagList());
         $this->view->assign("typeList", CategoryModel::getTypeList());
         $this->view->assign("parentList", $categorydata);
-
     }
 
 
@@ -48,7 +47,6 @@ class Product extends Backend
      */
     public function region_list()
     {
-
 
     }
     public function add(){
@@ -62,7 +60,10 @@ class Product extends Backend
                // $this->error('该商品名称已经添加');
             }
 
+            $tree = Tree::instance();
             $data['cat_id'] = array_filter($data['cat_id']);
+            $china_categoryids = $tree->getChildrenIds(input('categoryid',72),true);
+
             $cat_count = count($data['cat_id']);
             if($cat_count){
                 $data['cat_id'] = $data['cat_id'][$cat_count-1];
@@ -97,6 +98,12 @@ class Product extends Backend
             }
 
             $data['add_time']=date('Y-m-d H:i:s',time());
+            if(in_array($data['cat_id'],$china_categoryids)){
+                $data['is_inland'] = 1;
+            }else{
+                $data['is_inland'] = 0;
+            };
+
             $res=Db::name('goods')->insertGetId($data);
             if($res){
                 $this->success('添加成功！',url('product/index'));
@@ -124,8 +131,6 @@ class Product extends Backend
         }
         $product_list['cat_id'] = array_values(array_filter(array($parent_thee_id==14?'':$parent_thee_id,$parent_two_id==14?'':$parent_two_id,$product_list['cat_id'])));
 
-
-
         if($product_list['discount_start_time']){
             $product_list['discount_start_time'] = date('Y-m-d H:i:s',$product_list['discount_start_time']);
             $product_list['discount_end_time'] = date('Y-m-d H:i:s',$product_list['discount_end_time']);
@@ -139,7 +144,10 @@ class Product extends Backend
                 $this->error('特價不能為零！');
             }
 
+            $tree = Tree::instance();
             $data['cat_id'] = array_filter($data['cat_id']);
+            $china_categoryids = $tree->getChildrenIds(input('categoryid',72),true);
+
             $cat_count = count($data['cat_id']);
             if($cat_count){
                 $data['cat_id'] = $data['cat_id'][$cat_count-1];
@@ -169,8 +177,13 @@ class Product extends Backend
 
             $img_url=array_filter(input('img_url/a'));
             $data['img_url']=implode(',',$img_url);
-            $res=Db::name('goods')->where('product_id',$data['product_id'])->update($data);
+            if(in_array($data['cat_id'],$china_categoryids)){
+                $data['is_inland'] = 1;
+            }else{
+                $data['is_inland'] = 0;
+            };
 
+            $res=Db::name('goods')->where('product_id',$data['product_id'])->update($data);
             if($res){
                 $this->success('修改成功！');
             }else{

@@ -40,7 +40,7 @@ class Index extends Api
     public function getRegion(){
         $parent_id = input('get.parent_id/d');
         $selected = input('get.selected',0);
-        $data =  Db::name('region')->where("parent_id",$parent_id)->select();
+        $data =  Db::name('region')->where("parent_id",$parent_id)->order('weigh asc')->select();
         $html = '';
         if($data){
             foreach($data as $h){
@@ -56,7 +56,7 @@ class Index extends Api
 
     public function getTwon(){
         $parent_id = input('get.parent_id/d');
-        $data = Db::name('region')->where("parent_id",$parent_id)->select();
+        $data = Db::name('region')->where("parent_id",$parent_id)->order('weigh asc')->select();
         $html = '';
         if($data){
             foreach($data as $h){
@@ -75,7 +75,7 @@ class Index extends Api
      */
     public function getProvince()
     {
-        $province = Db::name('region')->field('id,name')->where(array('level' => 1))->cache(true)->select();
+        $province = Db::name('region')->field('id,name')->where(array('level' => 1))->cache(true)->order('weigh asc')->select();
         $res = array('status' => 1, 'msg' => '获取成功', 'result' => $province);
         exit(json_encode($res));
     }
@@ -88,7 +88,7 @@ class Index extends Api
         $parent_id = input('parent_id');
         $res = array('status' => 0, 'msg' => '获取失败，参数错误', 'result' => '');
         if($parent_id){
-            $region_list = Db::name('region')->field('id,name')->where(['parent_id'=>$parent_id])->select();
+            $region_list = Db::name('region')->field('id,name')->where(['parent_id'=>$parent_id])->order('weigh asc')->select();
             $res = array('status' => 1, 'msg' => '获取成功', 'result' => $region_list);
         }
         exit(json_encode($res));

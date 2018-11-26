@@ -37,14 +37,13 @@ class News extends Backend
             ->limit($offset, $limit)
             ->where($where)
             ->select(); 
-            
 
              $status =array('0'=>'隱藏','1'=>'顯示');
             foreach ($list as $k => &$v)
             {
                 $v['post_status'] = $status[$v['post_status']];
                 $v['post_terms'] = Db::name('category')->where('id',$v['post_term_id'])->value('name');
-                $v['post_date'] = date('Y/m/d',strtotime($v['post_date']));
+                $v['post_date'] = date('Y/m/d',$v['post_starttime']) .' - '.date('Y/m/d',$v['post_endtime']);
             }
             unset($v);
 
@@ -66,6 +65,8 @@ class News extends Backend
         {
             $params = $this->request->post("row/a");
             $params['post_type'] = 2;
+            $params['post_starttime'] =strtotime($params['post_starttime']);
+            $params['post_endtime'] = strtotime($params['post_endtime']);
             $info = Db::name('Article')->where('id',$ids)->update($params);
             if ($info!==false)
             {
@@ -89,6 +90,9 @@ class News extends Backend
         {
             $params = $this->request->post("row/a");
             $params['post_type'] = 2;
+            $params['post_starttime'] =strtotime($params['post_starttime']);
+            $params['post_endtime'] = strtotime($params['post_endtime']);
+
            /* if ($params){
                 $params['start_time'] = strtotime($params['start_time']);
                 $params['end_time'] = strtotime($params['end_time']);
